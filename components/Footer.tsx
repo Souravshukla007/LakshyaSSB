@@ -39,7 +39,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-                <p>© 2024 LakshaySSB Academy. Jai Hind.</p>
+                <p>© 2026 LakshaySSB Academy. Jai Hind.</p>
                 <div className="flex gap-8">
                     <a href="#" className="hover:text-white transition">Privacy Policy</a>
                     <a href="#" className="hover:text-white transition">Terms of Service</a>
