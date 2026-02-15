@@ -7,7 +7,7 @@ export default function Footer() {
                 <div className="col-span-1 md:col-span-1">
                     <div className="flex items-center gap-2 text-white mb-6">
                         <i className="fa-solid fa-shield-halved text-brand-orange text-xl"></i>
-                        <span className="font-logo font-bold text-2xl tracking-tight">LakshaySSB</span>
+                        <span className="font-logo font-bold text-2xl tracking-tight">LakshyaSSB</span>
                     </div>
                     <p className="text-gray-500 leading-relaxed">
                         Crafting future leaders for the Indian Armed Forces. Specialized SSB training for NDA, CDS, and AFCAT.
@@ -39,7 +39,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-                <p>© 2026 LakshaySSB Academy. Jai Hind.</p>
+                <p>© 2026 LakshyaSSB Academy. Jai Hind.</p>
                 <div className="flex gap-8">
                     <a href="#" className="hover:text-white transition">Privacy Policy</a>
                     <a href="#" className="hover:text-white transition">Terms of Service</a>
