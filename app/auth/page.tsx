@@ -87,7 +87,7 @@ export default function AuthPage() {
                     <div className="flex items-center gap-12">
                         <Link href="/" className="flex items-center gap-2 text-brand-orange">
                             <i className="fa-solid fa-shield-halved text-2xl"></i>
-                            <span className="font-logo font-semibold text-2xl tracking-tight text-brand-dark">LakshaySSB</span>
+                            <span className="font-logo font-semibold text-2xl tracking-tight text-brand-dark">LakshyaSSB</span>
                         </Link>
 
                         <div className="hidden md:flex gap-8 text-sm font-noname font-medium text-gray-800 tracking-wide">
@@ -126,7 +126,7 @@ export default function AuthPage() {
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-2 text-brand-orange mb-12">
                                         <i className="fa-solid fa-shield-halved text-2xl"></i>
-                                        <span className="font-logo font-semibold text-2xl tracking-tight">LakshaySSB</span>
+                                        <span className="font-logo font-semibold text-2xl tracking-tight">LakshyaSSB</span>
                                     </div>
 
                                     <h2 className="font-hero font-bold text-4xl lg:text-5xl mb-6 leading-tight">
