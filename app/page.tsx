@@ -1,37 +1,31 @@
+'use client';
+
+import { useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import Link from "next/link";
 
 export default function Home() {
+    useEffect(() => {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
+
+        return () => {
+            revealObserver.disconnect();
+        };
+    }, []);
+
     return (
         <>
-            {/* Navigation */}
-            <nav className="absolute w-full z-50 top-0 left-0 py-6 transition-all duration-300">
-                <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-                    <div className="flex items-center gap-12">
-                        <div className="flex items-center gap-2 text-brand-orange">
-                            <i className="fa-solid fa-shield-halved text-2xl"></i>
-                            <span className="font-logo font-semibold text-2xl tracking-tight text-brand-dark">LakshaySSB</span>
-                        </div>
-
-                        <div className="hidden md:flex gap-8 text-sm font-noname font-medium text-gray-800 tracking-wide">
-                            <Link href="/" className="hover:text-brand-orange transition">Home</Link>
-                            <Link href="/#process" className="hover:text-brand-orange transition">SSB Process</Link>
-                            <a href="#" className="hover:text-brand-orange transition">Success Stories</a>
-                            <Link href="/dashboard" className="hover:text-brand-orange transition">Dashboard</Link>
-                            <Link href="/auth" className="hover:text-brand-orange transition">Login / Sign Up</Link>
-                        </div>
-                    </div>
-
-                    <Link href="/auth" className="group relative bg-brand-dark p-[2px] rounded-full shadow-lg transition-all duration-300 hover:shadow-xl">
-                        <div className="relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center gap-3 pl-6 pr-1.5 py-1.5">
-                            <div className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]"></div>
-                            <span className="relative z-10 text-white group-hover:text-brand-dark text-sm font-medium transition-colors duration-[1000ms]">Join Academy</span>
-                            <div className="relative z-10 bg-white text-brand-dark w-8 h-8 rounded-full flex items-center justify-center">
-                                <i className="fa-solid fa-arrow-right text-xs"></i>
-                            </div>
-                        </div>
-                    </Link>
-                </div>
-            </nav>
+            <Navbar />
 
             <main>
                 {/* Hero Section */}
@@ -77,7 +71,7 @@ export default function Home() {
                                         <img className="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1538651954807-323f3c1c1123?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxuYXZ5JTIwb2ZmaWNlciUyMHdvbWFuJTIwcG9ydHJhaXQlMjBzcXVhcmV8ZW58MHwyfHx8MTc3MTA1MTUzNXww&ixlib=rb-4.1.0&w=100&h=100&fit=crop&fm=jpg&q=80" alt="Officer" />
                                         <div className="w-10 h-10 rounded-full border-2 border-white bg-brand-orange flex items-center justify-center text-[10px] text-white font-bold">+500</div>
                                     </div>
-                                    <p className="text-sm text-gray-500 font-noname"><strong>Recommended</strong> from NDA-152, CDS-OTA & AFCAT 02/24 batches.</p>
+                                    <p className="text-sm text-gray-500 font-noname"><strong>Recommended</strong> from NDA-152, CDS-OTA & AFCAT 02/25 batches.</p>
                                 </div>
                             </div>
 
@@ -93,7 +87,7 @@ export default function Home() {
                                     <div className="absolute bottom-6 left-6 right-6 glass-card p-6 rounded-2xl border border-white/40 flex items-center justify-between">
                                         <div>
                                             <div className="text-[10px] text-brand-orange uppercase font-bold tracking-widest mb-1">Next Batch Starting</div>
-                                            <div className="text-lg font-bold text-brand-dark">15th October 2024</div>
+                                            <div className="text-lg font-bold text-brand-dark">1st March 2026</div>
                                         </div>
                                         <div className="flex flex-col items-end">
                                             <div className="text-[10px] text-gray-400 font-bold mb-1">Limited Seats</div>
@@ -124,6 +118,147 @@ export default function Home() {
                                     <i className="fa-solid fa-bullseye text-2xl text-white/50"></i>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* SSB SELECTION PROCESS TIMELINE */}
+                <section id="selection-journey" className="py-24 px-6 bg-brand-bg relative overflow-hidden">
+                    {/* Light Grid Background */}
+                    <div className="absolute inset-0 bg-grid-pattern opacity-100 pointer-events-none"></div>
+
+                    <div className="max-w-7xl mx-auto relative z-10">
+                        {/* Header */}
+                        <div className="text-center max-w-3xl mx-auto mb-20 reveal">
+                            <div className="inline-block px-4 py-1.5 rounded-full border border-brand-orange/20 bg-brand-orange/10 mb-6">
+                                <span className="font-noname text-[10px] font-bold text-brand-orange uppercase tracking-[0.2em]">5-Day Selection Journey</span>
+                            </div>
+                            <h2 className="font-hero font-bold text-4xl lg:text-5xl text-brand-dark mb-6 tracking-tight">Your Path to Recommendation</h2>
+                            <p className="text-gray-500 font-noname text-lg">Understand what happens on each day of the SSB and how you are assessed by the board of officers.</p>
+                        </div>
+
+                        {/* Timeline Container */}
+                        <div className="relative">
+                            {/* Progress Line (Desktop) */}
+                            <div className="hidden lg:block absolute top-[45px] left-[10%] right-[10%] h-[2px] bg-gray-200 z-0">
+                                <div className="absolute top-0 left-0 h-full bg-brand-orange w-1/4"></div>
+                            </div>
+
+                            {/* Steps Grid */}
+                            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 relative z-10">
+                                {/* Mobile Progress Line (Custom implementation via Tailwind) */}
+                                <div className="absolute left-[23px] top-0 bottom-0 w-[2px] bg-gray-200 z-0 lg:hidden"></div>
+
+                                {/* Day 1 */}
+                                <Link href="/ssb/day-1" className="group cursor-pointer reveal-scale relative z-10">
+                                    <div className="flex flex-col items-center lg:items-start">
+                                        <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300 relative">
+                                            1
+                                        </div>
+                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full">
+                                            <div className="flex justify-between items-start mb-4">
+                                                <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Day 1</span>
+                                                <i className="fa-solid fa-id-card-clip text-gray-300 group-hover:text-brand-orange transition-colors"></i>
+                                            </div>
+                                            <h4 className="font-hero font-bold text-lg text-brand-dark mb-2">Screening</h4>
+                                            <p className="text-xs text-gray-500 leading-relaxed font-noname">OIR test and PPDT story & discussion</p>
+                                        </div>
+                                    </div>
+                                </Link>
+
+                                {/* Day 2 */}
+                                <Link href="/ssb/day-2" className="group cursor-pointer reveal-scale delay-100 relative z-10">
+                                    <div className="flex flex-col items-center lg:items-start">
+                                        <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300">
+                                            2
+                                        </div>
+                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full">
+                                            <div className="flex justify-between items-start mb-4">
+                                                <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Day 2</span>
+                                                <i className="fa-solid fa-brain text-gray-300 group-hover:text-brand-orange transition-colors"></i>
+                                            </div>
+                                            <h4 className="font-hero font-bold text-lg text-brand-dark mb-2">Psychology</h4>
+                                            <p className="text-xs text-gray-500 leading-relaxed font-noname">TAT, WAT, SRT and Self Description</p>
+                                        </div>
+                                    </div>
+                                </Link>
+
+                                {/* Day 3 */}
+                                <Link href="/ssb/day-3" className="group cursor-pointer reveal-scale delay-200 relative z-10">
+                                    <div className="flex flex-col items-center lg:items-start">
+                                        <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300">
+                                            3
+                                        </div>
+                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full">
+                                            <div className="flex justify-between items-start mb-4">
+                                                <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Day 3</span>
+                                                <i className="fa-solid fa-users-gear text-gray-300 group-hover:text-brand-orange transition-colors"></i>
+                                            </div>
+                                            <h4 className="font-hero font-bold text-lg text-brand-dark mb-2">GTO Tasks I</h4>
+                                            <p className="text-xs text-gray-500 leading-relaxed font-noname">Group discussion, GPE, PGT</p>
+                                        </div>
+                                    </div>
+                                </Link>
+
+                                {/* Day 4 */}
+                                <Link href="/ssb/day-4" className="group cursor-pointer reveal-scale delay-300 relative z-10">
+                                    <div className="flex flex-col items-center lg:items-start">
+                                        <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300">
+                                            4
+                                        </div>
+                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full">
+                                            <div className="flex justify-between items-start mb-4">
+                                                <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Day 4</span>
+                                                <i className="fa-solid fa-person-military-pointing text-gray-300 group-hover:text-brand-orange transition-colors"></i>
+                                            </div>
+                                            <h4 className="font-hero font-bold text-lg text-brand-dark mb-2">GTO Tasks II</h4>
+                                            <p className="text-xs text-gray-500 leading-relaxed font-noname">HGT, Command Task, Interview</p>
+                                        </div>
+                                    </div>
+                                </Link>
+
+                                {/* Day 5 */}
+                                <Link href="/ssb/day-5" className="group cursor-pointer reveal-scale delay-400 relative z-10">
+                                    <div className="flex flex-col items-center lg:items-start">
+                                        <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300">
+                                            5
+                                        </div>
+                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full">
+                                            <div className="flex justify-between items-start mb-4">
+                                                <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Day 5</span>
+                                                <i className="fa-solid fa-trophy text-gray-300 group-hover:text-brand-orange transition-colors"></i>
+                                            </div>
+                                            <h4 className="font-hero font-bold text-lg text-brand-dark mb-2">Conference</h4>
+                                            <p className="text-xs text-gray-500 leading-relaxed font-noname">Final board decision & results</p>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Call to Action Buttons */}
+                        <div className="mt-20 flex flex-col sm:flex-row gap-4 justify-center items-center reveal">
+                            <Link href="/ssb" className="group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                <div className="relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center gap-4 pl-8 pr-2 py-2.5">
+                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]"></div>
+                                    <span className="relative z-10 text-white group-hover:text-brand-dark font-noname font-bold text-base transition-colors duration-[1000ms]">Explore Full Process</span>
+                                    <span className="relative z-10 bg-white text-brand-dark w-10 h-10 rounded-full flex items-center justify-center">
+                                        <i className="fa-solid fa-map-location-dot text-xs"></i>
+                                    </span>
+                                </div>
+                            </Link>
+                            <Link href="/ssb/day-1" className="text-brand-dark font-noname font-bold hover:text-brand-orange transition flex items-center gap-3 px-8 h-[58px] rounded-full border border-gray-200 bg-white shadow-sm hover:shadow-md">
+                                Start Day 1
+                            </Link>
+                        </div>
+
+                        {/* OLQ Pills Row */}
+                        <div className="mt-12 flex flex-wrap justify-center gap-3 reveal delay-500">
+                            <span className="px-4 py-2 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm">Leadership</span>
+                            <span className="px-4 py-2 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm">Communication</span>
+                            <span className="px-4 py-2 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm">Teamwork</span>
+                            <span className="px-4 py-2 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm">Intelligence</span>
+                            <span className="px-4 py-2 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm">Stamina</span>
                         </div>
                     </div>
                 </section>
@@ -186,7 +321,21 @@ export default function Home() {
                                     <div className="flex gap-4 p-4 rounded-2xl hover:bg-brand-bg transition-colors border border-transparent hover:border-gray-100">
                                         <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold flex-shrink-0">03</div>
                                         <div>
-                                            <h4 className="font-bold text-brand-dark mb-1">GTO Tasks & Personal Interview</h4>
+                                            <h4 className="font-bold text-brand-dark mb-1">GTO Tasks I & Personal Interview</h4>
+                                            <p className="text-sm text-gray-500 font-noname">Outdoor group tasks and deep-dive one-on-one conversations with the IO.</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 p-4 rounded-2xl hover:bg-brand-bg transition-colors border border-transparent hover:border-gray-100">
+                                        <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold flex-shrink-0">04</div>
+                                        <div>
+                                            <h4 className="font-bold text-brand-dark mb-1">GTO Tasks II</h4>
+                                            <p className="text-sm text-gray-500 font-noname">Outdoor group tasks and deep-dive one-on-one conversations with the IO.</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 p-4 rounded-2xl hover:bg-brand-bg transition-colors border border-transparent hover:border-gray-100">
+                                        <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold flex-shrink-0">05</div>
+                                        <div>
+                                            <h4 className="font-bold text-brand-dark mb-1">Conference</h4>
                                             <p className="text-sm text-gray-500 font-noname">Outdoor group tasks and deep-dive one-on-one conversations with the IO.</p>
                                         </div>
                                     </div>
@@ -406,50 +555,7 @@ export default function Home() {
             </main>
 
             {/* Footer */}
-            <footer className="bg-brand-dark text-orange-50/70 py-16 text-sm">
-                <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-16">
-                    <div className="col-span-1 md:col-span-1">
-                        <div className="flex items-center gap-2 text-white mb-6">
-                            <i className="fa-solid fa-shield-halved text-brand-orange text-xl"></i>
-                            <span className="font-logo font-bold text-2xl tracking-tight">LakshaySSB</span>
-                        </div>
-                        <p className="text-gray-500 leading-relaxed">
-                            Crafting future leaders for the Indian Armed Forces. Specialized SSB training for NDA, CDS, and AFCAT.
-                        </p>
-                    </div>
-                    <div>
-                        <h4 className="text-white font-bold mb-6">Resources</h4>
-                        <ul className="space-y-3">
-                            <li><a href="#" className="hover:text-white transition">Psychology Tips</a></li>
-                            <li><a href="#" className="hover:text-white transition">GTO Ground Rules</a></li>
-                            <li><a href="#" className="hover:text-white transition">Daily Current Affairs</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="text-white font-bold mb-6">Academy</h4>
-                        <ul className="space-y-3">
-                            <li><a href="#" className="hover:text-white transition">About Mentors</a></li>
-                            <li><a href="#" className="hover:text-white transition">Admissions</a></li>
-                            <li><a href="#" className="hover:text-white transition">Batch Schedule</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="text-white font-bold mb-6">Connect</h4>
-                        <div className="flex gap-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition"><i className="fa-brands fa-youtube"></i></a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition"><i className="fa-brands fa-instagram"></i></a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition"><i className="fa-brands fa-telegram"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-                    <p>© 2024 LakshaySSB Academy. Jai Hind.</p>
-                    <div className="flex gap-8">
-                        <a href="#" className="hover:text-white transition">Privacy Policy</a>
-                        <a href="#" className="hover:text-white transition">Terms of Service</a>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </>
     );
 }
