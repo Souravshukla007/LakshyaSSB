@@ -18,7 +18,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-12">
                     <div className="flex items-center gap-2 text-brand-orange">
                         <i className="fa-solid fa-shield-halved text-2xl"></i>
-                        <span className="font-logo font-semibold text-2xl tracking-tight text-brand-dark">LakshaySSB</span>
+                        <span className="font-logo font-semibold text-2xl tracking-tight text-brand-dark">LakshyaSSB</span>
                     </div>
 
                     <div className="hidden md:flex gap-8 text-sm font-noname font-medium text-gray-800 tracking-wide">
