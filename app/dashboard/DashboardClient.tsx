@@ -7,6 +7,7 @@ interface User {
     name: string;
     email: string;
     entry?: string;
+    plan?: string;
 }
 
 interface DashboardClientProps {
@@ -405,7 +406,7 @@ export default function DashboardClient({ user }: DashboardClientProps) {
                                 </button>
                             </div>
                             <div className="mt-6 p-4 bg-yellow-50 rounded-2xl border border-yellow-100">
-                                <p className="text-xs text-yellow-800 leading-relaxed font-noname"><strong>Mentor Note:</strong> {user.name.split(' ')[0]}, your PPDT narration needs better voice modulation. Focus on the 'Chest Up' posture.</p>
+                                <p className="text-xs text-yellow-800 leading-relaxed font-noname"><strong>Mentor Note:</strong> {(user.name || 'Cadet').split(' ')[0]}, your PPDT narration needs better voice modulation. Focus on the &apos;Chest Up&apos; posture.</p>
                             </div>
                         </div>
 

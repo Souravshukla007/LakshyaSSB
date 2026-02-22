@@ -22,7 +22,7 @@ export default function Checkout() {
                         <div className="bg-brand-bg p-6 rounded-2xl mb-8 border border-gray-50">
                             <div className="flex justify-between items-center mb-4">
                                 <span className="text-sm font-bold text-brand-dark">Pro Training Plan</span>
-                                <span className="text-lg font-bold text-brand-orange">₹249/mo</span>
+                                <span className="text-lg font-bold text-brand-orange">₹99/mo</span>
                             </div>
                             <p className="text-[10px] text-gray-500">
                                 Includes unlimited AI evaluation, practice arena access, and performance tracking.

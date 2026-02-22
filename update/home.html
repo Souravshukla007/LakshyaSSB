@@ -1,0 +1,874 @@
+<div class="flex-1 relative w-full h-full min-h-0 flex justify-center" style="background-color: var(--neutral-background);"><div class="h-full transition-all duration-300 ease-in-out" style="width: 100%; max-width: 100%; box-shadow: none;"><iframe srcdoc="&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;OfficerPrep - Elite SSB Mentorship&lt;/title&gt;
+    
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&amp;amp;family=Inter:wght@400;500;600;700;900&amp;amp;family=Outfit:wght@400;500;700&amp;amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;amp;family=Raleway:wght@700;800&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css&quot;&gt;
+&lt;style type=&quot;text/tailwindcss&quot;&gt;@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .bg-grid-pattern {
+        background-size: 24px 24px;
+        background-image: 
+            linear-gradient(to right, rgba(49, 39, 48, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(49, 39, 48, 0.05) 1px, transparent 1px);
+    }
+
+    .bg-noise {
+        position: relative;
+    }
+    .bg-noise::before {
+        content: &quot;&quot;;
+        position: absolute;
+        inset: 0;
+        background-image: url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E&quot;);
+        opacity: 0.03;
+        pointer-events: none;
+        z-index: 0;
+        border-radius: inherit;
+    }
+    .bg-noise &gt; * {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.reveal, .reveal-left, .reveal-right, .reveal-scale {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform, opacity;
+}
+
+.reveal { transform: translateY(30px); }
+.reveal-left { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+.reveal-scale { transform: scale(0.95); }
+
+.active {
+    opacity: 1 !important;
+    transform: translate(0) scale(1) !important;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 10px; }&lt;/style&gt;&lt;script id=&quot;navigation-guard&quot;&gt;
+        (function() {
+          var blockAllNavigation = false;
+
+          if (blockAllNavigation) {
+            // Prevent programmatic navigation and popups
+            try {
+              window.open = function() { return null; };
+              window.history.pushState = function() {};
+              window.history.replaceState = function() {};
+              window.location.assign = function() {};
+              window.location.replace = function() {};
+            } catch (e) {}
+
+            // Remove meta refresh redirects
+            try {
+              var refreshTags = document.querySelectorAll('meta[http-equiv=&quot;refresh&quot; i]');
+              refreshTags.forEach(function(tag) { tag.parentNode &amp;&amp; tag.parentNode.removeChild(tag); });
+            } catch (e) {}
+
+            // Block form submissions
+            document.addEventListener('submit', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+            }, true);
+          }
+
+          document.addEventListener('click', function(e) {
+            var target = e.target.closest('a');
+            if (!target) return;
+            
+            // Ignore edit mode elements
+            if (target.closest('.edit-mode-btn') || target.closest('.edit-mode-overlay')) return;
+            
+            var href = target.getAttribute('href');
+            if (!href) return;
+
+            // Block mailto links
+            if (href.toLowerCase().startsWith('mailto:')) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              return;
+            }
+
+            if (blockAllNavigation) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              return;
+            }
+            
+            // External links handled by browser (target=_blank should be set if needed, or we force it)
+            if (href.startsWith('http') || href.startsWith('//')) {
+              target.target = '_blank';
+              return;
+            }
+            
+            // Internal links: Prevent default navigation immediately
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Notify parent to handle the navigation state change
+            window.parent.postMessage({
+              type: 'PREVIEW_NAVIGATION',
+              href: href
+            }, '*');
+          }, true); // Capture phase to start immediately
+        })();
+      &lt;/script&gt;&lt;script id=&quot;pixel-script-tracker&quot;&gt;
+        (function() {
+          // Only initialize once
+          if (window.__pixelScriptTrackerInitialized) return;
+          window.__pixelScriptTrackerInitialized = true;
+          
+          // Track event listeners, intervals, and observers for cleanup
+          window.__pixelTrackedListeners = [];
+          window.__pixelTrackedIntervals = [];
+          window.__pixelTrackedTimeouts = [];
+          window.__pixelTrackedObservers = [];
+          
+          // Wrap addEventListener to track listeners
+          const origAddEventListener = EventTarget.prototype.addEventListener;
+          EventTarget.prototype.addEventListener = function(type, listener, options) {
+            // Don't track if it's a system/pixel event
+            if (type !== 'pixel-cleanup') {
+              window.__pixelTrackedListeners.push({ 
+                target: this, 
+                type, 
+                listener, 
+                options 
+              });
+            }
+            return origAddEventListener.call(this, type, listener, options);
+          };
+          
+          // Wrap setInterval to track intervals
+          const origSetInterval = window.setInterval;
+          window.setInterval = function(fn, delay, ...args) {
+            const id = origSetInterval(fn, delay, ...args);
+            window.__pixelTrackedIntervals.push(id);
+            return id;
+          };
+          
+          // Wrap setTimeout to track timeouts (for delayed animations)
+          const origSetTimeout = window.setTimeout;
+          window.setTimeout = function(fn, delay, ...args) {
+            const id = origSetTimeout(fn, delay, ...args);
+            window.__pixelTrackedTimeouts.push(id);
+            return id;
+          };
+          
+          // Wrap IntersectionObserver to track observers
+          const OrigIntersectionObserver = window.IntersectionObserver;
+          window.IntersectionObserver = function(callback, options) {
+            const obs = new OrigIntersectionObserver(callback, options);
+            window.__pixelTrackedObservers.push(obs);
+            return obs;
+          };
+          // Preserve prototype
+          window.IntersectionObserver.prototype = OrigIntersectionObserver.prototype;
+          
+          // Cleanup function that can be called before re-executing scripts
+          window.__pixelCleanupTrackedResources = function() {
+            // Remove tracked event listeners (except DOMContentLoaded which can't be removed)
+            window.__pixelTrackedListeners.forEach(({ target, type, listener, options }) =&gt; {
+              try {
+                if (type !== 'DOMContentLoaded') {
+                  target.removeEventListener(type, listener, options);
+                }
+              } catch (e) {}
+            });
+            window.__pixelTrackedListeners = [];
+            
+            // Clear intervals
+            window.__pixelTrackedIntervals.forEach(id =&gt; {
+              try { clearInterval(id); } catch (e) {}
+            });
+            window.__pixelTrackedIntervals = [];
+            
+            // Clear timeouts
+            window.__pixelTrackedTimeouts.forEach(id =&gt; {
+              try { clearTimeout(id); } catch (e) {}
+            });
+            window.__pixelTrackedTimeouts = [];
+            
+            // Disconnect observers
+            window.__pixelTrackedObservers.forEach(obs =&gt; {
+              try { obs.disconnect(); } catch (e) {}
+            });
+            window.__pixelTrackedObservers = [];
+          };
+        })();
+      &lt;/script&gt;&lt;script src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;&lt;script&gt;tailwind.config = {
+  important: '#app-root',
+  theme: {
+    extend: {
+      backgroundImage: {
+        'grid-pattern': &quot;linear-gradient(to right, rgba(0,0,0,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.15) 1px, transparent 1px)&quot;,
+      },
+      fontFamily: {
+        sans: ['&quot;Plus Jakarta Sans&quot;', 'sans-serif'],
+        logo: ['&quot;Outfit&quot;', 'sans-serif'],
+        helvetica: ['&quot;Inter&quot;', '&quot;Helvetica Neue&quot;', 'Helvetica', 'Arial', 'sans-serif'],
+        gothic: ['&quot;Nanum Gothic&quot;', 'sans-serif'],
+        noname: ['&quot;DM Sans&quot;', 'sans-serif'],
+        hero: ['&quot;Raleway&quot;', 'sans-serif'],
+      },
+      colors: {
+        brand: {
+          bg: '#FFFBF6',
+          dark: '#0F0F12',
+          orange: '#FF5E3A',
+          purple: '#7C3AED',
+          green: '#10B981',
+          yellow: '#FBBF24',
+          gray: '#F4F4F5'
+        }
+      },
+      boxShadow: {
+        'soft': '0 20px 50px -20px rgba(0, 0, 0, 0.05)',
+        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+        'glow': '0 0 20px rgba(255, 94, 58, 0.15)'
+      },
+      animation: {
+        'marquee': 'marquee 25s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
+      }
+    }
+  }
+}&lt;/script&gt;&lt;/head&gt;
+&lt;body id=&quot;app-root&quot; class=&quot;antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg&quot;&gt;
+
+    &lt;nav class=&quot;absolute w-full z-50 top-0 left-0 py-6 transition-all duration-300&quot;&gt;
+        &lt;div class=&quot;max-w-7xl mx-auto px-6 flex justify-between items-center&quot;&gt;
+            &lt;div class=&quot;flex items-center gap-12&quot;&gt;
+                &lt;div class=&quot;flex items-center gap-2 text-brand-orange&quot; data-pixel-id=&quot;lg77o&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-shield-halved text-2xl&quot;&gt;&lt;/i&gt;
+                    &lt;span class=&quot;font-logo font-semibold text-2xl tracking-tight text-brand-dark&quot;&gt;Lakshay-SSB&lt;/span&gt;
+                &lt;/div&gt;
+                
+                &lt;div class=&quot;hidden md:flex gap-8 text-sm font-noname font-medium text-gray-800 tracking-wide&quot; data-pixel-id=&quot;l8hap&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;a href=&quot;/index.html&quot; class=&quot;hover:text-brand-orange transition font-bold&quot; data-pixel-id=&quot;6enm8&quot; data-pixel-kind=&quot;link&quot;&gt;Home&lt;/a&gt;
+                    &lt;a href=&quot;/index.html#process&quot; class=&quot;hover:text-brand-orange transition font-bold&quot; data-pixel-id=&quot;1nved&quot; data-pixel-kind=&quot;link&quot;&gt;SSB Process&lt;/a&gt;
+                    &lt;a href=&quot;/dashboard.html&quot; class=&quot;text-brand-orange transition font-bold&quot; data-pixel-id=&quot;0opfd&quot; data-pixel-kind=&quot;link&quot;&gt;Dashboard&lt;/a&gt;
+                    &lt;a href=&quot;/auth.html&quot; class=&quot;hover:text-brand-orange transition font-bold&quot; data-pixel-id=&quot;3qseb&quot; data-pixel-kind=&quot;link&quot;&gt;Login / Sign Up&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;a href=&quot;/auth.html&quot; class=&quot;group relative bg-brand-dark p-[2px] rounded-full shadow-lg transition-all duration-300 hover:shadow-xl&quot; data-pixel-id=&quot;crh9d&quot; data-pixel-kind=&quot;link&quot;&gt;
+                &lt;div class=&quot;relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center gap-3 pl-6 pr-1.5 py-1.5&quot;&gt;
+                    &lt;div class=&quot;absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]&quot;&gt;&lt;/div&gt;
+                    &lt;span class=&quot;relative z-10 text-white group-hover:text-brand-dark text-sm font-medium transition-colors duration-[1000ms]&quot;&gt;Join Academy&lt;/span&gt;
+                    &lt;div class=&quot;relative z-10 bg-white text-brand-dark w-8 h-8 rounded-full flex items-center justify-center&quot;&gt;
+                        &lt;i class=&quot;fa-solid fa-arrow-right text-xs&quot;&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+
+    &lt;main&gt;&lt;section class=&quot;relative pt-40 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-brand-bg&quot;&gt;
+    &lt;!-- Right Side Grid Background --&gt;
+    &lt;div class=&quot;absolute top-0 right-0 w-full lg:w-[calc(60%_-_40px)] h-full bg-grid-pattern opacity-100 z-0 pointer-events-none&quot;&gt;&lt;/div&gt;
+
+    &lt;div class=&quot;max-w-7xl mx-auto px-6 relative z-10&quot;&gt;
+        &lt;div class=&quot;flex flex-col lg:flex-row items-center gap-16&quot;&gt;
+            &lt;!-- Text Content --&gt;
+            &lt;div class=&quot;lg:w-1/2 reveal-left&quot;&gt;
+                &lt;div class=&quot;inline-block px-4 py-1.5 rounded-full border border-brand-orange/20 bg-brand-orange/5 mb-6&quot; data-pixel-id=&quot;wx0kw&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;span class=&quot;font-noname text-xs font-bold text-brand-orange uppercase tracking-widest&quot;&gt;Master the Selection Process&lt;/span&gt;
+                &lt;/div&gt;
+                
+                &lt;h1 class=&quot;font-hero font-bold text-5xl lg:text-7xl text-brand-dark tracking-tight leading-[1.1] mb-8&quot; data-pixel-id=&quot;ln9bx&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    Prepare Like &lt;br&gt;an &lt;span class=&quot;text-brand-orange&quot;&gt;Officer&lt;/span&gt;.
+                &lt;/h1&gt;
+
+                &lt;p class=&quot;text-lg text-gray-500 mb-10 leading-relaxed max-w-lg font-noname&quot; data-pixel-id=&quot;9ftmb&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    Elite mentorship for SSB aspirants. Join 500+ recommended candidates who mastered the OLQs with our scientific preparation framework.
+                &lt;/p&gt;
+
+                &lt;div class=&quot;flex flex-wrap gap-4&quot;&gt;
+                    &lt;button class=&quot;group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300&quot; data-pixel-id=&quot;z16ev&quot; data-pixel-kind=&quot;text&quot;&gt;
+                        &lt;div class=&quot;relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center gap-4 pl-8 pr-2 py-2.5&quot;&gt;
+                            &lt;div class=&quot;absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]&quot;&gt;&lt;/div&gt;
+                            &lt;span class=&quot;relative z-10 text-white group-hover:text-brand-dark font-noname font-bold text-base transition-colors duration-[1000ms]&quot;&gt;Start Preparation&lt;/span&gt;
+                            &lt;span class=&quot;relative z-10 bg-white text-brand-dark w-10 h-10 rounded-full flex items-center justify-center&quot;&gt;
+                                &lt;i class=&quot;fa-solid fa-bolt text-xs&quot;&gt;&lt;/i&gt;
+                            &lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/button&gt;
+                    &lt;button class=&quot;text-brand-dark font-noname font-bold hover:text-brand-orange transition flex items-center gap-3 px-6 h-[58px] rounded-full border border-gray-200 bg-white&quot; data-pixel-id=&quot;3r0gs&quot; data-pixel-kind=&quot;text&quot;&gt;
+                        Explore Courses
+                    &lt;/button&gt;
+                &lt;/div&gt;
+
+                &lt;div class=&quot;mt-12 flex items-center gap-6 pt-12 border-t border-gray-100 reveal delay-300&quot;&gt;
+                    &lt;div class=&quot;flex -space-x-3&quot;&gt;
+                        &lt;img class=&quot;w-10 h-10 rounded-full border-2 border-white object-cover&quot; src=&quot;https://images.unsplash.com/photo-1556978254-407bc35f8e66?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBhcm15JTIwb2ZmaWNlciUyMHBvcnRyYWl0JTIwc3F1YXJlfGVufDB8Mnx8fDE3NzEwNTE1MzZ8MA&amp;amp;ixlib=rb-4.1.0&amp;amp;w=100&amp;amp;h=100&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;q=80&quot; alt=&quot;Officer&quot; data-pixel-verified=&quot;true&quot; data-pixel-id=&quot;emosl&quot; data-pixel-kind=&quot;image&quot;&gt;
+                        &lt;img class=&quot;w-10 h-10 rounded-full border-2 border-white object-cover&quot; src=&quot;https://images.pexels.com/photos/8199174/pexels-photo-8199174.jpeg?w=100&amp;amp;h=100&amp;amp;fit=crop&quot; alt=&quot;Aspirant&quot; data-pixel-verified=&quot;true&quot; data-pixel-id=&quot;7wokt&quot; data-pixel-kind=&quot;image&quot;&gt;
+                        &lt;img class=&quot;w-10 h-10 rounded-full border-2 border-white object-cover&quot; src=&quot;https://images.unsplash.com/photo-1538651954807-323f3c1c1123?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxuYXZ5JTIwb2ZmaWNlciUyMHdvbWFuJTIwcG9ydHJhaXQlMjBzcXVhcmV8ZW58MHwyfHx8MTc3MTA1MTUzNXww&amp;amp;ixlib=rb-4.1.0&amp;amp;w=100&amp;amp;h=100&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;q=80&quot; alt=&quot;Officer&quot; data-pixel-verified=&quot;true&quot; data-pixel-id=&quot;td1vv&quot; data-pixel-kind=&quot;image&quot;&gt;
+                        &lt;div class=&quot;w-10 h-10 rounded-full border-2 border-white bg-brand-orange flex items-center justify-center text-[10px] text-white font-bold&quot; data-pixel-id=&quot;tr8l0&quot; data-pixel-kind=&quot;text&quot;&gt;+500&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;p class=&quot;text-sm text-gray-500 font-noname&quot; data-pixel-id=&quot;nvcix&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;strong&gt;Recommended&lt;/strong&gt; from NDA-152, CDS-OTA &amp;amp; AFCAT 02/24 batches.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Hero Visual --&gt;
+            &lt;div class=&quot;lg:w-1/2 reveal-right delay-200 relative&quot;&gt;
+                &lt;!-- Color Glow --&gt;
+                &lt;div class=&quot;absolute -top-3 left-1/2 -translate-x-1/2 w-[101%] h-[92%] blur-2xl -z-10 rounded-2xl opacity-20&quot; style=&quot;background: linear-gradient(135deg, #FF5E3A 40%, #7C3AED, #FBBF24);&quot;&gt;&lt;/div&gt;
+
+                &lt;div class=&quot;relative bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden z-10 w-full&quot; style=&quot;transform: perspective(1200px) rotateY(-5deg) rotateX(5deg);&quot;&gt;
+                    &lt;img src=&quot;https://images.pexels.com/photos/20410466/pexels-photo-20410466.jpeg?w=1200&amp;amp;h=800&amp;amp;fit=crop&quot; alt=&quot;National Defence Academy training&quot; class=&quot;w-full h-[500px] object-cover scale-105&quot; data-pixel-verified=&quot;true&quot; data-pixel-id=&quot;7xble&quot; data-pixel-kind=&quot;image&quot;&gt;
+                    
+                    &lt;!-- Overlay Info Card --&gt;
+                    &lt;div class=&quot;absolute bottom-6 left-6 right-6 glass-card p-6 rounded-2xl border border-white/40 flex items-center justify-between&quot;&gt;
+                        &lt;div&gt;
+                            &lt;div class=&quot;text-[10px] text-brand-orange uppercase font-bold tracking-widest mb-1&quot; data-pixel-id=&quot;rbtds&quot; data-pixel-kind=&quot;text&quot;&gt;Next Batch Starting&lt;/div&gt;
+                            &lt;div class=&quot;text-lg font-bold text-brand-dark&quot; data-pixel-id=&quot;9b8vx&quot; data-pixel-kind=&quot;text&quot;&gt;15th October 2024&lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;flex flex-col items-end&quot;&gt;
+                            &lt;div class=&quot;text-[10px] text-gray-400 font-bold mb-1&quot; data-pixel-id=&quot;smnda&quot; data-pixel-kind=&quot;text&quot;&gt;Limited Seats&lt;/div&gt;
+                            &lt;div class=&quot;flex gap-1 text-brand-yellow text-[10px]&quot;&gt;
+                                &lt;i class=&quot;fa-solid fa-star&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Floating Badges --&gt;
+                &lt;div class=&quot;absolute -top-12 -left-12 bg-white p-4 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4 z-20 animate-float&quot;&gt;
+                    &lt;div class=&quot;w-12 h-12 rounded-xl bg-green-50 text-brand-green flex items-center justify-center text-xl&quot;&gt;
+                        &lt;i class=&quot;fa-solid fa-person-military-pointing&quot;&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;div class=&quot;text-[10px] text-gray-400 uppercase font-bold tracking-tighter&quot; data-pixel-id=&quot;3fckg&quot; data-pixel-kind=&quot;text&quot;&gt;Psychology Expert&lt;/div&gt;
+                        &lt;div class=&quot;text-sm font-bold text-brand-dark&quot; data-pixel-id=&quot;3l8ng&quot; data-pixel-kind=&quot;text&quot;&gt;Ex-Asst. Psychologist DIPR&lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;div class=&quot;absolute -bottom-6 -right-6 bg-brand-dark p-5 rounded-2xl shadow-2xl z-20 text-white flex items-center gap-4&quot;&gt;
+                    &lt;div class=&quot;text-right&quot;&gt;
+                        &lt;div class=&quot;text-3xl font-hero font-bold text-brand-orange&quot; data-pixel-id=&quot;p1g18&quot; data-pixel-kind=&quot;text&quot;&gt;15/15&lt;/div&gt;
+                        &lt;div class=&quot;text-[10px] text-gray-400 uppercase font-medium&quot; data-pixel-id=&quot;zvnbm&quot; data-pixel-kind=&quot;text&quot;&gt;OLQs Covered&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;w-[1px] h-10 bg-white/10&quot;&gt;&lt;/div&gt;
+                    &lt;i class=&quot;fa-solid fa-bullseye text-2xl text-white/50&quot;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- SSB SELECTION PROCESS TIMELINE --&gt;
+&lt;section id=&quot;selection-journey&quot; class=&quot;py-24 px-6 bg-brand-bg relative overflow-hidden&quot;&gt;
+    &lt;!-- Light Grid Background --&gt;
+    &lt;div class=&quot;absolute inset-0 bg-grid-pattern opacity-100 pointer-events-none&quot;&gt;&lt;/div&gt;
+    
+    &lt;div class=&quot;max-w-7xl mx-auto relative z-10&quot;&gt;
+        &lt;!-- Header --&gt;
+        &lt;div class=&quot;text-center max-w-3xl mx-auto mb-20 reveal&quot;&gt;
+            &lt;div class=&quot;inline-block px-4 py-1.5 rounded-full border border-brand-orange/20 bg-brand-orange/10 mb-6&quot; data-pixel-id=&quot;fbjsd&quot; data-pixel-kind=&quot;text&quot;&gt;
+                &lt;span class=&quot;font-noname text-[10px] font-bold text-brand-orange uppercase tracking-[0.2em]&quot;&gt;5-Day Selection Journey&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;h2 class=&quot;font-hero font-bold text-4xl lg:text-5xl text-brand-dark mb-6 tracking-tight&quot; data-pixel-id=&quot;nzk3p&quot; data-pixel-kind=&quot;text&quot;&gt;Your Path to Recommendation&lt;/h2&gt;
+            &lt;p class=&quot;text-gray-500 font-noname text-lg&quot; data-pixel-id=&quot;ogxr8&quot; data-pixel-kind=&quot;text&quot;&gt;Understand what happens on each day of the SSB and how you are assessed by the board of officers.&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Timeline Container --&gt;
+        &lt;div class=&quot;relative&quot;&gt;
+            &lt;!-- Progress Line (Desktop) --&gt;
+            &lt;div class=&quot;hidden lg:block absolute top-[45px] left-[10%] right-[10%] h-[2px] bg-gray-200 z-0&quot;&gt;
+                &lt;div class=&quot;absolute top-0 left-0 h-full bg-brand-orange w-1/4&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Steps Grid --&gt;
+            &lt;div class=&quot;grid grid-cols-1 lg:grid-cols-5 gap-8 relative z-10&quot;&gt;
+                
+                &lt;!-- Day 1 --&gt;
+                &lt;a href=&quot;/ssb/day-1.html&quot; class=&quot;group cursor-pointer reveal-scale&quot; data-pixel-id=&quot;jhog8&quot; data-pixel-kind=&quot;link&quot;&gt;
+                    &lt;div class=&quot;flex flex-col items-center lg:items-start&quot;&gt;
+                        &lt;div class=&quot;w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300 relative&quot;&gt;
+                            1
+                        &lt;/div&gt;
+                        &lt;div class=&quot;bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full&quot;&gt;
+                            &lt;div class=&quot;flex justify-between items-start mb-4&quot;&gt;
+                                &lt;span class=&quot;text-[10px] font-bold text-brand-orange uppercase tracking-widest&quot;&gt;Day 1&lt;/span&gt;
+                                &lt;i class=&quot;fa-solid fa-id-card-clip text-gray-300 group-hover:text-brand-orange transition-colors&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h4 class=&quot;font-hero font-bold text-lg text-brand-dark mb-2&quot;&gt;Screening&lt;/h4&gt;
+                            &lt;p class=&quot;text-xs text-gray-500 leading-relaxed font-noname&quot;&gt;OIR test and PPDT story &amp;amp; discussion&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/a&gt;
+
+                &lt;!-- Day 2 --&gt;
+                &lt;a href=&quot;/ssb/day-2.html&quot; class=&quot;group cursor-pointer reveal-scale delay-100&quot; data-pixel-id=&quot;0a4p2&quot; data-pixel-kind=&quot;link&quot;&gt;
+                    &lt;div class=&quot;flex flex-col items-center lg:items-start&quot;&gt;
+                        &lt;div class=&quot;w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300&quot;&gt;
+                            2
+                        &lt;/div&gt;
+                        &lt;div class=&quot;bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full&quot;&gt;
+                            &lt;div class=&quot;flex justify-between items-start mb-4&quot;&gt;
+                                &lt;span class=&quot;text-[10px] font-bold text-brand-orange uppercase tracking-widest&quot;&gt;Day 2&lt;/span&gt;
+                                &lt;i class=&quot;fa-solid fa-brain text-gray-300 group-hover:text-brand-orange transition-colors&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h4 class=&quot;font-hero font-bold text-lg text-brand-dark mb-2&quot;&gt;Psychology&lt;/h4&gt;
+                            &lt;p class=&quot;text-xs text-gray-500 leading-relaxed font-noname&quot;&gt;TAT, WAT, SRT and Self Description&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/a&gt;
+
+                &lt;!-- Day 3 --&gt;
+                &lt;a href=&quot;/ssb/day-3.html&quot; class=&quot;group cursor-pointer reveal-scale delay-200&quot; data-pixel-id=&quot;bksb3&quot; data-pixel-kind=&quot;link&quot;&gt;
+                    &lt;div class=&quot;flex flex-col items-center lg:items-start&quot;&gt;
+                        &lt;div class=&quot;w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300&quot;&gt;
+                            3
+                        &lt;/div&gt;
+                        &lt;div class=&quot;bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full&quot;&gt;
+                            &lt;div class=&quot;flex justify-between items-start mb-4&quot;&gt;
+                                &lt;span class=&quot;text-[10px] font-bold text-brand-orange uppercase tracking-widest&quot;&gt;Day 3&lt;/span&gt;
+                                &lt;i class=&quot;fa-solid fa-users-gear text-gray-300 group-hover:text-brand-orange transition-colors&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h4 class=&quot;font-hero font-bold text-lg text-brand-dark mb-2&quot;&gt;GTO Tasks I&lt;/h4&gt;
+                            &lt;p class=&quot;text-xs text-gray-500 leading-relaxed font-noname&quot;&gt;Group discussion, GPE, PGT&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/a&gt;
+
+                &lt;!-- Day 4 --&gt;
+                &lt;a href=&quot;/ssb/day-4.html&quot; class=&quot;group cursor-pointer reveal-scale delay-300&quot; data-pixel-id=&quot;hso51&quot; data-pixel-kind=&quot;link&quot;&gt;
+                    &lt;div class=&quot;flex flex-col items-center lg:items-start&quot;&gt;
+                        &lt;div class=&quot;w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300&quot;&gt;
+                            4
+                        &lt;/div&gt;
+                        &lt;div class=&quot;bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full&quot;&gt;
+                            &lt;div class=&quot;flex justify-between items-start mb-4&quot;&gt;
+                                &lt;span class=&quot;text-[10px] font-bold text-brand-orange uppercase tracking-widest&quot;&gt;Day 4&lt;/span&gt;
+                                &lt;i class=&quot;fa-solid fa-person-military-pointing text-gray-300 group-hover:text-brand-orange transition-colors&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h4 class=&quot;font-hero font-bold text-lg text-brand-dark mb-2&quot;&gt;GTO Tasks II&lt;/h4&gt;
+                            &lt;p class=&quot;text-xs text-gray-500 leading-relaxed font-noname&quot;&gt;HGT, Command Task, Interview&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/a&gt;
+
+                &lt;!-- Day 5 --&gt;
+                &lt;a href=&quot;/ssb/day-5.html&quot; class=&quot;group cursor-pointer reveal-scale delay-400&quot; data-pixel-id=&quot;6yn8q&quot; data-pixel-kind=&quot;link&quot;&gt;
+                    &lt;div class=&quot;flex flex-col items-center lg:items-start&quot;&gt;
+                        &lt;div class=&quot;w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300&quot;&gt;
+                            5
+                        &lt;/div&gt;
+                        &lt;div class=&quot;bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full&quot;&gt;
+                            &lt;div class=&quot;flex justify-between items-start mb-4&quot;&gt;
+                                &lt;span class=&quot;text-[10px] font-bold text-brand-orange uppercase tracking-widest&quot;&gt;Day 5&lt;/span&gt;
+                                &lt;i class=&quot;fa-solid fa-trophy text-gray-300 group-hover:text-brand-orange transition-colors&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h4 class=&quot;font-hero font-bold text-lg text-brand-dark mb-2&quot;&gt;Conference&lt;/h4&gt;
+                            &lt;p class=&quot;text-xs text-gray-500 leading-relaxed font-noname&quot;&gt;Final board decision &amp;amp; results&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/a&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Call to Action Buttons --&gt;
+        &lt;div class=&quot;mt-20 flex flex-col sm:flex-row gap-4 justify-center items-center reveal&quot;&gt;
+            &lt;a href=&quot;/ssb&quot; class=&quot;group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300&quot; data-pixel-id=&quot;5nzyy&quot; data-pixel-kind=&quot;link&quot;&gt;
+                &lt;div class=&quot;relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center gap-4 pl-8 pr-2 py-2.5&quot;&gt;
+                    &lt;div class=&quot;absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]&quot;&gt;&lt;/div&gt;
+                    &lt;span class=&quot;relative z-10 text-white group-hover:text-brand-dark font-noname font-bold text-base transition-colors duration-[1000ms]&quot;&gt;Explore Full Process&lt;/span&gt;
+                    &lt;span class=&quot;relative z-10 bg-white text-brand-dark w-10 h-10 rounded-full flex items-center justify-center&quot;&gt;
+                        &lt;i class=&quot;fa-solid fa-map-location-dot text-xs&quot;&gt;&lt;/i&gt;
+                    &lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/a&gt;
+            &lt;a href=&quot;/ssb/day-1&quot; class=&quot;text-brand-dark font-noname font-bold hover:text-brand-orange transition flex items-center gap-3 px-8 h-[58px] rounded-full border border-gray-200 bg-white shadow-sm hover:shadow-md&quot; data-pixel-id=&quot;ezigc&quot; data-pixel-kind=&quot;link&quot;&gt;
+                Start Day 1
+            &lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;!-- OLQ Pills Row --&gt;
+        &lt;div class=&quot;mt-12 flex flex-wrap justify-center gap-3 reveal delay-500&quot; data-pixel-id=&quot;8kxi1&quot; data-pixel-kind=&quot;text&quot;&gt;
+            &lt;span class=&quot;px-4 py-2 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm&quot;&gt;Leadership&lt;/span&gt;
+            &lt;span class=&quot;px-4 py-2 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm&quot;&gt;Communication&lt;/span&gt;
+            &lt;span class=&quot;px-4 py-2 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm&quot;&gt;Teamwork&lt;/span&gt;
+            &lt;span class=&quot;px-4 py-2 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm&quot;&gt;Intelligence&lt;/span&gt;
+            &lt;span class=&quot;px-4 py-2 rounded-full bg-white border border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-widest shadow-sm&quot;&gt;Stamina&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Mobile Progress Line (CSS Only) --&gt;
+    &lt;style&gt;
+        @media (max-width: 1023px) {
+            #selection-journey .lg\:cols-5 { position: relative; }
+            #selection-journey .lg\:cols-5::before {
+                content: '';
+                position: absolute;
+                left: 23px;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background: #E5E7EB;
+                z-index: 0;
+            }
+        }
+    &lt;/style&gt;
+&lt;/section&gt;
+
+&lt;!-- LOGO CLOUD / TRUST BAR --&gt;
+&lt;section class=&quot;border-y border-gray-100 bg-[#fcfbfa] py-10 overflow-hidden&quot;&gt;
+    &lt;div class=&quot;w-full&quot;&gt;
+        &lt;p class=&quot;text-center text-[10px] font-bold text-gray-400 mb-8 tracking-[0.3em] font-mono uppercase&quot; data-pixel-id=&quot;meo3z&quot; data-pixel-kind=&quot;text&quot;&gt;Specialized Training For&lt;/p&gt;
+        
+        &lt;div class=&quot;relative w-full overflow-hidden&quot; style=&quot;-webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);&quot;&gt;
+             &lt;div class=&quot;flex w-max animate-marquee&quot;&gt;
+                &lt;div class=&quot;flex items-center gap-20 lg:gap-32 px-12&quot; data-pixel-id=&quot;63j7j&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;NDA&lt;/span&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;CDS (IMA/AFA/INA)&lt;/span&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;AFCAT&lt;/span&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;TES / UES&lt;/span&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;NCC SPECIAL&lt;/span&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;TERRITORIAL ARMY&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;!-- Duplicate for Marquee --&gt;
+                &lt;div class=&quot;flex items-center gap-20 lg:gap-32 px-12&quot; data-pixel-id=&quot;48g8n&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;NDA&lt;/span&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;CDS (IMA/AFA/INA)&lt;/span&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;AFCAT&lt;/span&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;TES / UES&lt;/span&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;NCC SPECIAL&lt;/span&gt;
+                    &lt;span class=&quot;text-2xl font-hero font-bold text-gray-300&quot;&gt;TERRITORIAL ARMY&lt;/span&gt;
+                &lt;/div&gt;
+             &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- SSB PROCESS SECTION --&gt;
+&lt;section id=&quot;process&quot; class=&quot;py-24 px-6 bg-white overflow-hidden&quot;&gt;
+    &lt;div class=&quot;max-w-7xl mx-auto&quot;&gt;
+        &lt;div class=&quot;flex flex-col lg:flex-row gap-16 items-center&quot;&gt;
+            &lt;div class=&quot;lg:w-1/2 reveal-left&quot;&gt;
+                &lt;div class=&quot;inline-block px-3 py-1 rounded-lg border border-brand-orange/10 bg-brand-orange/5 mb-6&quot; data-pixel-id=&quot;h81zs&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;span class=&quot;font-mono text-xs font-bold text-brand-orange&quot;&gt;5-DAY PROCESS&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;h2 class=&quot;font-hero font-bold text-4xl lg:text-5xl mb-6 text-brand-dark tracking-tight leading-tight&quot; data-pixel-id=&quot;kwelj&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    The 5-Day SSB &lt;br&gt;Selection Roadmap
+                &lt;/h2&gt;
+                &lt;div class=&quot;space-y-6&quot;&gt;
+                    &lt;div class=&quot;flex gap-4 p-4 rounded-2xl hover:bg-brand-bg transition-colors border border-transparent hover:border-gray-100&quot;&gt;
+                        &lt;div class=&quot;w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold flex-shrink-0&quot; data-pixel-id=&quot;qm9c8&quot; data-pixel-kind=&quot;text&quot;&gt;01&lt;/div&gt;
+                        &lt;div&gt;
+                            &lt;h4 class=&quot;font-bold text-brand-dark mb-1&quot; data-pixel-id=&quot;1x7j9&quot; data-pixel-kind=&quot;text&quot;&gt;Screening (Stage I)&lt;/h4&gt;
+                            &lt;p class=&quot;text-sm text-gray-500 font-noname&quot; data-pixel-id=&quot;zbux5&quot; data-pixel-kind=&quot;text&quot;&gt;OIR tests and PPDT. The first hurdle where decision-making and perception are tested.&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;flex gap-4 p-4 rounded-2xl hover:bg-brand-bg transition-colors border border-transparent hover:border-gray-100&quot;&gt;
+                        &lt;div class=&quot;w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold flex-shrink-0&quot; data-pixel-id=&quot;grfvs&quot; data-pixel-kind=&quot;text&quot;&gt;02&lt;/div&gt;
+                        &lt;div&gt;
+                            &lt;h4 class=&quot;font-bold text-brand-dark mb-1&quot; data-pixel-id=&quot;ztxbc&quot; data-pixel-kind=&quot;text&quot;&gt;Psychology Tests (Stage II)&lt;/h4&gt;
+                            &lt;p class=&quot;text-sm text-gray-500 font-noname&quot; data-pixel-id=&quot;x947c&quot; data-pixel-kind=&quot;text&quot;&gt;TAT, WAT, SRT, and SD. Peeking into your subconscious mind and personality traits.&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;flex gap-4 p-4 rounded-2xl hover:bg-brand-bg transition-colors border border-transparent hover:border-gray-100&quot;&gt;
+                        &lt;div class=&quot;w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold flex-shrink-0&quot; data-pixel-id=&quot;0pogq&quot; data-pixel-kind=&quot;text&quot;&gt;03&lt;/div&gt;
+                        &lt;div&gt;
+                            &lt;h4 class=&quot;font-bold text-brand-dark mb-1&quot; data-pixel-id=&quot;7wurb&quot; data-pixel-kind=&quot;text&quot;&gt;GTO Tasks &amp;amp; Personal Interview&lt;/h4&gt;
+                            &lt;p class=&quot;text-sm text-gray-500 font-noname&quot; data-pixel-id=&quot;qtzur&quot; data-pixel-kind=&quot;text&quot;&gt;Outdoor group tasks and deep-dive one-on-one conversations with the IO.&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;lg:w-1/2 reveal-right relative&quot;&gt;
+                &lt;div class=&quot;bg-brand-bg rounded-[2rem] p-2&quot;&gt;
+                    &lt;img src=&quot;https://images.pexels.com/photos/2450438/pexels-photo-2450438.jpeg?w=800&amp;amp;h=1000&amp;amp;fit=crop&quot; alt=&quot;GTO Training&quot; class=&quot;rounded-[1.8rem] w-full object-cover&quot; data-pixel-verified=&quot;true&quot; data-pixel-id=&quot;zjebh&quot; data-pixel-kind=&quot;image&quot;&gt;
+                &lt;/div&gt;
+                &lt;!-- Floating Info --&gt;
+                &lt;div class=&quot;absolute -bottom-8 -left-8 bg-white shadow-2xl p-6 rounded-2xl border border-gray-100 max-w-[240px]&quot;&gt;
+                    &lt;div class=&quot;flex items-center gap-2 mb-2 text-brand-orange&quot; data-pixel-id=&quot;rpglx&quot; data-pixel-kind=&quot;text&quot;&gt;
+                        &lt;i class=&quot;fa-solid fa-medal&quot;&gt;&lt;/i&gt;
+                        &lt;span class=&quot;text-[10px] font-bold uppercase tracking-widest&quot;&gt;Success Rate&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;text-3xl font-hero font-bold text-brand-dark&quot; data-pixel-id=&quot;8y3b0&quot; data-pixel-kind=&quot;text&quot;&gt;92.4%&lt;/div&gt;
+                    &lt;p class=&quot;text-[10px] text-gray-400 mt-1&quot; data-pixel-id=&quot;jcgan&quot; data-pixel-kind=&quot;text&quot;&gt;Recommendation rate of our recommended candidates in medicals.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- TRAINING DOMAINS (Bento) --&gt;
+&lt;section class=&quot;py-24 px-6 bg-brand-bg&quot;&gt;
+    &lt;div class=&quot;max-w-7xl mx-auto&quot;&gt;
+        &lt;div class=&quot;text-center mb-16 reveal&quot;&gt;
+            &lt;h2 class=&quot;font-hero font-bold text-4xl text-brand-dark mb-4&quot; data-pixel-id=&quot;0vkwv&quot; data-pixel-kind=&quot;text&quot;&gt;Master Every Pillar of SSB&lt;/h2&gt;
+            &lt;p class=&quot;text-gray-500 font-noname&quot; data-pixel-id=&quot;qhgf0&quot; data-pixel-kind=&quot;text&quot;&gt;Scientific preparation modules designed by Ex-Assessors.&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8&quot;&gt;
+            &lt;!-- Psychology Card --&gt;
+            &lt;div class=&quot;group bg-white rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all reveal-scale&quot;&gt;
+                &lt;div class=&quot;w-14 h-14 rounded-2xl bg-[#7C3AED]/10 text-brand-purple flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition-transform&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-brain&quot;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;h3 class=&quot;font-hero font-bold text-2xl text-brand-dark mb-4&quot; data-pixel-id=&quot;qmd6y&quot; data-pixel-kind=&quot;text&quot;&gt;Psychology Tests&lt;/h3&gt;
+                &lt;p class=&quot;text-gray-500 text-sm leading-relaxed mb-6 font-noname&quot; data-pixel-id=&quot;67gs3&quot; data-pixel-kind=&quot;text&quot;&gt;Master TAT, WAT, and SRT with our proprietary &quot;Thought Projection&quot; technique. Get personalized feedback on your Self Description.&lt;/p&gt;
+                &lt;ul class=&quot;space-y-3 mb-8&quot;&gt;
+                    &lt;li class=&quot;flex items-center gap-2 text-xs font-bold text-brand-dark&quot; data-pixel-id=&quot;t62yy&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;i class=&quot;fa-solid fa-check text-brand-green&quot;&gt;&lt;/i&gt; 50+ TAT Practice Sets&lt;/li&gt;
+                    &lt;li class=&quot;flex items-center gap-2 text-xs font-bold text-brand-dark&quot; data-pixel-id=&quot;7kuij&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;i class=&quot;fa-solid fa-check text-brand-green&quot;&gt;&lt;/i&gt; Live SRT Analysis&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;a href=&quot;#&quot; class=&quot;text-brand-orange font-bold text-xs uppercase tracking-widest flex items-center gap-2 group/link&quot; data-pixel-id=&quot;me3g1&quot; data-pixel-kind=&quot;link&quot;&gt;View Module &lt;i class=&quot;fa-solid fa-arrow-right group-hover/link:translate-x-1 transition-transform&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;/div&gt;
+
+            &lt;!-- GTO Card --&gt;
+            &lt;div class=&quot;group bg-white rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all reveal-scale delay-100&quot;&gt;
+                &lt;div class=&quot;w-14 h-14 rounded-2xl bg-[#FF5E3A]/10 text-brand-orange flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition-transform&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-person-running&quot;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;h3 class=&quot;font-hero font-bold text-2xl text-brand-dark mb-4&quot; data-pixel-id=&quot;yt1kz&quot; data-pixel-kind=&quot;text&quot;&gt;GTO Ground Tasks&lt;/h3&gt;
+                &lt;p class=&quot;text-gray-500 text-sm leading-relaxed mb-6 font-noname&quot; data-pixel-id=&quot;zfy56&quot; data-pixel-kind=&quot;text&quot;&gt;Simulated indoor GPEs and detailed walkthroughs of HGT, PGT, and Individual Obstacles using 3D modeling.&lt;/p&gt;
+                &lt;ul class=&quot;space-y-3 mb-8&quot;&gt;
+                    &lt;li class=&quot;flex items-center gap-2 text-xs font-bold text-brand-dark&quot; data-pixel-id=&quot;rnpl7&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;i class=&quot;fa-solid fa-check text-brand-green&quot;&gt;&lt;/i&gt; GPE Logic Building&lt;/li&gt;
+                    &lt;li class=&quot;flex items-center gap-2 text-xs font-bold text-brand-dark&quot; data-pixel-id=&quot;hrhcq&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;i class=&quot;fa-solid fa-check text-brand-green&quot;&gt;&lt;/i&gt; Obstacle Strategy&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;a href=&quot;#&quot; class=&quot;text-brand-orange font-bold text-xs uppercase tracking-widest flex items-center gap-2 group/link&quot; data-pixel-id=&quot;iejhq&quot; data-pixel-kind=&quot;link&quot;&gt;View Module &lt;i class=&quot;fa-solid fa-arrow-right group-hover/link:translate-x-1 transition-transform&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Interview Card --&gt;
+            &lt;div class=&quot;group bg-white rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all reveal-scale delay-200&quot;&gt;
+                &lt;div class=&quot;w-14 h-14 rounded-2xl bg-[#10B981]/10 text-brand-green flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition-transform&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-comments&quot;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;h3 class=&quot;font-hero font-bold text-2xl text-brand-dark mb-4&quot; data-pixel-id=&quot;wpmte&quot; data-pixel-kind=&quot;text&quot;&gt;Personal Interview&lt;/h3&gt;
+                &lt;p class=&quot;text-gray-500 text-sm leading-relaxed mb-6 font-noname&quot; data-pixel-id=&quot;nnsh9&quot; data-pixel-kind=&quot;text&quot;&gt;One-on-one mock interviews with Ex-Interviewing Officers. Learn to frame answers for tricky PIQ-based questions.&lt;/p&gt;
+                &lt;ul class=&quot;space-y-3 mb-8&quot;&gt;
+                    &lt;li class=&quot;flex items-center gap-2 text-xs font-bold text-brand-dark&quot; data-pixel-id=&quot;4nqr4&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;i class=&quot;fa-solid fa-check text-brand-green&quot;&gt;&lt;/i&gt; 2 Mock Interviews&lt;/li&gt;
+                    &lt;li class=&quot;flex items-center gap-2 text-xs font-bold text-brand-dark&quot; data-pixel-id=&quot;wnp9z&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;i class=&quot;fa-solid fa-check text-brand-green&quot;&gt;&lt;/i&gt; Detailed PI Feedback&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;a href=&quot;#&quot; class=&quot;text-brand-orange font-bold text-xs uppercase tracking-widest flex items-center gap-2 group/link&quot; data-pixel-id=&quot;r2avd&quot; data-pixel-kind=&quot;link&quot;&gt;View Module &lt;i class=&quot;fa-solid fa-arrow-right group-hover/link:translate-x-1 transition-transform&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- DAILY PRACTICE SECTION --&gt;
+&lt;section class=&quot;py-20 bg-brand-dark text-white relative overflow-hidden&quot;&gt;
+    &lt;div class=&quot;absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;max-w-7xl mx-auto px-6 relative z-10&quot;&gt;
+        &lt;div class=&quot;bg-white/5 backdrop-blur-md rounded-[3rem] p-8 lg:p-16 border border-white/10&quot;&gt;
+            &lt;div class=&quot;grid lg:grid-cols-2 gap-12 items-center&quot;&gt;
+                &lt;div class=&quot;reveal-left&quot;&gt;
+                    &lt;h2 class=&quot;font-hero font-bold text-4xl lg:text-5xl mb-6&quot; data-pixel-id=&quot;u2n9f&quot; data-pixel-kind=&quot;text&quot;&gt;Daily Practice Habits&lt;/h2&gt;
+                    &lt;p class=&quot;text-gray-400 font-noname mb-10 leading-relaxed&quot; data-pixel-id=&quot;cxgn4&quot; data-pixel-kind=&quot;text&quot;&gt;Preparation isn't a 2-week course; it's a lifestyle change. Our daily portal keeps you on track with OLQ-building activities.&lt;/p&gt;
+                    
+                    &lt;div class=&quot;grid grid-cols-1 sm:grid-cols-2 gap-6&quot;&gt;
+                        &lt;div class=&quot;flex items-start gap-4&quot;&gt;
+                            &lt;div class=&quot;w-10 h-10 rounded-full bg-brand-orange flex items-center justify-center text-sm&quot;&gt;&lt;i class=&quot;fa-solid fa-newspaper&quot;&gt;&lt;/i&gt;&lt;/div&gt;
+                            &lt;div&gt;
+                                &lt;h5 class=&quot;font-bold text-sm&quot; data-pixel-id=&quot;tg39j&quot; data-pixel-kind=&quot;text&quot;&gt;Daily News Analysis&lt;/h5&gt;
+                                &lt;p class=&quot;text-xs text-gray-500 mt-1&quot; data-pixel-id=&quot;dw7w9&quot; data-pixel-kind=&quot;text&quot;&gt;Handpicked current affairs for GD/Lecturette.&lt;/p&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;flex items-start gap-4&quot;&gt;
+                            &lt;div class=&quot;w-10 h-10 rounded-full bg-brand-purple flex items-center justify-center text-sm&quot;&gt;&lt;i class=&quot;fa-solid fa-dumbbell&quot;&gt;&lt;/i&gt;&lt;/div&gt;
+                            &lt;div&gt;
+                                &lt;h5 class=&quot;font-bold text-sm&quot; data-pixel-id=&quot;g0rec&quot; data-pixel-kind=&quot;text&quot;&gt;Fitness Tracker&lt;/h5&gt;
+                                &lt;p class=&quot;text-xs text-gray-500 mt-1&quot; data-pixel-id=&quot;ub1sp&quot; data-pixel-kind=&quot;text&quot;&gt;Routine for stamina and core strength.&lt;/p&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;reveal-right&quot;&gt;
+                    &lt;div class=&quot;bg-white rounded-3xl p-6 text-brand-dark shadow-2xl&quot;&gt;
+                        &lt;div class=&quot;flex items-center justify-between mb-8&quot;&gt;
+                            &lt;div class=&quot;font-bold&quot; data-pixel-id=&quot;tfgfs&quot; data-pixel-kind=&quot;text&quot;&gt;Today's Practice Task&lt;/div&gt;
+                            &lt;div class=&quot;px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-full text-xs font-bold&quot; data-pixel-id=&quot;0sf5x&quot; data-pixel-kind=&quot;text&quot;&gt;LIVE&lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;space-y-4&quot;&gt;
+                            &lt;div class=&quot;p-4 bg-brand-bg rounded-xl border border-gray-100 flex items-center justify-between&quot;&gt;
+                                &lt;div class=&quot;flex items-center gap-3&quot;&gt;
+                                    &lt;div class=&quot;w-2 h-2 rounded-full bg-brand-orange&quot;&gt;&lt;/div&gt;
+                                    &lt;span class=&quot;text-sm font-medium&quot; data-pixel-id=&quot;b1q6q&quot; data-pixel-kind=&quot;text&quot;&gt;WAT Practice (Set #42)&lt;/span&gt;
+                                &lt;/div&gt;
+                                &lt;button class=&quot;text-xs font-bold text-brand-orange&quot; data-pixel-id=&quot;wzu1c&quot; data-pixel-kind=&quot;text&quot;&gt;START&lt;/button&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;p-4 bg-brand-bg rounded-xl border border-gray-100 flex items-center justify-between opacity-50&quot;&gt;
+                                &lt;div class=&quot;flex items-center gap-3&quot;&gt;
+                                    &lt;div class=&quot;w-2 h-2 rounded-full bg-gray-300&quot;&gt;&lt;/div&gt;
+                                    &lt;span class=&quot;text-sm font-medium&quot; data-pixel-id=&quot;pon0g&quot; data-pixel-kind=&quot;text&quot;&gt;Lecturette: &quot;Indo-Pacific Ties&quot;&lt;/span&gt;
+                                &lt;/div&gt;
+                                &lt;span class=&quot;text-[10px] font-bold&quot; data-pixel-id=&quot;aivr0&quot; data-pixel-kind=&quot;text&quot;&gt;LOCKED&lt;/span&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- SUCCESS STORIES (Testimonials) --&gt;
+&lt;section class=&quot;py-24 bg-white relative overflow-hidden&quot;&gt;
+    &lt;div class=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+        &lt;div class=&quot;text-center mb-16 reveal&quot;&gt;
+            &lt;h2 class=&quot;font-hero font-bold text-4xl text-brand-dark mb-4&quot; data-pixel-id=&quot;sdybv&quot; data-pixel-kind=&quot;text&quot;&gt;From Aspirants to Officers&lt;/h2&gt;
+            &lt;p class=&quot;text-gray-500&quot; data-pixel-id=&quot;78hzu&quot; data-pixel-kind=&quot;text&quot;&gt;Real stories from the hallowed portals of NDA, IMA, and AFA.&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;grid md:grid-cols-2 lg:grid-cols-3 gap-8&quot;&gt;
+            &lt;!-- Testimonial 1 --&gt;
+            &lt;div class=&quot;p-8 rounded-[2rem] border border-gray-100 bg-brand-bg relative reveal-scale&quot;&gt;
+                &lt;div class=&quot;flex gap-1 text-brand-yellow mb-6&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;p class=&quot;text-gray-600 italic font-noname mb-8&quot; data-pixel-id=&quot;m5vuq&quot; data-pixel-kind=&quot;text&quot;&gt;&quot;The psychology feedback was instrumental. I realized my TAT stories were negative, and OfficerPrep helped me reframe my mindset towards problem-solving.&quot;&lt;/p&gt;
+                &lt;div class=&quot;flex items-center gap-4&quot;&gt;
+                    &lt;img src=&quot;https://images.pexels.com/photos/6121941/pexels-photo-6121941.jpeg?w=100&amp;amp;h=100&amp;amp;fit=crop&quot; alt=&quot;Success Story&quot; class=&quot;w-12 h-12 rounded-full object-cover&quot; data-pixel-verified=&quot;true&quot; data-pixel-id=&quot;11fvg&quot; data-pixel-kind=&quot;image&quot;&gt;
+                    &lt;div&gt;
+                        &lt;div class=&quot;font-bold text-brand-dark text-sm&quot; data-pixel-id=&quot;u9g85&quot; data-pixel-kind=&quot;text&quot;&gt;Lt. Vikram Singh&lt;/div&gt;
+                        &lt;div class=&quot;text-[10px] text-gray-400 font-bold uppercase tracking-tight&quot; data-pixel-id=&quot;02xoy&quot; data-pixel-kind=&quot;text&quot;&gt;Cdt @ IMA, Dehradun&lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Testimonial 2 --&gt;
+            &lt;div class=&quot;p-8 rounded-[2rem] border border-gray-100 bg-brand-bg relative reveal-scale delay-100&quot;&gt;
+                &lt;div class=&quot;flex gap-1 text-brand-yellow mb-6&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;p class=&quot;text-gray-600 italic font-noname mb-8&quot; data-pixel-id=&quot;ldqgt&quot; data-pixel-kind=&quot;text&quot;&gt;&quot;I was a repeater with 4 screen-outs. Their PPDT module fixed my narration and group discussion stance. Finally made it in the 5th attempt!&quot;&lt;/p&gt;
+                &lt;div class=&quot;flex items-center gap-4&quot;&gt;
+                    &lt;img src=&quot;https://images.pexels.com/photos/20404402/pexels-photo-20404402.jpeg?w=100&amp;amp;h=100&amp;amp;fit=crop&quot; alt=&quot;Success Story&quot; class=&quot;w-12 h-12 rounded-full object-cover&quot; data-pixel-verified=&quot;true&quot; data-pixel-id=&quot;gs80g&quot; data-pixel-kind=&quot;image&quot;&gt;
+                    &lt;div&gt;
+                        &lt;div class=&quot;font-bold text-brand-dark text-sm&quot; data-pixel-id=&quot;y4c4k&quot; data-pixel-kind=&quot;text&quot;&gt;Flt Lt. Ananya Iyer&lt;/div&gt;
+                        &lt;div class=&quot;text-[10px] text-gray-400 font-bold uppercase tracking-tight&quot; data-pixel-id=&quot;xmgjv&quot; data-pixel-kind=&quot;text&quot;&gt;AFCAT 01/24 Batch&lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Testimonial 3 --&gt;
+            &lt;div class=&quot;p-8 rounded-[2rem] border border-gray-100 bg-brand-bg relative reveal-scale delay-200&quot;&gt;
+                &lt;div class=&quot;flex gap-1 text-brand-yellow mb-6&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa-solid fa-star text-xs&quot;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;p class=&quot;text-gray-600 italic font-noname mb-8&quot; data-pixel-id=&quot;el5bt&quot; data-pixel-kind=&quot;text&quot;&gt;&quot;The GPE workshops were brilliant. Breaking down the 'Critical Task First' logic helped me lead the group discussion effectively during my SSB in Kapurthala.&quot;&lt;/p&gt;
+                &lt;div class=&quot;flex items-center gap-4&quot;&gt;
+                    &lt;img src=&quot;https://images.pexels.com/photos/30386568/pexels-photo-30386568.jpeg?w=100&amp;amp;h=100&amp;amp;fit=crop&quot; alt=&quot;Success Story&quot; class=&quot;w-12 h-12 rounded-full object-cover&quot; data-pixel-verified=&quot;true&quot; data-pixel-id=&quot;9ks8v&quot; data-pixel-kind=&quot;image&quot;&gt;
+                    &lt;div&gt;
+                        &lt;div class=&quot;font-bold text-brand-dark text-sm&quot; data-pixel-id=&quot;7tc8v&quot; data-pixel-kind=&quot;text&quot;&gt;Srg. Rahul Mehra&lt;/div&gt;
+                        &lt;div class=&quot;text-[10px] text-gray-400 font-bold uppercase tracking-tight&quot; data-pixel-id=&quot;a3593&quot; data-pixel-kind=&quot;text&quot;&gt;Recommended (NDA 151)&lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- JOIN NOW BANNER --&gt;
+&lt;section class=&quot;py-24 px-6 mb-12&quot;&gt;
+    &lt;div class=&quot;max-w-6xl mx-auto&quot;&gt;
+        &lt;div class=&quot;relative rounded-[3rem] bg-brand-dark overflow-hidden p-12 lg:p-20 text-center&quot;&gt;
+            &lt;!-- Decor --&gt;
+            &lt;div class=&quot;absolute top-0 right-0 w-64 h-64 bg-brand-orange/20 blur-[100px] rounded-full&quot;&gt;&lt;/div&gt;
+            &lt;div class=&quot;absolute bottom-0 left-0 w-64 h-64 bg-brand-purple/10 blur-[100px] rounded-full&quot;&gt;&lt;/div&gt;
+            
+            &lt;div class=&quot;relative z-10&quot;&gt;
+                &lt;h2 class=&quot;font-hero font-bold text-4xl lg:text-6xl text-white mb-6&quot; data-pixel-id=&quot;svkem&quot; data-pixel-kind=&quot;text&quot;&gt;Earn Your &lt;span class=&quot;text-brand-orange&quot;&gt;Stars&lt;/span&gt;.&lt;/h2&gt;
+                &lt;p class=&quot;text-gray-400 max-w-2xl mx-auto mb-12 font-noname&quot; data-pixel-id=&quot;6x0da&quot; data-pixel-kind=&quot;text&quot;&gt;The uniform isn't just fabric; it's a responsibility. Start your elite preparation now and join the lineage of defenders of the nation.&lt;/p&gt;
+                
+                &lt;div class=&quot;flex flex-col sm:flex-row gap-6 justify-center&quot; data-pixel-id=&quot;kbkll&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;button class=&quot;bg-brand-orange hover:bg-white hover:text-brand-dark text-white font-bold h-16 px-10 rounded-full transition-all duration-300 shadow-xl shadow-brand-orange/20&quot;&gt;
+                        Join Next Batch
+                    &lt;/button&gt;
+                    &lt;button class=&quot;bg-transparent border border-white/20 hover:bg-white/5 text-white font-bold h-16 px-10 rounded-full transition-all&quot;&gt;
+                        Talk to a Mentor
+                    &lt;/button&gt;
+                &lt;/div&gt;
+                
+                &lt;p class=&quot;mt-8 text-xs text-gray-500 uppercase tracking-widest font-bold&quot; data-pixel-id=&quot;flwnp&quot; data-pixel-kind=&quot;text&quot;&gt;Admission ends in 4D : 12H : 30M&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;&lt;/main&gt;
+
+    &lt;footer class=&quot;bg-brand-dark text-orange-50/70 py-16 text-sm&quot;&gt;
+        &lt;div class=&quot;max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-16&quot;&gt;
+            &lt;div class=&quot;col-span-1 md:col-span-1&quot;&gt;
+                &lt;div class=&quot;flex items-center gap-2 text-white mb-6&quot; data-pixel-id=&quot;gbfyt&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-shield-halved text-brand-orange text-xl&quot;&gt;&lt;/i&gt;
+                    &lt;span class=&quot;font-logo font-bold text-2xl tracking-tight&quot;&gt;OfficerPrep&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;p class=&quot;text-gray-500 leading-relaxed&quot; data-pixel-id=&quot;fi2ui&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    Crafting future leaders for the Indian Armed Forces. Specialized SSB training for NDA, CDS, and AFCAT.
+                &lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 class=&quot;text-white font-bold mb-6&quot; data-pixel-id=&quot;dsnwd&quot; data-pixel-kind=&quot;text&quot;&gt;Resources&lt;/h4&gt;
+                &lt;ul class=&quot;space-y-3&quot;&gt;
+                    &lt;li data-pixel-id=&quot;ur6km&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;qa50e&quot; data-pixel-kind=&quot;link&quot;&gt;Psychology Tips&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;be6bz&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;obk77&quot; data-pixel-kind=&quot;link&quot;&gt;GTO Ground Rules&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;f03k5&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;ry8jd&quot; data-pixel-kind=&quot;link&quot;&gt;Daily Current Affairs&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 class=&quot;text-white font-bold mb-6&quot; data-pixel-id=&quot;p7ah5&quot; data-pixel-kind=&quot;text&quot;&gt;Academy&lt;/h4&gt;
+                &lt;ul class=&quot;space-y-3&quot;&gt;
+                    &lt;li data-pixel-id=&quot;zs15v&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;k3dun&quot; data-pixel-kind=&quot;link&quot;&gt;About Mentors&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;zf8yu&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;b0z4t&quot; data-pixel-kind=&quot;link&quot;&gt;Admissions&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;5mh7c&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;zc2os&quot; data-pixel-kind=&quot;link&quot;&gt;Batch Schedule&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 class=&quot;text-white font-bold mb-6&quot; data-pixel-id=&quot;2q64c&quot; data-pixel-kind=&quot;text&quot;&gt;Connect&lt;/h4&gt;
+                &lt;div class=&quot;flex gap-4&quot;&gt;
+                    &lt;a href=&quot;#&quot; class=&quot;w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition&quot;&gt;&lt;i class=&quot;fa-brands fa-youtube&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                    &lt;a href=&quot;#&quot; class=&quot;w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition&quot;&gt;&lt;i class=&quot;fa-brands fa-instagram&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                    &lt;a href=&quot;#&quot; class=&quot;w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition&quot;&gt;&lt;i class=&quot;fa-brands fa-telegram&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;max-w-7xl mx-auto px-6 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs&quot;&gt;
+            &lt;p data-pixel-id=&quot;ryaaf&quot; data-pixel-kind=&quot;text&quot;&gt;© 2024 OfficerPrep Academy. Jai Hind.&lt;/p&gt;
+            &lt;div class=&quot;flex gap-8&quot; data-pixel-id=&quot;rxcoc&quot; data-pixel-kind=&quot;text&quot;&gt;
+                &lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;gtr9j&quot; data-pixel-kind=&quot;link&quot;&gt;Privacy Policy&lt;/a&gt;
+                &lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;383l6&quot; data-pixel-kind=&quot;link&quot;&gt;Terms of Service&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/footer&gt;
+
+    &lt;script&gt;
+        document.addEventListener('DOMContentLoaded', () =&gt; {
+            const observer = new IntersectionObserver((entries) =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el =&gt; observer.observe(el));
+        });
+    &lt;/script&gt;
+
+&lt;/body&gt;&lt;/html&gt;" title="Live Website Preview" class="w-full h-full bg-white"></iframe></div></div>

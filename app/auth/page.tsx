@@ -48,8 +48,7 @@ export default function AuthPage() {
         setMessage(null);
 
         const formData = new FormData(e.currentTarget);
-        const firstName = formData.get('firstName') as string;
-        const lastName = formData.get('lastName') as string;
+        const fullName = formData.get('fullName') as string;
         const email = formData.get('email') as string;
         const targetEntry = formData.get('targetEntry') as string;
         const password = formData.get('password') as string;
@@ -58,7 +57,7 @@ export default function AuthPage() {
             const response = await fetch('/api/auth/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ firstName, lastName, email, targetEntry, password }),
+                body: JSON.stringify({ fullName, email, targetEntry, password }),
             });
 
             const data = await response.json();
@@ -155,8 +154,8 @@ export default function AuthPage() {
                                 {/* Message Display */}
                                 {message && (
                                     <div className={`mb-6 p-4 rounded-xl border ${message.type === 'success'
-                                            ? 'bg-green-50 border-green-200 text-green-800'
-                                            : 'bg-red-50 border-red-200 text-red-800'
+                                        ? 'bg-green-50 border-green-200 text-green-800'
+                                        : 'bg-red-50 border-red-200 text-red-800'
                                         }`}>
                                         <p className="text-sm font-medium">{message.text}</p>
                                     </div>
@@ -167,8 +166,8 @@ export default function AuthPage() {
                                     <button
                                         onClick={() => { setActiveTab('login'); setMessage(null); }}
                                         className={`px-8 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'login'
-                                                ? 'bg-white text-brand-dark shadow-sm'
-                                                : 'text-gray-500 hover:text-brand-dark'
+                                            ? 'bg-white text-brand-dark shadow-sm'
+                                            : 'text-gray-500 hover:text-brand-dark'
                                             }`}
                                     >
                                         Login
@@ -176,8 +175,8 @@ export default function AuthPage() {
                                     <button
                                         onClick={() => { setActiveTab('signup'); setMessage(null); }}
                                         className={`px-8 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'signup'
-                                                ? 'bg-white text-brand-dark shadow-sm'
-                                                : 'text-gray-500 hover:text-brand-dark'
+                                            ? 'bg-white text-brand-dark shadow-sm'
+                                            : 'text-gray-500 hover:text-brand-dark'
                                             }`}
                                     >
                                         Sign Up
@@ -243,27 +242,16 @@ export default function AuthPage() {
                                         <p className="text-gray-500 text-sm mb-8 font-noname">Join the next batch of recommended candidates.</p>
 
                                         <form className="space-y-4" onSubmit={handleSignup}>
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div>
-                                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 font-mono">First Name</label>
-                                                    <input
-                                                        type="text"
-                                                        name="firstName"
-                                                        placeholder="Vikram"
-                                                        disabled={loading}
-                                                        className="w-full h-12 bg-gray-50 border border-gray-100 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 font-mono">Last Name</label>
-                                                    <input
-                                                        type="text"
-                                                        name="lastName"
-                                                        placeholder="Batra"
-                                                        disabled={loading}
-                                                        className="w-full h-12 bg-gray-50 border border-gray-100 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
-                                                    />
-                                                </div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 font-mono">Full Name</label>
+                                                <input
+                                                    type="text"
+                                                    name="fullName"
+                                                    placeholder="Vikram Batra"
+                                                    required
+                                                    disabled={loading}
+                                                    className="w-full h-12 bg-gray-50 border border-gray-100 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
+                                                />
                                             </div>
                                             <div>
                                                 <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 font-mono">Email Address</label>

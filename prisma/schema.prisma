@@ -1,5 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Lakshya SSB — Prisma Schema
+// learn more: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -10,16 +10,59 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Plan {
+  FREE
+  PRO
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+// ---------------------------------------------------------------------------
+// Models
+// ---------------------------------------------------------------------------
+
 model User {
-  id          String   @id @default(cuid())
-  email       String   @unique
-  password    String
-  firstName   String?
-  lastName    String?
-  targetEntry String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                 String    @id @default(uuid())
+  fullName           String
+  email              String    @unique
+  passwordHash       String
+  phone              String?
+  targetEntry        String?
+  attemptNumber      Int?
+  preferredSSBCenter String?
+
+  // Subscription
+  plan       Plan      @default(FREE)
+  planExpiry DateTime?
+  autoRenew  Boolean   @default(false)
+
+  // Relations
+  payments Payment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([email])
 }
 
+model Payment {
+  id                String        @id @default(uuid())
+  userId            String
+  razorpayOrderId   String        @unique
+  razorpayPaymentId String?
+  amount            Int           // in paise (₹499 = 49900)
+  status            PaymentStatus @default(PENDING)
+  createdAt         DateTime      @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}

@@ -1,0 +1,440 @@
+<iframe srcdoc="&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;OfficerPrep - Elite SSB Mentorship&lt;/title&gt;
+    
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&amp;amp;family=Inter:wght@400;500;600;700;900&amp;amp;family=Outfit:wght@400;500;700&amp;amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;amp;family=Raleway:wght@700;800&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css&quot;&gt;
+&lt;style type=&quot;text/tailwindcss&quot;&gt;@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .bg-grid-pattern {
+        background-size: 24px 24px;
+        background-image: 
+            linear-gradient(to right, rgba(49, 39, 48, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(49, 39, 48, 0.05) 1px, transparent 1px);
+    }
+
+    .bg-noise {
+        position: relative;
+    }
+    .bg-noise::before {
+        content: &quot;&quot;;
+        position: absolute;
+        inset: 0;
+        background-image: url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E&quot;);
+        opacity: 0.03;
+        pointer-events: none;
+        z-index: 0;
+        border-radius: inherit;
+    }
+    .bg-noise &gt; * {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.reveal, .reveal-left, .reveal-right, .reveal-scale {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform, opacity;
+}
+
+.reveal { transform: translateY(30px); }
+.reveal-left { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+.reveal-scale { transform: scale(0.95); }
+
+.active {
+    opacity: 1 !important;
+    transform: translate(0) scale(1) !important;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 10px; }&lt;/style&gt;&lt;script id=&quot;navigation-guard&quot;&gt;
+        (function() {
+          var blockAllNavigation = false;
+
+          if (blockAllNavigation) {
+            // Prevent programmatic navigation and popups
+            try {
+              window.open = function() { return null; };
+              window.history.pushState = function() {};
+              window.history.replaceState = function() {};
+              window.location.assign = function() {};
+              window.location.replace = function() {};
+            } catch (e) {}
+
+            // Remove meta refresh redirects
+            try {
+              var refreshTags = document.querySelectorAll('meta[http-equiv=&quot;refresh&quot; i]');
+              refreshTags.forEach(function(tag) { tag.parentNode &amp;&amp; tag.parentNode.removeChild(tag); });
+            } catch (e) {}
+
+            // Block form submissions
+            document.addEventListener('submit', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+            }, true);
+          }
+
+          document.addEventListener('click', function(e) {
+            var target = e.target.closest('a');
+            if (!target) return;
+            
+            // Ignore edit mode elements
+            if (target.closest('.edit-mode-btn') || target.closest('.edit-mode-overlay')) return;
+            
+            var href = target.getAttribute('href');
+            if (!href) return;
+
+            // Block mailto links
+            if (href.toLowerCase().startsWith('mailto:')) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              return;
+            }
+
+            if (blockAllNavigation) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              return;
+            }
+            
+            // External links handled by browser (target=_blank should be set if needed, or we force it)
+            if (href.startsWith('http') || href.startsWith('//')) {
+              target.target = '_blank';
+              return;
+            }
+            
+            // Internal links: Prevent default navigation immediately
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Notify parent to handle the navigation state change
+            window.parent.postMessage({
+              type: 'PREVIEW_NAVIGATION',
+              href: href
+            }, '*');
+          }, true); // Capture phase to start immediately
+        })();
+      &lt;/script&gt;&lt;script id=&quot;pixel-script-tracker&quot;&gt;
+        (function() {
+          // Only initialize once
+          if (window.__pixelScriptTrackerInitialized) return;
+          window.__pixelScriptTrackerInitialized = true;
+          
+          // Track event listeners, intervals, and observers for cleanup
+          window.__pixelTrackedListeners = [];
+          window.__pixelTrackedIntervals = [];
+          window.__pixelTrackedTimeouts = [];
+          window.__pixelTrackedObservers = [];
+          
+          // Wrap addEventListener to track listeners
+          const origAddEventListener = EventTarget.prototype.addEventListener;
+          EventTarget.prototype.addEventListener = function(type, listener, options) {
+            // Don't track if it's a system/pixel event
+            if (type !== 'pixel-cleanup') {
+              window.__pixelTrackedListeners.push({ 
+                target: this, 
+                type, 
+                listener, 
+                options 
+              });
+            }
+            return origAddEventListener.call(this, type, listener, options);
+          };
+          
+          // Wrap setInterval to track intervals
+          const origSetInterval = window.setInterval;
+          window.setInterval = function(fn, delay, ...args) {
+            const id = origSetInterval(fn, delay, ...args);
+            window.__pixelTrackedIntervals.push(id);
+            return id;
+          };
+          
+          // Wrap setTimeout to track timeouts (for delayed animations)
+          const origSetTimeout = window.setTimeout;
+          window.setTimeout = function(fn, delay, ...args) {
+            const id = origSetTimeout(fn, delay, ...args);
+            window.__pixelTrackedTimeouts.push(id);
+            return id;
+          };
+          
+          // Wrap IntersectionObserver to track observers
+          const OrigIntersectionObserver = window.IntersectionObserver;
+          window.IntersectionObserver = function(callback, options) {
+            const obs = new OrigIntersectionObserver(callback, options);
+            window.__pixelTrackedObservers.push(obs);
+            return obs;
+          };
+          // Preserve prototype
+          window.IntersectionObserver.prototype = OrigIntersectionObserver.prototype;
+          
+          // Cleanup function that can be called before re-executing scripts
+          window.__pixelCleanupTrackedResources = function() {
+            // Remove tracked event listeners (except DOMContentLoaded which can't be removed)
+            window.__pixelTrackedListeners.forEach(({ target, type, listener, options }) =&gt; {
+              try {
+                if (type !== 'DOMContentLoaded') {
+                  target.removeEventListener(type, listener, options);
+                }
+              } catch (e) {}
+            });
+            window.__pixelTrackedListeners = [];
+            
+            // Clear intervals
+            window.__pixelTrackedIntervals.forEach(id =&gt; {
+              try { clearInterval(id); } catch (e) {}
+            });
+            window.__pixelTrackedIntervals = [];
+            
+            // Clear timeouts
+            window.__pixelTrackedTimeouts.forEach(id =&gt; {
+              try { clearTimeout(id); } catch (e) {}
+            });
+            window.__pixelTrackedTimeouts = [];
+            
+            // Disconnect observers
+            window.__pixelTrackedObservers.forEach(obs =&gt; {
+              try { obs.disconnect(); } catch (e) {}
+            });
+            window.__pixelTrackedObservers = [];
+          };
+        })();
+      &lt;/script&gt;&lt;script src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;&lt;script&gt;tailwind.config = {
+  important: '#app-root',
+  theme: {
+    extend: {
+      backgroundImage: {
+        'grid-pattern': &quot;linear-gradient(to right, rgba(0,0,0,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.15) 1px, transparent 1px)&quot;,
+      },
+      fontFamily: {
+        sans: ['&quot;Plus Jakarta Sans&quot;', 'sans-serif'],
+        logo: ['&quot;Outfit&quot;', 'sans-serif'],
+        helvetica: ['&quot;Inter&quot;', '&quot;Helvetica Neue&quot;', 'Helvetica', 'Arial', 'sans-serif'],
+        gothic: ['&quot;Nanum Gothic&quot;', 'sans-serif'],
+        noname: ['&quot;DM Sans&quot;', 'sans-serif'],
+        hero: ['&quot;Raleway&quot;', 'sans-serif'],
+      },
+      colors: {
+        brand: {
+          bg: '#FFFBF6',
+          dark: '#0F0F12',
+          orange: '#FF5E3A',
+          purple: '#7C3AED',
+          green: '#10B981',
+          yellow: '#FBBF24',
+          gray: '#F4F4F5'
+        }
+      },
+      boxShadow: {
+        'soft': '0 20px 50px -20px rgba(0, 0, 0, 0.05)',
+        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+        'glow': '0 0 20px rgba(255, 94, 58, 0.15)'
+      },
+      animation: {
+        'marquee': 'marquee 25s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
+      }
+    }
+  }
+}&lt;/script&gt;&lt;/head&gt;
+&lt;body id=&quot;app-root&quot; class=&quot;antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg&quot;&gt;
+
+    &lt;nav class=&quot;absolute w-full z-50 top-0 left-0 py-6 transition-all duration-300&quot;&gt;
+        &lt;div class=&quot;max-w-7xl mx-auto px-6 flex justify-between items-center&quot;&gt;
+            &lt;div class=&quot;flex items-center gap-12&quot;&gt;
+                &lt;div class=&quot;flex items-center gap-2 text-brand-orange&quot; data-pixel-id=&quot;bck8m&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-shield-halved text-2xl&quot;&gt;&lt;/i&gt;
+                    &lt;span class=&quot;font-logo font-semibold text-2xl tracking-tight text-brand-dark&quot;&gt;Lakshay-SSB&lt;/span&gt;
+                &lt;/div&gt;
+                
+                &lt;div class=&quot;hidden md:flex gap-8 text-sm font-noname font-medium text-gray-800 tracking-wide&quot; data-pixel-id=&quot;du57u&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;a href=&quot;/index.html&quot; class=&quot;hover:text-brand-orange transition font-bold&quot; data-pixel-id=&quot;i99fs&quot; data-pixel-kind=&quot;link&quot;&gt;Home&lt;/a&gt;
+                    &lt;a href=&quot;/index.html#process&quot; class=&quot;hover:text-brand-orange transition font-bold&quot; data-pixel-id=&quot;wx7ex&quot; data-pixel-kind=&quot;link&quot;&gt;SSB Process&lt;/a&gt;
+                    &lt;a href=&quot;/dashboard.html&quot; class=&quot;text-brand-orange transition font-bold&quot; data-pixel-id=&quot;s7fdw&quot; data-pixel-kind=&quot;link&quot;&gt;Dashboard&lt;/a&gt;
+                    &lt;a href=&quot;/auth.html&quot; class=&quot;hover:text-brand-orange transition font-bold&quot; data-pixel-id=&quot;tnb34&quot; data-pixel-kind=&quot;link&quot;&gt;Login / Sign Up&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&quot;flex items-center gap-4&quot;&gt;
+                &lt;!-- User Avatar Dropdown --&gt;
+                &lt;div class=&quot;relative group/dropdown&quot;&gt;
+                    &lt;button id=&quot;avatar-btn&quot; class=&quot;w-10 h-10 rounded-full bg-gray-200 border border-gray-100 flex items-center justify-center text-brand-dark font-bold text-sm shadow-sm hover:shadow-md transition-all&quot;&gt;
+                        V
+                    &lt;/button&gt;
+                    &lt;!-- Dropdown Card --&gt;
+                    &lt;div id=&quot;avatar-dropdown&quot; class=&quot;absolute top-full right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 hidden group-hover/dropdown:block z-[100] animate-in fade-in slide-in-from-top-2 duration-200&quot;&gt;
+                        &lt;div class=&quot;px-4 py-3 border-b border-gray-50 mb-1&quot;&gt;
+                            &lt;p class=&quot;text-xs font-bold text-gray-400 uppercase tracking-widest&quot; data-pixel-id=&quot;02fk8&quot; data-pixel-kind=&quot;text&quot;&gt;Cadet Profile&lt;/p&gt;
+                            &lt;p class=&quot;text-sm font-bold text-brand-dark&quot; data-pixel-id=&quot;65uuc&quot; data-pixel-kind=&quot;text&quot;&gt;Vikram Batra&lt;/p&gt;
+                        &lt;/div&gt;
+                        &lt;a href=&quot;/account&quot; class=&quot;flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors&quot; data-pixel-id=&quot;5kl9i&quot; data-pixel-kind=&quot;link&quot;&gt;
+                            &lt;i class=&quot;fa-solid fa-user-gear w-4&quot;&gt;&lt;/i&gt; Profile
+                        &lt;/a&gt;
+                        &lt;a href=&quot;/olq-report.html&quot; class=&quot;flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors&quot; data-pixel-id=&quot;xcmn5&quot; data-pixel-kind=&quot;link&quot;&gt;
+                            &lt;i class=&quot;fa-solid fa-chart-pie w-4&quot;&gt;&lt;/i&gt; OLQ Report
+                        &lt;/a&gt;
+                        &lt;a href=&quot;/pricing.html&quot; class=&quot;flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors&quot; data-pixel-id=&quot;7xor3&quot; data-pixel-kind=&quot;link&quot;&gt;
+                            &lt;i class=&quot;fa-solid fa-credit-card w-4&quot;&gt;&lt;/i&gt; Pricing
+                        &lt;/a&gt;
+                        &lt;div class=&quot;h-[1px] bg-gray-50 my-1 mx-2&quot;&gt;&lt;/div&gt;
+                        &lt;button class=&quot;w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-500 hover:bg-red-50 hover:text-red-500 transition-colors&quot; data-pixel-id=&quot;j3gv1&quot; data-pixel-kind=&quot;text&quot;&gt;
+                            &lt;i class=&quot;fa-solid fa-right-from-bracket w-4&quot;&gt;&lt;/i&gt; Logout
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;a href=&quot;/auth.html&quot; class=&quot;group relative bg-brand-dark p-[2px] rounded-full shadow-lg transition-all duration-300 hover:shadow-xl&quot; data-pixel-id=&quot;n93d9&quot; data-pixel-kind=&quot;link&quot;&gt;
+                    &lt;div class=&quot;relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center gap-3 pl-6 pr-1.5 py-1.5&quot;&gt;
+                        &lt;div class=&quot;absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]&quot;&gt;&lt;/div&gt;
+                        &lt;span class=&quot;relative z-10 text-white group-hover:text-brand-dark text-sm font-medium transition-colors duration-[1000ms]&quot;&gt;Join Academy&lt;/span&gt;
+                        &lt;div class=&quot;relative z-10 bg-white text-brand-dark w-8 h-8 rounded-full flex items-center justify-center&quot;&gt;
+                            &lt;i class=&quot;fa-solid fa-arrow-right text-xs&quot;&gt;&lt;/i&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+
+    &lt;main&gt;&lt;div class=&quot;min-h-screen bg-brand-bg pt-32 pb-20 px-6&quot;&gt;
+    &lt;div class=&quot;max-w-4xl mx-auto&quot;&gt;
+        &lt;!-- Top Section --&gt;
+        &lt;div class=&quot;flex flex-col md:flex-row justify-between items-end gap-6 mb-12&quot;&gt;
+            &lt;div&gt;
+                &lt;h1 class=&quot;font-hero font-bold text-3xl text-brand-dark mb-2&quot; data-pixel-id=&quot;ecxtf&quot; data-pixel-kind=&quot;text&quot;&gt;Word Association &lt;span class=&quot;text-brand-orange&quot;&gt;Test&lt;/span&gt;&lt;/h1&gt;
+                &lt;p class=&quot;text-sm text-gray-500 font-noname&quot; data-pixel-id=&quot;zm6yt&quot; data-pixel-kind=&quot;text&quot;&gt;Rapidly write your first thought for the word shown.&lt;/p&gt;
+                &lt;div class=&quot;mt-4 flex items-center gap-4&quot; data-pixel-id=&quot;azjze&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;span class=&quot;px-3 py-1 bg-white border border-gray-100 rounded-full text-[10px] font-bold text-brand-orange&quot;&gt;Word 12 / 60&lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;text-right&quot;&gt;
+                &lt;div class=&quot;text-[10px] font-bold text-gray-400 uppercase mb-1&quot; data-pixel-id=&quot;mnt3j&quot; data-pixel-kind=&quot;text&quot;&gt;Time Remaining&lt;/div&gt;
+                &lt;div class=&quot;text-3xl font-hero font-bold text-brand-dark&quot; data-pixel-id=&quot;wjml2&quot; data-pixel-kind=&quot;text&quot;&gt;14:59&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;w-full h-2 bg-gray-200 rounded-full mb-12 overflow-hidden shadow-inner&quot;&gt;
+            &lt;div class=&quot;h-full bg-brand-orange w-[20%] transition-all duration-300 shadow-glow&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Main Card --&gt;
+        &lt;div class=&quot;bg-white p-12 rounded-[3.5rem] border border-gray-100 shadow-2xl reveal-scale active text-center&quot;&gt;
+            &lt;div class=&quot;py-16&quot;&gt;
+                &lt;h2 class=&quot;text-6xl font-hero font-bold text-brand-dark tracking-tight&quot; data-pixel-id=&quot;suf38&quot; data-pixel-kind=&quot;text&quot;&gt;HONESTY&lt;/h2&gt;
+            &lt;/div&gt;
+            
+            &lt;div class=&quot;max-w-md mx-auto&quot; data-pixel-id=&quot;5r3r3&quot; data-pixel-kind=&quot;text&quot;&gt;
+                &lt;label class=&quot;block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4&quot;&gt;Your Response&lt;/label&gt;
+                &lt;input type=&quot;text&quot; placeholder=&quot;Type your first thought...&quot; class=&quot;w-full text-center h-16 bg-brand-bg border-2 border-gray-50 rounded-2xl px-6 text-xl focus:outline-none focus:border-brand-orange transition-all font-noname&quot;&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&quot;flex gap-4 justify-center mt-12&quot; data-pixel-id=&quot;vww1q&quot; data-pixel-kind=&quot;text&quot;&gt;
+                &lt;button class=&quot;px-8 py-3 rounded-full border border-gray-100 text-xs font-bold text-gray-400 cursor-not-allowed&quot;&gt;Previous&lt;/button&gt;
+                &lt;button class=&quot;px-10 py-3 rounded-full bg-brand-dark text-white text-xs font-bold hover:bg-brand-orange transition-all shadow-lg&quot;&gt;Next Word&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Result Summary (Hidden initially, shown after submit) --&gt;
+        &lt;div class=&quot;mt-12 bg-brand-dark rounded-[3rem] p-10 text-white reveal-scale&quot;&gt;
+            &lt;div class=&quot;flex justify-between items-start mb-8&quot;&gt;
+                &lt;div&gt;
+                    &lt;h3 class=&quot;font-hero font-bold text-2xl text-brand-orange&quot; data-pixel-id=&quot;1j508&quot; data-pixel-kind=&quot;text&quot;&gt;Test Summary&lt;/h3&gt;
+                    &lt;p class=&quot;text-xs text-gray-400 mt-1&quot; data-pixel-id=&quot;sj8su&quot; data-pixel-kind=&quot;text&quot;&gt;AI Evaluated Profile&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;text-right&quot;&gt;
+                    &lt;div class=&quot;text-4xl font-bold&quot; data-pixel-id=&quot;7i1wr&quot; data-pixel-kind=&quot;text&quot;&gt;7.2s&lt;/div&gt;
+                    &lt;div class=&quot;text-[10px] font-bold uppercase text-gray-500&quot; data-pixel-id=&quot;es29h&quot; data-pixel-kind=&quot;text&quot;&gt;Avg Reaction Time&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;flex flex-wrap gap-2 mb-8&quot; data-pixel-id=&quot;w4by4&quot; data-pixel-kind=&quot;text&quot;&gt;
+                &lt;span class=&quot;px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest&quot;&gt;Responsibility&lt;/span&gt;
+                &lt;span class=&quot;px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-brand-orange&quot;&gt;Integrity&lt;/span&gt;
+                &lt;span class=&quot;px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest&quot;&gt;Self-Awareness&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;flex gap-4&quot; data-pixel-id=&quot;sd6am&quot; data-pixel-kind=&quot;text&quot;&gt;
+                &lt;button class=&quot;flex-1 py-4 border border-white/20 rounded-full text-xs font-bold hover:bg-white/5 transition-all&quot;&gt;Retry Test&lt;/button&gt;
+                &lt;a href=&quot;/olq-report.html&quot; class=&quot;flex-1 py-4 bg-brand-orange text-white rounded-full text-xs font-bold text-center hover:bg-white hover:text-brand-dark transition-all&quot; data-pixel-id=&quot;wswqx&quot; data-pixel-kind=&quot;link&quot;&gt;View Full OLQ Analysis&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;&lt;/main&gt;
+
+    &lt;footer class=&quot;bg-brand-dark text-orange-50/70 py-16 text-sm&quot;&gt;
+        &lt;div class=&quot;max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-16&quot;&gt;
+            &lt;div class=&quot;col-span-1 md:col-span-1&quot;&gt;
+                &lt;div class=&quot;flex items-center gap-2 text-white mb-6&quot; data-pixel-id=&quot;ncyzi&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-shield-halved text-brand-orange text-xl&quot;&gt;&lt;/i&gt;
+                    &lt;span class=&quot;font-logo font-bold text-2xl tracking-tight&quot;&gt;OfficerPrep&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;p class=&quot;text-gray-500 leading-relaxed&quot; data-pixel-id=&quot;nbd3g&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    Crafting future leaders for the Indian Armed Forces. Specialized SSB training for NDA, CDS, and AFCAT.
+                &lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 class=&quot;text-white font-bold mb-6&quot; data-pixel-id=&quot;ioz0z&quot; data-pixel-kind=&quot;text&quot;&gt;Resources&lt;/h4&gt;
+                &lt;ul class=&quot;space-y-3&quot;&gt;
+                    &lt;li data-pixel-id=&quot;teprc&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;pv160&quot; data-pixel-kind=&quot;link&quot;&gt;Psychology Tips&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;9h7dt&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;j1uqt&quot; data-pixel-kind=&quot;link&quot;&gt;GTO Ground Rules&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;045f3&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;it7do&quot; data-pixel-kind=&quot;link&quot;&gt;Daily Current Affairs&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 class=&quot;text-white font-bold mb-6&quot; data-pixel-id=&quot;lxdf3&quot; data-pixel-kind=&quot;text&quot;&gt;Academy&lt;/h4&gt;
+                &lt;ul class=&quot;space-y-3&quot;&gt;
+                    &lt;li data-pixel-id=&quot;lu9zq&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;cdoam&quot; data-pixel-kind=&quot;link&quot;&gt;About Mentors&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;5g28i&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;f8kz3&quot; data-pixel-kind=&quot;link&quot;&gt;Admissions&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;el8pj&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;059nn&quot; data-pixel-kind=&quot;link&quot;&gt;Batch Schedule&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 class=&quot;text-white font-bold mb-6&quot; data-pixel-id=&quot;gsygm&quot; data-pixel-kind=&quot;text&quot;&gt;Connect&lt;/h4&gt;
+                &lt;div class=&quot;flex gap-4&quot;&gt;
+                    &lt;a href=&quot;#&quot; class=&quot;w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition&quot;&gt;&lt;i class=&quot;fa-brands fa-youtube&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                    &lt;a href=&quot;#&quot; class=&quot;w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition&quot;&gt;&lt;i class=&quot;fa-brands fa-instagram&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                    &lt;a href=&quot;#&quot; class=&quot;w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition&quot;&gt;&lt;i class=&quot;fa-brands fa-telegram&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;max-w-7xl mx-auto px-6 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs&quot;&gt;
+            &lt;p data-pixel-id=&quot;rfv86&quot; data-pixel-kind=&quot;text&quot;&gt;© 2024 OfficerPrep Academy. Jai Hind.&lt;/p&gt;
+            &lt;div class=&quot;flex gap-8&quot; data-pixel-id=&quot;27umd&quot; data-pixel-kind=&quot;text&quot;&gt;
+                &lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;f678t&quot; data-pixel-kind=&quot;link&quot;&gt;Privacy Policy&lt;/a&gt;
+                &lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;oq9wm&quot; data-pixel-kind=&quot;link&quot;&gt;Terms of Service&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/footer&gt;
+
+    &lt;script&gt;
+        document.addEventListener('DOMContentLoaded', () =&gt; {
+            const observer = new IntersectionObserver((entries) =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el =&gt; observer.observe(el));
+        });
+    &lt;/script&gt;
+
+&lt;/body&gt;&lt;/html&gt;" title="Live Website Preview" class="w-full h-full bg-white"></iframe>

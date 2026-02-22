@@ -1,0 +1,831 @@
+<div class="flex-1 relative w-full h-full min-h-0 flex justify-center" style="background-color: var(--neutral-background);"><div class="h-full transition-all duration-300 ease-in-out" style="width: 100%; max-width: 100%; box-shadow: none;"><iframe srcdoc="&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;OfficerPrep - Elite SSB Mentorship&lt;/title&gt;
+    
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&amp;amp;family=Inter:wght@400;500;600;700;900&amp;amp;family=Outfit:wght@400;500;700&amp;amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;amp;family=Raleway:wght@700;800&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css&quot;&gt;
+&lt;style type=&quot;text/tailwindcss&quot;&gt;@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .bg-grid-pattern {
+        background-size: 24px 24px;
+        background-image: 
+            linear-gradient(to right, rgba(49, 39, 48, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(49, 39, 48, 0.05) 1px, transparent 1px);
+    }
+
+    .bg-noise {
+        position: relative;
+    }
+    .bg-noise::before {
+        content: &quot;&quot;;
+        position: absolute;
+        inset: 0;
+        background-image: url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E&quot;);
+        opacity: 0.03;
+        pointer-events: none;
+        z-index: 0;
+        border-radius: inherit;
+    }
+    .bg-noise &gt; * {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.reveal, .reveal-left, .reveal-right, .reveal-scale {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform, opacity;
+}
+
+.reveal { transform: translateY(30px); }
+.reveal-left { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+.reveal-scale { transform: scale(0.95); }
+
+.active {
+    opacity: 1 !important;
+    transform: translate(0) scale(1) !important;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 10px; }&lt;/style&gt;&lt;script id=&quot;navigation-guard&quot;&gt;
+        (function() {
+          var blockAllNavigation = false;
+
+          if (blockAllNavigation) {
+            // Prevent programmatic navigation and popups
+            try {
+              window.open = function() { return null; };
+              window.history.pushState = function() {};
+              window.history.replaceState = function() {};
+              window.location.assign = function() {};
+              window.location.replace = function() {};
+            } catch (e) {}
+
+            // Remove meta refresh redirects
+            try {
+              var refreshTags = document.querySelectorAll('meta[http-equiv=&quot;refresh&quot; i]');
+              refreshTags.forEach(function(tag) { tag.parentNode &amp;&amp; tag.parentNode.removeChild(tag); });
+            } catch (e) {}
+
+            // Block form submissions
+            document.addEventListener('submit', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+            }, true);
+          }
+
+          document.addEventListener('click', function(e) {
+            var target = e.target.closest('a');
+            if (!target) return;
+            
+            // Ignore edit mode elements
+            if (target.closest('.edit-mode-btn') || target.closest('.edit-mode-overlay')) return;
+            
+            var href = target.getAttribute('href');
+            if (!href) return;
+
+            // Block mailto links
+            if (href.toLowerCase().startsWith('mailto:')) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              return;
+            }
+
+            if (blockAllNavigation) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              return;
+            }
+            
+            // External links handled by browser (target=_blank should be set if needed, or we force it)
+            if (href.startsWith('http') || href.startsWith('//')) {
+              target.target = '_blank';
+              return;
+            }
+            
+            // Internal links: Prevent default navigation immediately
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Notify parent to handle the navigation state change
+            window.parent.postMessage({
+              type: 'PREVIEW_NAVIGATION',
+              href: href
+            }, '*');
+          }, true); // Capture phase to start immediately
+        })();
+      &lt;/script&gt;&lt;script id=&quot;pixel-script-tracker&quot;&gt;
+        (function() {
+          // Only initialize once
+          if (window.__pixelScriptTrackerInitialized) return;
+          window.__pixelScriptTrackerInitialized = true;
+          
+          // Track event listeners, intervals, and observers for cleanup
+          window.__pixelTrackedListeners = [];
+          window.__pixelTrackedIntervals = [];
+          window.__pixelTrackedTimeouts = [];
+          window.__pixelTrackedObservers = [];
+          
+          // Wrap addEventListener to track listeners
+          const origAddEventListener = EventTarget.prototype.addEventListener;
+          EventTarget.prototype.addEventListener = function(type, listener, options) {
+            // Don't track if it's a system/pixel event
+            if (type !== 'pixel-cleanup') {
+              window.__pixelTrackedListeners.push({ 
+                target: this, 
+                type, 
+                listener, 
+                options 
+              });
+            }
+            return origAddEventListener.call(this, type, listener, options);
+          };
+          
+          // Wrap setInterval to track intervals
+          const origSetInterval = window.setInterval;
+          window.setInterval = function(fn, delay, ...args) {
+            const id = origSetInterval(fn, delay, ...args);
+            window.__pixelTrackedIntervals.push(id);
+            return id;
+          };
+          
+          // Wrap setTimeout to track timeouts (for delayed animations)
+          const origSetTimeout = window.setTimeout;
+          window.setTimeout = function(fn, delay, ...args) {
+            const id = origSetTimeout(fn, delay, ...args);
+            window.__pixelTrackedTimeouts.push(id);
+            return id;
+          };
+          
+          // Wrap IntersectionObserver to track observers
+          const OrigIntersectionObserver = window.IntersectionObserver;
+          window.IntersectionObserver = function(callback, options) {
+            const obs = new OrigIntersectionObserver(callback, options);
+            window.__pixelTrackedObservers.push(obs);
+            return obs;
+          };
+          // Preserve prototype
+          window.IntersectionObserver.prototype = OrigIntersectionObserver.prototype;
+          
+          // Cleanup function that can be called before re-executing scripts
+          window.__pixelCleanupTrackedResources = function() {
+            // Remove tracked event listeners (except DOMContentLoaded which can't be removed)
+            window.__pixelTrackedListeners.forEach(({ target, type, listener, options }) =&gt; {
+              try {
+                if (type !== 'DOMContentLoaded') {
+                  target.removeEventListener(type, listener, options);
+                }
+              } catch (e) {}
+            });
+            window.__pixelTrackedListeners = [];
+            
+            // Clear intervals
+            window.__pixelTrackedIntervals.forEach(id =&gt; {
+              try { clearInterval(id); } catch (e) {}
+            });
+            window.__pixelTrackedIntervals = [];
+            
+            // Clear timeouts
+            window.__pixelTrackedTimeouts.forEach(id =&gt; {
+              try { clearTimeout(id); } catch (e) {}
+            });
+            window.__pixelTrackedTimeouts = [];
+            
+            // Disconnect observers
+            window.__pixelTrackedObservers.forEach(obs =&gt; {
+              try { obs.disconnect(); } catch (e) {}
+            });
+            window.__pixelTrackedObservers = [];
+          };
+        })();
+      &lt;/script&gt;&lt;script src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;&lt;script&gt;tailwind.config = {
+  important: '#app-root',
+  theme: {
+    extend: {
+      backgroundImage: {
+        'grid-pattern': &quot;linear-gradient(to right, rgba(0,0,0,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.15) 1px, transparent 1px)&quot;,
+      },
+      fontFamily: {
+        sans: ['&quot;Plus Jakarta Sans&quot;', 'sans-serif'],
+        logo: ['&quot;Outfit&quot;', 'sans-serif'],
+        helvetica: ['&quot;Inter&quot;', '&quot;Helvetica Neue&quot;', 'Helvetica', 'Arial', 'sans-serif'],
+        gothic: ['&quot;Nanum Gothic&quot;', 'sans-serif'],
+        noname: ['&quot;DM Sans&quot;', 'sans-serif'],
+        hero: ['&quot;Raleway&quot;', 'sans-serif'],
+      },
+      colors: {
+        brand: {
+          bg: '#FFFBF6',
+          dark: '#0F0F12',
+          orange: '#FF5E3A',
+          purple: '#7C3AED',
+          green: '#10B981',
+          yellow: '#FBBF24',
+          gray: '#F4F4F5'
+        }
+      },
+      boxShadow: {
+        'soft': '0 20px 50px -20px rgba(0, 0, 0, 0.05)',
+        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+        'glow': '0 0 20px rgba(255, 94, 58, 0.15)'
+      },
+      animation: {
+        'marquee': 'marquee 25s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
+      }
+    }
+  }
+}&lt;/script&gt;&lt;/head&gt;
+&lt;body id=&quot;app-root&quot; class=&quot;antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg&quot;&gt;
+
+    &lt;nav class=&quot;absolute w-full z-50 top-0 left-0 py-6 transition-all duration-300&quot;&gt;
+        &lt;div class=&quot;max-w-7xl mx-auto px-6 flex justify-between items-center&quot;&gt;
+            &lt;div class=&quot;flex items-center gap-12&quot;&gt;
+                &lt;div class=&quot;flex items-center gap-2 text-brand-orange&quot; data-pixel-id=&quot;lg77o&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-shield-halved text-2xl&quot;&gt;&lt;/i&gt;
+                    &lt;span class=&quot;font-logo font-semibold text-2xl tracking-tight text-brand-dark&quot;&gt;Lakshay-SSB&lt;/span&gt;
+                &lt;/div&gt;
+                
+                &lt;div class=&quot;hidden md:flex gap-8 text-sm font-noname font-medium text-gray-800 tracking-wide&quot; data-pixel-id=&quot;l8hap&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;a href=&quot;/index.html&quot; class=&quot;hover:text-brand-orange transition font-bold&quot; data-pixel-id=&quot;6enm8&quot; data-pixel-kind=&quot;link&quot;&gt;Home&lt;/a&gt;
+                    &lt;a href=&quot;/index.html#process&quot; class=&quot;hover:text-brand-orange transition font-bold&quot; data-pixel-id=&quot;1nved&quot; data-pixel-kind=&quot;link&quot;&gt;SSB Process&lt;/a&gt;
+                    &lt;a href=&quot;/dashboard.html&quot; class=&quot;text-brand-orange transition font-bold&quot; data-pixel-id=&quot;0opfd&quot; data-pixel-kind=&quot;link&quot;&gt;Dashboard&lt;/a&gt;
+                    &lt;a href=&quot;/auth.html&quot; class=&quot;hover:text-brand-orange transition font-bold&quot; data-pixel-id=&quot;3qseb&quot; data-pixel-kind=&quot;link&quot;&gt;Login / Sign Up&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;a href=&quot;/auth.html&quot; class=&quot;group relative bg-brand-dark p-[2px] rounded-full shadow-lg transition-all duration-300 hover:shadow-xl&quot; data-pixel-id=&quot;crh9d&quot; data-pixel-kind=&quot;link&quot;&gt;
+                &lt;div class=&quot;relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center gap-3 pl-6 pr-1.5 py-1.5&quot;&gt;
+                    &lt;div class=&quot;absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]&quot;&gt;&lt;/div&gt;
+                    &lt;span class=&quot;relative z-10 text-white group-hover:text-brand-dark text-sm font-medium transition-colors duration-[1000ms]&quot;&gt;Join Academy&lt;/span&gt;
+                    &lt;div class=&quot;relative z-10 bg-white text-brand-dark w-8 h-8 rounded-full flex items-center justify-center&quot;&gt;
+                        &lt;i class=&quot;fa-solid fa-arrow-right text-xs&quot;&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+
+    &lt;main&gt;&lt;section class=&quot;min-h-screen bg-brand-bg pt-32 pb-20 px-6&quot;&gt;
+    &lt;div class=&quot;max-w-7xl mx-auto&quot;&gt;
+        &lt;!-- Header --&gt;
+        &lt;div class=&quot;flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal&quot;&gt;
+            &lt;div&gt;
+                &lt;div class=&quot;flex items-center gap-3 mb-4&quot;&gt;
+                    &lt;div class=&quot;inline-block px-3 py-1 rounded-lg bg-brand-orange/10 text-brand-orange text-[10px] font-bold uppercase tracking-widest&quot; data-pixel-id=&quot;lw5ws&quot; data-pixel-kind=&quot;text&quot;&gt;
+                        Cadet Dashboard
+                    &lt;/div&gt;
+                    &lt;div class=&quot;px-3 py-1 bg-brand-orange text-white text-[10px] font-bold uppercase rounded-full shadow-glow&quot; data-pixel-id=&quot;so3mw&quot; data-pixel-kind=&quot;text&quot;&gt;
+                        PRO PLAN
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;h1 class=&quot;font-hero font-bold text-4xl text-brand-dark mb-2&quot; data-pixel-id=&quot;u52sw&quot; data-pixel-kind=&quot;text&quot;&gt;Welcome, Vikram &lt;span class=&quot;text-brand-orange&quot;&gt;Batra&lt;/span&gt;&lt;/h1&gt;
+                &lt;p class=&quot;text-gray-500 font-noname italic&quot; data-pixel-id=&quot;9bwc2&quot; data-pixel-kind=&quot;text&quot;&gt;&quot;Service Before Self — Ready for NDA 153?&quot;&lt;/p&gt;
+                &lt;div class=&quot;mt-4&quot; data-pixel-id=&quot;s5q25&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;a href=&quot;/pricing.html&quot; class=&quot;inline-block py-2 px-6 bg-brand-dark text-white rounded-full text-xs font-bold hover:bg-brand-orange transition-all&quot; data-pixel-id=&quot;oy9jr&quot; data-pixel-kind=&quot;link&quot;&gt;Go Pro!&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;flex gap-4&quot;&gt;
+                &lt;div class=&quot;p-4 bg-white rounded-2xl border border-gray-100 flex items-center gap-4 shadow-sm&quot;&gt;
+                    &lt;div class=&quot;w-10 h-10 rounded-full bg-green-50 text-brand-green flex items-center justify-center&quot;&gt;
+                        &lt;i class=&quot;fa-solid fa-calendar-check&quot;&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;div class=&quot;text-[10px] text-gray-400 font-bold uppercase&quot; data-pixel-id=&quot;rvve4&quot; data-pixel-kind=&quot;text&quot;&gt;Days to SSB&lt;/div&gt;
+                        &lt;div class=&quot;text-xl font-bold text-brand-dark counter&quot; data-target=&quot;42&quot;&gt;0&lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;grid lg:grid-cols-12 gap-8&quot;&gt;
+            &lt;!-- Left Side: Progress &amp; Stats --&gt;
+            &lt;div class=&quot;lg:col-span-8 space-y-8&quot;&gt;
+                
+                &lt;!-- NEW SECTION: AI PSYCH EVALUATION --&gt;
+                &lt;div class=&quot;bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm reveal-left&quot;&gt;
+                    &lt;div class=&quot;flex items-center justify-between mb-8&quot;&gt;
+                        &lt;div&gt;
+                            &lt;h3 class=&quot;font-hero font-bold text-2xl text-brand-dark&quot; data-pixel-id=&quot;y74pi&quot; data-pixel-kind=&quot;text&quot;&gt;AI Psych Evaluation&lt;/h3&gt;
+                            &lt;p class=&quot;text-sm text-gray-500 font-noname&quot; data-pixel-id=&quot;vjx90&quot; data-pixel-kind=&quot;text&quot;&gt;Extract OLQs from your TAT, WAT, and SRT responses.&lt;/p&gt;
+                        &lt;/div&gt;
+                        &lt;img src=&quot;https://images.unsplash.com/photo-1725399633872-32ba508b0607?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxCcmFpbiUyMHdpdGglMjBjaGVja2xpc3QlMjBpbGx1c3RyYXRpb258ZW58MHx8fHwxNzcxMTAzNjI3fDA&amp;amp;ixlib=rb-4.1.0&amp;amp;w=60&amp;amp;h=60&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;q=80&quot; class=&quot;w-12 h-12&quot; alt=&quot;AI Logic&quot; data-pixel-id=&quot;g41o2&quot; data-pixel-kind=&quot;image&quot;&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class=&quot;grid md:grid-cols-2 gap-8 items-center&quot;&gt;
+                        &lt;div class=&quot;relative aspect-square bg-brand-bg rounded-3xl p-6 flex items-center justify-center border border-gray-100 overflow-hidden&quot;&gt;
+                            &lt;!-- SVG Radar Chart Simulation --&gt;
+                            &lt;svg viewBox=&quot;0 0 200 200&quot; class=&quot;w-full h-full&quot;&gt;
+                                &lt;polygon points=&quot;100,20 160,80 180,150 100,180 20,150 40,80&quot; fill=&quot;none&quot; stroke=&quot;#e5e7eb&quot; stroke-width=&quot;1&quot;&gt;&lt;/polygon&gt;
+                                &lt;polygon points=&quot;100,40 140,85 160,140 100,160 50,140 60,85&quot; fill=&quot;none&quot; stroke=&quot;#e5e7eb&quot; stroke-width=&quot;1&quot;&gt;&lt;/polygon&gt;
+                                &lt;polygon points=&quot;100,45 150,90 170,160 100,170 30,140 50,70&quot; fill=&quot;rgba(255, 94, 58, 0.2)&quot; stroke=&quot;#FF5E3A&quot; stroke-width=&quot;2&quot;&gt;&lt;/polygon&gt;
+                                &lt;text x=&quot;100&quot; y=&quot;15&quot; text-anchor=&quot;middle&quot; class=&quot;text-[8px] font-bold fill-gray-400 uppercase&quot;&gt;Leadership&lt;/text&gt;
+                                &lt;text x=&quot;185&quot; y=&quot;80&quot; text-anchor=&quot;start&quot; class=&quot;text-[8px] font-bold fill-gray-400 uppercase&quot;&gt;Initiative&lt;/text&gt;
+                                &lt;text x=&quot;185&quot; y=&quot;160&quot; text-anchor=&quot;start&quot; class=&quot;text-[8px] font-bold fill-gray-400 uppercase&quot;&gt;Responsibility&lt;/text&gt;
+                                &lt;text x=&quot;100&quot; y=&quot;195&quot; text-anchor=&quot;middle&quot; class=&quot;text-[8px] font-bold fill-gray-400 uppercase&quot;&gt;Communication&lt;/text&gt;
+                                &lt;text x=&quot;15&quot; y=&quot;160&quot; text-anchor=&quot;end&quot; class=&quot;text-[8px] font-bold fill-gray-400 uppercase&quot;&gt;Teamwork&lt;/text&gt;
+                                &lt;text x=&quot;15&quot; y=&quot;80&quot; text-anchor=&quot;end&quot; class=&quot;text-[8px] font-bold fill-gray-400 uppercase&quot;&gt;Intel&lt;/text&gt;
+                            &lt;/svg&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;space-y-4&quot;&gt;
+                            &lt;div class=&quot;p-4 rounded-2xl bg-brand-bg border border-gray-100&quot;&gt;
+                                &lt;div class=&quot;flex justify-between items-end mb-2&quot; data-pixel-id=&quot;3t82k&quot; data-pixel-kind=&quot;text&quot;&gt;
+                                    &lt;span class=&quot;text-[10px] font-bold uppercase text-gray-400&quot;&gt;Analysis Summary&lt;/span&gt;
+                                    &lt;span class=&quot;text-xs font-bold text-brand-orange&quot;&gt;72% Overall Match&lt;/span&gt;
+                                &lt;/div&gt;
+                                &lt;p class=&quot;text-[11px] text-gray-500 font-noname leading-relaxed italic&quot; data-pixel-id=&quot;gvv8o&quot; data-pixel-kind=&quot;text&quot;&gt;&quot;Your SRT responses show high responsibility (80%), but Initiative (65%) can be improved by taking quicker actions in TAT stories.&quot;&lt;/p&gt;
+                            &lt;/div&gt;
+                            &lt;a href=&quot;/ai-evaluation.html&quot; class=&quot;w-full block text-center py-4 bg-brand-dark text-white rounded-full font-bold text-sm shadow-xl shadow-brand-dark/20 hover:bg-brand-orange transition-all duration-300&quot; data-pixel-id=&quot;pvtn0&quot; data-pixel-kind=&quot;link&quot;&gt;
+                                Run AI Evaluation
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- NEW SECTION: OLQ PROGRESS TRACKER --&gt;
+                &lt;div class=&quot;bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm reveal-left&quot;&gt;
+                    &lt;div class=&quot;flex items-center justify-between mb-8&quot;&gt;
+                        &lt;div&gt;
+                            &lt;h3 class=&quot;font-hero font-bold text-xl text-brand-dark&quot; data-pixel-id=&quot;dmrjn&quot; data-pixel-kind=&quot;text&quot;&gt;OLQ Progress Growth&lt;/h3&gt;
+                            &lt;p class=&quot;text-xs text-gray-400 font-bold uppercase tracking-widest mt-1&quot; data-pixel-id=&quot;bptk4&quot; data-pixel-kind=&quot;text&quot;&gt;Weekly Metrics Tracker&lt;/p&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;px-3 py-1 bg-green-50 text-brand-green rounded-lg text-xs font-bold&quot; data-pixel-id=&quot;1t7iu&quot; data-pixel-kind=&quot;text&quot;&gt;
+                            +12% Initiative
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;!-- Line Chart Visual Simulation --&gt;
+                    &lt;div class=&quot;h-48 w-full relative mb-6&quot;&gt;
+                        &lt;div class=&quot;absolute inset-0 flex items-end justify-between px-4 pb-2&quot;&gt;
+                            &lt;div class=&quot;w-1/4 h-[58%] bg-brand-orange/10 border-t-2 border-brand-orange relative group&quot;&gt;
+                                &lt;div class=&quot;absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold opacity-0 group-hover:opacity-100&quot; data-pixel-id=&quot;2dbzw&quot; data-pixel-kind=&quot;text&quot;&gt;58&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;w-1/4 h-[62%] bg-brand-orange/10 border-t-2 border-brand-orange relative group&quot;&gt;
+                                &lt;div class=&quot;absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold opacity-0 group-hover:opacity-100&quot; data-pixel-id=&quot;h07gl&quot; data-pixel-kind=&quot;text&quot;&gt;62&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;w-1/4 h-[67%] bg-brand-orange/10 border-t-2 border-brand-orange relative group&quot;&gt;
+                                &lt;div class=&quot;absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold opacity-0 group-hover:opacity-100&quot; data-pixel-id=&quot;or8hn&quot; data-pixel-kind=&quot;text&quot;&gt;67&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;w-1/4 h-[71%] bg-brand-orange/20 border-t-4 border-brand-orange relative group&quot;&gt;
+                                &lt;div class=&quot;absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold&quot; data-pixel-id=&quot;ziv36&quot; data-pixel-kind=&quot;text&quot;&gt;71&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;absolute bottom-0 left-0 right-0 h-[1px] bg-gray-100&quot;&gt;&lt;/div&gt;
+                        &lt;div class=&quot;absolute top-0 bottom-0 left-0 w-[1px] bg-gray-100&quot;&gt;&lt;/div&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class=&quot;flex justify-between text-[10px] font-bold text-gray-400 uppercase px-4 mb-8&quot; data-pixel-id=&quot;t12vg&quot; data-pixel-kind=&quot;text&quot;&gt;
+                        &lt;span&gt;Week 1&lt;/span&gt;
+                        &lt;span&gt;Week 2&lt;/span&gt;
+                        &lt;span&gt;Week 3&lt;/span&gt;
+                        &lt;span&gt;Week 4&lt;/span&gt;
+                    &lt;/div&gt;
+
+                    &lt;div class=&quot;p-4 rounded-2xl bg-brand-bg border border-gray-50 flex items-center gap-4&quot;&gt;
+                        &lt;img src=&quot;https://images.unsplash.com/photo-1632055186471-64814edeaab4?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxHcm93dGglMjBhcnJvdyUyMGFuYWx5dGljc3xlbnwwfHx8fDE3NzExMDM2MjZ8MA&amp;amp;ixlib=rb-4.1.0&amp;amp;w=40&amp;amp;h=40&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;q=80&quot; class=&quot;w-10 h-10&quot; alt=&quot;Growth&quot; data-pixel-id=&quot;l6p8c&quot; data-pixel-kind=&quot;image&quot;&gt;
+                        &lt;p class=&quot;text-xs text-gray-500 font-noname&quot; data-pixel-id=&quot;rhskv&quot; data-pixel-kind=&quot;text&quot;&gt;Insight: Your &lt;strong&gt;Initiative&lt;/strong&gt; and &lt;strong&gt;Social Adj.&lt;/strong&gt; are trending upwards. Focused GTO practice is next.&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- NEW SECTION: SSB PRACTICE ARENA --&gt;
+                &lt;div class=&quot;reveal-scale&quot;&gt;
+                    &lt;div class=&quot;flex items-center justify-between mb-6&quot;&gt;
+                        &lt;h3 class=&quot;font-hero font-bold text-xl text-brand-dark&quot; data-pixel-id=&quot;kspzl&quot; data-pixel-kind=&quot;text&quot;&gt;SSB Practice Arena&lt;/h3&gt;
+                        &lt;span class=&quot;text-xs font-bold text-brand-orange&quot; data-pixel-id=&quot;xm7cw&quot; data-pixel-kind=&quot;text&quot;&gt;Timed Sessions&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;grid md:grid-cols-2 lg:grid-cols-3 gap-6&quot;&gt;
+                        &lt;!-- OIR Timed --&gt;
+                        &lt;div class=&quot;bg-white p-6 rounded-[2rem] border border-gray-100 hover:shadow-lg transition-all group&quot;&gt;
+                            &lt;div class=&quot;w-12 h-12 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark mb-4 group-hover:bg-brand-dark group-hover:text-white transition-colors&quot;&gt;
+                                &lt;i class=&quot;fa-solid fa-stopwatch&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h4 class=&quot;font-bold text-brand-dark mb-2&quot; data-pixel-id=&quot;h0c9t&quot; data-pixel-kind=&quot;text&quot;&gt;OIR Timed Test&lt;/h4&gt;
+                            &lt;p class=&quot;text-xs text-gray-400 mb-4 font-noname&quot; data-pixel-id=&quot;bis8i&quot; data-pixel-kind=&quot;text&quot;&gt;40 questions / 30 mins&lt;/p&gt;
+                            &lt;a href=&quot;/practice/oir.html&quot; class=&quot;w-full block text-center py-2 bg-brand-bg hover:bg-brand-orange hover:text-white rounded-xl text-[10px] font-bold transition-all&quot; data-pixel-id=&quot;fv33k&quot; data-pixel-kind=&quot;link&quot;&gt;START PRACTICE&lt;/a&gt;
+                        &lt;/div&gt;
+                        &lt;!-- WAT Real Timer --&gt;
+                        &lt;div class=&quot;bg-white p-6 rounded-[2rem] border border-gray-100 hover:shadow-lg transition-all group&quot;&gt;
+                            &lt;div class=&quot;w-12 h-12 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark mb-4 group-hover:bg-brand-dark group-hover:text-white transition-colors&quot;&gt;
+                                &lt;i class=&quot;fa-solid fa-bolt-lightning&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h4 class=&quot;font-bold text-brand-dark mb-2&quot; data-pixel-id=&quot;z94j9&quot; data-pixel-kind=&quot;text&quot;&gt;WAT Real Timer&lt;/h4&gt;
+                            &lt;p class=&quot;text-xs text-gray-400 mb-4 font-noname&quot; data-pixel-id=&quot;74dye&quot; data-pixel-kind=&quot;text&quot;&gt;15s per word (60 words)&lt;/p&gt;
+                            &lt;a href=&quot;/practice/wat.html&quot; class=&quot;w-full block text-center py-2 bg-brand-bg hover:bg-brand-orange hover:text-white rounded-xl text-[10px] font-bold transition-all&quot; data-pixel-id=&quot;knmfi&quot; data-pixel-kind=&quot;link&quot;&gt;START PRACTICE&lt;/a&gt;
+                        &lt;/div&gt;
+                        &lt;!-- TAT Image Mode --&gt;
+                        &lt;div class=&quot;bg-white p-6 rounded-[2rem] border border-gray-100 hover:shadow-lg transition-all group&quot;&gt;
+                            &lt;div class=&quot;w-12 h-12 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark mb-4 group-hover:bg-brand-dark group-hover:text-white transition-colors&quot;&gt;
+                                &lt;i class=&quot;fa-solid fa-image&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h4 class=&quot;font-bold text-brand-dark mb-2&quot; data-pixel-id=&quot;y2654&quot; data-pixel-kind=&quot;text&quot;&gt;TAT Image Mode&lt;/h4&gt;
+                            &lt;p class=&quot;text-xs text-gray-400 mb-4 font-noname&quot; data-pixel-id=&quot;ohlgg&quot; data-pixel-kind=&quot;text&quot;&gt;4 mins per situational story&lt;/p&gt;
+                            &lt;a href=&quot;/practice/tat.html&quot; class=&quot;w-full block text-center py-2 bg-brand-bg hover:bg-brand-orange hover:text-white rounded-xl text-[10px] font-bold transition-all&quot; data-pixel-id=&quot;2kv1w&quot; data-pixel-kind=&quot;link&quot;&gt;START PRACTICE&lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Course Modules --&gt;
+                &lt;div class=&quot;reveal-scale&quot;&gt;
+                    &lt;h3 class=&quot;font-hero font-bold text-xl text-brand-dark mb-6&quot; data-pixel-id=&quot;limnv&quot; data-pixel-kind=&quot;text&quot;&gt;Learning Path&lt;/h3&gt;
+                    &lt;div class=&quot;space-y-4&quot;&gt;
+                        &lt;!-- Module 1 --&gt;
+                        &lt;div class=&quot;group bg-white p-6 rounded-3xl border border-gray-100 flex items-center justify-between hover:shadow-md transition-all&quot;&gt;
+                            &lt;div class=&quot;flex items-center gap-6&quot;&gt;
+                                &lt;div class=&quot;w-12 h-12 rounded-2xl bg-brand-orange text-white flex items-center justify-center text-lg&quot;&gt;
+                                    &lt;i class=&quot;fa-solid fa-brain&quot;&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div&gt;
+                                    &lt;h4 class=&quot;font-bold text-brand-dark&quot; data-pixel-id=&quot;oepd6&quot; data-pixel-kind=&quot;text&quot;&gt;Psychology Masterclass&lt;/h4&gt;
+                                    &lt;p class=&quot;text-xs text-gray-400 font-noname&quot; data-pixel-id=&quot;49a6e&quot; data-pixel-kind=&quot;text&quot;&gt;TAT &amp;amp; WAT Analysis • 12/15 Lessons Completed&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;flex items-center gap-6&quot;&gt;
+                                &lt;div class=&quot;hidden md:block w-32 h-1.5 bg-gray-100 rounded-full overflow-hidden&quot;&gt;
+                                    &lt;div class=&quot;w-4/5 h-full bg-brand-orange&quot;&gt;&lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;button class=&quot;w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:text-white transition-colors&quot;&gt;
+                                    &lt;i class=&quot;fa-solid fa-play text-xs&quot;&gt;&lt;/i&gt;
+                                &lt;/button&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;!-- Module 2 --&gt;
+                        &lt;div class=&quot;group bg-white p-6 rounded-3xl border border-gray-100 flex items-center justify-between hover:shadow-md transition-all&quot;&gt;
+                            &lt;div class=&quot;flex items-center gap-6&quot;&gt;
+                                &lt;div class=&quot;w-12 h-12 rounded-2xl bg-brand-purple text-white flex items-center justify-center text-lg&quot;&gt;
+                                    &lt;i class=&quot;fa-solid fa-microphone-lines&quot;&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div&gt;
+                                    &lt;h4 class=&quot;font-bold text-brand-dark&quot; data-pixel-id=&quot;2c2iz&quot; data-pixel-kind=&quot;text&quot;&gt;Personal Interview Drill&lt;/h4&gt;
+                                    &lt;p class=&quot;text-xs text-gray-400 font-noname&quot; data-pixel-id=&quot;agcpk&quot; data-pixel-kind=&quot;text&quot;&gt;Common PIQ Questions • 2/10 Lessons Completed&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;flex items-center gap-6&quot;&gt;
+                                &lt;div class=&quot;hidden md:block w-32 h-1.5 bg-gray-100 rounded-full overflow-hidden&quot;&gt;
+                                    &lt;div class=&quot;w-1/5 h-full bg-brand-purple&quot;&gt;&lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;button class=&quot;w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:text-white transition-colors&quot;&gt;
+                                    &lt;i class=&quot;fa-solid fa-lock text-xs&quot;&gt;&lt;/i&gt;
+                                &lt;/button&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+
+            &lt;!-- Right Side: Tasks &amp; Mentor --&gt;
+            &lt;div class=&quot;lg:col-span-4 space-y-8&quot;&gt;
+                
+                &lt;!-- NEW SECTION: PERFORMANCE INSIGHTS --&gt;
+                &lt;div class=&quot;bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm reveal-right&quot;&gt;
+                    &lt;h3 class=&quot;font-hero font-bold text-lg text-brand-dark mb-6&quot; data-pixel-id=&quot;chyq6&quot; data-pixel-kind=&quot;text&quot;&gt;Performance Insights&lt;/h3&gt;
+                    
+                    &lt;div class=&quot;space-y-6&quot;&gt;
+                        &lt;!-- Reaction Time --&gt;
+                        &lt;div&gt;
+                            &lt;div class=&quot;flex justify-between text-[10px] font-bold text-gray-400 uppercase mb-3&quot; data-pixel-id=&quot;jd8rk&quot; data-pixel-kind=&quot;text&quot;&gt;
+                                &lt;span&gt;WAT Reaction Time&lt;/span&gt;
+                                &lt;span class=&quot;text-brand-orange&quot;&gt;7.9s Avg&lt;/span&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;flex gap-1 h-12 items-end&quot;&gt;
+                                &lt;div class=&quot;flex-1 bg-brand-orange/10 h-[90%] rounded-t-lg&quot;&gt;&lt;/div&gt;
+                                &lt;div class=&quot;flex-1 bg-brand-orange/20 h-[80%] rounded-t-lg&quot;&gt;&lt;/div&gt;
+                                &lt;div class=&quot;flex-1 bg-brand-orange/40 h-[70%] rounded-t-lg&quot;&gt;&lt;/div&gt;
+                                &lt;div class=&quot;flex-1 bg-brand-orange h-[60%] rounded-t-lg&quot;&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+
+                        &lt;div class=&quot;grid grid-cols-2 gap-4 pt-4 border-t border-gray-50&quot;&gt;
+                            &lt;div&gt;
+                                &lt;div class=&quot;text-[10px] text-gray-400 font-bold uppercase mb-1&quot; data-pixel-id=&quot;lot0z&quot; data-pixel-kind=&quot;text&quot;&gt;Practice Streak&lt;/div&gt;
+                                &lt;div class=&quot;text-2xl font-bold text-brand-dark&quot; data-pixel-id=&quot;b6khy&quot; data-pixel-kind=&quot;text&quot;&gt;6 &lt;span class=&quot;text-xs text-gray-400 font-normal&quot;&gt;Days&lt;/span&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div&gt;
+                                &lt;div class=&quot;text-[10px] text-gray-400 font-bold uppercase mb-1&quot; data-pixel-id=&quot;9fcjc&quot; data-pixel-kind=&quot;text&quot;&gt;Best Streak&lt;/div&gt;
+                                &lt;div class=&quot;text-2xl font-bold text-brand-orange&quot; data-pixel-id=&quot;9o0rh&quot; data-pixel-kind=&quot;text&quot;&gt;14 &lt;span class=&quot;text-xs text-gray-400 font-normal&quot;&gt;Days&lt;/span&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- NEW SECTION: ACHIEVEMENTS / BADGES --&gt;
+                &lt;div class=&quot;bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm reveal-right delay-75&quot;&gt;
+                    &lt;h3 class=&quot;font-hero font-bold text-lg text-brand-dark mb-6&quot; data-pixel-id=&quot;c3han&quot; data-pixel-kind=&quot;text&quot;&gt;Achievements&lt;/h3&gt;
+                    &lt;div class=&quot;grid grid-cols-3 gap-4&quot;&gt;
+                        &lt;!-- Screening Master --&gt;
+                        &lt;div class=&quot;group relative flex flex-col items-center gap-2&quot;&gt;
+                            &lt;div class=&quot;w-12 h-12 rounded-full bg-brand-orange shadow-glow flex items-center justify-center text-white text-lg&quot;&gt;
+                                &lt;i class=&quot;fa-solid fa-shield-halved&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;span class=&quot;text-[8px] font-bold text-center uppercase tracking-tighter&quot; data-pixel-id=&quot;o4tw0&quot; data-pixel-kind=&quot;text&quot;&gt;Screening&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;!-- Psych Pro --&gt;
+                        &lt;div class=&quot;group relative flex flex-col items-center gap-2&quot;&gt;
+                            &lt;div class=&quot;w-12 h-12 rounded-full bg-brand-orange shadow-glow flex items-center justify-center text-white text-lg&quot;&gt;
+                                &lt;i class=&quot;fa-solid fa-brain&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;span class=&quot;text-[8px] font-bold text-center uppercase tracking-tighter&quot; data-pixel-id=&quot;hu8co&quot; data-pixel-kind=&quot;text&quot;&gt;Psych Pro&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;!-- GTO Leader (Locked) --&gt;
+                        &lt;div class=&quot;group relative flex flex-col items-center gap-2 opacity-30 grayscale&quot;&gt;
+                            &lt;div class=&quot;w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-lg&quot;&gt;
+                                &lt;i class=&quot;fa-solid fa-crown&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;span class=&quot;text-[8px] font-bold text-center uppercase tracking-tighter&quot; data-pixel-id=&quot;97by9&quot; data-pixel-kind=&quot;text&quot;&gt;GTO Leader&lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- NEW SECTION: PHYSICAL PREPARATION --&gt;
+                &lt;div class=&quot;bg-brand-dark rounded-[2.5rem] p-8 text-white reveal-right&quot;&gt;
+                    &lt;h3 class=&quot;font-hero font-bold text-lg mb-6&quot; data-pixel-id=&quot;hmwul&quot; data-pixel-kind=&quot;text&quot;&gt;Fitness Tracker&lt;/h3&gt;
+                    &lt;div class=&quot;space-y-6&quot;&gt;
+                        &lt;div class=&quot;space-y-2&quot;&gt;
+                            &lt;div class=&quot;flex justify-between text-[10px] font-bold uppercase text-gray-400&quot; data-pixel-id=&quot;3ftam&quot; data-pixel-kind=&quot;text&quot;&gt;
+                                &lt;span&gt;2.4km Run (Sub 10m)&lt;/span&gt;
+                                &lt;span&gt;65%&lt;/span&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;h-1.5 w-full bg-white/10 rounded-full overflow-hidden&quot;&gt;
+                                &lt;div class=&quot;h-full bg-brand-orange w-[65%]&quot;&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;space-y-2&quot;&gt;
+                            &lt;div class=&quot;flex justify-between text-[10px] font-bold uppercase text-gray-400&quot; data-pixel-id=&quot;xokt6&quot; data-pixel-kind=&quot;text&quot;&gt;
+                                &lt;span&gt;Push-ups (40 Target)&lt;/span&gt;
+                                &lt;span&gt;50%&lt;/span&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;h-1.5 w-full bg-white/10 rounded-full overflow-hidden&quot;&gt;
+                                &lt;div class=&quot;h-full bg-brand-orange w-[50%]&quot;&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;space-y-2&quot;&gt;
+                            &lt;div class=&quot;flex justify-between text-[10px] font-bold uppercase text-gray-400&quot; data-pixel-id=&quot;dgvdg&quot; data-pixel-kind=&quot;text&quot;&gt;
+                                &lt;span&gt;Chin-ups (6 Target)&lt;/span&gt;
+                                &lt;span&gt;40%&lt;/span&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;h-1.5 w-full bg-white/10 rounded-full overflow-hidden&quot;&gt;
+                                &lt;div class=&quot;h-full bg-brand-orange w-[40%]&quot;&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Daily Tasks --&gt;
+                &lt;div class=&quot;bg-gray-50 rounded-[2.5rem] p-8 border border-gray-100 reveal-right&quot;&gt;
+                    &lt;h3 class=&quot;font-hero font-bold text-lg text-brand-dark mb-6&quot; data-pixel-id=&quot;vjdpq&quot; data-pixel-kind=&quot;text&quot;&gt;Today's Goals&lt;/h3&gt;
+                    &lt;div class=&quot;space-y-4&quot;&gt;
+                        &lt;label class=&quot;flex items-center gap-4 group cursor-pointer&quot; data-pixel-id=&quot;u7rg4&quot; data-pixel-kind=&quot;text&quot;&gt;
+                            &lt;div class=&quot;relative flex items-center justify-center&quot;&gt;
+                                &lt;input type=&quot;checkbox&quot; checked=&quot;&quot; class=&quot;peer appearance-none w-5 h-5 border border-gray-200 rounded-md checked:bg-brand-orange checked:border-brand-orange transition-all&quot;&gt;
+                                &lt;i class=&quot;fa-solid fa-check absolute text-[10px] text-white opacity-0 peer-checked:opacity-100&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;span class=&quot;text-sm font-noname text-gray-500 peer-checked:line-through&quot;&gt;Personal PIQ Building&lt;/span&gt;
+                        &lt;/label&gt;
+                        &lt;label class=&quot;flex items-center gap-4 group cursor-pointer&quot; data-pixel-id=&quot;85sdz&quot; data-pixel-kind=&quot;text&quot;&gt;
+                            &lt;div class=&quot;relative flex items-center justify-center&quot;&gt;
+                                &lt;input type=&quot;checkbox&quot; class=&quot;peer appearance-none w-5 h-5 border border-gray-200 rounded-md checked:bg-brand-orange checked:border-brand-orange transition-all&quot;&gt;
+                                &lt;i class=&quot;fa-solid fa-check absolute text-[10px] text-white opacity-0 peer-checked:opacity-100&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;span class=&quot;text-sm font-noname text-gray-500&quot;&gt;Practice 3 Lecturette Topics&lt;/span&gt;
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;button class=&quot;w-full mt-8 py-3 bg-white border border-gray-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-brand-dark hover:text-white transition-all&quot; data-pixel-id=&quot;dl7v9&quot; data-pixel-kind=&quot;text&quot;&gt;
+                        Update Progress
+                    &lt;/button&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Mentor Card --&gt;
+                &lt;div class=&quot;bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm reveal-right delay-200&quot;&gt;
+                    &lt;div class=&quot;text-center mb-6&quot;&gt;
+                        &lt;img src=&quot;https://images.unsplash.com/photo-1556978254-407bc35f8e66?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBhcm15JTIwb2ZmaWNlciUyMHBvcnRyYWl0JTIwc3F1YXJlfGVufDB8Mnx8fDE3NzEwNTE1MzZ8MA&amp;amp;w=200&amp;amp;h=200&amp;amp;fit=crop&quot; class=&quot;w-20 h-20 rounded-full mx-auto object-cover border-4 border-brand-bg mb-4&quot; alt=&quot;Mentor&quot; data-pixel-id=&quot;pscv7&quot; data-pixel-kind=&quot;image&quot;&gt;
+                        &lt;h4 class=&quot;font-bold text-brand-dark&quot; data-pixel-id=&quot;qf3ee&quot; data-pixel-kind=&quot;text&quot;&gt;Col. Hardeep Singh (Retd.)&lt;/h4&gt;
+                        &lt;p class=&quot;text-[10px] text-gray-400 uppercase font-bold tracking-widest&quot; data-pixel-id=&quot;r3pvl&quot; data-pixel-kind=&quot;text&quot;&gt;Ex-GTO &amp;amp; IO&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;flex gap-2&quot; data-pixel-id=&quot;rola4&quot; data-pixel-kind=&quot;text&quot;&gt;
+                        &lt;button class=&quot;flex-1 py-3 bg-brand-bg rounded-xl text-[10px] font-bold text-brand-dark hover:bg-gray-100 transition-colors&quot;&gt;
+                            &lt;i class=&quot;fa-solid fa-message mr-2&quot;&gt;&lt;/i&gt; CHAT
+                        &lt;/button&gt;
+                        &lt;button class=&quot;flex-1 py-3 bg-brand-orange text-white rounded-xl text-[10px] font-bold shadow-lg shadow-brand-orange/20 hover:-translate-y-1 transition-all&quot;&gt;
+                            &lt;i class=&quot;fa-solid fa-phone mr-2&quot;&gt;&lt;/i&gt; CALL
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;mt-6 p-4 bg-yellow-50 rounded-2xl border border-yellow-100&quot;&gt;
+                        &lt;p class=&quot;text-xs text-yellow-800 leading-relaxed font-noname&quot; data-pixel-id=&quot;mm1bh&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;strong&gt;Mentor Note:&lt;/strong&gt; Vikram, your PPDT narration needs better voice modulation. Focus on the 'Chest Up' posture.&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- NEW FULL-WIDTH SECTION: PIQ BUILDER &amp; EXPERIENCE LIBRARY --&gt;
+        &lt;div class=&quot;mt-12 grid lg:grid-cols-2 gap-8 reveal&quot;&gt;
+            &lt;!-- PIQ Builder --&gt;
+            &lt;div class=&quot;bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm&quot;&gt;
+                &lt;div class=&quot;flex items-center gap-4 mb-8&quot;&gt;
+                    &lt;div class=&quot;w-14 h-14 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark text-xl&quot;&gt;
+                        &lt;i class=&quot;fa-solid fa-file-pen&quot;&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;h3 class=&quot;font-hero font-bold text-2xl text-brand-dark&quot; data-pixel-id=&quot;lbcha&quot; data-pixel-kind=&quot;text&quot;&gt;Build Your PIQ Profile&lt;/h3&gt;
+                        &lt;p class=&quot;text-sm text-gray-400 font-noname&quot; data-pixel-id=&quot;yr2jl&quot; data-pixel-kind=&quot;text&quot;&gt;Generate your projected interview questions.&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                
+                &lt;div class=&quot;grid md:grid-cols-2 gap-4 mb-8&quot;&gt;
+                    &lt;div class=&quot;p-4 bg-brand-bg rounded-2xl&quot;&gt;
+                        &lt;h5 class=&quot;text-[10px] font-bold uppercase text-gray-400 mb-2&quot; data-pixel-id=&quot;o0cr5&quot; data-pixel-kind=&quot;text&quot;&gt;Sample Questions&lt;/h5&gt;
+                        &lt;ul class=&quot;text-[11px] text-gray-600 space-y-2&quot;&gt;
+                            &lt;li data-pixel-id=&quot;xxyn6&quot; data-pixel-kind=&quot;text&quot;&gt;• Tell me about your biggest responsibility.&lt;/li&gt;
+                            &lt;li data-pixel-id=&quot;aor7d&quot; data-pixel-kind=&quot;text&quot;&gt;• Why do you want to join the Armed Forces?&lt;/li&gt;
+                            &lt;li data-pixel-id=&quot;3drl0&quot; data-pixel-kind=&quot;text&quot;&gt;• Describe a leadership experience.&lt;/li&gt;
+                        &lt;/ul&gt;
+                    &lt;/div&gt;
+                    &lt;img src=&quot;https://images.unsplash.com/photo-1693045181178-d5d83fb070c8?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxJbnRlcnZpZXclMjBwcm9maWxlJTIwZm9ybSUyMFVJJTIwaWxsdXN0cmF0aW9ufGVufDB8fHx8MTc3MTEwMzYzNnww&amp;amp;ixlib=rb-4.1.0&amp;amp;w=300&amp;amp;h=200&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;q=80&quot; class=&quot;rounded-2xl w-full h-full object-cover&quot; alt=&quot;PIQ Builder&quot; data-pixel-id=&quot;kz64w&quot; data-pixel-kind=&quot;image&quot;&gt;
+                &lt;/div&gt;
+                
+                &lt;a href=&quot;/piq-builder.html&quot; class=&quot;w-full block text-center py-4 bg-brand-dark text-white rounded-full font-bold text-sm hover:bg-brand-orange transition-all&quot; data-pixel-id=&quot;0x6uu&quot; data-pixel-kind=&quot;link&quot;&gt;Open PIQ Builder&lt;/a&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Medical Readiness --&gt;
+            &lt;div class=&quot;bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm relative overflow-hidden&quot;&gt;
+                &lt;div class=&quot;flex items-center gap-4 mb-8&quot;&gt;
+                    &lt;div class=&quot;w-14 h-14 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark text-xl&quot;&gt;
+                        &lt;i class=&quot;fa-solid fa-notes-medical&quot;&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;h3 class=&quot;font-hero font-bold text-2xl text-brand-dark&quot; data-pixel-id=&quot;zma8g&quot; data-pixel-kind=&quot;text&quot;&gt;SSB Medical Readiness&lt;/h3&gt;
+                        &lt;p class=&quot;text-sm text-gray-400 font-noname&quot; data-pixel-id=&quot;svu79&quot; data-pixel-kind=&quot;text&quot;&gt;Initial health standard self-check.&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;div class=&quot;space-y-4&quot;&gt;
+                    &lt;div class=&quot;flex items-center justify-between p-4 bg-brand-bg rounded-2xl&quot;&gt;
+                        &lt;div class=&quot;flex items-center gap-3&quot; data-pixel-id=&quot;q2x9e&quot; data-pixel-kind=&quot;text&quot;&gt;
+                            &lt;i class=&quot;fa-solid fa-ruler-vertical text-brand-orange&quot;&gt;&lt;/i&gt;
+                            &lt;span class=&quot;text-sm font-medium&quot;&gt;Height/Weight Standard&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;span class=&quot;px-2 py-1 bg-green-50 text-brand-green text-[10px] font-bold rounded&quot; data-pixel-id=&quot;woy7t&quot; data-pixel-kind=&quot;text&quot;&gt;READY&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;flex items-center justify-between p-4 bg-brand-bg rounded-2xl&quot;&gt;
+                        &lt;div class=&quot;flex items-center gap-3&quot; data-pixel-id=&quot;s7m0b&quot; data-pixel-kind=&quot;text&quot;&gt;
+                            &lt;i class=&quot;fa-solid fa-eye text-brand-orange&quot;&gt;&lt;/i&gt;
+                            &lt;span class=&quot;text-sm font-medium&quot;&gt;Vision 6/6 Target&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;span class=&quot;px-2 py-1 bg-yellow-50 text-brand-yellow text-[10px] font-bold rounded&quot; data-pixel-id=&quot;yj12g&quot; data-pixel-kind=&quot;text&quot;&gt;NEEDS TEST&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;flex items-center justify-between p-4 bg-brand-bg rounded-2xl&quot;&gt;
+                        &lt;div class=&quot;flex items-center gap-3&quot; data-pixel-id=&quot;1wt5c&quot; data-pixel-kind=&quot;text&quot;&gt;
+                            &lt;i class=&quot;fa-solid fa-shoe-prints text-brand-orange&quot;&gt;&lt;/i&gt;
+                            &lt;span class=&quot;text-sm font-medium&quot;&gt;No Knock Knees/Flat Foot&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;span class=&quot;px-2 py-1 bg-green-50 text-brand-green text-[10px] font-bold rounded&quot; data-pixel-id=&quot;sazhn&quot; data-pixel-kind=&quot;text&quot;&gt;READY&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- POST-SSB ROADMAP --&gt;
+        &lt;div class=&quot;mt-12 bg-brand-dark rounded-[3rem] p-12 text-white reveal relative overflow-hidden&quot;&gt;
+            &lt;div class=&quot;absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-5 pointer-events-none&quot;&gt;&lt;/div&gt;
+            &lt;div class=&quot;relative z-10 flex flex-col md:flex-row justify-between items-center gap-12&quot;&gt;
+                &lt;div class=&quot;max-w-md&quot;&gt;
+                    &lt;h3 class=&quot;font-hero font-bold text-3xl mb-4&quot; data-pixel-id=&quot;bnyag&quot; data-pixel-kind=&quot;text&quot;&gt;Post-SSB Recommendation Roadmap&lt;/h3&gt;
+                    &lt;p class=&quot;text-gray-400 text-sm leading-relaxed&quot; data-pixel-id=&quot;c91hq&quot; data-pixel-kind=&quot;text&quot;&gt;Once you hear those golden words from the board, here's what follows next in your journey to the academy.&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;flex-1 w-full overflow-x-auto pb-4&quot;&gt;
+                    &lt;div class=&quot;flex gap-4 min-w-[600px]&quot;&gt;
+                        &lt;div class=&quot;flex-1 p-6 rounded-2xl bg-white/5 border border-white/10 text-center&quot;&gt;
+                            &lt;div class=&quot;text-[10px] font-bold text-brand-orange mb-2&quot; data-pixel-id=&quot;3j2wk&quot; data-pixel-kind=&quot;text&quot;&gt;DAY 0&lt;/div&gt;
+                            &lt;div class=&quot;font-bold text-sm&quot; data-pixel-id=&quot;75c7q&quot; data-pixel-kind=&quot;text&quot;&gt;Recommended&lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;flex-1 p-6 rounded-2xl bg-white/5 border border-white/10 text-center&quot;&gt;
+                            &lt;div class=&quot;text-[10px] font-bold text-brand-orange mb-2&quot; data-pixel-id=&quot;yr7pa&quot; data-pixel-kind=&quot;text&quot;&gt;WEEK 1-2&lt;/div&gt;
+                            &lt;div class=&quot;font-bold text-sm&quot; data-pixel-id=&quot;67tou&quot; data-pixel-kind=&quot;text&quot;&gt;Medical Board&lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;flex-1 p-6 rounded-2xl bg-white/5 border border-white/10 text-center&quot;&gt;
+                            &lt;div class=&quot;text-[10px] font-bold text-brand-orange mb-2&quot; data-pixel-id=&quot;w3u4s&quot; data-pixel-kind=&quot;text&quot;&gt;MONTH 1-3&lt;/div&gt;
+                            &lt;div class=&quot;font-bold text-sm&quot; data-pixel-id=&quot;9oytg&quot; data-pixel-kind=&quot;text&quot;&gt;Merit List&lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;flex-1 p-6 rounded-2xl bg-white/5 border border-white/10 text-center relative overflow-hidden&quot;&gt;
+                            &lt;div class=&quot;absolute inset-0 bg-brand-orange/20 animate-pulse&quot;&gt;&lt;/div&gt;
+                            &lt;div class=&quot;relative z-10&quot;&gt;
+                                &lt;div class=&quot;text-[10px] font-bold text-white mb-2 uppercase&quot; data-pixel-id=&quot;8pmqe&quot; data-pixel-kind=&quot;text&quot;&gt;FINAL&lt;/div&gt;
+                                &lt;div class=&quot;font-bold text-sm&quot; data-pixel-id=&quot;i782n&quot; data-pixel-kind=&quot;text&quot;&gt;Academy Reporting&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;script&gt;
+    document.addEventListener('DOMContentLoaded', () =&gt; {
+        // Simple Counter Logic for Dashboard
+        const counterObserver = new IntersectionObserver((entries) =&gt; {
+            entries.forEach(entry =&gt; {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.getAttribute('data-target'));
+                    let count = 0;
+                    const update = () =&gt; {
+                        const inc = target / 50;
+                        if (count &lt; target) {
+                            count += inc;
+                            el.innerText = Math.ceil(count);
+                            setTimeout(update, 20);
+                        } else {
+                            el.innerText = target;
+                        }
+                    };
+                    update();
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.counter').forEach(el =&gt; counterObserver.observe(el));
+    });
+&lt;/script&gt;&lt;/main&gt;
+
+    &lt;footer class=&quot;bg-brand-dark text-orange-50/70 py-16 text-sm&quot;&gt;
+        &lt;div class=&quot;max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-16&quot;&gt;
+            &lt;div class=&quot;col-span-1 md:col-span-1&quot;&gt;
+                &lt;div class=&quot;flex items-center gap-2 text-white mb-6&quot; data-pixel-id=&quot;gbfyt&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-shield-halved text-brand-orange text-xl&quot;&gt;&lt;/i&gt;
+                    &lt;span class=&quot;font-logo font-bold text-2xl tracking-tight&quot;&gt;OfficerPrep&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;p class=&quot;text-gray-500 leading-relaxed&quot; data-pixel-id=&quot;fi2ui&quot; data-pixel-kind=&quot;text&quot;&gt;
+                    Crafting future leaders for the Indian Armed Forces. Specialized SSB training for NDA, CDS, and AFCAT.
+                &lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 class=&quot;text-white font-bold mb-6&quot; data-pixel-id=&quot;dsnwd&quot; data-pixel-kind=&quot;text&quot;&gt;Resources&lt;/h4&gt;
+                &lt;ul class=&quot;space-y-3&quot;&gt;
+                    &lt;li data-pixel-id=&quot;ur6km&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;qa50e&quot; data-pixel-kind=&quot;link&quot;&gt;Psychology Tips&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;be6bz&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;obk77&quot; data-pixel-kind=&quot;link&quot;&gt;GTO Ground Rules&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;f03k5&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;ry8jd&quot; data-pixel-kind=&quot;link&quot;&gt;Daily Current Affairs&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 class=&quot;text-white font-bold mb-6&quot; data-pixel-id=&quot;p7ah5&quot; data-pixel-kind=&quot;text&quot;&gt;Academy&lt;/h4&gt;
+                &lt;ul class=&quot;space-y-3&quot;&gt;
+                    &lt;li data-pixel-id=&quot;zs15v&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;k3dun&quot; data-pixel-kind=&quot;link&quot;&gt;About Mentors&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;zf8yu&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;b0z4t&quot; data-pixel-kind=&quot;link&quot;&gt;Admissions&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-pixel-id=&quot;5mh7c&quot; data-pixel-kind=&quot;text&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;zc2os&quot; data-pixel-kind=&quot;link&quot;&gt;Batch Schedule&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 class=&quot;text-white font-bold mb-6&quot; data-pixel-id=&quot;2q64c&quot; data-pixel-kind=&quot;text&quot;&gt;Connect&lt;/h4&gt;
+                &lt;div class=&quot;flex gap-4&quot;&gt;
+                    &lt;a href=&quot;#&quot; class=&quot;w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition&quot;&gt;&lt;i class=&quot;fa-brands fa-youtube&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                    &lt;a href=&quot;#&quot; class=&quot;w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition&quot;&gt;&lt;i class=&quot;fa-brands fa-instagram&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                    &lt;a href=&quot;#&quot; class=&quot;w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-orange hover:text-white transition&quot;&gt;&lt;i class=&quot;fa-brands fa-telegram&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;max-w-7xl mx-auto px-6 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs&quot;&gt;
+            &lt;p data-pixel-id=&quot;ryaaf&quot; data-pixel-kind=&quot;text&quot;&gt;© 2024 OfficerPrep Academy. Jai Hind.&lt;/p&gt;
+            &lt;div class=&quot;flex gap-8&quot; data-pixel-id=&quot;rxcoc&quot; data-pixel-kind=&quot;text&quot;&gt;
+                &lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;gtr9j&quot; data-pixel-kind=&quot;link&quot;&gt;Privacy Policy&lt;/a&gt;
+                &lt;a href=&quot;#&quot; class=&quot;hover:text-white transition&quot; data-pixel-id=&quot;383l6&quot; data-pixel-kind=&quot;link&quot;&gt;Terms of Service&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/footer&gt;
+
+    &lt;script&gt;
+        document.addEventListener('DOMContentLoaded', () =&gt; {
+            const observer = new IntersectionObserver((entries) =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el =&gt; observer.observe(el));
+        });
+    &lt;/script&gt;
+
+&lt;/body&gt;&lt;/html&gt;" title="Live Website Preview" class="w-full h-full bg-white"></iframe></div></div>

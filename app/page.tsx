@@ -263,6 +263,92 @@ export default function Home() {
                     </div>
                 </section>
 
+                {/* PIQ READINESS SCORE SECTION */}
+                <section className="py-24 px-6 bg-brand-bg relative overflow-hidden">
+                    <div className="absolute inset-0 bg-grid-pattern opacity-100 pointer-events-none"></div>
+                    <div className="max-w-7xl mx-auto relative z-10">
+                        <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+                            {/* Left: Copy */}
+                            <div className="reveal-left">
+                                <div className="inline-block px-4 py-1.5 rounded-full border border-brand-orange/20 bg-brand-orange/5 mb-6">
+                                    <span className="font-noname text-xs font-bold text-brand-orange uppercase tracking-widest">PIQ Readiness Score™</span>
+                                </div>
+                                <h2 className="font-hero font-bold text-4xl lg:text-5xl text-brand-dark mb-6 tracking-tight">
+                                    Detect gaps before the <br />Interviewing Officer does.
+                                </h2>
+                                <p className="text-gray-500 font-noname text-lg mb-10 leading-relaxed">
+                                    AI-powered OLQ analysis based on official SSB PIQ format. Detect leadership gaps, red flags, and interview questions before you face the board.
+                                </p>
+                                <div className="flex flex-wrap gap-4">
+                                    <Link href="/piq" className="bg-brand-dark text-white h-14 px-8 rounded-full font-bold flex items-center justify-center hover:bg-brand-orange transition-all shadow-lg">
+                                        Get My PIQ Score
+                                    </Link>
+                                    <button className="h-14 px-8 rounded-full border border-gray-200 bg-white text-brand-dark font-bold hover:bg-gray-50 transition-all">
+                                        View Sample Report
+                                    </button>
+                                </div>
+                                <p className="mt-8 text-xs text-gray-400 font-bold uppercase tracking-widest">
+                                    Used by 10,000+ NDA &amp; CDS aspirants preparing for SSB.
+                                </p>
+                            </div>
+
+                            {/* Right: Sample Report Card */}
+                            <div className="reveal-right">
+                                <div className="bg-white/90 backdrop-blur-md p-10 rounded-[3rem] border border-gray-100 shadow-soft relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/5 blur-3xl rounded-full"></div>
+
+                                    <div className="flex justify-between items-start mb-10">
+                                        <div>
+                                            <h4 className="font-hero font-bold text-xl text-brand-dark">Sample PIQ Report</h4>
+                                            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Evaluation ID: #8821</p>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="text-4xl font-hero font-bold text-brand-orange">74<span className="text-sm text-gray-400">/100</span></div>
+                                        </div>
+                                    </div>
+
+                                    {/* OLQ Mini Bars */}
+                                    <div className="space-y-4 mb-10">
+                                        {[
+                                            { label: 'Leadership', pct: '70%' },
+                                            { label: 'Initiative', pct: '65%' },
+                                            { label: 'Responsibility', pct: '80%' },
+                                        ].map(({ label, pct }) => (
+                                            <div key={label} className="space-y-1">
+                                                <div className="flex justify-between text-[8px] font-bold uppercase text-gray-400">
+                                                    <span>{label}</span><span>{pct}</span>
+                                                </div>
+                                                <div className="h-1 w-full bg-gray-100 rounded-full">
+                                                    <div className="h-full bg-brand-orange rounded-full" style={{ width: pct }}></div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="p-4 bg-red-50 rounded-2xl border border-red-100">
+                                            <h5 className="text-[9px] font-bold text-red-500 uppercase mb-2">Red Flags</h5>
+                                            <ul className="text-[8px] text-red-800 space-y-1 font-bold">
+                                                <li>• No sports participation</li>
+                                                <li>• No position of responsibility</li>
+                                            </ul>
+                                        </div>
+                                        <div className="p-4 bg-brand-bg rounded-2xl border border-gray-100">
+                                            <h5 className="text-[9px] font-bold text-brand-dark uppercase mb-2">Interview Qs</h5>
+                                            <ul className="text-[8px] text-gray-500 space-y-1">
+                                                <li>• Describe your leadership role</li>
+                                                <li>• Why no team activities?</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
                 {/* LOGO CLOUD / TRUST BAR */}
                 <section className="border-y border-gray-100 bg-[#fcfbfa] py-10 overflow-hidden">
                     <div className="w-full">
@@ -272,20 +358,20 @@ export default function Home() {
                             <div className="flex w-max animate-marquee">
                                 <div className="flex items-center gap-20 lg:gap-32 px-12">
                                     <span className="text-2xl font-hero font-bold text-gray-300">NDA</span>
-                                    <span className="text-2xl font-hero font-bold text-gray-300">CDS (IMA/AFA/INA)</span>
+                                    <span className="text-2xl font-hero font-bold text-gray-300">CDS (IMA/AFA/INA/OTA)</span>
                                     <span className="text-2xl font-hero font-bold text-gray-300">AFCAT</span>
-                                    <span className="text-2xl font-hero font-bold text-gray-300">TES / UES</span>
+                                    <span className="text-2xl font-hero font-bold text-gray-300">TES/NAVY TECH</span>
                                     <span className="text-2xl font-hero font-bold text-gray-300">NCC SPECIAL</span>
-                                    <span className="text-2xl font-hero font-bold text-gray-300">TERRITORIAL ARMY</span>
+                                    <span className="text-2xl font-hero font-bold text-gray-300">TGC/SSC TECH</span>
                                 </div>
                                 {/* Duplicate for Marquee */}
                                 <div className="flex items-center gap-20 lg:gap-32 px-12">
                                     <span className="text-2xl font-hero font-bold text-gray-300">NDA</span>
-                                    <span className="text-2xl font-hero font-bold text-gray-300">CDS (IMA/AFA/INA)</span>
+                                    <span className="text-2xl font-hero font-bold text-gray-300">CDS (IMA/AFA/INA/OTA)</span>
                                     <span className="text-2xl font-hero font-bold text-gray-300">AFCAT</span>
-                                    <span className="text-2xl font-hero font-bold text-gray-300">TES / UES</span>
+                                    <span className="text-2xl font-hero font-bold text-gray-300">TES/NAVY TECH</span>
                                     <span className="text-2xl font-hero font-bold text-gray-300">NCC SPECIAL</span>
-                                    <span className="text-2xl font-hero font-bold text-gray-300">TERRITORIAL ARMY</span>
+                                    <span className="text-2xl font-hero font-bold text-gray-300">TGC/SSC TECH</span>
                                 </div>
                             </div>
                         </div>
@@ -329,14 +415,14 @@ export default function Home() {
                                         <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold flex-shrink-0">04</div>
                                         <div>
                                             <h4 className="font-bold text-brand-dark mb-1">GTO Tasks II</h4>
-                                            <p className="text-sm text-gray-500 font-noname">Outdoor group tasks and deep-dive one-on-one conversations with the IO.</p>
+                                            <p className="text-sm text-gray-500 font-noname">Command Task, Individual Obstacles, and Final Group Task designed to evaluate initiative, problem-solving, and officer-like qualities under pressure.</p>
                                         </div>
                                     </div>
                                     <div className="flex gap-4 p-4 rounded-2xl hover:bg-brand-bg transition-colors border border-transparent hover:border-gray-100">
                                         <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold flex-shrink-0">05</div>
                                         <div>
                                             <h4 className="font-bold text-brand-dark mb-1">Conference</h4>
-                                            <p className="text-sm text-gray-500 font-noname">Outdoor group tasks and deep-dive one-on-one conversations with the IO.</p>
+                                            <p className="text-sm text-gray-500 font-noname">Final interaction with the board where your complete 5-day performance is assessed before the recommendation decision.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -483,7 +569,7 @@ export default function Home() {
                                 <div className="flex gap-1 text-brand-yellow mb-6">
                                     <i className="fa-solid fa-star text-xs"></i><i className="fa-solid fa-star text-xs"></i><i className="fa-solid fa-star text-xs"></i><i className="fa-solid fa-star text-xs"></i><i className="fa-solid fa-star text-xs"></i>
                                 </div>
-                                <p className="text-gray-600 italic font-noname mb-8">&quot;The psychology feedback was instrumental. I realized my TAT stories were negative, and LakshaySSB helped me reframe my mindset towards problem-solving.&quot;</p>
+                                <p className="text-gray-600 italic font-noname mb-8">&quot;The psychology feedback was instrumental. I realized my TAT stories were negative, and LakshyaSSB helped me reframe my mindset towards problem-solving.&quot;</p>
                                 <div className="flex items-center gap-4">
                                     <img src="https://images.pexels.com/photos/6121941/pexels-photo-6121941.jpeg?w=100&h=100&fit=crop" alt="Success Story" className="w-12 h-12 rounded-full object-cover" />
                                     <div>

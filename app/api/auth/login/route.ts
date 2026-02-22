@@ -8,61 +8,50 @@ export async function POST(request: Request) {
         const body = await request.json();
         const { email, password } = body;
 
-        // Validate required fields
         if (!email || !password) {
-            return NextResponse.json(
-                { error: 'Email and password are required' },
-                { status: 400 }
-            );
+            return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
         }
 
-        // Find user by email
         const user = await prisma.user.findUnique({
-            where: { email },
+            where: { email: email.toLowerCase().trim() },
+            select: {
+                id: true,
+                email: true,
+                fullName: true,
+                passwordHash: true,
+                plan: true,
+                planExpiry: true,
+            },
         });
 
         if (!user) {
-            return NextResponse.json(
-                { error: 'Invalid email or password' },
-                { status: 401 }
-            );
+            return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
         }
 
-        // Verify password
-        const isValidPassword = await bcrypt.compare(password, user.password);
-
-        if (!isValidPassword) {
-            return NextResponse.json(
-                { error: 'Invalid email or password' },
-                { status: 401 }
-            );
+        const isValid = await bcrypt.compare(password, user.passwordHash);
+        if (!isValid) {
+            return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
         }
 
-        // Create session
         await signSession({
+            userId: user.id,
+            email: user.email,
+            plan: user.plan as 'FREE' | 'PRO',
+            planExpiry: user.planExpiry ? user.planExpiry.toISOString() : null,
+        });
+
+        return NextResponse.json({
+            message: 'Login successful',
             user: {
                 id: user.id,
                 email: user.email,
-                name: `${user.firstName || ''} ${user.lastName || ''}`.trim(),
-                entry: user.targetEntry || '',
+                fullName: user.fullName,
+                plan: user.plan,
+                planExpiry: user.planExpiry,
             },
         });
-
-        // Return user data (excluding password)
-        const { password: _, ...userWithoutPassword } = user;
-
-        return NextResponse.json(
-            {
-                message: 'Login successful',
-                user: userWithoutPassword,
-            },
-            { status: 200 }
-        );
     } catch (error) {
-        console.error('Login error:', error);
-        return NextResponse.json(
-            { error: 'Internal server error' },
-            { status: 500 }
-        );
+        console.error('[login]', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }
