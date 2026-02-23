@@ -74,7 +74,7 @@ export default function Navbar() {
         { href: '/practice', label: 'Practice', icon: 'fa-dumbbell' },
         { href: '/medical', label: 'Medical', icon: 'fa-heart-pulse' },
         { href: '/pricing', label: 'Pricing', icon: 'fa-credit-card' },
-        { href: '/dashboard', label: 'Dashboard', icon: 'fa-gauge' },
+        { href: '/leaderboard', label: 'Leaderboard', icon: 'fa-trophy' },
     ];
 
     const closeMobile = () => setMobileMenuOpen(false);
@@ -167,7 +167,7 @@ export default function Navbar() {
                             </div>
                         )}
 
-                        {/* Join Academy / Dashboard pill (desktop) — unchanged */}
+                        {/* Join Academy / Dashboard pill (desktop) */}
                         <div className="hidden md:flex items-center">
                             {user ? (
                                 <Link href="/dashboard" className="group relative bg-brand-dark p-[2px] rounded-full shadow-lg transition-all duration-300 hover:shadow-xl">
@@ -175,7 +175,7 @@ export default function Navbar() {
                                         <div className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]" />
                                         <span className="relative z-10 text-white group-hover:text-brand-dark text-sm font-medium transition-colors duration-[1000ms]">Dashboard</span>
                                         <div className="relative z-10 bg-white text-brand-dark w-8 h-8 rounded-full flex items-center justify-center">
-                                            <i className="fa-solid fa-gauge text-xs" />
+                                            <i className="fa-solid fa-gauge-high text-xs" />
                                         </div>
                                     </div>
                                 </Link>
@@ -311,7 +311,7 @@ export default function Navbar() {
                                     onClick={closeMobile}
                                     className="flex items-center justify-center gap-2 w-full py-3.5 bg-brand-dark text-white rounded-2xl text-sm font-semibold hover:opacity-90 transition shadow-md"
                                 >
-                                    <i className="fa-solid fa-gauge text-xs" />
+                                    <i className="fa-solid fa-gauge-high text-xs" />
                                     Go to Dashboard
                                 </Link>
                             ) : (

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 interface User {
@@ -14,8 +14,30 @@ interface DashboardClientProps {
     user: User;
 }
 
+// ─── PIQ API Response Types ──────────────────────────────────────────────────
+interface PIQLatestNone { status: 'NO_PIQ' }
+interface PIQLatestExists {
+    status: 'HAS_PIQ';
+    latestScore: number;
+    riskLevel: 'LOW' | 'MODERATE' | 'HIGH';
+    lastUpdated: string;
+    olqs: { leadership: number; initiative: number; responsibility: number; socialAdaptability: number; confidence: number; consistency: number; };
+}
+type PIQLatest = PIQLatestNone | PIQLatestExists;
+
 export default function DashboardClient({ user }: DashboardClientProps) {
     const counterRef = useRef<HTMLDivElement>(null);
+    const [piqData, setPiqData] = useState<PIQLatest | null>(null);
+    const [piqLoading, setPiqLoading] = useState(true);
+
+    // Fetch PIQ status on mount
+    useEffect(() => {
+        fetch('/api/piq/latest')
+            .then(r => r.json())
+            .then((data: PIQLatest) => setPiqData(data))
+            .catch(() => setPiqData({ status: 'NO_PIQ' }))
+            .finally(() => setPiqLoading(false));
+    }, []);
 
     useEffect(() => {
         // Reveal Animations
@@ -415,32 +437,143 @@ export default function DashboardClient({ user }: DashboardClientProps) {
 
                 {/* PIQ BUILDER & EXPERIENCE LIBRARY */}
                 <div className="mt-12 grid lg:grid-cols-2 gap-8 reveal">
-                    {/* PIQ Builder */}
-                    <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="w-14 h-14 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark text-xl">
-                                <i className="fa-solid fa-file-pen"></i>
-                            </div>
-                            <div>
-                                <h3 className="font-hero font-bold text-2xl text-brand-dark">Build Your PIQ Profile</h3>
-                                <p className="text-sm text-gray-400 font-noname">Generate your projected interview questions.</p>
-                            </div>
-                        </div>
+                    {/* PIQ Builder — Live Conditional Card */}
+                    <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm relative overflow-hidden">
 
-                        <div className="grid md:grid-cols-2 gap-4 mb-8">
-                            <div className="p-4 bg-brand-bg rounded-2xl">
-                                <h5 className="text-[10px] font-bold uppercase text-gray-400 mb-2">Sample Questions</h5>
-                                <ul className="text-[11px] text-gray-600 space-y-2">
-                                    <li>• Tell me about your biggest responsibility.</li>
-                                    <li>• Why do you want to join the Armed Forces?</li>
-                                    <li>• Describe a leadership experience.</li>
-                                </ul>
+                        {/* ── LOADING SKELETON ── */}
+                        {piqLoading && (
+                            <div className="space-y-4 animate-pulse">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-14 h-14 rounded-2xl bg-gray-100" />
+                                    <div className="flex-1 space-y-2">
+                                        <div className="h-4 bg-gray-100 rounded-full w-3/4" />
+                                        <div className="h-3 bg-gray-100 rounded-full w-1/2" />
+                                    </div>
+                                </div>
+                                <div className="h-24 bg-gray-50 rounded-2xl" />
+                                <div className="h-10 bg-gray-100 rounded-full" />
                             </div>
-                            <img src="https://images.unsplash.com/photo-1693045181178-d5d83fb070c8?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxJbnRlcnZpZXclMjBwcm9maWxlJTIwZm9ybSUyMFVJJTIwaWxsdXN0cmF0aW9ufGVufDB8fHx8MTc3MTEwMzYzNnww&ixlib=rb-4.1.0&w=300&h=200&fit=crop&fm=jpg&q=80" className="rounded-2xl w-full h-full object-cover" alt="PIQ Builder" />
-                        </div>
+                        )}
 
-                        <Link href="/piq-builder" className="w-full block text-center py-4 bg-brand-dark text-white rounded-full font-bold text-sm hover:bg-brand-orange transition-all">Open PIQ Builder</Link>
+                        {/* ── STATE A: No PIQ submission ── */}
+                        {!piqLoading && piqData?.status === 'NO_PIQ' && (
+                            <>
+                                <div className="flex items-center gap-4 mb-8">
+                                    <div className="w-14 h-14 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark text-xl">
+                                        <i className="fa-solid fa-file-pen"></i>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-hero font-bold text-2xl text-brand-dark">Build Your PIQ Profile</h3>
+                                        <p className="text-sm text-gray-400 font-noname">Generate your SSB readiness score.</p>
+                                    </div>
+                                </div>
+
+                                <div className="p-5 bg-brand-bg rounded-2xl border border-gray-100 mb-8">
+                                    <p className="text-[10px] font-bold uppercase text-gray-400 mb-3">What you&apos;ll unlock</p>
+                                    <ul className="space-y-2">
+                                        {['OLQ Radar Analysis', 'Risk Heatmap', 'IO Question Prediction', 'Score History Tracker'].map(item => (
+                                            <li key={item} className="flex items-center gap-2 text-xs font-bold text-brand-dark">
+                                                <i className="fa-solid fa-check text-brand-green text-[10px]"></i> {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <Link
+                                    href="/piq/form"
+                                    className="w-full block text-center py-4 bg-brand-dark text-white rounded-full font-bold text-sm hover:bg-brand-orange transition-all shadow-lg"
+                                >
+                                    Fill PIQ Form
+                                </Link>
+                            </>
+                        )}
+
+                        {/* ── STATE B: Has PIQ submission ── */}
+                        {!piqLoading && piqData?.status === 'HAS_PIQ' && (() => {
+                            const d = piqData;
+                            const riskBadge = d.riskLevel === 'LOW'
+                                ? { label: '🟢 Low Risk', cls: 'bg-green-50  text-green-700  border-green-200' }
+                                : d.riskLevel === 'MODERATE'
+                                    ? { label: '🟡 Moderate Risk', cls: 'bg-yellow-50 text-yellow-700 border-yellow-200' }
+                                    : { label: '🔴 High Risk', cls: 'bg-red-50    text-red-700    border-red-200' };
+                            const score = d.latestScore;
+                            const r = 30;
+                            const circ = 2 * Math.PI * r;
+                            const dash = circ * (1 - score / 100);
+                            const olqBars = [
+                                { l: 'Leadership', v: d.olqs.leadership * 10 },
+                                { l: 'Initiative', v: d.olqs.initiative * 10 },
+                                { l: 'Responsibility', v: d.olqs.responsibility * 10 },
+                            ];
+                            const lastDate = new Date(d.lastUpdated).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+
+                            return (
+                                <>
+                                    <div className="flex items-start justify-between mb-6">
+                                        <div>
+                                            <p className="text-[10px] font-bold text-brand-orange uppercase tracking-widest mb-1">PIQ Readiness Score™</p>
+                                            <h3 className="font-hero font-bold text-xl text-brand-dark">Your PIQ Readiness Score™</h3>
+                                        </div>
+                                        <span className={`px-3 py-1.5 rounded-full text-xs font-bold border ${riskBadge.cls}`}>{riskBadge.label}</span>
+                                    </div>
+
+                                    {/* Score Circle */}
+                                    <div className="flex items-center gap-6 mb-6 p-6 bg-brand-bg rounded-2xl border border-gray-100">
+                                        <div className="relative w-20 h-20 flex-shrink-0">
+                                            <svg viewBox="0 0 80 80" className="w-full h-full">
+                                                <circle cx="40" cy="40" r={r} fill="none" stroke="#f3f4f6" strokeWidth="8" />
+                                                <circle cx="40" cy="40" r={r} fill="none" stroke="#FF5E3A" strokeWidth="8"
+                                                    strokeLinecap="round"
+                                                    strokeDasharray={circ}
+                                                    strokeDashoffset={dash}
+                                                    transform="rotate(-90 40 40)"
+                                                    style={{ transition: 'stroke-dashoffset 1s ease' }}
+                                                />
+                                                <text x="40" y="36" textAnchor="middle" fill="#0F0F12" fontSize="14" fontWeight="700">{score}</text>
+                                                <text x="40" y="49" textAnchor="middle" fill="#9ca3af" fontSize="8">/100</text>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div className="text-4xl font-hero font-bold text-brand-orange">
+                                                {score}<span className="text-lg text-gray-400">/100</span>
+                                            </div>
+                                            <div className="text-[10px] text-gray-400 font-bold uppercase mt-1">Last evaluated {lastDate}</div>
+                                        </div>
+                                    </div>
+
+                                    {/* Mini OLQ bars */}
+                                    <div className="space-y-2 mb-6">
+                                        {olqBars.map(({ l, v }) => (
+                                            <div key={l}>
+                                                <div className="flex justify-between text-[9px] font-bold uppercase text-gray-400 mb-1">
+                                                    <span>{l}</span>
+                                                    <span style={{ color: v < 60 ? '#FF5E3A' : '#10B981' }}>{v}%</span>
+                                                </div>
+                                                <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                                                    <div className="h-full rounded-full transition-all duration-700"
+                                                        style={{ width: `${v}%`, background: v < 60 ? '#FF5E3A' : '#10B981' }} />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <Link href="/piq-builder"
+                                            className="block text-center py-3 bg-brand-dark text-white rounded-full font-bold text-xs hover:bg-brand-orange transition-all">
+                                            View Full Analysis
+                                        </Link>
+                                        <Link href="/piq/form"
+                                            className="block text-center py-3 bg-brand-bg border border-gray-200 text-brand-dark rounded-full font-bold text-xs hover:bg-gray-100 transition-all">
+                                            Re-Evaluate PIQ
+                                        </Link>
+                                    </div>
+                                </>
+                            );
+                        })()}
                     </div>
+
+
+
 
                     {/* Medical Readiness */}
                     <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm relative overflow-hidden">
@@ -515,6 +648,6 @@ export default function DashboardClient({ user }: DashboardClientProps) {
                     </div>
                 </div>
             </div>
-        </main>
+        </main >
     );
 }

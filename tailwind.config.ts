@@ -37,6 +37,7 @@ const config: Config = {
             animation: {
                 'marquee': 'marquee 25s linear infinite',
                 'float': 'float 6s ease-in-out infinite',
+                'fadeIn': 'fadeIn 0.4s ease-out both',
             },
             keyframes: {
                 marquee: {
@@ -46,6 +47,10 @@ const config: Config = {
                 float: {
                     '0%, 100%': { transform: 'translateY(0)' },
                     '50%': { transform: 'translateY(-20px)' },
+                },
+                fadeIn: {
+                    '0%': { opacity: '0', transform: 'translateY(12px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
                 },
             },
             backgroundImage: {

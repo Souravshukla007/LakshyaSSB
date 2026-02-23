@@ -23,7 +23,6 @@ interface User {
     preferredSSBCenter: string | null;
     plan: 'FREE' | 'PRO';
     planExpiry: string | null;
-    autoRenew: boolean;
     payments: Payment[];
 }
 
@@ -201,19 +200,6 @@ function ProfileSection({ user }: { user: User }) {
 function SubscriptionSection({ user }: { user: User }) {
     const proActive = isPro(user.plan, user.planExpiry);
     const days = daysRemaining(user.planExpiry);
-    const [autoRenew, setAutoRenew] = useState(user.autoRenew);
-    const [isToggling, startToggle] = useTransition();
-
-    function handleToggleAutoRenew() {
-        startToggle(async () => {
-            await fetch('/api/account/profile', {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ autoRenew: !autoRenew }),
-            });
-            setAutoRenew((prev) => !prev);
-        });
-    }
 
     return (
         <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
@@ -257,26 +243,7 @@ function SubscriptionSection({ user }: { user: User }) {
                 </a>
             )}
 
-            {proActive && (
-                <div className="flex items-center justify-between p-5 bg-gray-50 rounded-2xl">
-                    <div>
-                        <p className="text-sm font-semibold text-brand-dark">Auto Renew</p>
-                        <p className="text-xs text-gray-500 mt-0.5">Automatically renew when plan expires</p>
-                    </div>
-                    <button
-                        onClick={handleToggleAutoRenew}
-                        disabled={isToggling}
-                        className={`relative w-12 h-6 rounded-full transition-colors duration-200 focus:outline-none
-              ${autoRenew ? 'bg-brand-orange' : 'bg-gray-300'}`}
-                        aria-label="Toggle auto renew"
-                    >
-                        <span
-                            className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200
-                ${autoRenew ? 'translate-x-6' : 'translate-x-0'}`}
-                        />
-                    </button>
-                </div>
-            )}
+
         </div>
     );
 }

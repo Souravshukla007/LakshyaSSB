@@ -16,7 +16,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { fullName, phone, targetEntry, attemptNumber, preferredSSBCenter, autoRenew } = body;
+    const { fullName, phone, targetEntry, attemptNumber, preferredSSBCenter } = body;
 
     // Minimal validation
     if (fullName !== undefined && typeof fullName === 'string' && fullName.trim().length < 2) {
@@ -46,7 +46,6 @@ export async function PATCH(request: NextRequest) {
     if (targetEntry !== undefined) data.targetEntry = targetEntry || null;
     if (attemptNumber !== undefined) data.attemptNumber = attemptNumber ? Number(attemptNumber) : null;
     if (preferredSSBCenter !== undefined) data.preferredSSBCenter = preferredSSBCenter || null;
-    if (autoRenew !== undefined && typeof autoRenew === 'boolean') data.autoRenew = autoRenew;
 
     const updated = await prisma.user.update({
         where: { id: session.userId },
@@ -57,7 +56,6 @@ export async function PATCH(request: NextRequest) {
             targetEntry: true,
             attemptNumber: true,
             preferredSSBCenter: true,
-            autoRenew: true,
         },
     });
 

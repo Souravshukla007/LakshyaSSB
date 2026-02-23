@@ -25,6 +25,12 @@ enum PaymentStatus {
   FAILED
 }
 
+enum RiskLevel {
+  LOW
+  MODERATE
+  HIGH
+}
+
 // ---------------------------------------------------------------------------
 // Models
 // ---------------------------------------------------------------------------
@@ -39,18 +45,31 @@ model User {
   attemptNumber      Int?
   preferredSSBCenter String?
 
-  // Subscription
+  // Subscription (Razorpay)
   plan       Plan      @default(FREE)
   planExpiry DateTime?
-  autoRenew  Boolean   @default(false)
+
+  // Leaderboard & Medal System
+  medals_total   Int       @default(0)
+  medals_weekly  Int       @default(0)
+  current_streak Int       @default(0)
+  longest_streak Int       @default(0)
+  last_login     DateTime?
+  is_pro         Boolean   @default(false)
 
   // Relations
-  payments Payment[]
+  payments       Payment[]
+  medicalResults MedicalResult[]
+  piqSubmission  PiqSubmission?
+  piqScores      PiqScore[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([email])
+  @@index([medals_total])
+  @@index([medals_weekly])
+  @@index([current_streak])
 }
 
 model Payment {
@@ -65,4 +84,105 @@ model Payment {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// Medical Readiness Results
+// ---------------------------------------------------------------------------
+
+model MedicalResult {
+  id             String    @id @default(uuid())
+  userId         String
+
+  // Raw inputs
+  heightCm       Float
+  weightKg       Float
+  vision         String    // "6/6" | "correctable" | "none"
+  flatFoot       Boolean   @default(false)
+  colorBlind     Boolean   @default(false)
+  surgeryHistory Boolean   @default(false)
+  pushups        Int
+  runMinutes     Float
+  situps         Int
+
+  // Computed scores (stored for history display)
+  bmi            Float
+  bmiScore       Int
+  visionScore    Int
+  conditionScore Int
+  fitnessScore   Int
+  medicalScore   Int
+  riskLevel      RiskLevel
+
+  createdAt      DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// PIQ Builder — Submission Inputs
+// ---------------------------------------------------------------------------
+
+model PiqSubmission {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+
+  // Leadership signals
+  positionOfResponsibility Boolean @default(false)
+  teamSportsYears          Int     @default(0)
+  nccInvolvement           Boolean @default(false)
+  sportsLevel              String  @default("none") // "none" | "school" | "district" | "state"
+
+  // Initiative signals
+  organizedEvent   Boolean @default(false)
+  volunteerWork    Boolean @default(false)
+
+  // Responsibility signals
+  familyResponsibility Boolean @default(false)
+  academicConsistency  Boolean @default(false)
+
+  // Confidence signals
+  publicSpeaking           Boolean @default(false)
+  competitiveAchievements  Boolean @default(false)
+
+  // Meta
+  attemptNumber Int @default(1)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// PIQ Builder — Score History (one row per evaluation)
+// ---------------------------------------------------------------------------
+
+model PiqScore {
+  id     String @id @default(uuid())
+  userId String
+
+  // OLQ sub-scores (0–10 each)
+  leadership        Int
+  initiative        Int
+  responsibility    Int
+  socialAdaptability Int
+  confidence        Int
+  consistency       Int
+
+  // Computed totals
+  totalScore Int
+  riskLevel  RiskLevel
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
 }

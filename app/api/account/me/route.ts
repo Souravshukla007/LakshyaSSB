@@ -28,7 +28,6 @@ export async function GET() {
             preferredSSBCenter: true,
             plan: true,
             planExpiry: true,
-            autoRenew: true,
             createdAt: true,
             payments: {
                 orderBy: { createdAt: 'desc' },

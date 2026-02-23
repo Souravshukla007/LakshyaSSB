@@ -25,7 +25,7 @@ export async function checkAndDowngrade(userId: string): Promise<void> {
     if (user.plan === 'PRO' && user.planExpiry && user.planExpiry < new Date()) {
         await prisma.user.update({
             where: { id: userId },
-            data: { plan: 'FREE', planExpiry: null, autoRenew: false },
+            data: { plan: 'FREE', planExpiry: null },
         });
     }
 }

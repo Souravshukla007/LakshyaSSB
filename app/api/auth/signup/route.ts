@@ -42,7 +42,6 @@ export async function POST(request: Request) {
                 email: email.toLowerCase().trim(),
                 passwordHash,
                 plan: 'FREE',
-                autoRenew: false,
             },
             select: {
                 id: true,

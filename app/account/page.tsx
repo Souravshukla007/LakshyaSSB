@@ -30,7 +30,6 @@ export default async function AccountPage() {
             preferredSSBCenter: true,
             plan: true,
             planExpiry: true,
-            autoRenew: true,
             payments: {
                 orderBy: { createdAt: 'desc' },
                 take: 10,
