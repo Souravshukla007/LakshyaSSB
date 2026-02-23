@@ -69,13 +69,23 @@ export default function Navbar() {
         router.refresh();
     };
 
-    const navLinks = [
+    // Links visible to everyone
+    const guestNavLinks = [
         { href: '/', label: 'Home', icon: 'fa-house' },
         { href: '/practice', label: 'Practice', icon: 'fa-dumbbell' },
         { href: '/medical', label: 'Medical', icon: 'fa-heart-pulse' },
         { href: '/pricing', label: 'Pricing', icon: 'fa-credit-card' },
-        { href: '/leaderboard', label: 'Leaderboard', icon: 'fa-trophy' },
+        { href: '/ssb-entry-navigator', label: 'SSB Entry Navigator', icon: 'fa-compass' },
     ];
+
+    // Extra link only for logged-in users
+    const authNavLinks = [
+        ...guestNavLinks.slice(0, 4), // Home, Practice, Medical, Pricing
+        { href: '/leaderboard', label: 'Leaderboard', icon: 'fa-trophy' },
+        { href: '/ssb-entry-navigator', label: 'SSB Entry Navigator', icon: 'fa-compass' },
+    ];
+
+    const navLinks = user ? authNavLinks : guestNavLinks;
 
     const closeMobile = () => setMobileMenuOpen(false);
 
