@@ -814,7 +814,7 @@ function Step4Report({
                         ))}
                     </ul>
                     <button className="px-8 py-3.5 rounded-2xl bg-brand-orange text-white font-bold text-sm hover:opacity-90 transition-opacity">
-                        Unlock Pro Analysis — ₹149
+                        Unlock Pro Analysis — ₹99
                     </button>
                 </div>
             </div>

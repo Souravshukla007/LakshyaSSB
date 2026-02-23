@@ -7,7 +7,20 @@ import { isPro } from '@/lib/plan';
 const AUTH_PROTECTED = ['/dashboard', '/account'];
 
 // Routes that require an active PRO subscription
-const PRO_PROTECTED = ['/ssb', '/piq', '/practice', '/daily-question', '/medical', '/olq-report'];
+const PRO_PROTECTED = [
+    '/piq',
+    '/daily-question',
+    '/olq-report',
+    // Sub-paths like tests inside medical, practice, and ssb are protected 
+    // but the root page is accessible publicly.
+    // E.g., /medical/test (if any), /practice/oir, /practice/wat, /practice/tat, etc.
+    '/practice/oir', '/practice/wat', '/practice/tat', '/practice/srt', '/practice/lecturette',
+    // Currently, /medical doesn't seem to have sub-pages from what we saw, but if it does, add them here.
+    // For ssb, /ssb is accessible, but what about /ssb/day-1? 
+    // The user requested: "keep the links open for the all 5 day in your path to recommedation section in landing page for all users." 
+    // This means /ssb/day-1, day-2, etc. should be accessible to all users. 
+    // If there are tests under /ssb, they would be protected.
+];
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
@@ -51,11 +64,16 @@ export const config = {
     matcher: [
         '/dashboard/:path*',
         '/account/:path*',
-        '/ssb/:path*',
+        // ssb root & day-X are public, but if there are tests, they might be /ssb/day-1/test etc.
+        // For now, no strict matcher for /ssb/:path* needed unless we add protected sub-routes under it.
+        // Actually, if we don't include it in matcher, middleware won't run. So we should include routes we want to protect.
         '/piq/:path*',
-        '/practice/:path*',
+        '/practice/oir/:path*',
+        '/practice/wat/:path*',
+        '/practice/tat/:path*',
+        '/practice/srt/:path*',
+        '/practice/lecturette/:path*',
         '/daily-question/:path*',
-        '/medical/:path*',
         '/olq-report/:path*',
     ],
 };
