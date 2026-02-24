@@ -10,7 +10,6 @@ export interface SessionPayload {
     userId: string;
     email: string;
     plan: 'FREE' | 'PRO';
-    planExpiry: string | null; // ISO string
     expires: string;
 }
 

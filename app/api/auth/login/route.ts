@@ -20,7 +20,6 @@ export async function POST(request: Request) {
                 fullName: true,
                 passwordHash: true,
                 plan: true,
-                planExpiry: true,
             },
         });
 
@@ -37,7 +36,6 @@ export async function POST(request: Request) {
             userId: user.id,
             email: user.email,
             plan: user.plan as 'FREE' | 'PRO',
-            planExpiry: user.planExpiry ? user.planExpiry.toISOString() : null,
         });
 
         return NextResponse.json({
@@ -47,7 +45,6 @@ export async function POST(request: Request) {
                 email: user.email,
                 fullName: user.fullName,
                 plan: user.plan,
-                planExpiry: user.planExpiry,
             },
         });
     } catch (error) {

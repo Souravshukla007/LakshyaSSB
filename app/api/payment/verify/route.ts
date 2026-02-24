@@ -44,11 +44,13 @@ export async function POST(request: NextRequest) {
         });
 
         if (existing) {
-            return NextResponse.json({ success: true, message: 'Already processed' });
+            // If payment already processed, ensure PRO is activated and return success
+            await activatePro(session.userId);
+            return NextResponse.json({ success: true, message: 'Payment verified successfully.' });
         }
 
         // Upgrade user to PRO and record payment atomically
-        const planExpiry = await activatePro(session.userId);
+        await activatePro(session.userId);
 
         await prisma.payment.create({
             data: {
@@ -62,7 +64,6 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({
             success: true,
-            planExpiry: planExpiry.toISOString(),
         });
     } catch (error) {
         console.error('[verify] Error:', error);

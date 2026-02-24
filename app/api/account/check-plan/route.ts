@@ -12,7 +12,7 @@ export async function POST(request: Request) {
 
         const user = await prisma.user.findUnique({
             where: { id: userId },
-            select: { plan: true, planExpiry: true },
+            select: { plan: true },
         });
 
         if (!user) {
@@ -21,7 +21,6 @@ export async function POST(request: Request) {
 
         return NextResponse.json({
             plan: user.plan,
-            planExpiry: user.planExpiry,
         });
     } catch (error) {
         console.error('[check-plan]', error);

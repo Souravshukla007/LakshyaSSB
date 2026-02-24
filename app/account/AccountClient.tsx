@@ -22,7 +22,6 @@ interface User {
     attemptNumber: number | null;
     preferredSSBCenter: string | null;
     plan: 'FREE' | 'PRO';
-    planExpiry: string | null;
     payments: Payment[];
 }
 
@@ -33,16 +32,9 @@ interface Props {
 const TARGET_ENTRIES = ['NDA', 'CDS', 'AFCAT', 'TA', 'SSC', 'NCC Special'];
 const SSB_CENTERS = ['Allahabad', 'Bhopal', 'Bangalore', 'Mysore', 'Kapurthala', 'Coimbatore', 'Varanasi'];
 
-function daysRemaining(planExpiry: string | null): number {
-    if (!planExpiry) return 0;
-    const diff = new Date(planExpiry).getTime() - Date.now();
-    return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
-}
-
-function isPro(plan: string, planExpiry: string | null): boolean {
+function isPro(plan: string): boolean {
     if (plan !== 'PRO') return false;
-    if (!planExpiry) return false;
-    return new Date(planExpiry) > new Date();
+    return true;
 }
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
@@ -198,8 +190,7 @@ function ProfileSection({ user }: { user: User }) {
 // ─── Section: Subscription ────────────────────────────────────────────────────
 
 function SubscriptionSection({ user }: { user: User }) {
-    const proActive = isPro(user.plan, user.planExpiry);
-    const days = daysRemaining(user.planExpiry);
+    const proActive = isPro(user.plan);
 
     return (
         <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
@@ -211,28 +202,9 @@ function SubscriptionSection({ user }: { user: User }) {
             ${proActive ? 'bg-brand-orange/10 text-brand-orange' : 'bg-gray-100 text-gray-500'}`}
                 >
                     <span className={`w-2 h-2 rounded-full ${proActive ? 'bg-brand-orange' : 'bg-gray-400'}`} />
-                    {proActive ? 'PRO Active' : 'FREE Plan'}
+                    {proActive ? 'PRO Active (Lifetime)' : 'FREE Plan'}
                 </span>
-
-                {proActive && (
-                    <span className="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-green-50 text-green-700 text-sm font-semibold">
-                        ⏱ {days} day{days !== 1 ? 's' : ''} remaining
-                    </span>
-                )}
             </div>
-
-            {proActive && user.planExpiry && (
-                <p className="text-sm text-gray-500 mb-6">
-                    Your PRO access expires on{' '}
-                    <span className="font-semibold text-brand-dark">
-                        {new Date(user.planExpiry).toLocaleDateString('en-IN', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric',
-                        })}
-                    </span>
-                </p>
-            )}
 
             {!proActive && (
                 <a

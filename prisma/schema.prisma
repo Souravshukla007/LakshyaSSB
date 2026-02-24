@@ -47,7 +47,6 @@ model User {
 
   // Subscription (Razorpay)
   plan       Plan      @default(FREE)
-  planExpiry DateTime?
 
   // Leaderboard & Medal System
   medals_total   Int       @default(0)

@@ -3,6 +3,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import type { VisionType, MedicalScoreBreakdown, WeeklyPlan } from "@/lib/medical-score";
 
 
@@ -565,19 +566,22 @@ function HistoryPanel({ entries }: { entries: HistoryEntry[] }) {
 }
 
 function Step4Report({
-    height, weight, vision, conditions, pushups, runTime, situps, onBack, onRestart,
+    height, weight, vision, conditions, pushups, runTime, situps, onBack, onRestart, isPro,
 }: {
     height: string; weight: string;
     vision: VisionType;
     conditions: Record<string, boolean>;
     pushups: string; runTime: string; situps: string;
     onBack: () => void; onRestart: () => void;
+    isPro: boolean;
 }) {
     const [status, setStatus] = useState<'loading' | 'done' | 'guest' | 'error'>('loading');
     const [result, setResult] = useState<MedicalScoreBreakdown | null>(null);
     const [toast, setToast] = useState<string | null>(null);
     const [history, setHistory] = useState<HistoryEntry[]>([]);
     const [showHistory, setShowHistory] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+    const [hasSaved, setHasSaved] = useState(false);
     const hasFetched = useRef(false);
 
     const showToast = useCallback((msg: string) => {
@@ -585,28 +589,51 @@ function Step4Report({
         setTimeout(() => setToast(null), 3500);
     }, []);
 
+    const payload = {
+        heightCm: parseFloat(height) || 0,
+        weightKg: parseFloat(weight) || 0,
+        vision,
+        flatFoot: conditions.flatFoot ?? false,
+        colorBlind: conditions.colorBlind ?? false,
+        surgeryHistory: conditions.surgery ?? false,
+        pushups: parseFloat(pushups) || 0,
+        runMinutes: parseFloat(runTime) || 0,
+        situps: parseFloat(situps) || 0,
+    };
+
+    const handleSave = async () => {
+        if (isSaving || hasSaved) return;
+        setIsSaving(true);
+        try {
+            const res = await fetch('/api/medical/calculate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...payload, save: true }),
+            });
+            if (res.ok) {
+                setHasSaved(true);
+                showToast('✓ Saved to Dashboard');
+                // Refresh history
+                fetch('/api/medical/history')
+                    .then(r => r.ok ? r.json() : [])
+                    .then((h: HistoryEntry[]) => setHistory(h))
+                    .catch(() => { });
+            }
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
     useEffect(() => {
         if (hasFetched.current) return;
         hasFetched.current = true;
-
-        const payload = {
-            heightCm: parseFloat(height) || 0,
-            weightKg: parseFloat(weight) || 0,
-            vision,
-            flatFoot: conditions.flatFoot ?? false,
-            colorBlind: conditions.colorBlind ?? false,
-            surgeryHistory: conditions.surgery ?? false,
-            pushups: parseFloat(pushups) || 0,
-            runMinutes: parseFloat(runTime) || 0,
-            situps: parseFloat(situps) || 0,
-        };
 
         (async () => {
             try {
                 const res = await fetch('/api/medical/calculate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
+                    body: JSON.stringify({ ...payload, save: false }),
                 });
 
                 if (res.status === 401) {
@@ -636,12 +663,11 @@ function Step4Report({
                     plan: data.plan,
                 });
                 setStatus('done');
-                if (data.savedToProfile) showToast('✓ Saved to your profile');
 
                 // Load history in background
                 fetch('/api/medical/history')
                     .then(r => r.ok ? r.json() : [])
-                    .then((h: HistoryEntry[]) => setHistory(h.slice(1))) // skip the one just saved
+                    .then((h: HistoryEntry[]) => setHistory(h))
                     .catch(() => { });
 
             } catch {
@@ -792,46 +818,57 @@ function Step4Report({
             )}
 
             {/* Upgrade CTA */}
-            <div className="rounded-3xl overflow-hidden border border-gray-900 bg-gray-900 p-8 text-center relative">
-                <div className="absolute inset-0 opacity-5"
-                    style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #F97316 0%, transparent 60%)' }} />
-                <div className="relative">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 text-[10px] font-bold uppercase tracking-widest mb-4">
-                        ⭐ Pro Feature
+            {!isPro && (
+                <div className="rounded-3xl overflow-hidden border border-gray-900 bg-gray-900 p-8 text-center relative">
+                    <div className="absolute inset-0 opacity-5"
+                        style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #F97316 0%, transparent 60%)' }} />
+                    <div className="relative">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 text-[10px] font-bold uppercase tracking-widest mb-4">
+                            ⭐ Pro Feature
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-2">Unlock Detailed Medical Analysis</h3>
+                        <p className="text-gray-400 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
+                            Get a personalised rejection probability, custom fitness roadmap, and complete medical document checklist.
+                        </p>
+                        <ul className="text-left max-w-xs mx-auto mb-7 space-y-2">
+                            {['Detailed rejection probability score', 'Personalised fitness roadmap', 'Medical document checklist'].map((item, i) => (
+                                <li key={i} className="flex items-center gap-2.5 text-sm text-gray-300">
+                                    <span className="w-4 h-4 rounded-full bg-orange-500/30 flex items-center justify-center flex-shrink-0">
+                                        <span className="text-orange-400 text-[8px]">✓</span>
+                                    </span>
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                        <a href="/pricing" className="inline-block px-8 py-3.5 rounded-2xl bg-brand-orange text-white font-bold text-sm hover:opacity-90 transition-opacity">
+                            Unlock Pro Analysis — ₹99
+                        </a>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Unlock Detailed Medical Analysis</h3>
-                    <p className="text-gray-400 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
-                        Get a personalised rejection probability, custom fitness roadmap, and complete medical document checklist.
-                    </p>
-                    <ul className="text-left max-w-xs mx-auto mb-7 space-y-2">
-                        {['Detailed rejection probability score', 'Personalised fitness roadmap', 'Medical document checklist'].map((item, i) => (
-                            <li key={i} className="flex items-center gap-2.5 text-sm text-gray-300">
-                                <span className="w-4 h-4 rounded-full bg-orange-500/30 flex items-center justify-center flex-shrink-0">
-                                    <span className="text-orange-400 text-[8px]">✓</span>
-                                </span>
-                                {item}
-                            </li>
-                        ))}
-                    </ul>
-                    <button className="px-8 py-3.5 rounded-2xl bg-brand-orange text-white font-bold text-sm hover:opacity-90 transition-opacity">
-                        Unlock Pro Analysis — ₹99
-                    </button>
                 </div>
-            </div>
+            )}
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 mb-6">
                 <button
                     onClick={onBack}
                     className="flex-1 px-6 py-3.5 rounded-2xl border-2 border-gray-200 text-sm font-bold text-gray-600 hover:bg-gray-50 transition-all"
                 >
                     ← Edit Fitness Data
                 </button>
+                {status !== 'guest' && (
+                    <button
+                        onClick={handleSave}
+                        disabled={isSaving || hasSaved}
+                        className="flex-[1.5] px-6 py-3.5 rounded-2xl bg-brand-orange text-white text-sm font-bold hover:opacity-90 transition-all disabled:opacity-50"
+                    >
+                        {isSaving ? 'Saving...' : hasSaved ? '✓ Saved to Dashboard' : '💾 Save to Dashboard'}
+                    </button>
+                )}
                 <button
                     onClick={onRestart}
                     className="flex-1 px-6 py-3.5 rounded-2xl bg-brand-dark text-white text-sm font-bold hover:opacity-90 transition-all"
                 >
-                    🔄 Restart Simulator
+                    🔄 Restart
                 </button>
             </div>
         </div>
@@ -853,6 +890,21 @@ export default function MedicalSimulator() {
     });
     // Vision type for scoring
     const [vision, setVision] = useState<VisionType>('6/6');
+
+    // User status
+    const [isPro, setIsPro] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        fetch('/api/account/me')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data?.fullName) setIsLoggedIn(true);
+                if (data?.plan === 'PRO') setIsPro(true);
+            })
+            .catch(() => null);
+    }, []);
 
     // Step 3
     const [pushups, setPushups] = useState("");
@@ -915,7 +967,13 @@ export default function MedicalSimulator() {
                                     pushups={pushups} setPushups={setPushups}
                                     runTime={runTime} setRunTime={setRunTime}
                                     situps={situps} setSitups={setSitups}
-                                    onBack={back} onNext={next}
+                                    onBack={back} onNext={() => {
+                                        if (!isLoggedIn) {
+                                            router.push('/auth');
+                                            return;
+                                        }
+                                        next();
+                                    }}
                                 />
                             )}
                             {step === 3 && (
@@ -925,6 +983,7 @@ export default function MedicalSimulator() {
                                     conditions={conditions}
                                     pushups={pushups} runTime={runTime} situps={situps}
                                     onBack={back} onRestart={restart}
+                                    isPro={isPro}
                                 />
                             )}
                         </div>

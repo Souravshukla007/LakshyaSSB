@@ -157,6 +157,7 @@ export default function PIQBuilderPage() {
     const [activeOLQ, setActiveOLQ] = useState<keyof OLQScores | null>(null);
     const [expandedQ, setExpandedQ] = useState<number | null>(null);
     const [mounted, setMounted] = useState(false);
+    const [isPro, setIsPro] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -166,10 +167,12 @@ export default function PIQBuilderPage() {
             fetch('/api/piq/latest').then(r => r.json()),
             fetch('/api/piq/history').then(r => r.json()),
             fetch('/api/piq/io-questions').then(r => r.json()),
-        ]).then(([lat, hist, io]) => {
+            fetch('/api/account/me').then(r => r.ok ? r.json() : null),
+        ]).then(([lat, hist, io, user]) => {
             setLatest(lat);
             setHistory(Array.isArray(hist) ? hist : []);
             setIoQs(Array.isArray(io.questions) ? io.questions : []);
+            if (user?.plan === 'PRO') setIsPro(true);
         }).catch(console.error).finally(() => setLoading(false));
 
         // Reveal animations
@@ -404,10 +407,12 @@ export default function PIQBuilderPage() {
                                                 placeholder="Type your answer here to practise..."
                                                 className="w-full text-sm font-noname p-4 rounded-xl border border-gray-200 bg-white resize-none focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange transition-all"
                                             />
-                                            <p className="text-xs text-gray-400 font-noname mt-3 flex items-center gap-1">
-                                                <i className="fa-solid fa-lock text-[10px]"></i>
-                                                AI feedback available on Pro plan
-                                            </p>
+                                            {!isPro && (
+                                                <p className="text-xs text-gray-400 font-noname mt-3 flex items-center gap-1">
+                                                    <i className="fa-solid fa-lock text-[10px]"></i>
+                                                    AI feedback available on Pro plan
+                                                </p>
+                                            )}
                                         </div>
                                     )}
                                 </div>

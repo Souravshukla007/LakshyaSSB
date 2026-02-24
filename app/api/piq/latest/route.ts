@@ -27,29 +27,14 @@ export async function GET() {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const rows = await prisma.$queryRaw<LatestPiqRow[]>`
-            SELECT
-                id,
-                leadership,
-                initiative,
-                responsibility,
-                "socialAdaptability",
-                confidence,
-                consistency,
-                "totalScore",
-                "riskLevel",
-                "createdAt"
-            FROM "PiqScore"
-            WHERE "userId" = ${session.userId}
-            ORDER BY "createdAt" DESC
-            LIMIT 1
-        `;
+        const latest = await prisma.piqScore.findFirst({
+            where: { userId: session.userId },
+            orderBy: { createdAt: 'desc' },
+        });
 
-        if (!rows || rows.length === 0) {
+        if (!latest) {
             return NextResponse.json({ status: 'NO_PIQ' });
         }
-
-        const latest = rows[0];
 
         return NextResponse.json({
             status: 'HAS_PIQ',

@@ -367,62 +367,66 @@ export default function LeaderboardPage() {
                         </div>
 
                         {/* 99-medal progress teaser */}
-                        <div className="mt-5 p-4 rounded-2xl bg-orange-50 border border-orange-100 flex items-center gap-4">
-                            <div className="flex-1">
-                                <p className="text-sm font-bold text-gray-900">🏅 99 Medals = Unlock Pro Access</p>
-                                <p className="text-xs text-gray-500 mt-0.5">Compete harder. Rank higher. Access full insights.</p>
-                                <div className="mt-2 w-full bg-orange-100 rounded-full h-2">
-                                    <div className="bg-orange-500 h-2 rounded-full transition-all duration-500" style={{ width: '28%' }} />
+                        {!isPro && (
+                            <div className="mt-5 p-4 rounded-2xl bg-orange-50 border border-orange-100 flex items-center gap-4">
+                                <div className="flex-1">
+                                    <p className="text-sm font-bold text-gray-900">🏅 99 Medals = Unlock Pro Access</p>
+                                    <p className="text-xs text-gray-500 mt-0.5">Compete harder. Rank higher. Access full insights.</p>
+                                    <div className="mt-2 w-full bg-orange-100 rounded-full h-2">
+                                        <div className="bg-orange-500 h-2 rounded-full transition-all duration-500" style={{ width: '28%' }} />
+                                    </div>
+                                    <p className="text-[10px] text-gray-400 mt-1">28 / 99 medals earned (example)</p>
                                 </div>
-                                <p className="text-[10px] text-gray-400 mt-1">28 / 99 medals earned (example)</p>
+                                <i className="fa-solid fa-crown text-3xl text-orange-400 shrink-0" />
                             </div>
-                            <i className="fa-solid fa-crown text-3xl text-orange-400 shrink-0" />
-                        </div>
+                        )}
                     </section>
 
                     {/* ════════════════════════════════════
               MONETISATION CTA
           ════════════════════════════════════ */}
-                    <section className="relative overflow-hidden rounded-3xl bg-gray-900 shadow-2xl px-8 py-12 text-center">
-                        {/* Decorative orange glow circles */}
-                        <div className="absolute -top-10 -left-10 w-48 h-48 bg-orange-500/20 rounded-full blur-3xl pointer-events-none" />
-                        <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-orange-500/20 rounded-full blur-3xl pointer-events-none" />
+                    {!isPro && (
+                        <section className="relative overflow-hidden rounded-3xl bg-gray-900 shadow-2xl px-8 py-12 text-center">
+                            {/* Decorative orange glow circles */}
+                            <div className="absolute -top-10 -left-10 w-48 h-48 bg-orange-500/20 rounded-full blur-3xl pointer-events-none" />
+                            <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-orange-500/20 rounded-full blur-3xl pointer-events-none" />
 
-                        <div className="relative z-10 space-y-5">
-                            <div className="inline-flex items-center gap-2 bg-orange-500/20 text-orange-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
-                                <i className="fa-solid fa-crown text-[10px]" />
-                                Pro Access
+                            <div className="relative z-10 space-y-5">
+                                <div className="inline-flex items-center gap-2 bg-orange-500/20 text-orange-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
+                                    <i className="fa-solid fa-crown text-[10px]" />
+                                    Pro Access
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                                    Unlock Pro Access<br />
+                                    <span className="text-orange-500">with 99 Medals</span>
+                                </h2>
+                                <p className="text-gray-400 text-base max-w-md mx-auto">
+                                    Compete harder. Rank higher. Access the full leaderboard, detailed OLQ reports, and exclusive training materials.
+                                </p>
+
+                                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
+                                    <Link
+                                        href="/pricing"
+                                        className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white px-8 py-3.5 rounded-2xl font-bold text-sm transition-all shadow-lg shadow-orange-900/30 hover:shadow-orange-900/50"
+                                    >
+                                        <i className="fa-solid fa-crown text-xs" />
+                                        Upgrade to Pro
+                                    </Link>
+                                    <Link
+                                        href="/practice"
+                                        className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-3.5 rounded-2xl font-semibold text-sm transition-all"
+                                    >
+                                        <i className="fa-solid fa-dumbbell text-xs" />
+                                        Start Earning Medals
+                                    </Link>
+                                </div>
+
+                                <p className="text-gray-500 text-xs mt-4">
+                                    Already at 99 medals? <Link href="/auth" className="text-orange-400 underline font-semibold">Sign in to redeem →</Link>
+                                </p>
                             </div>
-                            <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
-                                Unlock Pro Access<br />
-                                <span className="text-orange-500">with 99 Medals</span>
-                            </h2>
-                            <p className="text-gray-400 text-base max-w-md mx-auto">
-                                Compete harder. Rank higher. Access the full leaderboard, detailed OLQ reports, and exclusive training materials.
-                            </p>
-
-                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
-                                <Link
-                                    href="/pricing"
-                                    className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white px-8 py-3.5 rounded-2xl font-bold text-sm transition-all shadow-lg shadow-orange-900/30 hover:shadow-orange-900/50"
-                                >
-                                    <i className="fa-solid fa-crown text-xs" />
-                                    Upgrade to Pro
-                                </Link>
-                                <Link
-                                    href="/practice"
-                                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-3.5 rounded-2xl font-semibold text-sm transition-all"
-                                >
-                                    <i className="fa-solid fa-dumbbell text-xs" />
-                                    Start Earning Medals
-                                </Link>
-                            </div>
-
-                            <p className="text-gray-500 text-xs mt-4">
-                                Already at 99 medals? <Link href="/auth" className="text-orange-400 underline font-semibold">Sign in to redeem →</Link>
-                            </p>
-                        </div>
-                    </section>
+                        </section>
+                    )}
 
                 </div>
             </main>

@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
         const {
             heightCm, weightKg, vision, flatFoot, colorBlind,
-            surgeryHistory, pushups, runMinutes, situps,
+            surgeryHistory, pushups, runMinutes, situps, save
         } = body;
 
         // Basic validation
@@ -35,23 +35,25 @@ export async function POST(request: Request) {
         });
 
         // Persist using raw SQL so we don't need a regenerated Prisma client
-        await prisma.$executeRaw`
-            INSERT INTO "MedicalResult" (
-                id, "userId",
-                "heightCm", "weightKg", vision,
-                "flatFoot", "colorBlind", "surgeryHistory",
-                pushups, "runMinutes", situps,
-                bmi, "bmiScore", "visionScore", "conditionScore", "fitnessScore",
-                "medicalScore", "riskLevel", "createdAt"
-            ) VALUES (
-                gen_random_uuid(), ${session.userId},
-                ${Number(heightCm)}, ${Number(weightKg)}, ${vision ?? '6/6'},
-                ${Boolean(flatFoot)}, ${Boolean(colorBlind)}, ${Boolean(surgeryHistory)},
-                ${Math.round(Number(pushups) || 0)}, ${Number(runMinutes) || 0}, ${Math.round(Number(situps) || 0)},
-                ${result.bmi}, ${result.bmiScore}, ${result.visionScore}, ${result.conditionScore}, ${result.fitnessScore},
-                ${result.medicalScore}, ${result.riskLevel}::"RiskLevel", NOW()
-            )
-        `;
+        if (save) {
+            await prisma.$executeRaw`
+                INSERT INTO "MedicalResult" (
+                    id, "userId",
+                    "heightCm", "weightKg", vision,
+                    "flatFoot", "colorBlind", "surgeryHistory",
+                    pushups, "runMinutes", situps,
+                    bmi, "bmiScore", "visionScore", "conditionScore", "fitnessScore",
+                    "medicalScore", "riskLevel", "createdAt"
+                ) VALUES (
+                    gen_random_uuid(), ${session.userId},
+                    ${Number(heightCm)}, ${Number(weightKg)}, ${vision ?? '6/6'},
+                    ${Boolean(flatFoot)}, ${Boolean(colorBlind)}, ${Boolean(surgeryHistory)},
+                    ${Math.round(Number(pushups) || 0)}, ${Number(runMinutes) || 0}, ${Math.round(Number(situps) || 0)},
+                    ${result.bmi}, ${result.bmiScore}, ${result.visionScore}, ${result.conditionScore}, ${result.fitnessScore},
+                    ${result.medicalScore}, ${result.riskLevel}::"RiskLevel", NOW()
+                )
+            `;
+        }
 
         return NextResponse.json({
             bmi: result.bmi,
@@ -62,7 +64,7 @@ export async function POST(request: Request) {
             medicalScore: result.medicalScore,
             riskLevel: result.riskLevel,
             plan: result.plan,
-            savedToProfile: true,
+            savedToProfile: !!save,
         });
 
     } catch (error) {

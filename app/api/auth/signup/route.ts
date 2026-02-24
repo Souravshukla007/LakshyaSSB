@@ -57,7 +57,6 @@ export async function POST(request: Request) {
             userId: user.id,
             email: user.email,
             plan: 'FREE',
-            planExpiry: null,
         });
 
         return NextResponse.json(

@@ -8,6 +8,9 @@ interface User {
     email: string;
     entry?: string;
     plan?: string;
+    current_streak: number;
+    longest_streak: number;
+    medals_total: number;
 }
 
 interface DashboardClientProps {
@@ -25,10 +28,33 @@ interface PIQLatestExists {
 }
 type PIQLatest = PIQLatestNone | PIQLatestExists;
 
+// ─── Medical API Response Types ──────────────────────────────────────────────
+interface MedicalLatestNone { status: 'NO_MEDICAL' }
+interface MedicalLatestExists {
+    status: 'HAS_MEDICAL';
+    data: {
+        bmi: number;
+        bmiScore: number;
+        visionScore: number;
+        conditionScore: number;
+        fitnessScore: number;
+        medicalScore: number;
+        riskLevel: 'LOW' | 'MODERATE' | 'HIGH';
+        vision: string;
+        flatFoot: boolean;
+        colorBlind: boolean;
+        surgeryHistory: boolean;
+    }
+}
+type MedicalLatest = MedicalLatestNone | MedicalLatestExists;
+
 export default function DashboardClient({ user }: DashboardClientProps) {
     const counterRef = useRef<HTMLDivElement>(null);
     const [piqData, setPiqData] = useState<PIQLatest | null>(null);
     const [piqLoading, setPiqLoading] = useState(true);
+
+    const [medicalData, setMedicalData] = useState<MedicalLatest | null>(null);
+    const [medicalLoading, setMedicalLoading] = useState(true);
 
     // Fetch PIQ status on mount
     useEffect(() => {
@@ -37,6 +63,12 @@ export default function DashboardClient({ user }: DashboardClientProps) {
             .then((data: PIQLatest) => setPiqData(data))
             .catch(() => setPiqData({ status: 'NO_PIQ' }))
             .finally(() => setPiqLoading(false));
+
+        fetch('/api/medical/latest')
+            .then(r => r.json())
+            .then((data: MedicalLatest) => setMedicalData(data))
+            .catch(() => setMedicalData({ status: 'NO_MEDICAL' }))
+            .finally(() => setMedicalLoading(false));
     }, []);
 
     useEffect(() => {
@@ -93,15 +125,19 @@ export default function DashboardClient({ user }: DashboardClientProps) {
                             <div className="inline-block px-3 py-1 rounded-lg bg-brand-orange/10 text-brand-orange text-[10px] font-bold uppercase tracking-widest">
                                 Cadet Dashboard
                             </div>
-                            <div className="px-3 py-1 bg-brand-orange text-white text-[10px] font-bold uppercase rounded-full shadow-glow">
-                                PRO PLAN
-                            </div>
+                            {user.plan === 'PRO' && (
+                                <div className="px-3 py-1 bg-brand-orange text-white text-[10px] font-bold uppercase rounded-full shadow-glow">
+                                    PRO PLAN
+                                </div>
+                            )}
                         </div>
                         <h1 className="font-hero font-bold text-4xl text-brand-dark mb-2">Welcome, <span className="text-brand-orange">{user.name}</span></h1>
                         <p className="text-gray-500 font-noname italic">"Service Before Self — Ready for {user.entry || 'SSB'}?"</p>
-                        <div className="mt-4">
-                            <Link href="/pricing" className="inline-block py-2 px-6 bg-brand-dark text-white rounded-full text-xs font-bold hover:bg-brand-orange transition-all">Go Pro!</Link>
-                        </div>
+                        {user.plan !== 'PRO' && (
+                            <div className="mt-4">
+                                <Link href="/pricing" className="inline-block py-2 px-6 bg-brand-dark text-white rounded-full text-xs font-bold hover:bg-brand-orange transition-all">Go Pro!</Link>
+                            </div>
+                        )}
                     </div>
                     <div className="flex gap-4">
                         <div className="p-4 bg-white rounded-2xl border border-gray-100 flex items-center gap-4 shadow-sm">
@@ -316,11 +352,11 @@ export default function DashboardClient({ user }: DashboardClientProps) {
                                 <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-50">
                                     <div>
                                         <div className="text-[10px] text-gray-400 font-bold uppercase mb-1">Practice Streak</div>
-                                        <div className="text-2xl font-bold text-brand-dark">6 <span className="text-xs text-gray-400 font-normal">Days</span></div>
+                                        <div className="text-2xl font-bold text-brand-dark">{user.current_streak} <span className="text-xs text-gray-400 font-normal">Days</span></div>
                                     </div>
                                     <div>
                                         <div className="text-[10px] text-gray-400 font-bold uppercase mb-1">Best Streak</div>
-                                        <div className="text-2xl font-bold text-brand-orange">14 <span className="text-xs text-gray-400 font-normal">Days</span></div>
+                                        <div className="text-2xl font-bold text-brand-orange">{user.longest_streak} <span className="text-xs text-gray-400 font-normal">Days</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -328,28 +364,31 @@ export default function DashboardClient({ user }: DashboardClientProps) {
 
                         {/* ACHIEVEMENTS / BADGES */}
                         <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm reveal-right delay-75">
-                            <h3 className="font-hero font-bold text-lg text-brand-dark mb-6">Achievements</h3>
+                            <div className="flex justify-between items-center mb-6">
+                                <h3 className="font-hero font-bold text-lg text-brand-dark">Achievements</h3>
+                                <div className="text-xs font-bold text-brand-orange">{user.medals_total} Medals</div>
+                            </div>
                             <div className="grid grid-cols-3 gap-4">
-                                {/* Screening Master */}
+                                {/* First Steps */}
                                 <div className="group relative flex flex-col items-center gap-2">
-                                    <div className="w-12 h-12 rounded-full bg-brand-orange shadow-glow flex items-center justify-center text-white text-lg">
-                                        <i className="fa-solid fa-shield-halved"></i>
+                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg ${user.medals_total >= 1 ? 'bg-brand-orange shadow-glow text-white' : 'bg-gray-100 text-gray-400'}`}>
+                                        <i className="fa-solid fa-star"></i>
                                     </div>
-                                    <span className="text-[8px] font-bold text-center uppercase tracking-tighter">Screening</span>
+                                    <span className="text-[8px] font-bold text-center uppercase tracking-tighter">Initiate</span>
                                 </div>
-                                {/* Psych Pro */}
+                                {/* 7-day Streak */}
                                 <div className="group relative flex flex-col items-center gap-2">
-                                    <div className="w-12 h-12 rounded-full bg-brand-orange shadow-glow flex items-center justify-center text-white text-lg">
-                                        <i className="fa-solid fa-brain"></i>
+                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg ${user.longest_streak >= 7 ? 'bg-brand-orange shadow-glow text-white' : 'bg-gray-100 text-gray-400'}`}>
+                                        <i className="fa-solid fa-fire"></i>
                                     </div>
-                                    <span className="text-[8px] font-bold text-center uppercase tracking-tighter">Psych Pro</span>
+                                    <span className="text-[8px] font-bold text-center uppercase tracking-tighter">7-Day Fire</span>
                                 </div>
-                                {/* GTO Leader (Locked) */}
-                                <div className="group relative flex flex-col items-center gap-2 opacity-30 grayscale">
-                                    <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-lg">
+                                {/* Advanced */}
+                                <div className="group relative flex flex-col items-center gap-2">
+                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg ${user.medals_total >= 10 ? 'bg-brand-orange shadow-glow text-white' : 'bg-gray-100 text-gray-400'}`}>
                                         <i className="fa-solid fa-crown"></i>
                                     </div>
-                                    <span className="text-[8px] font-bold text-center uppercase tracking-tighter">GTO Leader</span>
+                                    <span className="text-[8px] font-bold text-center uppercase tracking-tighter">Veteran</span>
                                 </div>
                             </div>
                         </div>
@@ -577,40 +616,100 @@ export default function DashboardClient({ user }: DashboardClientProps) {
 
                     {/* Medical Readiness */}
                     <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm relative overflow-hidden">
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="w-14 h-14 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark text-xl">
-                                <i className="fa-solid fa-notes-medical"></i>
-                            </div>
-                            <div>
-                                <h3 className="font-hero font-bold text-2xl text-brand-dark">SSB Medical Readiness</h3>
-                                <p className="text-sm text-gray-400 font-noname">Initial health standard self-check.</p>
-                                <Link href="/medical" className="text-[10px] font-bold text-brand-orange uppercase hover:underline">Check Status &rarr;</Link>
-                            </div>
-                        </div>
 
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between p-4 bg-brand-bg rounded-2xl">
-                                <div className="flex items-center gap-3">
-                                    <i className="fa-solid fa-ruler-vertical text-brand-orange"></i>
-                                    <span className="text-sm font-medium">Height/Weight Standard</span>
+                        {medicalLoading && (
+                            <div className="space-y-4 animate-pulse">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-14 h-14 rounded-2xl bg-gray-100" />
+                                    <div className="flex-1 space-y-2">
+                                        <div className="h-4 bg-gray-100 rounded-full w-3/4" />
+                                        <div className="h-3 bg-gray-100 rounded-full w-1/2" />
+                                    </div>
                                 </div>
-                                <span className="px-2 py-1 bg-green-50 text-brand-green text-[10px] font-bold rounded">READY</span>
+                                <div className="h-24 bg-gray-50 rounded-2xl" />
+                                <div className="h-10 bg-gray-100 rounded-full" />
                             </div>
-                            <div className="flex items-center justify-between p-4 bg-brand-bg rounded-2xl">
-                                <div className="flex items-center gap-3">
-                                    <i className="fa-solid fa-eye text-brand-orange"></i>
-                                    <span className="text-sm font-medium">Vision 6/6 Target</span>
+                        )}
+
+                        {!medicalLoading && medicalData?.status === 'NO_MEDICAL' && (
+                            <>
+                                <div className="flex items-center gap-4 mb-8">
+                                    <div className="w-14 h-14 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark text-xl">
+                                        <i className="fa-solid fa-notes-medical"></i>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-hero font-bold text-2xl text-brand-dark">SSB Medical Readiness</h3>
+                                        <p className="text-sm text-gray-400 font-noname">Initial health standard self-check.</p>
+                                    </div>
                                 </div>
-                                <span className="px-2 py-1 bg-yellow-50 text-brand-yellow text-[10px] font-bold rounded">NEEDS TEST</span>
-                            </div>
-                            <div className="flex items-center justify-between p-4 bg-brand-bg rounded-2xl">
-                                <div className="flex items-center gap-3">
-                                    <i className="fa-solid fa-shoe-prints text-brand-orange"></i>
-                                    <span className="text-sm font-medium">No Knock Knees/Flat Foot</span>
+
+                                <div className="p-5 bg-brand-bg rounded-2xl border border-gray-100 mb-8 flex flex-col items-center justify-center text-center gap-2">
+                                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-400 shadow-sm mb-2">
+                                        <i className="fa-solid fa-stethoscope"></i>
+                                    </div>
+                                    <p className="text-sm font-bold text-brand-dark">No Medical Data Found</p>
+                                    <p className="text-xs text-gray-500 font-noname mb-2">Take the medical simulator to check your readiness for SSB medical boards.</p>
                                 </div>
-                                <span className="px-2 py-1 bg-green-50 text-brand-green text-[10px] font-bold rounded">READY</span>
-                            </div>
-                        </div>
+
+                                <Link href="/medical" className="w-full block text-center py-4 bg-brand-dark text-white rounded-full font-bold text-sm hover:bg-brand-orange transition-all shadow-lg">Check Status &rarr;</Link>
+                            </>
+                        )}
+
+                        {!medicalLoading && medicalData?.status === 'HAS_MEDICAL' && (() => {
+                            const d = medicalData.data;
+                            return (
+                                <>
+                                    <div className="flex items-center gap-4 mb-8">
+                                        <div className="w-14 h-14 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark text-xl">
+                                            <i className="fa-solid fa-notes-medical"></i>
+                                        </div>
+                                        <div>
+                                            <h3 className="font-hero font-bold text-2xl text-brand-dark">SSB Medical Readiness</h3>
+                                            <p className="text-sm text-gray-400 font-noname">Initial health standard self-check.</p>
+                                            <Link href="/medical" className="text-[10px] font-bold text-brand-orange uppercase hover:underline">Re-evaluate &rarr;</Link>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <div className="flex items-center justify-between p-4 bg-brand-bg rounded-2xl">
+                                            <div className="flex items-center gap-3">
+                                                <i className="fa-solid fa-ruler-vertical text-brand-orange"></i>
+                                                <span className="text-sm font-medium">BMI Status</span>
+                                            </div>
+                                            {d.bmiScore >= 16 ? (
+                                                <span className="px-2 py-1 bg-green-50 text-brand-green text-[10px] font-bold rounded">READY</span>
+                                            ) : (
+                                                <span className="px-2 py-1 bg-yellow-50 text-brand-yellow text-[10px] font-bold rounded">NEEDS WORK</span>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center justify-between p-4 bg-brand-bg rounded-2xl">
+                                            <div className="flex items-center gap-3">
+                                                <i className="fa-solid fa-eye text-brand-orange"></i>
+                                                <span className="text-sm font-medium">Vision ({d.vision})</span>
+                                            </div>
+                                            {d.vision === '6/6' ? (
+                                                <span className="px-2 py-1 bg-green-50 text-brand-green text-[10px] font-bold rounded">READY</span>
+                                            ) : d.vision === 'correctable' ? (
+                                                <span className="px-2 py-1 bg-yellow-50 text-brand-yellow text-[10px] font-bold rounded">ACCEPTABLE</span>
+                                            ) : (
+                                                <span className="px-2 py-1 bg-red-50 text-red-700 text-[10px] font-bold rounded">DISQUALIFYING</span>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center justify-between p-4 bg-brand-bg rounded-2xl">
+                                            <div className="flex items-center gap-3">
+                                                <i className="fa-solid fa-shoe-prints text-brand-orange"></i>
+                                                <span className="text-sm font-medium">Clear Conditions</span>
+                                            </div>
+                                            {!d.flatFoot && !d.colorBlind ? (
+                                                <span className="px-2 py-1 bg-green-50 text-brand-green text-[10px] font-bold rounded">READY</span>
+                                            ) : (
+                                                <span className="px-2 py-1 bg-red-50 text-red-700 text-[10px] font-bold rounded">NEEDS CONSULT</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                </>
+                            );
+                        })()}
                     </div>
                 </div>
 

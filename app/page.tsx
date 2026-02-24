@@ -1,12 +1,20 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 
 export default function Home() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     useEffect(() => {
+        let isMounted = true;
+        fetch('/api/account/me')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => { if (isMounted && data?.email) setIsLoggedIn(true); })
+            .catch(() => null);
+
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -19,6 +27,7 @@ export default function Home() {
         document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
 
         return () => {
+            isMounted = false;
             revealObserver.disconnect();
         };
     }, []);
@@ -465,7 +474,7 @@ export default function Home() {
                                     <li className="flex items-center gap-2 text-xs font-bold text-brand-dark"><i className="fa-solid fa-check text-brand-green"></i> 50+ TAT Practice Sets</li>
                                     <li className="flex items-center gap-2 text-xs font-bold text-brand-dark"><i className="fa-solid fa-check text-brand-green"></i> Live SRT Analysis</li>
                                 </ul>
-                                <a href="#" className="text-brand-orange font-bold text-xs uppercase tracking-widest flex items-center gap-2 group/link">View Module <i className="fa-solid fa-arrow-right group-hover/link:translate-x-1 transition-transform"></i></a>
+                                <Link href={isLoggedIn ? '/practice' : '/auth'} className="text-brand-orange font-bold text-xs uppercase tracking-widest flex items-center gap-2 group/link">View Module <i className="fa-solid fa-arrow-right group-hover/link:translate-x-1 transition-transform"></i></Link>
                             </div>
 
                             {/* GTO Card */}
@@ -479,7 +488,7 @@ export default function Home() {
                                     <li className="flex items-center gap-2 text-xs font-bold text-brand-dark"><i className="fa-solid fa-check text-brand-green"></i> GPE Logic Building</li>
                                     <li className="flex items-center gap-2 text-xs font-bold text-brand-dark"><i className="fa-solid fa-check text-brand-green"></i> Obstacle Strategy</li>
                                 </ul>
-                                <a href="#" className="text-brand-orange font-bold text-xs uppercase tracking-widest flex items-center gap-2 group/link">View Module <i className="fa-solid fa-arrow-right group-hover/link:translate-x-1 transition-transform"></i></a>
+                                <Link href={isLoggedIn ? '/practice' : '/auth'} className="text-brand-orange font-bold text-xs uppercase tracking-widest flex items-center gap-2 group/link">View Module <i className="fa-solid fa-arrow-right group-hover/link:translate-x-1 transition-transform"></i></Link>
                             </div>
 
                             {/* Interview Card */}
@@ -493,7 +502,7 @@ export default function Home() {
                                     <li className="flex items-center gap-2 text-xs font-bold text-brand-dark"><i className="fa-solid fa-check text-brand-green"></i> 2 Mock Interviews</li>
                                     <li className="flex items-center gap-2 text-xs font-bold text-brand-dark"><i className="fa-solid fa-check text-brand-green"></i> Detailed PI Feedback</li>
                                 </ul>
-                                <a href="#" className="text-brand-orange font-bold text-xs uppercase tracking-widest flex items-center gap-2 group/link">View Module <i className="fa-solid fa-arrow-right group-hover/link:translate-x-1 transition-transform"></i></a>
+                                <Link href={isLoggedIn ? '/practice' : '/auth'} className="text-brand-orange font-bold text-xs uppercase tracking-widest flex items-center gap-2 group/link">View Module <i className="fa-solid fa-arrow-right group-hover/link:translate-x-1 transition-transform"></i></Link>
                             </div>
                         </div>
                     </div>

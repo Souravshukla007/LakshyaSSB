@@ -13,7 +13,6 @@ export default async function Dashboard() {
         redirect('/auth');
     }
 
-    // Fetch fresh user data from DB (session only holds id, email, plan)
     const user = await prisma.user.findUnique({
         where: { id: session.userId },
         select: {
@@ -21,7 +20,9 @@ export default async function Dashboard() {
             email: true,
             targetEntry: true,
             plan: true,
-            planExpiry: true,
+            current_streak: true,
+            longest_streak: true,
+            medals_total: true,
         },
     });
 
@@ -36,6 +37,9 @@ export default async function Dashboard() {
                     email: user.email,
                     entry: user.targetEntry ?? '',
                     plan: user.plan,
+                    current_streak: user.current_streak,
+                    longest_streak: user.longest_streak,
+                    medals_total: user.medals_total,
                 }}
             />
             <Footer />

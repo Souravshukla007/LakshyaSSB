@@ -86,7 +86,10 @@ export default function Navbar() {
 
     // Extra link only for logged-in users
     const authNavLinks = [
-        ...guestNavLinks.slice(0, 4), // Home, Practice, Medical, Pricing
+        { href: '/', label: 'Home', icon: 'fa-house' },
+        { href: '/practice', label: 'Practice', icon: 'fa-dumbbell' },
+        { href: '/medical', label: 'Medical', icon: 'fa-heart-pulse' },
+        ...(user?.plan === 'PRO' ? [] : [{ href: '/pricing', label: 'Pricing', icon: 'fa-credit-card' }]),
         { href: '/leaderboard', label: 'Leaderboard', icon: 'fa-trophy' },
         { href: '/ssb-entry-navigator', label: 'SSB Entry Navigator', icon: 'fa-compass' },
     ];
@@ -169,10 +172,12 @@ export default function Navbar() {
                                             className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors">
                                             <i className="fa-solid fa-chart-pie w-4" /> OLQ Report
                                         </Link>
-                                        <Link href="/pricing" onClick={() => setDropdownOpen(false)}
-                                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors">
-                                            <i className="fa-solid fa-credit-card w-4" /> Pricing
-                                        </Link>
+                                        {user.plan !== 'PRO' && (
+                                            <Link href="/pricing" onClick={() => setDropdownOpen(false)}
+                                                className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors">
+                                                <i className="fa-solid fa-credit-card w-4" /> Pricing
+                                            </Link>
+                                        )}
                                         <div className="h-[1px] bg-gray-50 my-1 mx-2" />
                                         <button onClick={handleLogout}
                                             className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-500 hover:bg-red-50 hover:text-red-500 transition-colors">
@@ -301,19 +306,21 @@ export default function Navbar() {
                                     <Link
                                         href="/olq-report"
                                         onClick={closeMobile}
-                                        className="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl text-sm text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange transition"
+                                        className={`flex items-center gap-2 p-3 bg-gray-50 rounded-2xl text-sm text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange transition ${user?.plan === 'PRO' ? 'col-span-2 justify-center' : ''}`}
                                     >
                                         <i className="fa-solid fa-chart-pie text-gray-400 text-sm" />
                                         OLQ Report
                                     </Link>
-                                    <Link
-                                        href="/pricing"
-                                        onClick={closeMobile}
-                                        className="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl text-sm text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange transition"
-                                    >
-                                        <i className="fa-solid fa-credit-card text-gray-400 text-sm" />
-                                        Pricing
-                                    </Link>
+                                    {user.plan !== 'PRO' && (
+                                        <Link
+                                            href="/pricing"
+                                            onClick={closeMobile}
+                                            className="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl text-sm text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange transition"
+                                        >
+                                            <i className="fa-solid fa-credit-card text-gray-400 text-sm" />
+                                            Pricing
+                                        </Link>
+                                    )}
                                 </div>
                             </>
                         )}

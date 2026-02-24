@@ -24,7 +24,7 @@ const PRO_FEATURES = [
     { text: "Badge System & Streaks", included: true },
     { text: "PIQ Builder + Interview Qs", included: true },
     { text: "Priority Email Support", included: true },
-    { text: "30-Day Access (One-Time Purchase)", included: true },
+    { text: "Lifetime Access (One-Time Purchase)", included: true },
 ];
 
 const COMPARISON_ROWS = [
@@ -91,7 +91,7 @@ export default function Pricing() {
                             <div>
                                 <h3 className="font-hero font-bold text-2xl text-brand-dark mb-2">FREE PLAN</h3>
                                 <div className="text-4xl font-bold text-brand-dark mb-2">
-                                    ₹0 <span className="text-sm text-gray-400 font-normal">/month</span>
+                                    ₹0 <span className="text-sm text-gray-400 font-normal">lifetime</span>
                                 </div>
                                 <p className="text-xs text-gray-400 mb-8">Limited access · No credit card required</p>
                                 <ul className="space-y-4 mb-10">
@@ -120,7 +120,7 @@ export default function Pricing() {
                                 <div className="text-4xl font-bold text-brand-dark mb-2">
                                     ₹99 <span className="text-sm text-gray-400 font-normal">one-time</span>
                                 </div>
-                                <p className="text-xs text-gray-400 mb-8">Full access · One-time payment · 30 days of digital access</p>
+                                <p className="text-xs text-gray-400 mb-8">Full access · One-time payment · Lifetime digital access</p>
                                 <ul className="space-y-4 mb-10">
                                     {PRO_FEATURES.map(({ text }) => (
                                         <li key={text} className="flex items-center gap-3 text-sm text-gray-600 font-bold">
