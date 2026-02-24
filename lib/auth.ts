@@ -36,6 +36,7 @@ export async function signSession(payload: Omit<SessionPayload, 'expires'>) {
 
     (await cookies()).set('session', token, {
         expires,
+        maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
@@ -73,6 +74,7 @@ export async function updateSession(request: NextRequest): Promise<NextResponse 
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
+            maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
             expires: newExpires,
             path: '/',
         });
