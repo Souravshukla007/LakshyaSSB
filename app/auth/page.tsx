@@ -9,6 +9,7 @@ export default function AuthPage() {
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
     const [otpEmail, setOtpEmail] = useState('');
     const [otpSent, setOtpSent] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -261,14 +262,23 @@ export default function AuthPage() {
                                                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest font-mono">Password</label>
                                                     <a href="#" className="text-[10px] font-bold text-brand-orange hover:underline">Forgot Password?</a>
                                                 </div>
-                                                <input
-                                                    type="password"
-                                                    name="password"
-                                                    placeholder="••••••••"
-                                                    required
-                                                    disabled={loading}
-                                                    className="w-full h-14 bg-gray-50 border border-gray-100 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
-                                                />
+                                                <div className="relative">
+                                                    <input
+                                                        type={showPassword ? 'text' : 'password'}
+                                                        name="password"
+                                                        placeholder="••••••••"
+                                                        required
+                                                        disabled={loading}
+                                                        className="w-full h-14 bg-gray-50 border border-gray-100 rounded-xl px-4 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setShowPassword(!showPassword)}
+                                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-orange transition-colors"
+                                                    >
+                                                        <i className={`fa-solid ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                                                    </button>
+                                                </div>
                                             </div>
 
                                             <button
@@ -418,14 +428,23 @@ export default function AuthPage() {
                                             </div>
                                             <div>
                                                 <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 font-mono">Password</label>
-                                                <input
-                                                    type="password"
-                                                    name="password"
-                                                    placeholder="••••••••"
-                                                    required
-                                                    disabled={loading}
-                                                    className="w-full h-12 bg-gray-50 border border-gray-100 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
-                                                />
+                                                <div className="relative">
+                                                    <input
+                                                        type={showPassword ? 'text' : 'password'}
+                                                        name="password"
+                                                        placeholder="••••••••"
+                                                        required
+                                                        disabled={loading}
+                                                        className="w-full h-12 bg-gray-50 border border-gray-100 rounded-xl px-4 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setShowPassword(!showPassword)}
+                                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-orange transition-colors"
+                                                    >
+                                                        <i className={`fa-solid ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                                                    </button>
+                                                </div>
                                             </div>
 
                                             <button

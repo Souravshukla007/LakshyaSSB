@@ -47,11 +47,14 @@ export async function middleware(request: NextRequest) {
 
         try {
             const session = await decrypt(sessionCookie);
-            if (!isPro(session.plan, session.planExpiry)) {
-                // Not PRO (or expired) — send to pricing
+            const proStatus = isPro(session.plan, session.planExpiry);
+
+            if (!proStatus) {
+                console.log(`[MIDDLEWARE REDIRECT] JWT check failed for ${session.email} to /pricing`);
                 return NextResponse.redirect(new URL('/pricing', request.url));
             }
-        } catch {
+        } catch (error) {
+            console.log(`[MIDDLEWARE JWT ERROR]`, error);
             // Invalid/expired JWT — treat as logged out
             return NextResponse.redirect(new URL('/auth', request.url));
         }

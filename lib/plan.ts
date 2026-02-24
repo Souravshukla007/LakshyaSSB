@@ -7,7 +7,10 @@ import { prisma } from '@/lib/prisma';
 export function isPro(plan: string, planExpiry: Date | string | null): boolean {
     if (plan !== 'PRO') return false;
     if (!planExpiry) return false;
-    return new Date(planExpiry) > new Date();
+    const expiryDate = new Date(planExpiry);
+    // ensure valid date object before checking time
+    if (isNaN(expiryDate.getTime())) return false;
+    return expiryDate > new Date();
 }
 
 /**

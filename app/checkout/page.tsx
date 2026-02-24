@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import useScrollReveal from "@/hooks/useScrollReveal";
@@ -11,7 +11,15 @@ export default function Checkout() {
     useScrollReveal();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [userEmail, setUserEmail] = useState<string>('');
     const router = useRouter();
+
+    useEffect(() => {
+        fetch('/api/account/me')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => { if (data?.email) setUserEmail(data.email); })
+            .catch(() => null);
+    }, []);
 
     const handlePayment = async () => {
         setIsLoading(true);
@@ -60,7 +68,7 @@ export default function Checkout() {
                 },
                 prefill: {
                     name: "SSB Aspirant",
-                    email: "cadet@academy.in",
+                    email: userEmail || "cadet@academy.in",
                     contact: ""
                 },
                 theme: {
@@ -109,7 +117,7 @@ export default function Checkout() {
                         <div className="space-y-4 mb-8 sm:mb-10">
                             <div className="flex items-center gap-3 p-3 sm:p-4 border border-gray-100 rounded-xl">
                                 <i className="fa-solid fa-envelope text-brand-orange"></i>
-                                <span className="text-sm font-bold text-gray-400">cadet@academy.in</span>
+                                <span className="text-sm font-bold text-gray-400">{userEmail || 'Loading...'}</span>
                             </div>
                         </div>
 

@@ -47,5 +47,15 @@ export async function GET() {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
+    // Auto-sync stale session cookie if DB plan state diverged
+    if (user.plan !== session.plan || (user.planExpiry?.toISOString() || null) !== session.planExpiry) {
+        await import('@/lib/auth').then(m => m.signSession({
+            userId: user.id,
+            email: user.email,
+            plan: user.plan as 'FREE' | 'PRO',
+            planExpiry: user.planExpiry ? user.planExpiry.toISOString() : null,
+        }));
+    }
+
     return NextResponse.json(user);
 }

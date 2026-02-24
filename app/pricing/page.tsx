@@ -1,12 +1,11 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import useScrollReveal from "@/hooks/useScrollReveal";
 import Link from "next/link";
-
-// Note: metadata must go in a server component wrapper or generateMetadata — since this
-// page is already 'use client', add the title via the layout or a dedicated metadata file.
+import { useRouter } from "next/navigation";
 
 const FREE_FEATURES = [
     { text: "1 OIR test (limited)", included: true },
@@ -41,6 +40,17 @@ const COMPARISON_ROWS = [
 
 export default function Pricing() {
     useScrollReveal();
+    const router = useRouter();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        let isMounted = true;
+        fetch('/api/account/me')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => { if (isMounted && data?.email) setIsLoggedIn(true); })
+            .catch(() => null);
+        return () => { isMounted = false; };
+    }, []);
 
     return (
         <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
@@ -93,7 +103,9 @@ export default function Pricing() {
                                     ))}
                                 </ul>
                             </div>
-                            <button className="w-full py-4 border border-brand-dark rounded-full font-bold text-brand-dark hover:bg-brand-dark hover:text-white transition-all">
+                            <button
+                                onClick={() => router.push(isLoggedIn ? '/dashboard' : '/auth')}
+                                className="w-full py-4 border border-brand-dark rounded-full font-bold text-brand-dark hover:bg-brand-dark hover:text-white transition-all">
                                 Start Free
                             </button>
                         </div>
@@ -119,12 +131,12 @@ export default function Pricing() {
                                 </ul>
                             </div>
                             <div>
-                                <Link
-                                    href="/checkout"
+                                <button
+                                    onClick={() => router.push(isLoggedIn ? '/checkout' : '/auth')}
                                     className="w-full py-4 bg-brand-dark text-white rounded-full font-bold text-center hover:bg-brand-orange transition-all shadow-xl shadow-brand-dark/20 block"
                                 >
                                     Upgrade to Pro
-                                </Link>
+                                </button>
                                 <p className="text-center text-xs text-gray-400 mt-3">
                                     One-time purchase · No auto-renewal ·{" "}
                                     <Link href="/refund-policy" className="text-brand-orange hover:underline">
