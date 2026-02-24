@@ -19,11 +19,17 @@ export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    // Fetch user profile on mount
+    // Fetch user profile on mount & trigger daily login tracking
     useEffect(() => {
         fetch('/api/account/me')
             .then(res => res.ok ? res.json() : null)
-            .then(data => { if (data?.fullName) setUser(data); })
+            .then(data => {
+                if (data?.fullName) {
+                    setUser(data);
+                    // Silently trigger daily login check to update streak & medals
+                    fetch('/api/user/daily-login', { method: 'POST' }).catch(() => null);
+                }
+            })
             .catch(() => null);
     }, []);
 

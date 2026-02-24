@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -20,52 +20,6 @@ interface LeaderboardEntry {
     isCurrentUser?: boolean;
 }
 
-// ─── Mock data ────────────────────────────────────────────────────────────────
-const overallData: LeaderboardEntry[] = [
-    { rank: 1, username: 'CaptainArjun_IMA', medals: 234, currentStreak: 42, badge: '🎯 Elite Cadet', isCurrentUser: false },
-    { rank: 2, username: 'VikrantSingh_NDA', medals: 198, currentStreak: 37, badge: '⚔️ War Veteran', isCurrentUser: false },
-    { rank: 3, username: 'ShouriyaRana_OTA', medals: 176, currentStreak: 31, badge: '🛡️ Shield Bearer', isCurrentUser: false },
-    { rank: 4, username: 'AkashDeep_INA', medals: 155, currentStreak: 28, badge: '🌟 Rising Star', isCurrentUser: true },
-    { rank: 5, username: 'PranaySharma', medals: 143, currentStreak: 24, badge: '🔥 Streak Master', isCurrentUser: false },
-    { rank: 6, username: 'DevKumar_SSB', medals: 129, currentStreak: 21, badge: '💪 Dedicated', isCurrentUser: false },
-    { rank: 7, username: 'ManavJoshi', medals: 118, currentStreak: 19, badge: '📚 Scholar', isCurrentUser: false },
-    { rank: 8, username: 'RahulVerma_NDA', medals: 107, currentStreak: 16, badge: '🎖️ Achiever', isCurrentUser: false },
-    { rank: 9, username: 'SiddharthMalik', medals: 96, currentStreak: 14, badge: '⭐ Consistent', isCurrentUser: false },
-    { rank: 10, username: 'AnkitRajput', medals: 88, currentStreak: 12, badge: '🚀 Launching', isCurrentUser: false },
-    { rank: 11, username: 'RohanGupta', medals: 79, currentStreak: 10, badge: '🎯 Aspirant', isCurrentUser: false },
-    { rank: 12, username: 'VijayMehta', medals: 71, currentStreak: 9, badge: '💡 Sharp Mind', isCurrentUser: false },
-];
-
-const weeklyData: LeaderboardEntry[] = [
-    { rank: 1, username: 'VikrantSingh_NDA', medals: 28, weeklyMedals: 28, currentStreak: 7, weeklyStreak: 7, badge: '⚔️ War Veteran', isCurrentUser: false },
-    { rank: 2, username: 'CaptainArjun_IMA', medals: 25, weeklyMedals: 25, currentStreak: 7, weeklyStreak: 7, badge: '🎯 Elite Cadet', isCurrentUser: false },
-    { rank: 3, username: 'AkashDeep_INA', medals: 22, weeklyMedals: 22, currentStreak: 6, weeklyStreak: 6, badge: '🌟 Rising Star', isCurrentUser: true },
-    { rank: 4, username: 'PranaySharma', medals: 18, weeklyMedals: 18, currentStreak: 5, weeklyStreak: 5, badge: '🔥 Streak Master', isCurrentUser: false },
-    { rank: 5, username: 'ShouriyaRana_OTA', medals: 16, weeklyMedals: 16, currentStreak: 4, weeklyStreak: 4, badge: '🛡️ Shield Bearer', isCurrentUser: false },
-    { rank: 6, username: 'DevKumar_SSB', medals: 14, weeklyMedals: 14, currentStreak: 4, weeklyStreak: 4, badge: '💪 Dedicated', isCurrentUser: false },
-    { rank: 7, username: 'ManavJoshi', medals: 12, weeklyMedals: 12, currentStreak: 3, weeklyStreak: 3, badge: '📚 Scholar', isCurrentUser: false },
-    { rank: 8, username: 'SiddharthMalik', medals: 10, weeklyMedals: 10, currentStreak: 3, weeklyStreak: 3, badge: '⭐ Consistent', isCurrentUser: false },
-    { rank: 9, username: 'RahulVerma_NDA', medals: 9, weeklyMedals: 9, currentStreak: 2, weeklyStreak: 2, badge: '🎖️ Achiever', isCurrentUser: false },
-    { rank: 10, username: 'AnkitRajput', medals: 7, weeklyMedals: 7, currentStreak: 2, weeklyStreak: 2, badge: '🚀 Launching', isCurrentUser: false },
-    { rank: 11, username: 'RohanGupta', medals: 5, weeklyMedals: 5, currentStreak: 1, weeklyStreak: 1, badge: '🎯 Aspirant', isCurrentUser: false },
-    { rank: 12, username: 'VijayMehta', medals: 4, weeklyMedals: 4, currentStreak: 1, weeklyStreak: 1, badge: '💡 Sharp Mind', isCurrentUser: false },
-];
-
-const streakData: LeaderboardEntry[] = [
-    { rank: 1, username: 'CaptainArjun_IMA', medals: 234, currentStreak: 42, longestStreak: 58, badge: '🎯 Elite Cadet', isCurrentUser: false },
-    { rank: 2, username: 'VikrantSingh_NDA', medals: 198, currentStreak: 37, longestStreak: 51, badge: '⚔️ War Veteran', isCurrentUser: false },
-    { rank: 3, username: 'ShouriyaRana_OTA', medals: 176, currentStreak: 31, longestStreak: 44, badge: '🛡️ Shield Bearer', isCurrentUser: false },
-    { rank: 4, username: 'AkashDeep_INA', medals: 155, currentStreak: 28, longestStreak: 35, badge: '🌟 Rising Star', isCurrentUser: true },
-    { rank: 5, username: 'PranaySharma', medals: 143, currentStreak: 24, longestStreak: 30, badge: '🔥 Streak Master', isCurrentUser: false },
-    { rank: 6, username: 'DevKumar_SSB', medals: 129, currentStreak: 21, longestStreak: 28, badge: '💪 Dedicated', isCurrentUser: false },
-    { rank: 7, username: 'ManavJoshi', medals: 118, currentStreak: 19, longestStreak: 25, badge: '📚 Scholar', isCurrentUser: false },
-    { rank: 8, username: 'RahulVerma_NDA', medals: 107, currentStreak: 16, longestStreak: 22, badge: '🎖️ Achiever', isCurrentUser: false },
-    { rank: 9, username: 'SiddharthMalik', medals: 96, currentStreak: 14, longestStreak: 19, badge: '⭐ Consistent', isCurrentUser: false },
-    { rank: 10, username: 'AnkitRajput', medals: 88, currentStreak: 12, longestStreak: 16, badge: '🚀 Launching', isCurrentUser: false },
-    { rank: 11, username: 'RohanGupta', medals: 79, currentStreak: 10, longestStreak: 14, badge: '🎯 Aspirant', isCurrentUser: false },
-    { rank: 12, username: 'VijayMehta', medals: 71, currentStreak: 9, longestStreak: 12, badge: '💡 Sharp Mind', isCurrentUser: false },
-];
-
 // ─── Sub-components ───────────────────────────────────────────────────────────
 const podiumConfig = [
     { rankIndex: 1, medal: '🥇', title: 'Param Vir Chakra', order: 'order-2 md:order-2', height: 'pt-0', ring: 'ring-yellow-400 bg-gradient-to-b from-yellow-50 to-white', textColor: 'text-yellow-600', scale: 'scale-105 md:scale-110' },
@@ -75,31 +29,31 @@ const podiumConfig = [
 
 function PodiumCard({ entry, config }: { entry: LeaderboardEntry; config: typeof podiumConfig[0] }) {
     return (
-        <div className={`flex flex-col items-center ${config.order} ${config.height} ${config.scale} transition-transform duration-300`}>
+        <div className={`flex flex-col items-center justify-end ${config.order} ${config.height} ${config.scale} transition-transform duration-300 flex-1 max-w-[180px]`}>
             {/* Medal badge */}
-            <div className="text-5xl mb-2 drop-shadow-sm">{config.medal}</div>
+            <div className="text-3xl sm:text-5xl mb-1 sm:mb-2 drop-shadow-sm">{config.medal}</div>
 
             {/* Card */}
-            <div className={`ring-2 ${config.ring} rounded-2xl shadow-lg p-5 text-center w-full max-w-[200px] backdrop-blur-sm`}>
+            <div className={`ring-1 sm:ring-2 ${config.ring} rounded-xl sm:rounded-2xl shadow-lg p-3 sm:p-5 text-center w-full backdrop-blur-sm`}>
                 {/* Title */}
-                <p className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${config.textColor}`}>
+                <p className={`text-[8px] sm:text-[10px] font-bold uppercase tracking-widest mb-1 ${config.textColor} truncate px-1`}>
                     {config.title}
                 </p>
 
                 {/* Avatar initial */}
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mx-auto mb-3 ${config.rankIndex === 1 ? 'bg-yellow-500' : config.rankIndex === 2 ? 'bg-gray-400' : 'bg-orange-400'}`}>
+                <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-lg mx-auto mb-2 sm:mb-3 ${config.rankIndex === 1 ? 'bg-yellow-500' : config.rankIndex === 2 ? 'bg-gray-400' : 'bg-orange-400'}`}>
                     {entry.username.charAt(0).toUpperCase()}
                 </div>
 
-                <p className="text-sm font-bold text-gray-900 truncate">{entry.username}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{entry.badge}</p>
+                <p className="text-xs sm:text-sm font-bold text-gray-900 truncate px-1">{entry.username}</p>
+                <p className="hidden sm:block text-xs text-gray-500 mt-0.5 truncate">{entry.badge}</p>
 
-                <div className="mt-3 flex justify-center gap-3 text-xs">
+                <div className="mt-2 sm:mt-3 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3 text-[10px] sm:text-xs">
                     <span className="flex items-center gap-1 text-orange-500 font-semibold">
-                        <i className="fa-solid fa-medal text-[10px]" /> {entry.medals}
+                        <i className="fa-solid fa-medal text-[8px] sm:text-[10px]" /> {entry.medals}
                     </span>
                     <span className="flex items-center gap-1 text-indigo-500 font-semibold">
-                        <i className="fa-solid fa-fire text-[10px]" /> {entry.currentStreak}d
+                        <i className="fa-solid fa-fire text-[8px] sm:text-[10px]" /> {entry.currentStreak}d
                     </span>
                 </div>
             </div>
@@ -118,18 +72,44 @@ function RankPill({ rank }: { rank: number }) {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function LeaderboardPage() {
     const [tab, setTab] = useState<Tab>('overall');
-    const isPro = false; // swap with real auth when backend is wired
+    const [activeData, setActiveData] = useState<LeaderboardEntry[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isPro, setIsPro] = useState(false);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        // Fetch User status
+        fetch('/api/account/me')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => { if (isMounted && data?.plan === 'PRO') setIsPro(true); })
+            .catch(() => null);
+
+        const fetchLeaderboard = async () => {
+            setIsLoading(true);
+            try {
+                const res = await fetch(`/api/leaderboard?tab=${tab}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (isMounted) setActiveData(data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch leaderboard:', error);
+            } finally {
+                if (isMounted) setIsLoading(false);
+            }
+        };
+
+        fetchLeaderboard();
+
+        return () => { isMounted = false; };
+    }, [tab]);
 
     const tabs: { key: Tab; label: string; icon: string }[] = [
         { key: 'overall', label: 'Overall', icon: 'fa-trophy' },
         { key: 'weekly', label: 'Weekly', icon: 'fa-calendar-week' },
         { key: 'streak', label: 'Streak', icon: 'fa-fire' },
     ];
-
-    const activeData =
-        tab === 'overall' ? overallData :
-            tab === 'weekly' ? weeklyData :
-                streakData;
 
     const visibleRows = isPro ? activeData : activeData.slice(0, 10);
     const hiddenCount = activeData.length - 10;
@@ -171,18 +151,18 @@ export default function LeaderboardPage() {
                     {/* ════════════════════════════════════
               SEGMENT TABS
           ════════════════════════════════════ */}
-                    <div className="flex justify-center">
-                        <div className="inline-flex items-center gap-1 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-1.5 shadow-sm">
+                    <div className="flex justify-center w-full">
+                        <div className="flex w-full sm:w-auto items-center gap-1 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-1.5 shadow-sm">
                             {tabs.map(t => (
                                 <button
                                     key={t.key}
                                     onClick={() => setTab(t.key)}
-                                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${tab === t.key
-                                            ? 'bg-orange-500 text-white shadow-md shadow-orange-200'
-                                            : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'
+                                    className={`flex flex-1 sm:flex-none items-center justify-center gap-1 sm:gap-2 px-2 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${tab === t.key
+                                        ? 'bg-orange-500 text-white shadow-md shadow-orange-200'
+                                        : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'
                                         }`}
                                 >
-                                    <i className={`fa-solid ${t.icon} text-xs`} />
+                                    <i className={`fa-solid ${t.icon} text-xs hidden sm:inline-block`} />
                                     {t.label}
                                 </button>
                             ))}
@@ -192,40 +172,43 @@ export default function LeaderboardPage() {
                     {/* ════════════════════════════════════
               TOP 3 PODIUM
           ════════════════════════════════════ */}
-                    <section className="bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-md p-8 md:p-10">
-                        <h2 className="text-center text-xs font-bold uppercase tracking-widest text-gray-400 mb-8">
+                    <section className="bg-white/80 backdrop-blur-sm rounded-[2rem] border border-gray-100 shadow-md p-4 sm:p-8 md:p-10">
+                        <h2 className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 sm:mb-8">
                             {tab === 'overall' ? '🏆 Top Commanders' : tab === 'weekly' ? '📅 This Week\'s Champions' : '🔥 Streak Legends'}
                         </h2>
-                        <div className="flex items-end justify-center gap-4 md:gap-8">
+                        <div className={`flex items-end justify-center gap-2 sm:gap-4 md:gap-8 ${isLoading ? 'opacity-50 blur-sm pointer-events-none' : ''} transition-all duration-300 min-h-[160px]`}>
                             {[podiumConfig[1], podiumConfig[0], podiumConfig[2]].map(cfg => {
                                 const entry = activeData.find(e => e.rank === cfg.rankIndex);
                                 return entry ? <PodiumCard key={cfg.rankIndex} entry={entry} config={cfg} /> : null;
                             })}
+                            {!isLoading && activeData.length === 0 && (
+                                <p className="text-gray-400 text-sm font-semibold my-10">No commanders on the board yet. Participate to secure rank #1!</p>
+                            )}
                         </div>
                     </section>
 
                     {/* ════════════════════════════════════
               FULL TABLE
           ════════════════════════════════════ */}
-                    <section className="bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-md overflow-hidden">
+                    <section className="bg-white/80 backdrop-blur-sm rounded-[2rem] border border-gray-100 shadow-md overflow-hidden">
                         {/* Table header */}
-                        <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+                        <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <div>
-                                <h2 className="text-lg font-bold text-gray-900">
+                                <h2 className="text-base sm:text-lg font-bold text-gray-900">
                                     {tab === 'overall' ? 'Full Rankings' : tab === 'weekly' ? 'Weekly Top Performers' : 'Top Streak Holders'}
                                 </h2>
                                 {tab === 'weekly' && (
                                     <p className="text-xs text-gray-400 mt-0.5">Resets every Sunday at 11:59 PM</p>
                                 )}
                             </div>
-                            <span className="text-xs font-semibold text-orange-500 bg-orange-50 px-3 py-1 rounded-full">
+                            <span className="self-start sm:self-auto text-[10px] sm:text-xs font-semibold text-orange-500 bg-orange-50 px-3 py-1 rounded-full">
                                 {isPro ? 'PRO · Full Access' : 'FREE · Top 10 shown'}
                             </span>
                         </div>
 
                         {/* Scrollable table */}
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-sm">
+                        <div className="overflow-x-auto w-full">
+                            <table className="w-full text-sm min-w-[600px] whitespace-nowrap">
                                 <thead>
                                     <tr className="bg-gray-50 border-b border-gray-100 text-xs text-gray-400 uppercase tracking-wider">
                                         <th className="px-6 py-3 text-left">Rank</th>
@@ -240,8 +223,8 @@ export default function LeaderboardPage() {
                                         <tr
                                             key={row.rank}
                                             className={`transition-colors ${row.isCurrentUser
-                                                    ? 'bg-orange-50 border-l-4 border-l-orange-500'
-                                                    : 'hover:bg-gray-50/80'
+                                                ? 'bg-orange-50 border-l-4 border-l-orange-500'
+                                                : 'hover:bg-gray-50/80'
                                                 }`}
                                         >
                                             <td className="px-6 py-4"><RankPill rank={row.rank} /></td>
