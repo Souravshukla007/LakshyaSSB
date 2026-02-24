@@ -74,7 +74,7 @@ export default function Day1() {
                         </div>
 
                         {/* Hero Section */}
-                        <div className="flex flex-col lg:flex-row items-end justify-between gap-8 mb-16 reveal">
+                        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 mb-16 reveal">
                             <div className="max-w-2xl">
                                 <h1 className="font-hero font-bold text-5xl lg:text-6xl text-brand-dark mb-4">
                                     Day 1 – <span className="text-brand-orange">Screening</span>
@@ -253,7 +253,7 @@ export default function Day1() {
                                 </div>
 
                                 {/* BOTTOM NAV */}
-                                <div className="pt-20 border-t border-gray-100 flex justify-between items-center gap-6 reveal">
+                                <div className="pt-20 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-6 reveal">
                                     <div></div>
                                     <button className="bg-brand-dark text-white h-14 px-10 rounded-full font-bold shadow-xl hover:bg-brand-orange hover:-translate-y-1 transition-all">Practice OIR & PPDT</button>
                                     <Link href="/ssb/day-2" className="flex items-center gap-3 text-sm font-bold text-gray-500 hover:text-brand-orange transition group">

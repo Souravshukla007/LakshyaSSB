@@ -17,12 +17,21 @@ interface EligibilityForm {
     nccC: string;
 }
 
+interface Intake {
+    name: string;
+    courseCommencement: string;
+    ageOnCcdText: string;
+    eligible: boolean;
+    rejectReason?: string;
+}
+
 interface EntryResult {
     name: string;
     fullName: string;
     eligible: boolean;
     reason: string;
     icon: string;
+    intakes: Intake[];
 }
 
 // ─── Eligibility logic ────────────────────────────────────────────────────────
@@ -37,134 +46,195 @@ function checkEligibility(form: EligibilityForm): EntryResult[] {
 
     const results: EntryResult[] = [];
 
-    // NDA – Male, 10+2 PCM, age 16.5–19.5
+    // Helper for intake generation
+    const generateIntakes = (
+        entryType: string,
+        minAge: number,
+        maxAge: number,
+        genderOk: boolean,
+        eduOk: boolean,
+        otherOk: boolean,
+        otherReason: string
+    ): Intake[] => {
+        let intakesData: { name: string; ccd: string; offset: number }[] = [];
+
+        if (entryType === 'NDA') {
+            intakesData = [
+                { name: 'NDA 1 2026', ccd: 'January 2026', offset: 0 },
+                { name: 'NDA 2 2026', ccd: 'July 2026', offset: 0.5 }
+            ];
+        } else if (entryType === 'AFCAT') {
+            intakesData = [
+                { name: 'AFCAT 1 2026', ccd: 'January 2026', offset: 0 },
+                { name: 'AFCAT 2 2026', ccd: 'July 2026', offset: 0.5 }
+            ];
+        } else if (entryType === 'TES') {
+            intakesData = [
+                { name: 'TES 52', ccd: 'January 2026', offset: 0 },
+                { name: 'TES 53', ccd: 'July 2026', offset: 0.5 }
+            ];
+        } else if (entryType === 'IMA' || entryType === 'SSC_NT') {
+            intakesData = [
+                { name: 'CDS 1 2026', ccd: 'January 2026', offset: 0 },
+                { name: 'CDS 2 2026', ccd: 'July 2026', offset: 0.5 }
+            ];
+        } else {
+            const label = entryType.replace('_', ' ');
+            intakesData = [
+                { name: `${label} Jan`, ccd: 'January 2026', offset: 0 },
+                { name: `${label} Jul`, ccd: 'July 2026', offset: 0.5 }
+            ];
+        }
+
+        return intakesData.map(i => {
+            const ageOnCcd = age + i.offset;
+            const years = Math.floor(ageOnCcd);
+            const months = Math.floor((ageOnCcd - years) * 12);
+
+            let eligible = true;
+            let reason = '';
+
+            if (!genderOk) {
+                eligible = false;
+                reason = 'Gender restriction';
+            } else if (!eduOk) {
+                eligible = false;
+                reason = 'Qualification insufficient';
+            } else if (!otherOk) {
+                eligible = false;
+                reason = otherReason;
+            } else if (ageOnCcd < minAge) {
+                eligible = false;
+                reason = 'Age exceeds limit'; // actually underage, but using 'exceeds limit' loosely, or a different note.
+            } else if (ageOnCcd > maxAge) {
+                eligible = false;
+                reason = 'Age exceeds limit';
+            }
+
+            return {
+                name: i.name,
+                courseCommencement: i.ccd,
+                ageOnCcdText: `${years} years ${months} months`,
+                eligible,
+                rejectReason: reason,
+            };
+        });
+    };
+
+    // NDA
+    const ndaGender = isMale;
+    const ndaEdu = edu === '12th';
+    const ndaOther = pcm >= 60;
+    const ndaIntakes = generateIntakes('NDA', 16.5, 19.5, ndaGender, ndaEdu, ndaOther, 'PCM percentage should be ≥ 60%');
     results.push({
         name: 'NDA',
         fullName: 'National Defence Academy',
         icon: '⚔️',
-        eligible: isMale && edu === '12th' && age >= 16.5 && age <= 19.5 && pcm >= 60,
-        reason:
-            isMale && edu === '12th' && age >= 16.5 && age <= 19.5 && pcm >= 60
-                ? 'Male, 10+2 PCM, age & percentage criteria met. Appear for UPSC NDA written exam.'
-                : !isMale
-                    ? 'NDA is open to male candidates only.'
-                    : edu !== '12th'
-                        ? 'Requires 10+2 (Class XII) as minimum education.'
-                        : age < 16.5 || age > 19.5
-                            ? `Age limit: 16.5–19.5 years. Your age: ${age} years.`
-                            : 'PCM percentage should be ≥ 60% (indicative threshold).',
+        eligible: ndaIntakes.some(i => i.eligible),
+        reason: ndaIntakes.some(i => i.eligible) ? 'Eligible for upcoming intakes.' : 'Not eligible for upcoming intakes.',
+        intakes: ndaIntakes,
     });
 
-    // IMA – Male, Graduate, age 19–24
+    // IMA (CDS)
+    const imaGender = isMale;
+    const imaEdu = (edu === 'graduate' || edu === 'engineering' || edu === 'llb');
+    const imaIntakes = generateIntakes('IMA', 19, 24, imaGender, imaEdu, true, '');
     results.push({
         name: 'IMA (CDS)',
         fullName: 'Indian Military Academy via CDS',
         icon: '🎖️',
-        eligible: isMale && (edu === 'graduate' || edu === 'engineering' || edu === 'llb') && age >= 19 && age <= 24,
-        reason:
-            isMale && (edu === 'graduate' || edu === 'engineering' || edu === 'llb') && age >= 19 && age <= 24
-                ? 'Eligible. Appear for UPSC Combined Defence Services (CDS) written exam.'
-                : !isMale
-                    ? 'IMA via CDS is open to male candidates only.'
-                    : !(edu === 'graduate' || edu === 'engineering' || edu === 'llb')
-                        ? 'Requires graduation or equivalent degree.'
-                        : `Age limit: 19–24 years. Your age: ${age} years.`,
+        eligible: imaIntakes.some(i => i.eligible),
+        reason: imaIntakes.some(i => i.eligible) ? 'Eligible for upcoming intakes.' : 'Not eligible for upcoming intakes.',
+        intakes: imaIntakes,
     });
 
-    // SSC (NT) – Male/Female, Graduate, age 19–25
+    // SSC (NT)
+    const sscNtEdu = (edu === 'graduate' || edu === 'engineering' || edu === 'llb');
+    const sscNtIntakes = generateIntakes('SSC_NT', 19, 25, true, sscNtEdu, true, '');
     results.push({
         name: 'SSC (NT)',
         fullName: 'Short Service Commission (Non-Technical)',
         icon: '🪖',
-        eligible: (edu === 'graduate' || edu === 'engineering' || edu === 'llb') && age >= 19 && age <= 25,
-        reason:
-            (edu === 'graduate' || edu === 'engineering' || edu === 'llb') && age >= 19 && age <= 25
-                ? 'Eligible. Appear for UPSC CDS written exam (SSC NT entry).'
-                : !(edu === 'graduate' || edu === 'engineering' || edu === 'llb')
-                    ? 'Requires graduation or equivalent degree.'
-                    : `Age limit for SSC NT: 19–25 years. Your age: ${age} years.`,
+        eligible: sscNtIntakes.some(i => i.eligible),
+        reason: sscNtIntakes.some(i => i.eligible) ? 'Eligible for upcoming intakes.' : 'Not eligible for upcoming intakes.',
+        intakes: sscNtIntakes,
     });
 
-    // TES – Male, 10+2 PCM, age 16.5–19.5
+    // AFCAT
+    const afcatEdu = (edu === 'graduate' || edu === 'engineering');
+    const afcatIntakes = generateIntakes('AFCAT', 20, 24, true, afcatEdu, pcm >= 60, 'Requires PCM ≥ 60% in 12th for Flying Branch');
+    results.push({
+        name: 'AFCAT',
+        fullName: 'Air Force Common Admission Test',
+        icon: '✈️',
+        eligible: afcatIntakes.some(i => i.eligible),
+        reason: afcatIntakes.some(i => i.eligible) ? 'Eligible for upcoming intakes.' : 'Not eligible for upcoming intakes.',
+        intakes: afcatIntakes,
+    });
+
+    // TES
+    const tesGender = isMale;
+    const tesEdu = edu === '12th';
+    const tesOther = pcm >= 70 && jee > 0;
+    const tesIntakes = generateIntakes('TES', 16.5, 19.5, tesGender, tesEdu, tesOther, 'Requires PCM ≥ 70% & JEE Mains score');
     results.push({
         name: 'TES',
         fullName: 'Technical Entry Scheme (10+2)',
         icon: '⚙️',
-        eligible: isMale && edu === '12th' && age >= 16.5 && age <= 19.5 && pcm >= 70,
-        reason:
-            isMale && edu === '12th' && age >= 16.5 && age <= 19.5 && pcm >= 70
-                ? jee > 0
-                    ? `JEE Mains score (${jee}) taken into account for shortlisting. Eligible – no written exam, SSB directly.`
-                    : 'PCM ≥ 70% & JEE Mains score required for shortlisting. No separate written exam.'
-                : !isMale
-                    ? 'TES is open to male candidates only.'
-                    : edu !== '12th'
-                        ? 'Requires 10+2 (Class XII) with PCM.'
-                        : age < 16.5 || age > 19.5
-                            ? `Age limit: 16.5–19.5 years. Your age: ${age} years.`
-                            : 'PCM percentage should be ≥ 70%.',
+        eligible: tesIntakes.some(i => i.eligible),
+        reason: tesIntakes.some(i => i.eligible) ? 'Eligible for upcoming intakes.' : 'Not eligible for upcoming intakes.',
+        intakes: tesIntakes,
     });
 
-    // TGC – Male, Engineering, age 20–27
+    // TGC
+    const tgcGender = isMale;
+    const tgcEdu = edu === 'engineering';
+    const tgcIntakes = generateIntakes('TGC', 20, 27, tgcGender, tgcEdu, true, '');
     results.push({
         name: 'TGC',
         fullName: 'Technical Graduate Course',
         icon: '🔧',
-        eligible: isMale && edu === 'engineering' && age >= 20 && age <= 27,
-        reason:
-            isMale && edu === 'engineering' && age >= 20 && age <= 27
-                ? 'Eligible. Engineering graduates directly called based on marks. No written exam.'
-                : !isMale
-                    ? 'TGC is open to male candidates only.'
-                    : edu !== 'engineering'
-                        ? 'Requires an Engineering degree (B.Tech/B.E.).'
-                        : `Age limit: 20–27 years. Your age: ${age} years.`,
+        eligible: tgcIntakes.some(i => i.eligible),
+        reason: tgcIntakes.some(i => i.eligible) ? 'Eligible for upcoming intakes.' : 'Not eligible for upcoming intakes.',
+        intakes: tgcIntakes,
     });
 
-    // SSC (Tech) – Male/Female, Engineering, age 20–27
+    // SSC (Tech)
+    const sscTechEdu = edu === 'engineering';
+    const sscTechIntakes = generateIntakes('SSC_Tech', 20, 27, true, sscTechEdu, true, '');
     results.push({
         name: 'SSC (Tech)',
         fullName: 'Short Service Commission (Technical)',
         icon: '💻',
-        eligible: edu === 'engineering' && age >= 20 && age <= 27,
-        reason:
-            edu === 'engineering' && age >= 20 && age <= 27
-                ? 'Eligible. Engineering marks based shortlisting. No written exam.'
-                : edu !== 'engineering'
-                    ? 'Requires an Engineering degree (B.Tech/B.E.).'
-                    : `Age limit: 20–27 years. Your age: ${age} years.`,
+        eligible: sscTechIntakes.some(i => i.eligible),
+        reason: sscTechIntakes.some(i => i.eligible) ? 'Eligible for upcoming intakes.' : 'Not eligible for upcoming intakes.',
+        intakes: sscTechIntakes,
     });
 
-    // SSC (JAG) – Male/Female, LLB, age 21–27
+    // SSC (JAG)
+    const jagEdu = edu === 'llb';
+    const jagOther = clat > 0;
+    const jagIntakes = generateIntakes('SSC_JAG', 21, 27, true, jagEdu, jagOther, 'Requires valid CLAT score');
     results.push({
         name: 'SSC (JAG)',
         fullName: 'Short Service Commission (Judge Advocate General)',
         icon: '⚖️',
-        eligible: edu === 'llb' && age >= 21 && age <= 27,
-        reason:
-            edu === 'llb' && age >= 21 && age <= 27
-                ? clat > 0
-                    ? `CLAT score (${clat}) considered for shortlisting. Eligible.`
-                    : 'LLB with valid CLAT score required for shortlisting. Eligible.'
-                : edu !== 'llb'
-                    ? 'Requires LLB degree (Law graduate).'
-                    : `Age limit: 21–27 years. Your age: ${age} years.`,
+        eligible: jagIntakes.some(i => i.eligible),
+        reason: jagIntakes.some(i => i.eligible) ? 'Eligible for upcoming intakes.' : 'Not eligible for upcoming intakes.',
+        intakes: jagIntakes,
     });
 
-    // SSC (NCC) – All, Graduate + NCC C, age 19–25
+    // SSC (NCC)
+    const nccEdu = (edu === 'graduate' || edu === 'engineering' || edu === 'llb');
+    const nccOther = hasNCC;
+    const nccIntakes = generateIntakes('SSC_NCC', 19, 25, true, nccEdu, nccOther, 'Requires NCC C Certificate');
     results.push({
         name: 'SSC (NCC)',
         fullName: 'Short Service Commission (NCC Special Entry)',
         icon: '🏅',
-        eligible: (edu === 'graduate' || edu === 'engineering' || edu === 'llb') && age >= 19 && age <= 25 && hasNCC,
-        reason:
-            (edu === 'graduate' || edu === 'engineering' || edu === 'llb') && age >= 19 && age <= 25 && hasNCC
-                ? 'NCC C Certificate holder. Direct SSB – no written exam. Eligible.'
-                : !hasNCC
-                    ? 'Requires NCC C Certificate (Army Wing, B or A grade).'
-                    : !(edu === 'graduate' || edu === 'engineering' || edu === 'llb')
-                        ? 'Requires graduation or equivalent degree.'
-                        : `Age limit: 19–25 years. Your age: ${age} years.`,
+        eligible: nccIntakes.some(i => i.eligible),
+        reason: nccIntakes.some(i => i.eligible) ? 'Eligible for upcoming intakes.' : 'Not eligible for upcoming intakes.',
+        intakes: nccIntakes,
     });
 
     return results;
@@ -184,6 +254,7 @@ export default function SSBEntryNavigatorPage() {
         nccC: 'no',
     });
     const [results, setResults] = useState<EntryResult[] | null>(null);
+    const [expandedEntry, setExpandedEntry] = useState<string | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null); // null = loading
 
     // ── Check session once on mount ──────────────────────────────────────────
@@ -621,43 +692,101 @@ export default function SSBEntryNavigatorPage() {
                                 </div>
                             </div>
 
-                            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                                {results.map((entry, i) => (
-                                    <div
-                                        key={i}
-                                        className={`relative bg-white/80 backdrop-blur-sm rounded-2xl border shadow-md p-5 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-1 ${entry.eligible
-                                            ? 'border-green-200 shadow-green-100/60'
-                                            : 'border-gray-100 opacity-75'
-                                            }`}
-                                    >
-                                        {/* Status badge */}
-                                        <div className={`absolute top-4 right-4 w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-sm ${entry.eligible ? 'bg-green-500' : 'bg-red-400'}`}>
-                                            {entry.eligible ? '✓' : '✗'}
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                                {results.map((entry, i) => {
+                                    const isExpanded = expandedEntry === entry.name;
+                                    return (
+                                        <div
+                                            key={i}
+                                            onClick={() => setExpandedEntry(isExpanded ? null : entry.name)}
+                                            className={`relative cursor-pointer bg-white/80 backdrop-blur-sm rounded-2xl border shadow-md flex flex-col transition-all duration-300 ${isExpanded ? 'ring-2 ring-orange-500 scale-[1.02] shadow-orange-100' : 'hover:-translate-y-1'} ${entry.eligible
+                                                ? 'border-green-200 shadow-green-100/60'
+                                                : 'border-gray-100 opacity-75'
+                                                }`}
+                                        >
+                                            <div className="p-5 flex flex-col gap-3">
+                                                {/* Status badge */}
+                                                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-sm ${entry.eligible ? 'bg-green-500' : 'bg-red-400'}`}>
+                                                    {entry.eligible ? '✓' : '✗'}
+                                                </div>
+
+                                                {/* Icon & name */}
+                                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${entry.eligible ? 'bg-green-50' : 'bg-gray-100'}`}>
+                                                    {entry.icon}
+                                                </div>
+
+                                                <div>
+                                                    <p className="font-extrabold text-gray-900 text-base">{entry.name}</p>
+                                                    <p className="text-gray-400 text-xs leading-tight">{entry.fullName}</p>
+                                                </div>
+
+                                                {/* Status label */}
+                                                <span className={`self-start text-xs font-bold px-2.5 py-1 rounded-lg ${entry.eligible
+                                                    ? 'bg-green-100 text-green-700'
+                                                    : 'bg-red-50 text-red-500'
+                                                    }`}>
+                                                    {entry.eligible ? '✅ Eligible' : '❌ Not Eligible'}
+                                                </span>
+
+                                                <div className="flex items-center justify-between mt-1">
+                                                    <p className="text-gray-500 text-xs flex-1 line-clamp-2">{entry.reason}</p>
+                                                    <div className="w-6 h-6 rounded-full bg-gray-50 flex items-center justify-center border border-gray-100 shrink-0 ml-2">
+                                                        <i className={`fa-solid fa-chevron-down text-[10px] text-gray-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* EXPANDABLE INTAKE PANEL */}
+                                            <div className={`grid transition-all duration-300 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                                                <div className="overflow-hidden">
+                                                    <div className="p-5 pt-0 border-t border-gray-100 mt-2 bg-gray-50/50 rounded-b-2xl">
+                                                        <p className="text-xs font-bold text-gray-900 mb-3 pt-3 uppercase tracking-wider">Upcoming Intakes</p>
+                                                        <div className="space-y-3">
+                                                            {entry.intakes.map((intake, idx) => (
+                                                                <div key={idx} className={`p-3 rounded-xl border text-left ${intake.eligible ? 'bg-white border-green-100 shadow-sm' : 'bg-white border-red-50'}`}>
+                                                                    <p className="font-bold text-gray-900 text-sm">{intake.name}</p>
+                                                                    <div className="mt-2 space-y-1">
+                                                                        <div className="flex justify-between text-xs">
+                                                                            <span className="text-gray-500">Commencement:</span>
+                                                                            <span className="font-semibold text-gray-700">{intake.courseCommencement}</span>
+                                                                        </div>
+                                                                        <div className="flex justify-between text-xs">
+                                                                            <span className="text-gray-500">Age on CCD:</span>
+                                                                            <span className="font-semibold text-gray-700">{intake.ageOnCcdText}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="mt-4 flex items-center justify-between">
+                                                                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold ${intake.eligible ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-red-50 text-red-600 border border-red-50'}`}>
+                                                                            {intake.eligible ? '🟢 Eligible' : '🔴 Not Eligible'}
+                                                                        </span>
+                                                                        {intake.eligible && (
+                                                                            <button
+                                                                                onClick={(e) => {
+                                                                                    e.stopPropagation();
+                                                                                    requireAuth(() => router.push('/practice'));
+                                                                                }}
+                                                                                className="bg-gray-900 text-white hover:bg-gray-800 text-[10px] px-3 py-1.5 rounded-lg font-bold transition-all shadow-sm flex items-center gap-1.5"
+                                                                            >
+                                                                                Start prep <i className="fa-solid fa-arrow-right text-[8px]" />
+                                                                            </button>
+                                                                        )}
+                                                                    </div>
+                                                                    {!intake.eligible && intake.rejectReason && (
+                                                                        <p className="text-red-500 text-[10px] mt-2 leading-tight font-medium bg-red-50/50 p-1.5 rounded-md border border-red-100 inline-block">Reason: {intake.rejectReason}</p>
+                                                                    )}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-
-                                        {/* Icon & name */}
-                                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${entry.eligible ? 'bg-green-50' : 'bg-gray-100'}`}>
-                                            {entry.icon}
-                                        </div>
-
-                                        <div>
-                                            <p className="font-extrabold text-gray-900 text-base">{entry.name}</p>
-                                            <p className="text-gray-400 text-xs leading-tight">{entry.fullName}</p>
-                                        </div>
-
-                                        {/* Status label */}
-                                        <span className={`self-start text-xs font-bold px-2.5 py-1 rounded-lg ${entry.eligible
-                                            ? 'bg-green-100 text-green-700'
-                                            : 'bg-red-50 text-red-500'
-                                            }`}>
-                                            {entry.eligible ? '✅ Eligible' : '❌ Not Eligible'}
-                                        </span>
-
-                                        {/* Reason */}
-                                        <p className="text-gray-500 text-xs leading-relaxed">{entry.reason}</p>
-                                    </div>
-                                ))}
+                                    )
+                                })}
                             </div>
+                            <p className="text-center text-xs text-gray-400 mb-8 italic">
+                                *Eligibility calculated based on age on course commencement date (CCD).
+                            </p>
 
                             {/* CTA */}
                             {eligibleCount > 0 && (

@@ -62,10 +62,10 @@ export default async function AccountPage() {
         <main className="min-h-screen bg-brand-bg">
             <Navbar />
 
-            <section className="min-h-screen bg-brand-bg pt-32 pb-20 px-6">
+            <section className="min-h-screen bg-brand-bg pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
                 <div className="max-w-4xl mx-auto">
-                    <div className="mb-12">
-                        <h1 className="font-hero font-bold text-4xl text-brand-dark mb-2">
+                    <div className="mb-8 sm:mb-12">
+                        <h1 className="font-hero font-bold text-3xl sm:text-4xl text-brand-dark mb-2">
                             My <span className="text-brand-orange">Account</span>
                         </h1>
                         <p className="text-gray-500 font-noname">

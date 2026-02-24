@@ -325,7 +325,7 @@ function Step2Vision({
             {/* Vision Acuity Selector */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
                 <p className="text-xs font-bold text-brand-dark uppercase tracking-widest mb-3">👁️ Visual Acuity</p>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2">
                     {(
                         [
                             { value: '6/6' as VisionType, label: '6/6 (Perfect)', sub: 'Meets SSB standard' },

@@ -74,7 +74,7 @@ export default function Day5() {
                         </div>
 
                         {/* Hero Section */}
-                        <div className="flex flex-col lg:flex-row items-end justify-between gap-8 mb-16 reveal">
+                        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 mb-16 reveal">
                             <div className="max-w-2xl">
                                 <h1 className="font-hero font-bold text-5xl lg:text-6xl text-brand-dark mb-4">
                                     Day 5 – <span className="text-brand-orange">The Conference</span>

@@ -4,9 +4,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 export default function AuthPage() {
-    const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
+    const [activeTab, setActiveTab] = useState<'login' | 'signup' | 'otp'>('login');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+    const [otpEmail, setOtpEmail] = useState('');
+    const [otpSent, setOtpSent] = useState(false);
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -70,6 +72,69 @@ export default function AuthPage() {
                 }, 2000);
             } else {
                 setMessage({ type: 'error', text: data.error || 'Signup failed' });
+            }
+        } catch (error) {
+            setMessage({ type: 'error', text: 'An error occurred. Please try again.' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSendOtp = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setMessage(null);
+
+        const formData = new FormData(e.currentTarget);
+        const email = formData.get('email') as string;
+        setOtpEmail(email);
+
+        try {
+            const response = await fetch('/api/auth/send-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage({ type: 'success', text: 'OTP sent! Please check your email.' });
+                setOtpSent(true);
+            } else {
+                setMessage({ type: 'error', text: data.error || 'Failed to send OTP' });
+            }
+        } catch (error) {
+            setMessage({ type: 'error', text: 'An error occurred. Please try again.' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleVerifyOtp = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setMessage(null);
+
+        const formData = new FormData(e.currentTarget);
+        const otp = formData.get('otp') as string;
+
+        try {
+            const response = await fetch('/api/auth/verify-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: otpEmail, otp }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage({ type: 'success', text: 'Login successful! Welcome back.' });
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1500);
+            } else {
+                setMessage({ type: 'error', text: data.error || 'Invalid OTP' });
             }
         } catch (error) {
             setMessage({ type: 'error', text: 'An error occurred. Please try again.' });
@@ -145,8 +210,8 @@ export default function AuthPage() {
                                 {/* Toggle Tabs */}
                                 <div className="flex mb-10 bg-gray-100 p-1 rounded-2xl w-fit">
                                     <button
-                                        onClick={() => { setActiveTab('login'); setMessage(null); }}
-                                        className={`px-8 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'login'
+                                        onClick={() => { setActiveTab('login'); setMessage(null); setOtpSent(false); }}
+                                        className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'login'
                                             ? 'bg-white text-brand-dark shadow-sm'
                                             : 'text-gray-500 hover:text-brand-dark'
                                             }`}
@@ -154,8 +219,17 @@ export default function AuthPage() {
                                         Login
                                     </button>
                                     <button
-                                        onClick={() => { setActiveTab('signup'); setMessage(null); }}
-                                        className={`px-8 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'signup'
+                                        onClick={() => { setActiveTab('otp'); setMessage(null); setOtpSent(false); }}
+                                        className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'otp'
+                                            ? 'bg-white text-brand-dark shadow-sm'
+                                            : 'text-gray-500 hover:text-brand-dark'
+                                            }`}
+                                    >
+                                        Login with OTP
+                                    </button>
+                                    <button
+                                        onClick={() => { setActiveTab('signup'); setMessage(null); setOtpSent(false); }}
+                                        className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'signup'
                                             ? 'bg-white text-brand-dark shadow-sm'
                                             : 'text-gray-500 hover:text-brand-dark'
                                             }`}
@@ -213,6 +287,88 @@ export default function AuthPage() {
                                                 </div>
                                             </button>
                                         </form>
+                                    </div>
+                                )}
+
+                                {/* OTP Form */}
+                                {activeTab === 'otp' && (
+                                    <div className="transition-all duration-500">
+                                        <h3 className="font-hero font-bold text-3xl text-brand-dark mb-2">Passwordless Login</h3>
+                                        <p className="text-gray-500 text-sm mb-8 font-noname">
+                                            {otpSent ? 'Enter the 6-digit code sent to your email.' : 'Enter your email to receive a secure login code.'}
+                                        </p>
+
+                                        {!otpSent ? (
+                                            <form className="space-y-5" onSubmit={handleSendOtp}>
+                                                <div>
+                                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 font-mono">Email Address</label>
+                                                    <input
+                                                        type="email"
+                                                        name="email"
+                                                        placeholder="cadet@academy.in"
+                                                        required
+                                                        disabled={loading}
+                                                        className="w-full h-14 bg-gray-50 border border-gray-100 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
+                                                    />
+                                                </div>
+
+                                                <button
+                                                    type="submit"
+                                                    disabled={loading}
+                                                    className="w-full group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                >
+                                                    <div className="relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center justify-between pl-8 pr-2 py-3">
+                                                        <div className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]"></div>
+                                                        <span className="relative z-10 text-white group-hover:text-brand-dark font-noname font-bold text-base transition-colors duration-[1000ms]">
+                                                            {loading ? 'Sending OTP...' : 'Send OTP'}
+                                                        </span>
+                                                        <span className="relative z-10 bg-white text-brand-dark w-10 h-10 rounded-full flex items-center justify-center">
+                                                            <i className="fa-solid fa-paper-plane text-xs"></i>
+                                                        </span>
+                                                    </div>
+                                                </button>
+                                            </form>
+                                        ) : (
+                                            <form className="space-y-5" onSubmit={handleVerifyOtp}>
+                                                <div>
+                                                    <div className="flex justify-between items-center mb-2">
+                                                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest font-mono">6-Digit Code</label>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setOtpSent(false)}
+                                                            className="text-[10px] font-bold text-brand-orange hover:underline"
+                                                        >
+                                                            Change Email
+                                                        </button>
+                                                    </div>
+                                                    <input
+                                                        type="text"
+                                                        name="otp"
+                                                        placeholder="123456"
+                                                        required
+                                                        maxLength={6}
+                                                        disabled={loading}
+                                                        className="w-full h-14 bg-gray-50 border border-gray-100 rounded-xl px-4 text-center text-2xl tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
+                                                    />
+                                                </div>
+
+                                                <button
+                                                    type="submit"
+                                                    disabled={loading}
+                                                    className="w-full group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                >
+                                                    <div className="relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center justify-between pl-8 pr-2 py-3">
+                                                        <div className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]"></div>
+                                                        <span className="relative z-10 text-white group-hover:text-brand-dark font-noname font-bold text-base transition-colors duration-[1000ms]">
+                                                            {loading ? 'Verifying...' : 'Verify Login'}
+                                                        </span>
+                                                        <span className="relative z-10 bg-white text-brand-dark w-10 h-10 rounded-full flex items-center justify-center">
+                                                            <i className="fa-solid fa-check text-xs"></i>
+                                                        </span>
+                                                    </div>
+                                                </button>
+                                            </form>
+                                        )}
                                     </div>
                                 )}
 
