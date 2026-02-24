@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
                 userId: session.userId,
                 razorpayOrderId: razorpay_order_id,
                 razorpayPaymentId: razorpay_payment_id,
-                amount: 49900, // ₹499 in paise
+                amount: 9900, // ₹99 in paise
                 status: 'SUCCESS',
             },
         });

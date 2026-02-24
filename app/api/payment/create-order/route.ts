@@ -20,9 +20,10 @@ export async function POST() {
         return NextResponse.json({ error: 'Payment gateway not configured' }, { status: 500 });
     }
 
-    const amount = 49900; // ₹499 in paise
+    const amount = 9900; // ₹99 in paise
     const currency = 'INR';
-    const receipt = `order_${session.userId}_${Date.now()}`;
+    // Receipt must be <= 40 chars
+    const receipt = `rcpt_${session.userId.substring(0, 8)}_${Date.now()}`;
 
     try {
         // Use Razorpay REST API directly — no SDK needed
