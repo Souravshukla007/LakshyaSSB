@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { checkAndDowngrade } from '@/lib/plan';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AccountClient from './AccountClient';
@@ -15,9 +14,6 @@ export default async function AccountPage() {
     const session = await getSession();
     if (!session) redirect('/auth');
 
-    // Auto-downgrade before showing subscription status
-    await checkAndDowngrade(session.userId);
-
     const user = await prisma.user.findUnique({
         where: { id: session.userId },
         select: {
@@ -29,7 +25,6 @@ export default async function AccountPage() {
             attemptNumber: true,
             preferredSSBCenter: true,
             plan: true,
-            planExpiry: true,
             payments: {
                 orderBy: { createdAt: 'desc' },
                 take: 10,
@@ -50,7 +45,6 @@ export default async function AccountPage() {
     const serialized = {
         ...user,
         plan: user.plan as 'FREE' | 'PRO',
-        planExpiry: user.planExpiry ? user.planExpiry.toISOString() : null,
         payments: user.payments.map((p) => ({
             ...p,
             status: p.status as 'PENDING' | 'SUCCESS' | 'FAILED',

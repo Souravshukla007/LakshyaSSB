@@ -45,9 +45,9 @@ export default function Pricing() {
 
     useEffect(() => {
         let isMounted = true;
-        fetch('/api/account/me')
+        fetch('/api/auth/status')
             .then(res => res.ok ? res.json() : null)
-            .then(data => { if (isMounted && data?.email) setIsLoggedIn(true); })
+            .then(data => { if (isMounted && data?.isLoggedIn) setIsLoggedIn(true); })
             .catch(() => null);
         return () => { isMounted = false; };
     }, []);

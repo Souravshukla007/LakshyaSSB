@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { checkAndDowngrade } from '@/lib/plan';
 
 /**
  * GET /api/account/me
@@ -12,9 +11,6 @@ export async function GET() {
     if (!session) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
-    // Auto-downgrade before returning data
-    await checkAndDowngrade(session.userId);
 
     const user = await prisma.user.findUnique({
         where: { id: session.userId },
@@ -48,14 +44,11 @@ export async function GET() {
 
     // Auto-sync stale session cookie if DB plan state diverged
     // Note: planExpiry is no longer fetched, so this part of the condition will always be false
-    // if (user.plan !== session.plan || (user.planExpiry?.toISOString() || null) !== session.planExpiry) {
     if (user.plan !== session.plan) { // Simplified condition as planExpiry is no longer fetched
         await import('@/lib/auth').then(m => m.signSession({
             userId: user.id,
             email: user.email,
             plan: user.plan as 'FREE' | 'PRO',
-            // planExpiry is no longer fetched, so it's removed from the session update
-            planExpiry: null, // Explicitly set to null or remove if not needed in session
         }));
     }
 

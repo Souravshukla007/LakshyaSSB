@@ -15,7 +15,7 @@ export default function Checkout() {
     const router = useRouter();
 
     useEffect(() => {
-        fetch('/api/account/me')
+        fetch('/api/auth/status')
             .then(res => res.ok ? res.json() : null)
             .then(data => { if (data?.email) setUserEmail(data.email); })
             .catch(() => null);

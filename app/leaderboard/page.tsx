@@ -80,7 +80,7 @@ export default function LeaderboardPage() {
         let isMounted = true;
 
         // Fetch User status
-        fetch('/api/account/me')
+        fetch('/api/auth/status')
             .then(res => res.ok ? res.json() : null)
             .then(data => { if (isMounted && data?.plan === 'PRO') setIsPro(true); })
             .catch(() => null);

@@ -897,10 +897,10 @@ export default function MedicalSimulator() {
     const router = useRouter();
 
     useEffect(() => {
-        fetch('/api/account/me')
+        fetch('/api/auth/status')
             .then(res => res.ok ? res.json() : null)
             .then(data => {
-                if (data?.fullName) setIsLoggedIn(true);
+                if (data?.isLoggedIn) setIsLoggedIn(true);
                 if (data?.plan === 'PRO') setIsPro(true);
             })
             .catch(() => null);

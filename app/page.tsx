@@ -10,9 +10,9 @@ export default function Home() {
 
     useEffect(() => {
         let isMounted = true;
-        fetch('/api/account/me')
+        fetch('/api/auth/status')
             .then(res => res.ok ? res.json() : null)
-            .then(data => { if (isMounted && data?.email) setIsLoggedIn(true); })
+            .then(data => { if (isMounted && data?.isLoggedIn) setIsLoggedIn(true); })
             .catch(() => null);
 
         const revealObserver = new IntersectionObserver((entries) => {
@@ -59,7 +59,7 @@ export default function Home() {
                                 </p>
 
                                 <div className="flex flex-wrap gap-4">
-                                    <Link href="/auth" className="group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                    <Link href={isLoggedIn ? '/dashboard' : '/auth'} className="group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                                         <div className="relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center gap-4 pl-8 pr-2 py-2.5">
                                             <div className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]"></div>
                                             <span className="relative z-10 text-white group-hover:text-brand-dark font-noname font-bold text-base transition-colors duration-[1000ms]">Start Preparation</span>
@@ -634,7 +634,7 @@ export default function Home() {
                                 <p className="text-gray-400 max-w-2xl mx-auto mb-12 font-noname">The uniform isn&apos;t just fabric; it&apos;s a responsibility. Start your elite preparation now and join the lineage of defenders of the nation.</p>
 
                                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                                    <Link href="/auth" className="bg-brand-orange hover:bg-white hover:text-brand-dark text-white font-bold h-16 px-10 rounded-full transition-all duration-300 shadow-xl shadow-brand-orange/20 flex items-center justify-center">
+                                    <Link href={isLoggedIn ? '/dashboard' : '/auth'} className="bg-brand-orange hover:bg-white hover:text-brand-dark text-white font-bold h-16 px-10 rounded-full transition-all duration-300 shadow-xl shadow-brand-orange/20 flex items-center justify-center">
                                         Join Next Batch
                                     </Link>
                                     <a href="#" className="bg-transparent border border-white/20 hover:bg-white/5 text-white font-bold h-16 px-10 rounded-full transition-all flex items-center justify-center">

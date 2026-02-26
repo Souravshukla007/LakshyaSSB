@@ -1,8 +1,6 @@
-```typescript
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { SignJWT } from 'jose';
-import { cookies } from 'next/headers';
+import { signSession } from '@/lib/auth';
 
 export async function POST(request: Request) {
     try {
@@ -53,43 +51,25 @@ export async function POST(request: Request) {
             where: { id: otpRecord.id },
         });
 
-        // 5. Sign Session (using JWT directly)
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-        const alg = 'HS256';
-
-        const token = await new SignJWT({
+        // 5. Sign Session (using lib/auth)
+        await signSession({
             userId: user.id,
             email: user.email,
             plan: user.plan as 'FREE' | 'PRO',
-            planExpiry: user.planExpiry ? user.planExpiry.toISOString() : null,
-        })
-            .setProtectedHeader({ alg })
-            .setExpirationTime('7d') // 1 week expiration
-            .sign(secret);
+        });
 
-        const response = NextResponse.json({
+        return NextResponse.json({
             message: 'OTP verified successfully',
             user: {
                 id: user.id,
                 email: user.email,
                 fullName: user.fullName,
                 plan: user.plan,
-                planExpiry: user.planExpiry,
             },
         });
-
-        cookies().set('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 60 * 60 * 24 * 7 // 1 week
-        });
-
-        return response;
 
     } catch (error) {
         console.error('[verify-otp]', error);
         return NextResponse.json({ error: 'Failed to verify OTP' }, { status: 500 });
     }
 }
-```

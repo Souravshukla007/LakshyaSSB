@@ -47,7 +47,7 @@ export async function middleware(request: NextRequest) {
 
         try {
             const session = await decrypt(sessionCookie);
-            const proStatus = isPro(session.plan, session.planExpiry);
+            const proStatus = isPro(session.plan);
 
             if (!proStatus) {
                 console.log(`[MIDDLEWARE REDIRECT] JWT check failed for ${session.email} to /pricing`);

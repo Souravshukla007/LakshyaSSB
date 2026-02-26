@@ -167,7 +167,7 @@ export default function PIQBuilderPage() {
             fetch('/api/piq/latest').then(r => r.json()),
             fetch('/api/piq/history').then(r => r.json()),
             fetch('/api/piq/io-questions').then(r => r.json()),
-            fetch('/api/account/me').then(r => r.ok ? r.json() : null),
+            fetch('/api/auth/status').then(r => r.ok ? r.json() : null),
         ]).then(([lat, hist, io, user]) => {
             setLatest(lat);
             setHistory(Array.isArray(hist) ? hist : []);
