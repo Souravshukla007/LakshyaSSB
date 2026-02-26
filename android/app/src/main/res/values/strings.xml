@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Lakshya SSB</string>
+    <string name="title_activity_main">Lakshya SSB</string>
+    <string name="package_name">in.lakshyassb.app</string>
+    <string name="custom_url_scheme">in.lakshyassb.app</string>
+</resources>

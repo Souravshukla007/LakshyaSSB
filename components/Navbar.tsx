@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import ApkDownloadModal from './ApkDownloadModal';
 
 interface UserProfile {
     fullName: string;
@@ -17,6 +18,7 @@ export default function Navbar() {
     const [user, setUser] = useState<UserProfile | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isApkModalOpen, setIsApkModalOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     // Fetch user profile on mount & trigger daily login tracking
@@ -141,6 +143,20 @@ export default function Navbar() {
 
                     {/* ── Right: Avatar + CTA + Hamburger ── */}
                     <div className="flex items-center gap-4">
+
+                        {/* Android App Download Trigger (Desktop) */}
+                        <div className="hidden md:flex items-center">
+                            <button
+                                onClick={() => setIsApkModalOpen(true)}
+                                className="group relative bg-[#1c1c1c] hover:bg-brand-orange text-white p-[2px] rounded-full shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
+                                aria-label="Download Android App"
+                            >
+                                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 group-hover:border-transparent transition-colors">
+                                    <i className="fa-brands fa-android text-brand-orange group-hover:text-white transition-colors" />
+                                    <span className="text-xs font-bold tracking-wide">App</span>
+                                </div>
+                            </button>
+                        </div>
 
                         {/* Avatar Dropdown (desktop) — unchanged */}
                         {user && (
@@ -274,6 +290,18 @@ export default function Navbar() {
                                     )}
                                 </Link>
                             ))}
+
+                            {/* Mobile Download App Link */}
+                            <button
+                                onClick={() => {
+                                    closeMobile();
+                                    setIsApkModalOpen(true);
+                                }}
+                                className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition-all text-left"
+                            >
+                                <i className="fa-brands fa-android w-4 text-center text-green-500" />
+                                Download Android App
+                            </button>
                         </div>
 
                         {/* ── Cadet Profile Card (logged-in only) ── */}
@@ -363,6 +391,11 @@ export default function Navbar() {
                     </div>
                 </div>
             </nav>
+
+            <ApkDownloadModal
+                isOpen={isApkModalOpen}
+                onClose={() => setIsApkModalOpen(false)}
+            />
         </>
     );
 }

@@ -12,8 +12,7 @@ async function main() {
             ]
         },
         data: {
-            plan: 'PRO',
-            planExpiry: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
+            plan: 'PRO'
         }
     });
 

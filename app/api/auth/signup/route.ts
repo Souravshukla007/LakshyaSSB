@@ -48,7 +48,6 @@ export async function POST(request: Request) {
                 email: true,
                 fullName: true,
                 plan: true,
-                planExpiry: true,
                 createdAt: true,
             },
         });

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
+import CapacitorBackButtonHandler from "@/components/CapacitorBackButtonHandler";
 
 export const metadata: Metadata = {
     title: "LakshaySSB | Elite SSB Preparation Academy",
@@ -25,6 +26,7 @@ export default function RootLayout({
                 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Inter:wght@400;500;600;700;900&family=Outfit:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Raleway:wght@700;800&display=swap" rel="stylesheet" />
             </head>
             <body className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
+                <CapacitorBackButtonHandler />
                 {children}
                 <Script id="reveal-animation" strategy="afterInteractive">
                     {`

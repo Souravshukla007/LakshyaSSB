@@ -1,6 +1,12 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
+import ApkDownloadModal from './ApkDownloadModal';
 
 export default function Footer() {
+    const [isApkModalOpen, setIsApkModalOpen] = useState(false);
+
     return (
         <footer className="bg-brand-dark text-orange-50/70 py-16 text-sm">
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-16">
@@ -19,6 +25,11 @@ export default function Footer() {
                 <div>
                     <h4 className="text-white font-bold mb-6">Resources</h4>
                     <ul className="space-y-3">
+                        <li>
+                            <button onClick={() => setIsApkModalOpen(true)} className="hover:text-white transition flex items-center gap-2">
+                                <i className="fa-brands fa-android text-brand-orange" /> Download Android App
+                            </button>
+                        </li>
                         <li><a href="#" className="hover:text-white transition">Psychology Tips</a></li>
                         <li><a href="#" className="hover:text-white transition">GTO Ground Rules</a></li>
                         <li><a href="#" className="hover:text-white transition">Daily Current Affairs</a></li>
@@ -57,6 +68,11 @@ export default function Footer() {
                     <Link href="/contact" className="hover:text-white transition">Contact Us</Link>
                 </div>
             </div>
+
+            <ApkDownloadModal
+                isOpen={isApkModalOpen}
+                onClose={() => setIsApkModalOpen(false)}
+            />
         </footer>
     );
 }
