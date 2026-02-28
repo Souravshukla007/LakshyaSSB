@@ -149,9 +149,8 @@ export default function AuthPage() {
             {/* Navigation — logo only on auth page */}
             <nav className="absolute w-full z-50 top-0 left-0 py-6">
                 <div className="max-w-7xl mx-auto px-6 flex items-center">
-                    <Link href="/" className="flex items-center gap-2 text-brand-orange">
-                        <i className="fa-solid fa-shield-halved text-2xl"></i>
-                        <span className="font-logo font-semibold text-2xl tracking-tight text-brand-dark">LakshyaSSB</span>
+                    <Link href="/" className="flex items-center gap-2">
+                        <img src="/LSSB_logo.png" alt="LakshyaSSB Logo" className="h-10 w-auto" />
                     </Link>
                 </div>
             </nav>
@@ -170,9 +169,8 @@ export default function AuthPage() {
                                 <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
 
                                 <div className="relative z-10">
-                                    <div className="flex items-center gap-2 text-brand-orange mb-12">
-                                        <i className="fa-solid fa-shield-halved text-2xl"></i>
-                                        <span className="font-logo font-semibold text-2xl tracking-tight">LakshyaSSB</span>
+                                    <div className="flex items-center gap-2 mb-12">
+                                        <img src="/LSSB_logo.png" alt="LakshyaSSB Logo" className="h-10 w-auto" />
                                     </div>
 
                                     <h2 className="font-hero font-bold text-4xl lg:text-5xl mb-6 leading-tight">
@@ -488,9 +486,8 @@ export default function AuthPage() {
             <footer className="bg-brand-dark text-orange-50/70 py-16 text-sm">
                 <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-16">
                     <div className="col-span-1 md:col-span-1">
-                        <div className="flex items-center gap-2 text-white mb-6">
-                            <i className="fa-solid fa-shield-halved text-brand-orange text-xl"></i>
-                            <span className="font-logo font-bold text-2xl tracking-tight">OfficerPrep</span>
+                        <div className="flex items-center gap-2 mb-6">
+                            <img src="/LSSB_logo.png" alt="LakshyaSSB Logo" className="h-10 w-auto" />
                         </div>
                         <p className="text-gray-500 leading-relaxed">
                             Crafting future leaders for the Indian Armed Forces. Specialized SSB training for NDA, CDS, and AFCAT.

@@ -120,11 +120,8 @@ export default function Navbar() {
 
                     {/* ── Left: Logo + Desktop links ── */}
                     <div className="flex items-center gap-12">
-                        <Link href="/" className="flex items-center gap-2 text-brand-orange">
-                            <i className="fa-solid fa-shield-halved text-2xl" />
-                            <span className="font-logo font-semibold text-2xl tracking-tight text-brand-dark">
-                                LakshyaSSB
-                            </span>
+                        <Link href="/" className="flex items-center gap-2">
+                            <img src="/LSSB_logo.png" alt="LakshyaSSB Logo" className="h-10 w-auto" />
                         </Link>
 
                         {/* Desktop nav — unchanged */}
@@ -258,9 +255,8 @@ export default function Navbar() {
 
                         {/* ── Drawer Header: Logo + Close ── */}
                         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-                            <Link href="/" onClick={closeMobile} className="flex items-center gap-2 text-brand-orange">
-                                <i className="fa-solid fa-shield-halved text-xl" />
-                                <span className="font-logo font-semibold text-xl tracking-tight text-brand-dark">LakshyaSSB</span>
+                            <Link href="/" onClick={closeMobile} className="flex items-center gap-2">
+                                <img src="/LSSB_logo.png" alt="LakshyaSSB Logo" className="h-8 w-auto" />
                             </Link>
                             <button
                                 onClick={closeMobile}
