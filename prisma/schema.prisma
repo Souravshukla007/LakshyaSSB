@@ -62,6 +62,7 @@ model User {
   piqSubmission  PiqSubmission?
   piqScores      PiqScore[]
   srtResults     SrtResult[] // SRT history
+  watResults     WatResult[] // WAT history
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
