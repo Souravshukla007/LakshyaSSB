@@ -13,7 +13,7 @@ export default function Footer() {
                 {/* Brand Column */}
                 <div className="col-span-1 md:col-span-1">
                     <div className="flex items-center gap-2 mb-6">
-                        <img src="/LSSB_logo.png" alt="LakshyaSSB Logo" className="h-10 w-auto" />
+                        <img src="/LSSB_logo.png" alt="LakshyaSSB Logo" className="h-16 md:h-20 w-auto" />
                     </div>
                     <p className="text-gray-500 leading-relaxed">
                         Crafting future leaders for the Indian Armed Forces. Specialized SSB training for NDA, CDS, and AFCAT.
