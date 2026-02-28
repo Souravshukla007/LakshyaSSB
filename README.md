@@ -2,6 +2,8 @@
 
 ![LakshyaSSB Banner](https://via.placeholder.com/1200x400/FFF7ED/F97316?text=LakshyaSSB+-+Your+Gateway+to+the+Uniform)
 
+<img src="./public/LSSB_logo.png" alt="LakshyaSSB Logo" width="200" />
+
 LakshyaSSB is a comprehensive, modern EdTech platform dedicated to helping aspirants prepare for the Indian Armed Forces **Services Selection Board (SSB)** interviews. Built with cutting-edge web technologies, it offers a seamless experience for practicing psychological tests, filling out PIQs, tracking medical readiness, and more.
 
 ---
@@ -14,6 +16,8 @@ LakshyaSSB is a comprehensive, modern EdTech platform dedicated to helping aspir
 - **Interactive Daily Track (Day 1 - 5)**: Detailed guides, mind maps, and practice tasks for Screening, Psychology, GTO, and Conference days.
 - **Leaderboards**: Competitive track records (Overall, Weekly, Streak) to keep aspirants motivated.
 - **OTP Passwordless Authentication**: Secure and frictionless login via Email OTP.
+- **Premium PRO Plan**: Lifetime one-time payment access to detailed OLQ reports and advanced insights.
+- **Android Application**: A fully wrapped Android application wrapper via Capacitor JS.
 - **Razorpay Integration**: Ready for premium content and mock interview bookings.
 
 ## 🚀 Tech Stack
@@ -25,6 +29,7 @@ LakshyaSSB is a comprehensive, modern EdTech platform dedicated to helping aspir
 - **Authentication**: Custom OTP workflow & NextAuth
 - **Emails**: [Resend](https://resend.com/)
 - **Payments**: [Razorpay](https://razorpay.com/)
+- **Mobile Wrapper**: [Capacitor JS](https://capacitorjs.com/) for Android builds
 
 ---
 
@@ -41,7 +46,7 @@ Ensure you have the following installed on your local machine:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/LakshyaSSB.git
+   git clone https://github.com/Souravshukla007/LakshyaSSB.git
    cd LakshyaSSB
    ```
 
@@ -118,7 +123,7 @@ LakshyaSSB/
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
-Feel free to check out the [issues page](https://github.com/your-username/LakshyaSSB/issues).
+Feel free to check out the [issues page](https://github.com/Souravshukla007/LakshyaSSB/issues).
 
 ---
 
