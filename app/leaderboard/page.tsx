@@ -144,7 +144,7 @@ export default function LeaderboardPage() {
                             LakshyaSSB <span className="text-orange-500">Leaderboard</span>
                         </h1>
                         <p className="text-gray-500 text-base md:text-lg max-w-xl mx-auto">
-                            See where you stand among serious SSB aspirants. Earn medals. Climb ranks. Unlock Pro.
+                            See where you stand among serious SSB aspirants. Earn medals. Climb ranks.{!isPro && ' Unlock Pro.'}
                         </p>
                     </section>
 
