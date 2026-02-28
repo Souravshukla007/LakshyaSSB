@@ -121,7 +121,9 @@ export default function Navbar() {
                     {/* ── Left: Logo + Desktop links ── */}
                     <div className="flex items-center gap-12">
                         <Link href="/" className="flex items-center gap-2">
-                            <img src="/LSSB_logo.png" alt="LakshyaSSB Logo" className="h-16 md:h-20 w-auto" />
+                            <span className="text-3xl font-logo font-black text-brand-dark tracking-tight">
+                                Lakshya <span className="text-brand-orange">SSB</span>
+                            </span>
                         </Link>
 
                         {/* Desktop nav — unchanged */}
@@ -145,7 +147,7 @@ export default function Navbar() {
                         <div className="hidden md:flex items-center">
                             <button
                                 onClick={() => setIsApkModalOpen(true)}
-                                className="group relative bg-[#1c1c1c] hover:bg-brand-orange text-white p-[2px] rounded-full shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
+                                className="group relative bg-[#1c1c1c] hover:bg-brand-orange text-white p-[8px] rounded-full shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
                                 aria-label="Download Android App"
                             >
                                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 group-hover:border-transparent transition-colors">
@@ -256,7 +258,9 @@ export default function Navbar() {
                         {/* ── Drawer Header: Logo + Close ── */}
                         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
                             <Link href="/" onClick={closeMobile} className="flex items-center gap-2">
-                                <img src="/LSSB_logo.png" alt="LakshyaSSB Logo" className="h-14 w-auto" />
+                                <span className="text-2xl font-logo font-black text-brand-dark tracking-tight">
+                                    Lakshya <span className="text-brand-orange">SSB</span>
+                                </span>
                             </Link>
                             <button
                                 onClick={closeMobile}

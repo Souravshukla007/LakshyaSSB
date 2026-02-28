@@ -75,7 +75,7 @@ export default function Practice() {
                                 <h3 className="font-hero font-bold text-xl text-brand-dark mb-2">SRT Rapid Response</h3>
                                 <p className="text-sm text-gray-500 font-noname mb-6">60 situations / 30 minutes. Tests practical intelligence.</p>
                             </div>
-                            <Link href="/practice/srt" className="w-full py-4 bg-brand-dark text-white rounded-full font-bold text-sm text-center hover:bg-brand-orange transition-all">
+                            <Link href="/practice/srt-test" className="w-full py-4 bg-brand-dark text-white rounded-full font-bold text-sm text-center hover:bg-brand-orange transition-all">
                                 Start Practice
                             </Link>
                         </div>

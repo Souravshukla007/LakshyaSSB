@@ -1,0 +1,602 @@
+[
+    {
+        "id": 301,
+        "word": "Indefinite",
+        "difficulty": "medium",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 302,
+        "word": "Person",
+        "difficulty": "easy",
+        "theme": "Social_Adjustment"
+    },
+    {
+        "id": 303,
+        "word": "Deny",
+        "difficulty": "medium",
+        "theme": "Integrity"
+    },
+    {
+        "id": 304,
+        "word": "Attempt",
+        "difficulty": "medium",
+        "theme": "Initiative"
+    },
+    {
+        "id": 305,
+        "word": "Adventure",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 306,
+        "word": "Differ",
+        "difficulty": "medium",
+        "theme": "Tolerance"
+    },
+    {
+        "id": 307,
+        "word": "Admire",
+        "difficulty": "easy",
+        "theme": "Positive_Attitude"
+    },
+    {
+        "id": 308,
+        "word": "Accident",
+        "difficulty": "medium",
+        "theme": "Crisis_Management"
+    },
+    {
+        "id": 309,
+        "word": "Certainly",
+        "difficulty": "easy",
+        "theme": "Confidence"
+    },
+    {
+        "id": 310,
+        "word": "Cooperation",
+        "difficulty": "medium",
+        "theme": "Teamwork"
+    },
+    {
+        "id": 311,
+        "word": "Compel",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 312,
+        "word": "Angry",
+        "difficulty": "medium",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 313,
+        "word": "Curiosity",
+        "difficulty": "easy",
+        "theme": "Learning_Ability"
+    },
+    {
+        "id": 314,
+        "word": "Crime",
+        "difficulty": "hard",
+        "theme": "Integrity"
+    },
+    {
+        "id": 315,
+        "word": "Competition",
+        "difficulty": "medium",
+        "theme": "Achievement_Motivation"
+    },
+    {
+        "id": 316,
+        "word": "Attack",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 317,
+        "word": "Interest",
+        "difficulty": "medium",
+        "theme": "Motivation"
+    },
+    {
+        "id": 318,
+        "word": "Doubt",
+        "difficulty": "medium",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 319,
+        "word": "Response",
+        "difficulty": "medium",
+        "theme": "Initiative"
+    },
+    {
+        "id": 320,
+        "word": "Desire",
+        "difficulty": "medium",
+        "theme": "Ambition"
+    },
+    {
+        "id": 321,
+        "word": "Demand",
+        "difficulty": "medium",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 322,
+        "word": "Friendly",
+        "difficulty": "easy",
+        "theme": "Social_Adjustment"
+    },
+    {
+        "id": 323,
+        "word": "Fallow",
+        "difficulty": "medium",
+        "theme": "Patience"
+    },
+    {
+        "id": 324,
+        "word": "Follow",
+        "difficulty": "medium",
+        "theme": "Discipline"
+    },
+    {
+        "id": 325,
+        "word": "Avoid",
+        "difficulty": "medium",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 326,
+        "word": "Educated",
+        "difficulty": "medium",
+        "theme": "Knowledge"
+    },
+    {
+        "id": 327,
+        "word": "Good",
+        "difficulty": "easy",
+        "theme": "Positive_Attitude"
+    },
+    {
+        "id": 328,
+        "word": "General",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 329,
+        "word": "Bathe",
+        "difficulty": "easy",
+        "theme": "Self_Discipline"
+    },
+    {
+        "id": 330,
+        "word": "Question",
+        "difficulty": "medium",
+        "theme": "Curiosity"
+    },
+    {
+        "id": 331,
+        "word": "Humour",
+        "difficulty": "easy",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 332,
+        "word": "Strict",
+        "difficulty": "medium",
+        "theme": "Discipline"
+    },
+    {
+        "id": 333,
+        "word": "Examination",
+        "difficulty": "medium",
+        "theme": "Achievement_Motivation"
+    },
+    {
+        "id": 334,
+        "word": "Inspection",
+        "difficulty": "medium",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 335,
+        "word": "Moble",
+        "difficulty": "easy",
+        "theme": "Adaptability"
+    },
+    {
+        "id": 336,
+        "word": "Leadership",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 337,
+        "word": "Confidence",
+        "difficulty": "medium",
+        "theme": "Self_Confidence"
+    },
+    {
+        "id": 338,
+        "word": "Progress",
+        "difficulty": "medium",
+        "theme": "Achievement_Motivation"
+    },
+    {
+        "id": 339,
+        "word": "Receive",
+        "difficulty": "easy",
+        "theme": "Acceptance"
+    },
+    {
+        "id": 340,
+        "word": "Speak",
+        "difficulty": "easy",
+        "theme": "Communication"
+    },
+    {
+        "id": 341,
+        "word": "Continue",
+        "difficulty": "medium",
+        "theme": "Determination"
+    },
+    {
+        "id": 342,
+        "word": "Limit",
+        "difficulty": "medium",
+        "theme": "Self_Control"
+    },
+    {
+        "id": 343,
+        "word": "Social",
+        "difficulty": "medium",
+        "theme": "Social_Responsibility"
+    },
+    {
+        "id": 344,
+        "word": "Pity",
+        "difficulty": "easy",
+        "theme": "Empathy"
+    },
+    {
+        "id": 345,
+        "word": "Climb",
+        "difficulty": "easy",
+        "theme": "Progress"
+    },
+    {
+        "id": 346,
+        "word": "Busy",
+        "difficulty": "easy",
+        "theme": "Work_Ethics"
+    },
+    {
+        "id": 347,
+        "word": "Vulgar",
+        "difficulty": "medium",
+        "theme": "Moral_Values"
+    },
+    {
+        "id": 348,
+        "word": "Worthy",
+        "difficulty": "medium",
+        "theme": "Self_Respect"
+    },
+    {
+        "id": 349,
+        "word": "Rocket",
+        "difficulty": "medium",
+        "theme": "Ambition"
+    },
+    {
+        "id": 350,
+        "word": "Illiteracy",
+        "difficulty": "medium",
+        "theme": "Social_Responsibility"
+    },
+    {
+        "id": 351,
+        "word": "Tidy",
+        "difficulty": "easy",
+        "theme": "Discipline"
+    },
+    {
+        "id": 352,
+        "word": "Batch",
+        "difficulty": "easy",
+        "theme": "Organization"
+    },
+    {
+        "id": 353,
+        "word": "Hijacking",
+        "difficulty": "hard",
+        "theme": "Crisis_Management"
+    },
+    {
+        "id": 354,
+        "word": "Memory",
+        "difficulty": "medium",
+        "theme": "Learning_Ability"
+    },
+    {
+        "id": 355,
+        "word": "Bring",
+        "difficulty": "easy",
+        "theme": "Initiative"
+    },
+    {
+        "id": 356,
+        "word": "Prize",
+        "difficulty": "easy",
+        "theme": "Achievement_Motivation"
+    },
+    {
+        "id": 357,
+        "word": "Heat",
+        "difficulty": "medium",
+        "theme": "Endurance"
+    },
+    {
+        "id": 358,
+        "word": "Average",
+        "difficulty": "medium",
+        "theme": "Self_Improvement"
+    },
+    {
+        "id": 359,
+        "word": "Drink",
+        "difficulty": "medium",
+        "theme": "Self_Control"
+    },
+    {
+        "id": 360,
+        "word": "Team",
+        "difficulty": "medium",
+        "theme": "Teamwork"
+    },
+    {
+        "id": 361,
+        "word": "Courage",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 362,
+        "word": "Graduate",
+        "difficulty": "easy",
+        "theme": "Achievement_Motivation"
+    },
+    {
+        "id": 363,
+        "word": "Disagree",
+        "difficulty": "medium",
+        "theme": "Communication"
+    },
+    {
+        "id": 364,
+        "word": "Satisfy",
+        "difficulty": "medium",
+        "theme": "Work_Ethics"
+    },
+    {
+        "id": 365,
+        "word": "Game",
+        "difficulty": "easy",
+        "theme": "Teamwork"
+    },
+    {
+        "id": 366,
+        "word": "Mind",
+        "difficulty": "medium",
+        "theme": "Intellectual_Ability"
+    },
+    {
+        "id": 367,
+        "word": "Agree",
+        "difficulty": "easy",
+        "theme": "Adjustment"
+    },
+    {
+        "id": 368,
+        "word": "Care",
+        "difficulty": "easy",
+        "theme": "Empathy"
+    },
+    {
+        "id": 369,
+        "word": "Gun",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 370,
+        "word": "Solve",
+        "difficulty": "medium",
+        "theme": "Problem_Solving"
+    },
+    {
+        "id": 371,
+        "word": "Murder",
+        "difficulty": "hard",
+        "theme": "Integrity"
+    },
+    {
+        "id": 372,
+        "word": "Conscience",
+        "difficulty": "hard",
+        "theme": "Moral_Values"
+    },
+    {
+        "id": 373,
+        "word": "Courage",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 374,
+        "word": "Point",
+        "difficulty": "easy",
+        "theme": "Clarity"
+    },
+    {
+        "id": 375,
+        "word": "Tidy",
+        "difficulty": "easy",
+        "theme": "Discipline"
+    },
+    {
+        "id": 376,
+        "word": "Dismiss",
+        "difficulty": "medium",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 377,
+        "word": "Dream",
+        "difficulty": "medium",
+        "theme": "Vision"
+    },
+    {
+        "id": 378,
+        "word": "Recognise",
+        "difficulty": "medium",
+        "theme": "Awareness"
+    },
+    {
+        "id": 379,
+        "word": "Bluff",
+        "difficulty": "medium",
+        "theme": "Integrity"
+    },
+    {
+        "id": 380,
+        "word": "Nation",
+        "difficulty": "medium",
+        "theme": "Patriotism"
+    },
+    {
+        "id": 381,
+        "word": "Fight",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 382,
+        "word": "Wealth",
+        "difficulty": "medium",
+        "theme": "Values"
+    },
+    {
+        "id": 383,
+        "word": "Union",
+        "difficulty": "medium",
+        "theme": "Unity"
+    },
+    {
+        "id": 384,
+        "word": "Tact",
+        "difficulty": "medium",
+        "theme": "Social_Adjustment"
+    },
+    {
+        "id": 385,
+        "word": "Obey",
+        "difficulty": "medium",
+        "theme": "Discipline"
+    },
+    {
+        "id": 386,
+        "word": "Need",
+        "difficulty": "easy",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 387,
+        "word": "Doubt",
+        "difficulty": "medium",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 388,
+        "word": "Worthy",
+        "difficulty": "medium",
+        "theme": "Self_Respect"
+    },
+    {
+        "id": 389,
+        "word": "Holiday",
+        "difficulty": "easy",
+        "theme": "Balance"
+    },
+    {
+        "id": 390,
+        "word": "Precious",
+        "difficulty": "medium",
+        "theme": "Values"
+    },
+    {
+        "id": 391,
+        "word": "Appreciate",
+        "difficulty": "easy",
+        "theme": "Positive_Attitude"
+    },
+    {
+        "id": 392,
+        "word": "Pride",
+        "difficulty": "medium",
+        "theme": "Self_Respect"
+    },
+    {
+        "id": 393,
+        "word": "Bitter",
+        "difficulty": "medium",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 394,
+        "word": "Average",
+        "difficulty": "medium",
+        "theme": "Self_Improvement"
+    },
+    {
+        "id": 395,
+        "word": "Except",
+        "difficulty": "easy",
+        "theme": "Judgement"
+    },
+    {
+        "id": 396,
+        "word": "Crowd",
+        "difficulty": "medium",
+        "theme": "Social_Adjustment"
+    },
+    {
+        "id": 397,
+        "word": "Attempt",
+        "difficulty": "medium",
+        "theme": "Initiative"
+    },
+    {
+        "id": 398,
+        "word": "Organise",
+        "difficulty": "medium",
+        "theme": "Organizing_Ability"
+    },
+    {
+        "id": 399,
+        "word": "Honest",
+        "difficulty": "hard",
+        "theme": "Integrity"
+    },
+    {
+        "id": 400,
+        "word": "Hero",
+        "difficulty": "medium",
+        "theme": "Courage"
+    }
+]
