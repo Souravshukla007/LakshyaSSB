@@ -13,8 +13,8 @@ const PRO_PROTECTED = [
     '/olq-report',
     // Sub-paths like tests inside medical, practice, and ssb are protected 
     // but the root page is accessible publicly.
-    // E.g., /medical/test (if any), /practice/oir, /practice/wat, /practice/tat, etc.
-    '/practice/oir', '/practice/wat', '/practice/tat', '/practice/srt', '/practice/lecturette',
+    // E.g., /medical/test (if any)
+    // Removed: '/practice/oir', '/practice/wat', '/practice/tat', '/practice/srt', '/practice/lecturette'
     // Currently, /medical doesn't seem to have sub-pages from what we saw, but if it does, add them here.
     // For ssb, /ssb is accessible, but what about /ssb/day-1? 
     // The user requested: "keep the links open for the all 5 day in your path to recommedation section in landing page for all users." 
@@ -71,11 +71,6 @@ export const config = {
         // For now, no strict matcher for /ssb/:path* needed unless we add protected sub-routes under it.
         // Actually, if we don't include it in matcher, middleware won't run. So we should include routes we want to protect.
         '/piq/:path*',
-        '/practice/oir/:path*',
-        '/practice/wat/:path*',
-        '/practice/tat/:path*',
-        '/practice/srt/:path*',
-        '/practice/lecturette/:path*',
         '/daily-question/:path*',
         '/olq-report/:path*',
     ],
