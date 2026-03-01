@@ -173,7 +173,7 @@ export default function PIQResult() {
                                         PRO
                                     </div>
                                     <h3 className="font-hero font-bold text-xl text-brand-dark mb-4">Unlock Full Report</h3>
-                                    <div className="text-3xl font-hero font-bold text-brand-dark mb-6">₹99</div>
+                                    <div className="text-3xl font-hero font-bold text-brand-dark mb-6">₹49</div>
                                     <ul className="space-y-3 mb-8">
                                         <li className="flex items-center gap-3 text-xs text-gray-500 font-bold">
                                             <i className="fa-solid fa-check text-brand-orange"></i> Detailed 15 OLQ Scoring

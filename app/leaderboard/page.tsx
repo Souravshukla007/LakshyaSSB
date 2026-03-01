@@ -366,16 +366,16 @@ export default function LeaderboardPage() {
                             <span>Medals reset <strong className="text-gray-600">weekly</strong> for the Weekly Leaderboard only. Overall medals are permanent.</span>
                         </div>
 
-                        {/* 99-medal progress teaser */}
+                        {/* 49-medal progress teaser */}
                         {!isPro && (
                             <div className="mt-5 p-4 rounded-2xl bg-orange-50 border border-orange-100 flex items-center gap-4">
                                 <div className="flex-1">
-                                    <p className="text-sm font-bold text-gray-900">🏅 99 Medals = Unlock Pro Access</p>
+                                    <p className="text-sm font-bold text-gray-900">🏅 49 Medals = Unlock Pro Access</p>
                                     <p className="text-xs text-gray-500 mt-0.5">Compete harder. Rank higher. Access full insights.</p>
                                     <div className="mt-2 w-full bg-orange-100 rounded-full h-2">
                                         <div className="bg-orange-500 h-2 rounded-full transition-all duration-500" style={{ width: '28%' }} />
                                     </div>
-                                    <p className="text-[10px] text-gray-400 mt-1">28 / 99 medals earned (example)</p>
+                                    <p className="text-[10px] text-gray-400 mt-1">28 / 49 medals earned (example)</p>
                                 </div>
                                 <i className="fa-solid fa-crown text-3xl text-orange-400 shrink-0" />
                             </div>
@@ -398,7 +398,7 @@ export default function LeaderboardPage() {
                                 </div>
                                 <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
                                     Unlock Pro Access<br />
-                                    <span className="text-orange-500">with 99 Medals</span>
+                                    <span className="text-orange-500">with 49 Medals</span>
                                 </h2>
                                 <p className="text-gray-400 text-base max-w-md mx-auto">
                                     Compete harder. Rank higher. Access the full leaderboard, detailed OLQ reports, and exclusive training materials.
@@ -422,7 +422,7 @@ export default function LeaderboardPage() {
                                 </div>
 
                                 <p className="text-gray-500 text-xs mt-4">
-                                    Already at 99 medals? <Link href="/auth" className="text-orange-400 underline font-semibold">Sign in to redeem →</Link>
+                                    Already at 49 medals? <Link href="/auth" className="text-orange-400 underline font-semibold">Sign in to redeem →</Link>
                                 </p>
                             </div>
                         </section>

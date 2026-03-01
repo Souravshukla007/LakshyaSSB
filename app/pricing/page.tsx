@@ -118,7 +118,7 @@ export default function Pricing() {
                             <div>
                                 <h3 className="font-hero font-bold text-2xl text-brand-dark mb-2">PRO PLAN</h3>
                                 <div className="text-4xl font-bold text-brand-dark mb-2">
-                                    ₹99 <span className="text-sm text-gray-400 font-normal">one-time</span>
+                                    ₹49 <span className="text-sm text-gray-400 font-normal">one-time</span>
                                 </div>
                                 <p className="text-xs text-gray-400 mb-8">Full access · One-time payment · Lifetime digital access</p>
                                 <ul className="space-y-4 mb-10">

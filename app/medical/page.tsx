@@ -841,7 +841,7 @@ function Step4Report({
                             ))}
                         </ul>
                         <a href="/pricing" className="inline-block px-8 py-3.5 rounded-2xl bg-brand-orange text-white font-bold text-sm hover:opacity-90 transition-opacity">
-                            Unlock Pro Analysis — ₹99
+                            Unlock Pro Analysis — ₹49
                         </a>
                     </div>
                 </div>

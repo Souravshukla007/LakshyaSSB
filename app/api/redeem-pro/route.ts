@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
-const PRO_COST = 99;
+const PRO_COST = 49;
 
 export async function POST() {
     const session = await getSession();

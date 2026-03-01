@@ -63,6 +63,7 @@ model User {
   piqScores      PiqScore[]
   srtResults     SrtResult[] // SRT history
   watResults     WatResult[] // WAT history
+  tatResults     TatResult[] // TAT history
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -78,7 +79,7 @@ model Payment {
   userId            String
   razorpayOrderId   String        @unique
   razorpayPaymentId String?
-  amount            Int           // in paise (₹499 = 49900)
+  amount            Int           // in paise (₹49 = 4900)
   status            PaymentStatus @default(PENDING)
   createdAt         DateTime      @default(now())
 
@@ -227,6 +228,26 @@ model SrtResult {
 // ---------------------------------------------------------------------------
 
 model WatResult {
+  id          String   @id @default(uuid())
+  userId      String
+
+  totalScore  Int
+  themeScores Json
+  riskLevel   RiskLevel
+
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Thematic Apperception Test (TAT) Evaluation Results
+// ---------------------------------------------------------------------------
+
+model TatResult {
   id          String   @id @default(uuid())
   userId      String
 

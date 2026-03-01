@@ -5,7 +5,7 @@ import { getSession } from '@/lib/auth';
 /**
  * POST /api/payment/create-order
  * Creates a Razorpay order for the PRO plan.
- * Amount is hardcoded to ₹499 (49900 paise).
+ * Amount is hardcoded to ₹49 (4900 paise).
  */
 export async function POST() {
     const session = await getSession();
@@ -20,7 +20,7 @@ export async function POST() {
         return NextResponse.json({ error: 'Payment gateway not configured' }, { status: 500 });
     }
 
-    const amount = 9900; // ₹99 in paise
+    const amount = 4900; // ₹49 in paise
     const currency = 'INR';
     // Receipt must be <= 40 chars
     const receipt = `rcpt_${session.userId.substring(0, 8)}_${Date.now()}`;
