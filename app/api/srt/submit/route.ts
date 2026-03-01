@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 import { evaluateSrt, SrtInput } from '@/lib/evaluators/srtEvaluator';
 
 export async function POST(req: Request) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.id) {
+        const session = await getSession();
+        if (!session?.userId) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
@@ -24,7 +23,7 @@ export async function POST(req: Request) {
         // Save to Database
         const srtResult = await prisma.srtResult.create({
             data: {
-                userId: session.user.id,
+                userId: session.userId,
                 totalScore: evaluationResult.totalScore,
                 themeScores: evaluationResult.themeScores,
                 riskLevel: evaluationResult.riskLevel,
