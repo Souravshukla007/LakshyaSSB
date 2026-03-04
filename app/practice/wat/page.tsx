@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import watData from '../../../wat01.json';
@@ -9,6 +10,7 @@ import watData from '../../../wat01.json';
 type GameState = 'start' | 'test' | 'result';
 
 export default function WATModule() {
+    const router = useRouter();
     const [gameState, setGameState] = useState<GameState>('start');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [timeLeft, setTimeLeft] = useState(15);
@@ -39,7 +41,26 @@ export default function WATModule() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [timeLeft, gameState]);
 
-    const handleStart = () => {
+    const handleStart = async () => {
+        // Verify Access
+        const accessRes = await fetch('/api/practice/check-access?module=WAT');
+        if (accessRes.status === 401) {
+            router.push('/auth');
+            return;
+        }
+        const accessData = await accessRes.json();
+        if (!accessData.allowed) {
+            router.push('/pricing');
+            return;
+        }
+
+        // Consume Attempt (POST)
+        await fetch('/api/practice/check-access', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ module: 'WAT' })
+        });
+
         setGameState('test');
         setCurrentIndex(0);
         setTimeLeft(15);
@@ -302,12 +323,12 @@ export default function WATModule() {
                                                     {evaluationResult.percentage_score}<span className="text-4xl text-gray-400 font-medium">/100</span>
                                                 </div>
                                                 <div className={`inline-flex items-center gap-2 px-5 py-2.5 border rounded-full text-sm font-bold shadow-sm ${evaluationResult.risk_level === 'LOW' ? 'bg-green-100 text-green-700 border-green-200' :
-                                                        evaluationResult.risk_level === 'MODERATE' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' :
-                                                            'bg-red-100 text-red-700 border-red-200'
+                                                    evaluationResult.risk_level === 'MODERATE' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' :
+                                                        'bg-red-100 text-red-700 border-red-200'
                                                     }`}>
                                                     <div className={`w-2 h-2 rounded-full animate-pulse ${evaluationResult.risk_level === 'LOW' ? 'bg-green-500' :
-                                                            evaluationResult.risk_level === 'MODERATE' ? 'bg-yellow-500' :
-                                                                'bg-red-500'
+                                                        evaluationResult.risk_level === 'MODERATE' ? 'bg-yellow-500' :
+                                                            'bg-red-500'
                                                         }`}></div>
                                                     {evaluationResult.risk_level === 'LOW' ? 'Strong Officer Thinking' :
                                                         evaluationResult.risk_level === 'MODERATE' ? 'Moderate Development' :

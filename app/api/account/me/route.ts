@@ -9,7 +9,8 @@ import { prisma } from '@/lib/prisma';
 export async function GET() {
     const session = await getSession();
     if (!session) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        // Return 200 with an empty/unauthenticated flag so Navbar doesn't spam 401s in console
+        return NextResponse.json({ authenticated: false }, { status: 200 });
     }
 
     const user = await prisma.user.findUnique({
@@ -45,11 +46,12 @@ export async function GET() {
     // Auto-sync stale session cookie if DB plan state diverged
     // Note: planExpiry is no longer fetched, so this part of the condition will always be false
     if (user.plan !== session.plan) { // Simplified condition as planExpiry is no longer fetched
-        await import('@/lib/auth').then(m => m.signSession({
+        const { signSession } = await import('@/lib/auth');
+        await signSession({
             userId: user.id,
             email: user.email,
             plan: user.plan as 'FREE' | 'PRO',
-        }));
+        });
     }
 
     return NextResponse.json(user);

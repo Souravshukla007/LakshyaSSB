@@ -1,0 +1,1302 @@
+[
+    {
+        "id": 1,
+        "question": "Doctor : Hospital :: Teacher : ?",
+        "options": [
+            "School",
+            "Market",
+            "Library",
+            "Playground"
+        ],
+        "answer": "School",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 2,
+        "question": "Bird : Fly :: Fish : ?",
+        "options": [
+            "Swim",
+            "Run",
+            "Jump",
+            "Climb"
+        ],
+        "answer": "Swim",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 3,
+        "question": "Pencil : Write :: Knife : ?",
+        "options": [
+            "Cut",
+            "Draw",
+            "Paint",
+            "Erase"
+        ],
+        "answer": "Cut",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 4,
+        "question": "Sun : Day :: Moon : ?",
+        "options": [
+            "Night",
+            "Morning",
+            "Evening",
+            "Light"
+        ],
+        "answer": "Night",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 5,
+        "question": "Cow : Milk :: Hen : ?",
+        "options": [
+            "Egg",
+            "Feather",
+            "Nest",
+            "Bird"
+        ],
+        "answer": "Egg",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 6,
+        "question": "Tree : Leaf :: Flower : ?",
+        "options": [
+            "Petal",
+            "Stem",
+            "Bud",
+            "Fruit"
+        ],
+        "answer": "Petal",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 7,
+        "question": "Car : Wheel :: Human : ?",
+        "options": [
+            "Leg",
+            "Hand",
+            "Eye",
+            "Head"
+        ],
+        "answer": "Leg",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 8,
+        "question": "Book : Read :: Song : ?",
+        "options": [
+            "Sing",
+            "Dance",
+            "Play",
+            "Hear"
+        ],
+        "answer": "Sing",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 9,
+        "question": "Finger : Hand :: Toe : ?",
+        "options": [
+            "Foot",
+            "Leg",
+            "Body",
+            "Head"
+        ],
+        "answer": "Foot",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 10,
+        "question": "Bird : Nest :: Lion : ?",
+        "options": [
+            "Den",
+            "Cave",
+            "Forest",
+            "Zoo"
+        ],
+        "answer": "Den",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 11,
+        "question": "Clock : Time :: Thermometer : ?",
+        "options": [
+            "Temperature",
+            "Heat",
+            "Weather",
+            "Cold"
+        ],
+        "answer": "Temperature",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 12,
+        "question": "Author : Book :: Painter : ?",
+        "options": [
+            "Painting",
+            "Canvas",
+            "Brush",
+            "Art"
+        ],
+        "answer": "Painting",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 13,
+        "question": "Knife : Cut :: Pen : ?",
+        "options": [
+            "Write",
+            "Draw",
+            "Erase",
+            "Mark"
+        ],
+        "answer": "Write",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 14,
+        "question": "Doctor : Patient :: Lawyer : ?",
+        "options": [
+            "Client",
+            "Judge",
+            "Case",
+            "Court"
+        ],
+        "answer": "Client",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 15,
+        "question": "Eye : See :: Ear : ?",
+        "options": [
+            "Hear",
+            "Speak",
+            "Listen",
+            "Touch"
+        ],
+        "answer": "Hear",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 16,
+        "question": "Pen : Ink :: Car : ?",
+        "options": [
+            "Fuel",
+            "Engine",
+            "Road",
+            "Wheel"
+        ],
+        "answer": "Fuel",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 17,
+        "question": "Engine : Train :: Heart : ?",
+        "options": [
+            "Body",
+            "Blood",
+            "Brain",
+            "Lung"
+        ],
+        "answer": "Body",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 18,
+        "question": "Soldier : Army :: Sailor : ?",
+        "options": [
+            "Navy",
+            "Ship",
+            "Ocean",
+            "Boat"
+        ],
+        "answer": "Navy",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 19,
+        "question": "Judge : Court :: Teacher : ?",
+        "options": [
+            "School",
+            "Student",
+            "Class",
+            "Book"
+        ],
+        "answer": "School",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 20,
+        "question": "Doctor : Medicine :: Farmer : ?",
+        "options": [
+            "Crop",
+            "Field",
+            "Plough",
+            "Soil"
+        ],
+        "answer": "Crop",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 21,
+        "question": "Fish : Water :: Bird : ?",
+        "options": [
+            "Air",
+            "Sky",
+            "Tree",
+            "Cloud"
+        ],
+        "answer": "Air",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 22,
+        "question": "Lion : Roar :: Snake : ?",
+        "options": [
+            "Hiss",
+            "Bite",
+            "Crawl",
+            "Strike"
+        ],
+        "answer": "Hiss",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 23,
+        "question": "Carpenter : Wood :: Sculptor : ?",
+        "options": [
+            "Stone",
+            "Clay",
+            "Metal",
+            "Sand"
+        ],
+        "answer": "Stone",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 24,
+        "question": "Poet : Poem :: Composer : ?",
+        "options": [
+            "Music",
+            "Song",
+            "Dance",
+            "Tune"
+        ],
+        "answer": "Song",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 25,
+        "question": "Baker : Bread :: Brewer : ?",
+        "options": [
+            "Beer",
+            "Water",
+            "Drink",
+            "Juice"
+        ],
+        "answer": "Beer",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 26,
+        "question": "Student : Study :: Athlete : ?",
+        "options": [
+            "Practice",
+            "Run",
+            "Jump",
+            "Play"
+        ],
+        "answer": "Practice",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 27,
+        "question": "Flower : Garden :: Tree : ?",
+        "options": [
+            "Forest",
+            "Leaf",
+            "Branch",
+            "Plant"
+        ],
+        "answer": "Forest",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 28,
+        "question": "Key : Lock :: Password : ?",
+        "options": [
+            "Account",
+            "Login",
+            "Security",
+            "System"
+        ],
+        "answer": "Account",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 29,
+        "question": "Helmet : Head :: Shoe : ?",
+        "options": [
+            "Foot",
+            "Leg",
+            "Toe",
+            "Walk"
+        ],
+        "answer": "Foot",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 30,
+        "question": "Bridge : River :: Tunnel : ?",
+        "options": [
+            "Mountain",
+            "Road",
+            "Train",
+            "City"
+        ],
+        "answer": "Mountain",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 31,
+        "question": "Milk : Dairy :: Bread : ?",
+        "options": [
+            "Bakery",
+            "Kitchen",
+            "Market",
+            "Store"
+        ],
+        "answer": "Bakery",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 32,
+        "question": "Ship : Sailor :: Plane : ?",
+        "options": [
+            "Pilot",
+            "Driver",
+            "Captain",
+            "Passenger"
+        ],
+        "answer": "Pilot",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 33,
+        "question": "Battery : Power :: Brain : ?",
+        "options": [
+            "Thinking",
+            "Memory",
+            "Energy",
+            "Mind"
+        ],
+        "answer": "Thinking",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 34,
+        "question": "Ink : Pen :: Blood : ?",
+        "options": [
+            "Body",
+            "Heart",
+            "Vein",
+            "Life"
+        ],
+        "answer": "Body",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 35,
+        "question": "Fire : Heat :: Ice : ?",
+        "options": [
+            "Cold",
+            "Water",
+            "Freeze",
+            "Snow"
+        ],
+        "answer": "Cold",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 36,
+        "question": "Leaf : Tree :: Page : ?",
+        "options": [
+            "Book",
+            "Paper",
+            "Chapter",
+            "Library"
+        ],
+        "answer": "Book",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 37,
+        "question": "Hand : Wrist :: Foot : ?",
+        "options": [
+            "Ankle",
+            "Toe",
+            "Leg",
+            "Heel"
+        ],
+        "answer": "Ankle",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 38,
+        "question": "Bird : Feather :: Fish : ?",
+        "options": [
+            "Scale",
+            "Fin",
+            "Gill",
+            "Tail"
+        ],
+        "answer": "Scale",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 39,
+        "question": "Rain : Cloud :: Lava : ?",
+        "options": [
+            "Volcano",
+            "Mountain",
+            "Rock",
+            "Heat"
+        ],
+        "answer": "Volcano",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 40,
+        "question": "Teacher : Student :: Coach : ?",
+        "options": [
+            "Player",
+            "Team",
+            "Game",
+            "Athlete"
+        ],
+        "answer": "Player",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 41,
+        "question": "Knife : Blade :: Pencil : ?",
+        "options": [
+            "Lead",
+            "Graphite",
+            "Tip",
+            "Wood"
+        ],
+        "answer": "Lead",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 42,
+        "question": "Shoes : Feet :: Gloves : ?",
+        "options": [
+            "Hands",
+            "Fingers",
+            "Palm",
+            "Skin"
+        ],
+        "answer": "Hands",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 43,
+        "question": "Engine : Car :: Processor : ?",
+        "options": [
+            "Computer",
+            "Laptop",
+            "Server",
+            "CPU"
+        ],
+        "answer": "Computer",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 44,
+        "question": "Camera : Photo :: Printer : ?",
+        "options": [
+            "Paper",
+            "Print",
+            "Ink",
+            "Copy"
+        ],
+        "answer": "Print",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 45,
+        "question": "Knife : Kitchen :: Bed : ?",
+        "options": [
+            "Bedroom",
+            "House",
+            "Room",
+            "Sleep"
+        ],
+        "answer": "Bedroom",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 46,
+        "question": "Seed : Plant :: Egg : ?",
+        "options": [
+            "Bird",
+            "Chicken",
+            "Animal",
+            "Life"
+        ],
+        "answer": "Bird",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 47,
+        "question": "Compass : Direction :: Thermometer : ?",
+        "options": [
+            "Temperature",
+            "Weather",
+            "Climate",
+            "Heat"
+        ],
+        "answer": "Temperature",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 48,
+        "question": "Map : Geography :: Microscope : ?",
+        "options": [
+            "Biology",
+            "Physics",
+            "Science",
+            "Chemistry"
+        ],
+        "answer": "Biology",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 49,
+        "question": "Dictionary : Words :: Atlas : ?",
+        "options": [
+            "Maps",
+            "Countries",
+            "Cities",
+            "Geography"
+        ],
+        "answer": "Maps",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 50,
+        "question": "Teacher : Chalk :: Artist : ?",
+        "options": [
+            "Brush",
+            "Paint",
+            "Canvas",
+            "Color"
+        ],
+        "answer": "Brush",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 51,
+        "question": "King : Queen :: Man : ?",
+        "options": [
+            "Woman",
+            "Lady",
+            "Girl",
+            "Mother"
+        ],
+        "answer": "Woman",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 52,
+        "question": "Hot : Cold :: Light : ?",
+        "options": [
+            "Dark",
+            "Dim",
+            "Night",
+            "Shadow"
+        ],
+        "answer": "Dark",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 53,
+        "question": "Doctor : Cure :: Judge : ?",
+        "options": [
+            "Justice",
+            "Court",
+            "Law",
+            "Crime"
+        ],
+        "answer": "Justice",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 54,
+        "question": "Teacher : Knowledge :: Farmer : ?",
+        "options": [
+            "Food",
+            "Crop",
+            "Harvest",
+            "Field"
+        ],
+        "answer": "Food",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 55,
+        "question": "Car : Road :: Ship : ?",
+        "options": [
+            "Sea",
+            "Water",
+            "Ocean",
+            "River"
+        ],
+        "answer": "Sea",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 56,
+        "question": "Lock : Key :: Problem : ?",
+        "options": [
+            "Solution",
+            "Answer",
+            "Idea",
+            "Plan"
+        ],
+        "answer": "Solution",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 57,
+        "question": "Camera : Lens :: Eye : ?",
+        "options": [
+            "Pupil",
+            "Vision",
+            "Sight",
+            "Cornea"
+        ],
+        "answer": "Pupil",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 58,
+        "question": "Brain : Thinking :: Heart : ?",
+        "options": [
+            "Pumping",
+            "Feeling",
+            "Blood",
+            "Emotion"
+        ],
+        "answer": "Feeling",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 59,
+        "question": "Fuel : Engine :: Food : ?",
+        "options": [
+            "Body",
+            "Energy",
+            "Health",
+            "Muscle"
+        ],
+        "answer": "Body",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 60,
+        "question": "Cloud : Rain :: Volcano : ?",
+        "options": [
+            "Lava",
+            "Fire",
+            "Smoke",
+            "Ash"
+        ],
+        "answer": "Lava",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 61,
+        "question": "Brush : Paint :: Pen : ?",
+        "options": [
+            "Ink",
+            "Write",
+            "Paper",
+            "Draw"
+        ],
+        "answer": "Ink",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 62,
+        "question": "Tailor : Clothes :: Cobbler : ?",
+        "options": [
+            "Shoes",
+            "Leather",
+            "Repair",
+            "Sole"
+        ],
+        "answer": "Shoes",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 63,
+        "question": "Book : Author :: Film : ?",
+        "options": [
+            "Director",
+            "Actor",
+            "Producer",
+            "Script"
+        ],
+        "answer": "Director",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 64,
+        "question": "Computer : Keyboard :: Piano : ?",
+        "options": [
+            "Keys",
+            "Music",
+            "Sound",
+            "Instrument"
+        ],
+        "answer": "Keys",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 65,
+        "question": "Water : Thirst :: Food : ?",
+        "options": [
+            "Hunger",
+            "Taste",
+            "Eat",
+            "Nutrition"
+        ],
+        "answer": "Hunger",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 66,
+        "question": "Knife : Cut :: Scissors : ?",
+        "options": [
+            "Snip",
+            "Cut",
+            "Clip",
+            "Slice"
+        ],
+        "answer": "Cut",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 67,
+        "question": "Pen : Paper :: Chalk : ?",
+        "options": [
+            "Board",
+            "Class",
+            "Dust",
+            "Teacher"
+        ],
+        "answer": "Board",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 68,
+        "question": "Singer : Song :: Writer : ?",
+        "options": [
+            "Story",
+            "Book",
+            "Article",
+            "Essay"
+        ],
+        "answer": "Story",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 69,
+        "question": "Heart : Blood :: Lungs : ?",
+        "options": [
+            "Air",
+            "Oxygen",
+            "Breath",
+            "Life"
+        ],
+        "answer": "Oxygen",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 70,
+        "question": "Battery : Electricity :: Dam : ?",
+        "options": [
+            "Water",
+            "Power",
+            "River",
+            "Energy"
+        ],
+        "answer": "Power",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 71,
+        "question": "Dog : Bark :: Cat : ?",
+        "options": [
+            "Meow",
+            "Roar",
+            "Hiss",
+            "Growl"
+        ],
+        "answer": "Meow",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 72,
+        "question": "Tree : Root :: Building : ?",
+        "options": [
+            "Foundation",
+            "Wall",
+            "Roof",
+            "Brick"
+        ],
+        "answer": "Foundation",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 73,
+        "question": "Doctor : Stethoscope :: Carpenter : ?",
+        "options": [
+            "Hammer",
+            "Saw",
+            "Tool",
+            "Wood"
+        ],
+        "answer": "Hammer",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 74,
+        "question": "Bee : Honey :: Silkworm : ?",
+        "options": [
+            "Silk",
+            "Thread",
+            "Cloth",
+            "Cocoon"
+        ],
+        "answer": "Silk",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 75,
+        "question": "Brain : Memory :: Computer : ?",
+        "options": [
+            "Storage",
+            "Disk",
+            "Data",
+            "Memory"
+        ],
+        "answer": "Memory",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 76,
+        "question": "Clock : Second :: Calendar : ?",
+        "options": [
+            "Day",
+            "Month",
+            "Year",
+            "Week"
+        ],
+        "answer": "Day",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 77,
+        "question": "Water : Liquid :: Ice : ?",
+        "options": [
+            "Solid",
+            "Cold",
+            "Crystal",
+            "Frozen"
+        ],
+        "answer": "Solid",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 78,
+        "question": "Snake : Poison :: Bee : ?",
+        "options": [
+            "Sting",
+            "Honey",
+            "Buzz",
+            "Wing"
+        ],
+        "answer": "Sting",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 79,
+        "question": "Glass : Fragile :: Iron : ?",
+        "options": [
+            "Strong",
+            "Heavy",
+            "Hard",
+            "Metal"
+        ],
+        "answer": "Strong",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 80,
+        "question": "Teacher : Teach :: Student : ?",
+        "options": [
+            "Learn",
+            "Study",
+            "Read",
+            "Write"
+        ],
+        "answer": "Learn",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 81,
+        "question": "Night : Dark :: Day : ?",
+        "options": [
+            "Bright",
+            "Light",
+            "Sun",
+            "Warm"
+        ],
+        "answer": "Bright",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 82,
+        "question": "Seed : Grow :: Fire : ?",
+        "options": [
+            "Burn",
+            "Heat",
+            "Light",
+            "Smoke"
+        ],
+        "answer": "Burn",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 83,
+        "question": "Fish : Gill :: Human : ?",
+        "options": [
+            "Lungs",
+            "Heart",
+            "Skin",
+            "Breath"
+        ],
+        "answer": "Lungs",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 84,
+        "question": "Paper : Fold :: Cloth : ?",
+        "options": [
+            "Stitch",
+            "Sew",
+            "Cut",
+            "Wash"
+        ],
+        "answer": "Stitch",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 85,
+        "question": "Milk : White :: Coal : ?",
+        "options": [
+            "Black",
+            "Hard",
+            "Solid",
+            "Burn"
+        ],
+        "answer": "Black",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 86,
+        "question": "Foot : Walk :: Hand : ?",
+        "options": [
+            "Hold",
+            "Touch",
+            "Grip",
+            "Carry"
+        ],
+        "answer": "Hold",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 87,
+        "question": "Car : Petrol :: Human : ?",
+        "options": [
+            "Food",
+            "Energy",
+            "Air",
+            "Water"
+        ],
+        "answer": "Food",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 88,
+        "question": "Book : Knowledge :: Experience : ?",
+        "options": [
+            "Wisdom",
+            "Life",
+            "Learning",
+            "Idea"
+        ],
+        "answer": "Wisdom",
+        "difficulty": "hard",
+        "topic": "analogy"
+    },
+    {
+        "id": 89,
+        "question": "Map : Direction :: Guide : ?",
+        "options": [
+            "Help",
+            "Advice",
+            "Path",
+            "Travel"
+        ],
+        "answer": "Advice",
+        "difficulty": "hard",
+        "topic": "analogy"
+    },
+    {
+        "id": 90,
+        "question": "Poison : Kill :: Medicine : ?",
+        "options": [
+            "Heal",
+            "Treat",
+            "Cure",
+            "Help"
+        ],
+        "answer": "Cure",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 91,
+        "question": "Knife : Sharp :: Pillow : ?",
+        "options": [
+            "Soft",
+            "Light",
+            "Cotton",
+            "Bed"
+        ],
+        "answer": "Soft",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 92,
+        "question": "Train : Track :: Car : ?",
+        "options": [
+            "Road",
+            "Wheel",
+            "Driver",
+            "Highway"
+        ],
+        "answer": "Road",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 93,
+        "question": "Teacher : Lesson :: Student : ?",
+        "options": [
+            "Homework",
+            "Learning",
+            "Study",
+            "Exam"
+        ],
+        "answer": "Learning",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 94,
+        "question": "River : Flow :: Wind : ?",
+        "options": [
+            "Blow",
+            "Move",
+            "Air",
+            "Storm"
+        ],
+        "answer": "Blow",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 95,
+        "question": "Pen : Signature :: Brush : ?",
+        "options": [
+            "Painting",
+            "Art",
+            "Color",
+            "Canvas"
+        ],
+        "answer": "Painting",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 96,
+        "question": "Soldier : War :: Doctor : ?",
+        "options": [
+            "Hospital",
+            "Disease",
+            "Treatment",
+            "Patient"
+        ],
+        "answer": "Treatment",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 97,
+        "question": "Baker : Cake :: Chef : ?",
+        "options": [
+            "Meal",
+            "Food",
+            "Dish",
+            "Kitchen"
+        ],
+        "answer": "Dish",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 98,
+        "question": "Clock : Tick :: Heart : ?",
+        "options": [
+            "Beat",
+            "Blood",
+            "Pulse",
+            "Life"
+        ],
+        "answer": "Beat",
+        "difficulty": "easy",
+        "topic": "analogy"
+    },
+    {
+        "id": 99,
+        "question": "Engine : Power :: Brain : ?",
+        "options": [
+            "Thought",
+            "Idea",
+            "Energy",
+            "Control"
+        ],
+        "answer": "Thought",
+        "difficulty": "medium",
+        "topic": "analogy"
+    },
+    {
+        "id": 100,
+        "question": "Fire : Smoke :: Rain : ?",
+        "options": [
+            "Cloud",
+            "Water",
+            "Flood",
+            "Drop"
+        ],
+        "answer": "Cloud",
+        "difficulty": "medium",
+        "topic": "analogy"
+    }
+]

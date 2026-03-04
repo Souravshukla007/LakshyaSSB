@@ -1,0 +1,1315 @@
+[
+    {
+        "id": 0,
+        "question": "He shall make adequate arrangement for your departure.",
+        "options": [
+            "accurate",
+            "sufficient",
+            "alike",
+            "against"
+        ],
+        "answer": "sufficient",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 1,
+        "question": "The boy showed immense courage during the rescue.",
+        "options": [
+            "fear",
+            "bravery",
+            "anger",
+            "laziness"
+        ],
+        "answer": "bravery",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 2,
+        "question": "The teacher asked the students to remain silent.",
+        "options": [
+            "quiet",
+            "talkative",
+            "angry",
+            "happy"
+        ],
+        "answer": "quiet",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 3,
+        "question": "The weather today is pleasant.",
+        "options": [
+            "stormy",
+            "enjoyable",
+            "dangerous",
+            "boring"
+        ],
+        "answer": "enjoyable",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 4,
+        "question": "The child was extremely happy with the gift.",
+        "options": [
+            "sad",
+            "delighted",
+            "angry",
+            "worried"
+        ],
+        "answer": "delighted",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 5,
+        "question": "The soldier showed great valor in the battle.",
+        "options": [
+            "fear",
+            "bravery",
+            "cowardice",
+            "anger"
+        ],
+        "answer": "bravery",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 6,
+        "question": "The teacher gave a brief explanation.",
+        "options": [
+            "short",
+            "long",
+            "boring",
+            "confusing"
+        ],
+        "answer": "short",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 7,
+        "question": "He made a rapid decision.",
+        "options": [
+            "slow",
+            "quick",
+            "weak",
+            "late"
+        ],
+        "answer": "quick",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 8,
+        "question": "The building is enormous.",
+        "options": [
+            "tiny",
+            "huge",
+            "clean",
+            "dirty"
+        ],
+        "answer": "huge",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 9,
+        "question": "The child was frightened by the loud noise.",
+        "options": [
+            "happy",
+            "afraid",
+            "angry",
+            "excited"
+        ],
+        "answer": "afraid",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 10,
+        "question": "She showed great patience while teaching.",
+        "options": [
+            "anger",
+            "calmness",
+            "fear",
+            "hate"
+        ],
+        "answer": "calmness",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 11,
+        "question": "The plan was rejected due to insufficient funds.",
+        "options": [
+            "enough",
+            "inadequate",
+            "plenty",
+            "extra"
+        ],
+        "answer": "inadequate",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 12,
+        "question": "He was reluctant to accept the offer.",
+        "options": [
+            "willing",
+            "unwilling",
+            "excited",
+            "happy"
+        ],
+        "answer": "unwilling",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 13,
+        "question": "The judge gave a fair decision.",
+        "options": [
+            "unjust",
+            "honest",
+            "partial",
+            "wrong"
+        ],
+        "answer": "honest",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 14,
+        "question": "The team achieved a remarkable victory.",
+        "options": [
+            "ordinary",
+            "notable",
+            "weak",
+            "poor"
+        ],
+        "answer": "notable",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 15,
+        "question": "The student showed diligence in his studies.",
+        "options": [
+            "laziness",
+            "carelessness",
+            "hard work",
+            "ignorance"
+        ],
+        "answer": "hard work",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 16,
+        "question": "The company suffered a huge loss.",
+        "options": [
+            "profit",
+            "damage",
+            "benefit",
+            "gain"
+        ],
+        "answer": "damage",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 17,
+        "question": "The old monument is ancient.",
+        "options": [
+            "modern",
+            "very old",
+            "new",
+            "recent"
+        ],
+        "answer": "very old",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 18,
+        "question": "The boy gave a clever answer.",
+        "options": [
+            "smart",
+            "dull",
+            "lazy",
+            "weak"
+        ],
+        "answer": "smart",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 19,
+        "question": "The teacher appreciated the brilliant performance.",
+        "options": [
+            "excellent",
+            "poor",
+            "weak",
+            "slow"
+        ],
+        "answer": "excellent",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 20,
+        "question": "The city experienced a severe storm.",
+        "options": [
+            "mild",
+            "dangerous",
+            "strong",
+            "gentle"
+        ],
+        "answer": "strong",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 21,
+        "question": "He is a generous person.",
+        "options": [
+            "kind",
+            "selfish",
+            "angry",
+            "greedy"
+        ],
+        "answer": "kind",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 22,
+        "question": "The manager gave a strict warning.",
+        "options": [
+            "soft",
+            "serious",
+            "happy",
+            "funny"
+        ],
+        "answer": "serious",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 23,
+        "question": "The child was curious about the new toy.",
+        "options": [
+            "interested",
+            "bored",
+            "angry",
+            "sad"
+        ],
+        "answer": "interested",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 24,
+        "question": "The teacher gave a precise explanation.",
+        "options": [
+            "exact",
+            "wrong",
+            "unclear",
+            "long"
+        ],
+        "answer": "exact",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 25,
+        "question": "The soldiers showed loyalty to their country.",
+        "options": [
+            "faithfulness",
+            "betrayal",
+            "anger",
+            "fear"
+        ],
+        "answer": "faithfulness",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 26,
+        "question": "The exam was extremely difficult.",
+        "options": [
+            "easy",
+            "hard",
+            "short",
+            "simple"
+        ],
+        "answer": "hard",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 27,
+        "question": "The scientist made a significant discovery.",
+        "options": [
+            "important",
+            "minor",
+            "useless",
+            "ordinary"
+        ],
+        "answer": "important",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 28,
+        "question": "The judge was impartial in his decision.",
+        "options": [
+            "biased",
+            "fair",
+            "angry",
+            "weak"
+        ],
+        "answer": "fair",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 29,
+        "question": "The building collapsed suddenly.",
+        "options": [
+            "fell",
+            "stood",
+            "expanded",
+            "moved"
+        ],
+        "answer": "fell",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 30,
+        "question": "The speaker gave an inspiring speech.",
+        "options": [
+            "motivating",
+            "boring",
+            "sad",
+            "weak"
+        ],
+        "answer": "motivating",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 31,
+        "question": "The plan failed due to negligence.",
+        "options": [
+            "carelessness",
+            "care",
+            "attention",
+            "effort"
+        ],
+        "answer": "carelessness",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 32,
+        "question": "He made a bold decision.",
+        "options": [
+            "brave",
+            "weak",
+            "afraid",
+            "careless"
+        ],
+        "answer": "brave",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 33,
+        "question": "The result was unexpected.",
+        "options": [
+            "surprising",
+            "known",
+            "planned",
+            "clear"
+        ],
+        "answer": "surprising",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 34,
+        "question": "The teacher encouraged the students.",
+        "options": [
+            "motivated",
+            "stopped",
+            "ignored",
+            "punished"
+        ],
+        "answer": "motivated",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 35,
+        "question": "The man was furious after the argument.",
+        "options": [
+            "very angry",
+            "happy",
+            "excited",
+            "pleased"
+        ],
+        "answer": "very angry",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 36,
+        "question": "The situation became critical.",
+        "options": [
+            "dangerous",
+            "safe",
+            "simple",
+            "easy"
+        ],
+        "answer": "dangerous",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 37,
+        "question": "He is a reliable friend.",
+        "options": [
+            "trustworthy",
+            "lazy",
+            "weak",
+            "angry"
+        ],
+        "answer": "trustworthy",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 38,
+        "question": "The child was exhausted after playing.",
+        "options": [
+            "tired",
+            "happy",
+            "fresh",
+            "excited"
+        ],
+        "answer": "tired",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 39,
+        "question": "The leader delivered a powerful speech.",
+        "options": [
+            "strong",
+            "weak",
+            "boring",
+            "short"
+        ],
+        "answer": "strong",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 40,
+        "question": "The scientist conducted a careful experiment.",
+        "options": [
+            "accurate",
+            "careless",
+            "rough",
+            "quick"
+        ],
+        "answer": "accurate",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 41,
+        "question": "The project was completed successfully.",
+        "options": [
+            "failed",
+            "achieved",
+            "stopped",
+            "delayed"
+        ],
+        "answer": "achieved",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 42,
+        "question": "The boy was ashamed of his mistake.",
+        "options": [
+            "embarrassed",
+            "happy",
+            "angry",
+            "excited"
+        ],
+        "answer": "embarrassed",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 43,
+        "question": "The police arrested the criminal.",
+        "options": [
+            "caught",
+            "released",
+            "ignored",
+            "helped"
+        ],
+        "answer": "caught",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 44,
+        "question": "The child was innocent.",
+        "options": [
+            "guilty",
+            "pure",
+            "angry",
+            "selfish"
+        ],
+        "answer": "pure",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 45,
+        "question": "The teacher made a logical argument.",
+        "options": [
+            "reasonable",
+            "weak",
+            "funny",
+            "false"
+        ],
+        "answer": "reasonable",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 46,
+        "question": "The leader gave a motivating speech.",
+        "options": [
+            "inspiring",
+            "boring",
+            "slow",
+            "weak"
+        ],
+        "answer": "inspiring",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 47,
+        "question": "The student showed remarkable intelligence.",
+        "options": [
+            "smartness",
+            "laziness",
+            "fear",
+            "weakness"
+        ],
+        "answer": "smartness",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 48,
+        "question": "The task was simple.",
+        "options": [
+            "easy",
+            "hard",
+            "complex",
+            "difficult"
+        ],
+        "answer": "easy",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 49,
+        "question": "The old man was wealthy.",
+        "options": [
+            "rich",
+            "poor",
+            "weak",
+            "sad"
+        ],
+        "answer": "rich",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 50,
+        "question": "The decision was final.",
+        "options": [
+            "last",
+            "temporary",
+            "uncertain",
+            "weak"
+        ],
+        "answer": "last",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 51,
+        "question": "The manager gave a prompt response.",
+        "options": [
+            "quick",
+            "slow",
+            "late",
+            "careless"
+        ],
+        "answer": "quick",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 52,
+        "question": "The soldier remained calm during the crisis.",
+        "options": [
+            "peaceful",
+            "angry",
+            "confused",
+            "fearful"
+        ],
+        "answer": "peaceful",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 53,
+        "question": "The child was eager to learn.",
+        "options": [
+            "unwilling",
+            "interested",
+            "lazy",
+            "angry"
+        ],
+        "answer": "interested",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 54,
+        "question": "The teacher gave a detailed explanation.",
+        "options": [
+            "brief",
+            "complete",
+            "wrong",
+            "short"
+        ],
+        "answer": "complete",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 55,
+        "question": "The plan was rejected because it was impractical.",
+        "options": [
+            "useless",
+            "helpful",
+            "possible",
+            "simple"
+        ],
+        "answer": "useless",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 56,
+        "question": "The officer made a wise decision.",
+        "options": [
+            "foolish",
+            "smart",
+            "careless",
+            "weak"
+        ],
+        "answer": "smart",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 57,
+        "question": "The boy was terrified after the accident.",
+        "options": [
+            "excited",
+            "afraid",
+            "happy",
+            "calm"
+        ],
+        "answer": "afraid",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 58,
+        "question": "The scientist made an innovative invention.",
+        "options": [
+            "creative",
+            "old",
+            "simple",
+            "weak"
+        ],
+        "answer": "creative",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 59,
+        "question": "The player showed tremendous energy.",
+        "options": [
+            "great",
+            "small",
+            "weak",
+            "slow"
+        ],
+        "answer": "great",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 60,
+        "question": "The judge gave a strict punishment.",
+        "options": [
+            "severe",
+            "light",
+            "kind",
+            "happy"
+        ],
+        "answer": "severe",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 61,
+        "question": "The student made a foolish mistake.",
+        "options": [
+            "silly",
+            "smart",
+            "good",
+            "wise"
+        ],
+        "answer": "silly",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 62,
+        "question": "The workers completed the task efficiently.",
+        "options": [
+            "poorly",
+            "effectively",
+            "slowly",
+            "weakly"
+        ],
+        "answer": "effectively",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 63,
+        "question": "The man was wealthy and generous.",
+        "options": [
+            "rich",
+            "poor",
+            "weak",
+            "lazy"
+        ],
+        "answer": "rich",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 64,
+        "question": "The teacher gave constructive criticism.",
+        "options": [
+            "helpful",
+            "harmful",
+            "angry",
+            "useless"
+        ],
+        "answer": "helpful",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 65,
+        "question": "The leader showed determination.",
+        "options": [
+            "weakness",
+            "firmness",
+            "fear",
+            "anger"
+        ],
+        "answer": "firmness",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 66,
+        "question": "The boy was extremely intelligent.",
+        "options": [
+            "smart",
+            "slow",
+            "weak",
+            "lazy"
+        ],
+        "answer": "smart",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 67,
+        "question": "The company faced a serious problem.",
+        "options": [
+            "minor",
+            "important",
+            "dangerous",
+            "small"
+        ],
+        "answer": "dangerous",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 68,
+        "question": "The child was delighted with the toy.",
+        "options": [
+            "happy",
+            "sad",
+            "angry",
+            "afraid"
+        ],
+        "answer": "happy",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 69,
+        "question": "The officer gave a clear order.",
+        "options": [
+            "confusing",
+            "obvious",
+            "wrong",
+            "slow"
+        ],
+        "answer": "obvious",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 70,
+        "question": "The soldier remained loyal to his country.",
+        "options": [
+            "faithful",
+            "angry",
+            "weak",
+            "careless"
+        ],
+        "answer": "faithful",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 71,
+        "question": "The man spoke in a gentle voice.",
+        "options": [
+            "soft",
+            "loud",
+            "angry",
+            "harsh"
+        ],
+        "answer": "soft",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 72,
+        "question": "The teacher made a sensible suggestion.",
+        "options": [
+            "reasonable",
+            "foolish",
+            "weak",
+            "wrong"
+        ],
+        "answer": "reasonable",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 73,
+        "question": "The athlete showed remarkable strength.",
+        "options": [
+            "power",
+            "weakness",
+            "fear",
+            "anger"
+        ],
+        "answer": "power",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 74,
+        "question": "The decision was made instantly.",
+        "options": [
+            "slowly",
+            "immediately",
+            "carefully",
+            "weakly"
+        ],
+        "answer": "immediately",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 75,
+        "question": "The boy showed kindness to the poor.",
+        "options": [
+            "cruelty",
+            "generosity",
+            "anger",
+            "fear"
+        ],
+        "answer": "generosity",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 76,
+        "question": "The student was curious about the experiment.",
+        "options": [
+            "interested",
+            "bored",
+            "angry",
+            "sad"
+        ],
+        "answer": "interested",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 77,
+        "question": "The teacher demanded complete silence.",
+        "options": [
+            "noise",
+            "quiet",
+            "talk",
+            "argument"
+        ],
+        "answer": "quiet",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 78,
+        "question": "The man faced the problem bravely.",
+        "options": [
+            "fearfully",
+            "boldly",
+            "weakly",
+            "sadly"
+        ],
+        "answer": "boldly",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 79,
+        "question": "The plan was successful.",
+        "options": [
+            "failed",
+            "effective",
+            "useless",
+            "weak"
+        ],
+        "answer": "effective",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 80,
+        "question": "The boy felt miserable after losing the match.",
+        "options": [
+            "happy",
+            "sad",
+            "excited",
+            "brave"
+        ],
+        "answer": "sad",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 81,
+        "question": "The teacher praised the student.",
+        "options": [
+            "criticized",
+            "appreciated",
+            "ignored",
+            "punished"
+        ],
+        "answer": "appreciated",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 82,
+        "question": "The situation became urgent.",
+        "options": [
+            "important",
+            "delayed",
+            "slow",
+            "simple"
+        ],
+        "answer": "important",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 83,
+        "question": "The officer handled the situation skillfully.",
+        "options": [
+            "badly",
+            "expertly",
+            "slowly",
+            "weakly"
+        ],
+        "answer": "expertly",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 84,
+        "question": "The child was innocent and honest.",
+        "options": [
+            "pure",
+            "guilty",
+            "angry",
+            "weak"
+        ],
+        "answer": "pure",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 85,
+        "question": "The leader had a strong influence.",
+        "options": [
+            "power",
+            "weakness",
+            "fear",
+            "anger"
+        ],
+        "answer": "power",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 86,
+        "question": "The boy answered confidently.",
+        "options": [
+            "nervously",
+            "boldly",
+            "weakly",
+            "sadly"
+        ],
+        "answer": "boldly",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 87,
+        "question": "The teacher explained the topic clearly.",
+        "options": [
+            "confused",
+            "plainly",
+            "wrongly",
+            "quickly"
+        ],
+        "answer": "plainly",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 88,
+        "question": "The man gave a generous donation.",
+        "options": [
+            "small",
+            "kind",
+            "selfish",
+            "weak"
+        ],
+        "answer": "kind",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 89,
+        "question": "The judge remained neutral.",
+        "options": [
+            "fair",
+            "angry",
+            "biased",
+            "weak"
+        ],
+        "answer": "fair",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 90,
+        "question": "The officer remained alert.",
+        "options": [
+            "careful",
+            "sleepy",
+            "lazy",
+            "slow"
+        ],
+        "answer": "careful",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 91,
+        "question": "The student made a rapid improvement.",
+        "options": [
+            "slow",
+            "quick",
+            "late",
+            "weak"
+        ],
+        "answer": "quick",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 92,
+        "question": "The situation was dangerous.",
+        "options": [
+            "safe",
+            "risky",
+            "easy",
+            "simple"
+        ],
+        "answer": "risky",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 93,
+        "question": "The teacher gave valuable advice.",
+        "options": [
+            "useless",
+            "important",
+            "weak",
+            "angry"
+        ],
+        "answer": "important",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 94,
+        "question": "The boy showed courage.",
+        "options": [
+            "bravery",
+            "fear",
+            "anger",
+            "weakness"
+        ],
+        "answer": "bravery",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 95,
+        "question": "The speech was inspiring.",
+        "options": [
+            "motivating",
+            "boring",
+            "weak",
+            "sad"
+        ],
+        "answer": "motivating",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 96,
+        "question": "The man was humble.",
+        "options": [
+            "modest",
+            "proud",
+            "angry",
+            "weak"
+        ],
+        "answer": "modest",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 97,
+        "question": "The player showed great stamina.",
+        "options": [
+            "strength",
+            "weakness",
+            "fear",
+            "anger"
+        ],
+        "answer": "strength",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 98,
+        "question": "The child was cheerful.",
+        "options": [
+            "happy",
+            "sad",
+            "angry",
+            "afraid"
+        ],
+        "answer": "happy",
+        "difficulty": "easy",
+        "topic": "synonym"
+    },
+    {
+        "id": 99,
+        "question": "The officer gave a strict command.",
+        "options": [
+            "soft",
+            "firm",
+            "happy",
+            "weak"
+        ],
+        "answer": "firm",
+        "difficulty": "medium",
+        "topic": "synonym"
+    },
+    {
+        "id": 100,
+        "question": "The result was obvious.",
+        "options": [
+            "clear",
+            "hidden",
+            "wrong",
+            "slow"
+        ],
+        "answer": "clear",
+        "difficulty": "easy",
+        "topic": "synonym"
+    }
+]

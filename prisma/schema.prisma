@@ -64,6 +64,7 @@ model User {
   srtResults     SrtResult[] // SRT history
   watResults     WatResult[] // WAT history
   tatResults     TatResult[] // TAT history
+  practiceAttempts PracticeAttempt[] // Track 1-free-test usages
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -263,3 +264,18 @@ model TatResult {
   @@index([createdAt])
 }
 
+// ---------------------------------------------------------------------------
+// Practice Trial Tracking
+// ---------------------------------------------------------------------------
+
+model PracticeAttempt {
+  id        String   @id @default(uuid())
+  userId    String
+  module    String   // e.g., "OIR", "WAT", "TAT", "SRT", "LECTURETTE"
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([module])
+}

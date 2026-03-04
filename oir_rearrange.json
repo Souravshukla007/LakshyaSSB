@@ -1,0 +1,1315 @@
+[
+    {
+        "id": 0,
+        "question": "Write the LAST letter of the rearranged sentence: 'He / philosopher / more / is / a / of'",
+        "options": [
+            "E",
+            "R",
+            "S",
+            "N"
+        ],
+        "answer": "R",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 1,
+        "question": "Write the LAST letter of the rearranged sentence: 'India / country / great / a / is'",
+        "options": [
+            "A",
+            "T",
+            "S",
+            "Y"
+        ],
+        "answer": "Y",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 2,
+        "question": "Write the LAST letter of the rearranged sentence: 'play / children / park / the / in'",
+        "options": [
+            "K",
+            "N",
+            "E",
+            "T"
+        ],
+        "answer": "K",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 3,
+        "question": "Write the LAST letter of the rearranged sentence: 'teacher / kind / very / our / is'",
+        "options": [
+            "D",
+            "S",
+            "R",
+            "T"
+        ],
+        "answer": "D",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 4,
+        "question": "Write the LAST letter of the rearranged sentence: 'honesty / policy / best / the / is'",
+        "options": [
+            "Y",
+            "T",
+            "S",
+            "L"
+        ],
+        "answer": "Y",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 5,
+        "question": "Write the LAST letter of the rearranged sentence: 'sun / east / rises / the / in / the'",
+        "options": [
+            "T",
+            "E",
+            "S",
+            "D"
+        ],
+        "answer": "T",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 6,
+        "question": "Write the LAST letter of the rearranged sentence: 'always / truth / speak / should / we / the'",
+        "options": [
+            "H",
+            "T",
+            "E",
+            "S"
+        ],
+        "answer": "H",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 7,
+        "question": "Write the LAST letter of the rearranged sentence: 'hard / key / success / work / is / the / to'",
+        "options": [
+            "O",
+            "Y",
+            "S",
+            "T"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 8,
+        "question": "Write the LAST letter of the rearranged sentence: 'books / knowledge / give / us / valuable'",
+        "options": [
+            "E",
+            "S",
+            "T",
+            "L"
+        ],
+        "answer": "E",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 9,
+        "question": "Write the LAST letter of the rearranged sentence: 'team / wins / together / works / that / the'",
+        "options": [
+            "M",
+            "S",
+            "R",
+            "H"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 10,
+        "question": "Write the LAST letter of the rearranged sentence: 'health / wealth / is / better / than'",
+        "options": [
+            "N",
+            "H",
+            "L",
+            "S"
+        ],
+        "answer": "N",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 11,
+        "question": "Write the LAST letter of the rearranged sentence: 'practice / perfect / makes'",
+        "options": [
+            "S",
+            "T",
+            "S",
+            "E"
+        ],
+        "answer": "T",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 12,
+        "question": "Write the LAST letter of the rearranged sentence: 'knowledge / power / is'",
+        "options": [
+            "R",
+            "L",
+            "E",
+            "S"
+        ],
+        "answer": "R",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 13,
+        "question": "Write the LAST letter of the rearranged sentence: 'time / waits / man / no / for'",
+        "options": [
+            "N",
+            "T",
+            "R",
+            "E"
+        ],
+        "answer": "N",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 14,
+        "question": "Write the LAST letter of the rearranged sentence: 'early / bed / to / early / rise / to'",
+        "options": [
+            "E",
+            "S",
+            "O",
+            "T"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 15,
+        "question": "Write the LAST letter of the rearranged sentence: 'country / serve / should / we / our'",
+        "options": [
+            "R",
+            "Y",
+            "E",
+            "T"
+        ],
+        "answer": "Y",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 16,
+        "question": "Write the LAST letter of the rearranged sentence: 'discipline / success / brings / life / in'",
+        "options": [
+            "S",
+            "E",
+            "H",
+            "T"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 17,
+        "question": "Write the LAST letter of the rearranged sentence: 'leader / inspires / good / others / a'",
+        "options": [
+            "S",
+            "R",
+            "T",
+            "E"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 18,
+        "question": "Write the LAST letter of the rearranged sentence: 'honest / man / respected / an / is'",
+        "options": [
+            "D",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "D",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 19,
+        "question": "Write the LAST letter of the rearranged sentence: 'teamwork / success / to / leads'",
+        "options": [
+            "S",
+            "O",
+            "E",
+            "D"
+        ],
+        "answer": "S",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 20,
+        "question": "Write the LAST letter of the rearranged sentence: 'respect / earn / actions / your / through'",
+        "options": [
+            "T",
+            "S",
+            "H",
+            "E"
+        ],
+        "answer": "T",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 21,
+        "question": "Write the LAST letter of the rearranged sentence: 'success / follows / effort / sincere'",
+        "options": [
+            "T",
+            "S",
+            "L",
+            "R"
+        ],
+        "answer": "T",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 22,
+        "question": "Write the LAST letter of the rearranged sentence: 'future / our / build / education / helps'",
+        "options": [
+            "S",
+            "E",
+            "R",
+            "T"
+        ],
+        "answer": "E",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 23,
+        "question": "Write the LAST letter of the rearranged sentence: 'great / achieve / people / dreams'",
+        "options": [
+            "S",
+            "M",
+            "E",
+            "T"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 24,
+        "question": "Write the LAST letter of the rearranged sentence: 'knowledge / gained / books / from / is'",
+        "options": [
+            "S",
+            "E",
+            "R",
+            "D"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 25,
+        "question": "Write the LAST letter of the rearranged sentence: 'unity / strength / is'",
+        "options": [
+            "H",
+            "G",
+            "T",
+            "S"
+        ],
+        "answer": "H",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 26,
+        "question": "Write the LAST letter of the rearranged sentence: 'work / hard / always / succeed / to'",
+        "options": [
+            "D",
+            "T",
+            "E",
+            "S"
+        ],
+        "answer": "D",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 27,
+        "question": "Write the LAST letter of the rearranged sentence: 'nation / duty / serve / is / our / to'",
+        "options": [
+            "N",
+            "E",
+            "R",
+            "S"
+        ],
+        "answer": "N",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 28,
+        "question": "Write the LAST letter of the rearranged sentence: 'learn / mistakes / from / we / our'",
+        "options": [
+            "S",
+            "E",
+            "R",
+            "T"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 29,
+        "question": "Write the LAST letter of the rearranged sentence: 'effort / brings / success / continuous'",
+        "options": [
+            "T",
+            "S",
+            "L",
+            "D"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 30,
+        "question": "Write the LAST letter of the rearranged sentence: 'books / our / best / friends / are'",
+        "options": [
+            "S",
+            "T",
+            "D",
+            "R"
+        ],
+        "answer": "S",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 31,
+        "question": "Write the LAST letter of the rearranged sentence: 'leader / example / leads / by / a'",
+        "options": [
+            "T",
+            "E",
+            "S",
+            "R"
+        ],
+        "answer": "E",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 32,
+        "question": "Write the LAST letter of the rearranged sentence: 'effort / every / counts / small'",
+        "options": [
+            "T",
+            "S",
+            "R",
+            "D"
+        ],
+        "answer": "S",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 33,
+        "question": "Write the LAST letter of the rearranged sentence: 'strong / nation / builds / unity / a'",
+        "options": [
+            "N",
+            "E",
+            "R",
+            "S"
+        ],
+        "answer": "N",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 34,
+        "question": "Write the LAST letter of the rearranged sentence: 'service / noble / is / country / to / the'",
+        "options": [
+            "T",
+            "E",
+            "S",
+            "Y"
+        ],
+        "answer": "Y",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 35,
+        "question": "Write the LAST letter of the rearranged sentence: 'discipline / success / brings / always'",
+        "options": [
+            "S",
+            "E",
+            "T",
+            "L"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 36,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / inspire / great / others'",
+        "options": [
+            "S",
+            "R",
+            "E",
+            "T"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 37,
+        "question": "Write the LAST letter of the rearranged sentence: 'truth / wins / always'",
+        "options": [
+            "S",
+            "T",
+            "L",
+            "D"
+        ],
+        "answer": "S",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 38,
+        "question": "Write the LAST letter of the rearranged sentence: 'honesty / builds / trust'",
+        "options": [
+            "T",
+            "S",
+            "D",
+            "R"
+        ],
+        "answer": "T",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 39,
+        "question": "Write the LAST letter of the rearranged sentence: 'effort / rewards / hard / success'",
+        "options": [
+            "S",
+            "T",
+            "E",
+            "R"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 40,
+        "question": "Write the LAST letter of the rearranged sentence: 'team / strong / builds / unity / a'",
+        "options": [
+            "M",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "M",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 41,
+        "question": "Write the LAST letter of the rearranged sentence: 'future / build / we / today / actions / by / our'",
+        "options": [
+            "S",
+            "Y",
+            "T",
+            "E"
+        ],
+        "answer": "S",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 42,
+        "question": "Write the LAST letter of the rearranged sentence: 'success / patience / needs / effort / and'",
+        "options": [
+            "T",
+            "S",
+            "R",
+            "D"
+        ],
+        "answer": "T",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 43,
+        "question": "Write the LAST letter of the rearranged sentence: 'dreams / achieve / people / determined'",
+        "options": [
+            "S",
+            "T",
+            "E",
+            "R"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 44,
+        "question": "Write the LAST letter of the rearranged sentence: 'confidence / success / builds / self'",
+        "options": [
+            "F",
+            "S",
+            "T",
+            "E"
+        ],
+        "answer": "F",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 45,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / inspire / vision / clear / with'",
+        "options": [
+            "S",
+            "N",
+            "E",
+            "R"
+        ],
+        "answer": "N",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 46,
+        "question": "Write the LAST letter of the rearranged sentence: 'success / comes / persistence / with'",
+        "options": [
+            "E",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "E",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 47,
+        "question": "Write the LAST letter of the rearranged sentence: 'knowledge / power / real / is'",
+        "options": [
+            "L",
+            "R",
+            "S",
+            "E"
+        ],
+        "answer": "L",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 48,
+        "question": "Write the LAST letter of the rearranged sentence: 'effort / leads / improvement / constant / to'",
+        "options": [
+            "T",
+            "S",
+            "R",
+            "E"
+        ],
+        "answer": "T",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 49,
+        "question": "Write the LAST letter of the rearranged sentence: 'honesty / respect / earns / always'",
+        "options": [
+            "T",
+            "S",
+            "R",
+            "E"
+        ],
+        "answer": "T",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 50,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / responsibility / take / true'",
+        "options": [
+            "S",
+            "E",
+            "T",
+            "R"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 51,
+        "question": "Write the LAST letter of the rearranged sentence: 'service / nation / is / duty / our'",
+        "options": [
+            "E",
+            "R",
+            "Y",
+            "S"
+        ],
+        "answer": "E",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 52,
+        "question": "Write the LAST letter of the rearranged sentence: 'success / patience / requires / great'",
+        "options": [
+            "T",
+            "S",
+            "R",
+            "E"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 53,
+        "question": "Write the LAST letter of the rearranged sentence: 'education / foundation / success / the / of / is'",
+        "options": [
+            "S",
+            "N",
+            "R",
+            "E"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 54,
+        "question": "Write the LAST letter of the rearranged sentence: 'country / proud / our / we / of / are'",
+        "options": [
+            "Y",
+            "E",
+            "T",
+            "D"
+        ],
+        "answer": "Y",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 55,
+        "question": "Write the LAST letter of the rearranged sentence: 'teamwork / success / ensures / always'",
+        "options": [
+            "S",
+            "E",
+            "T",
+            "R"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 56,
+        "question": "Write the LAST letter of the rearranged sentence: 'honesty / brings / respect / true'",
+        "options": [
+            "T",
+            "S",
+            "E",
+            "R"
+        ],
+        "answer": "T",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 57,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / inspire / actions / their / by'",
+        "options": [
+            "S",
+            "T",
+            "R",
+            "E"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 58,
+        "question": "Write the LAST letter of the rearranged sentence: 'knowledge / improves / thinking / logical'",
+        "options": [
+            "L",
+            "S",
+            "R",
+            "E"
+        ],
+        "answer": "L",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 59,
+        "question": "Write the LAST letter of the rearranged sentence: 'hard / leads / work / achievement / to'",
+        "options": [
+            "T",
+            "S",
+            "R",
+            "E"
+        ],
+        "answer": "T",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 60,
+        "question": "Write the LAST letter of the rearranged sentence: 'effort / continuous / success / brings'",
+        "options": [
+            "S",
+            "T",
+            "R",
+            "E"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 61,
+        "question": "Write the LAST letter of the rearranged sentence: 'unity / strength / real / is'",
+        "options": [
+            "L",
+            "H",
+            "T",
+            "S"
+        ],
+        "answer": "H",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 62,
+        "question": "Write the LAST letter of the rearranged sentence: 'confidence / success / builds / self'",
+        "options": [
+            "F",
+            "S",
+            "T",
+            "E"
+        ],
+        "answer": "F",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 63,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / vision / clear / have / great'",
+        "options": [
+            "N",
+            "T",
+            "S",
+            "E"
+        ],
+        "answer": "N",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 64,
+        "question": "Write the LAST letter of the rearranged sentence: 'books / give / knowledge / valuable / us'",
+        "options": [
+            "E",
+            "S",
+            "R",
+            "T"
+        ],
+        "answer": "E",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 65,
+        "question": "Write the LAST letter of the rearranged sentence: 'country / citizens / protect / brave / the'",
+        "options": [
+            "S",
+            "T",
+            "R",
+            "E"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 66,
+        "question": "Write the LAST letter of the rearranged sentence: 'future / our / shape / decisions / today / the'",
+        "options": [
+            "E",
+            "T",
+            "S",
+            "R"
+        ],
+        "answer": "E",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 67,
+        "question": "Write the LAST letter of the rearranged sentence: 'discipline / success / foundation / the / is / of'",
+        "options": [
+            "S",
+            "N",
+            "R",
+            "E"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 68,
+        "question": "Write the LAST letter of the rearranged sentence: 'team / united / wins / always / a'",
+        "options": [
+            "S",
+            "M",
+            "T",
+            "R"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 69,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / inspire / people / great'",
+        "options": [
+            "E",
+            "S",
+            "R",
+            "T"
+        ],
+        "answer": "E",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 70,
+        "question": "Write the LAST letter of the rearranged sentence: 'service / nation / noble / is / the / to'",
+        "options": [
+            "E",
+            "Y",
+            "S",
+            "R"
+        ],
+        "answer": "Y",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 71,
+        "question": "Write the LAST letter of the rearranged sentence: 'success / confidence / effort / builds'",
+        "options": [
+            "S",
+            "T",
+            "E",
+            "R"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 72,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / responsibility / take / true'",
+        "options": [
+            "S",
+            "E",
+            "T",
+            "R"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 73,
+        "question": "Write the LAST letter of the rearranged sentence: 'truth / wins / always / finally'",
+        "options": [
+            "Y",
+            "S",
+            "R",
+            "T"
+        ],
+        "answer": "Y",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 74,
+        "question": "Write the LAST letter of the rearranged sentence: 'hard / success / earned / work / by / is'",
+        "options": [
+            "K",
+            "S",
+            "T",
+            "E"
+        ],
+        "answer": "K",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 75,
+        "question": "Write the LAST letter of the rearranged sentence: 'future / build / dreams / determined / people'",
+        "options": [
+            "S",
+            "E",
+            "R",
+            "T"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 76,
+        "question": "Write the LAST letter of the rearranged sentence: 'knowledge / powerful / weapon / is / a'",
+        "options": [
+            "N",
+            "R",
+            "T",
+            "E"
+        ],
+        "answer": "N",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 77,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / respect / earn / honest'",
+        "options": [
+            "T",
+            "S",
+            "E",
+            "R"
+        ],
+        "answer": "T",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 78,
+        "question": "Write the LAST letter of the rearranged sentence: 'effort / improvement / constant / leads / to'",
+        "options": [
+            "T",
+            "S",
+            "R",
+            "E"
+        ],
+        "answer": "T",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 79,
+        "question": "Write the LAST letter of the rearranged sentence: 'vision / future / leaders / shape / the'",
+        "options": [
+            "E",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "E",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 80,
+        "question": "Write the LAST letter of the rearranged sentence: 'teamwork / success / great / builds'",
+        "options": [
+            "S",
+            "T",
+            "R",
+            "E"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 81,
+        "question": "Write the LAST letter of the rearranged sentence: 'nation / serve / citizens / proud / the'",
+        "options": [
+            "N",
+            "S",
+            "R",
+            "E"
+        ],
+        "answer": "N",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 82,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / example / lead / by / great'",
+        "options": [
+            "E",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "E",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 83,
+        "question": "Write the LAST letter of the rearranged sentence: 'truth / trust / builds / always'",
+        "options": [
+            "T",
+            "S",
+            "E",
+            "R"
+        ],
+        "answer": "T",
+        "difficulty": "easy",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 84,
+        "question": "Write the LAST letter of the rearranged sentence: 'dreams / pursue / brave / people / their'",
+        "options": [
+            "S",
+            "E",
+            "R",
+            "T"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 85,
+        "question": "Write the LAST letter of the rearranged sentence: 'unity / nation / strong / makes / a'",
+        "options": [
+            "N",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "N",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 86,
+        "question": "Write the LAST letter of the rearranged sentence: 'knowledge / success / brings / applied / when'",
+        "options": [
+            "N",
+            "S",
+            "R",
+            "T"
+        ],
+        "answer": "N",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 87,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / courage / inspire / true'",
+        "options": [
+            "E",
+            "S",
+            "R",
+            "T"
+        ],
+        "answer": "E",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 88,
+        "question": "Write the LAST letter of the rearranged sentence: 'success / patience / determination / needs'",
+        "options": [
+            "N",
+            "S",
+            "R",
+            "T"
+        ],
+        "answer": "N",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 89,
+        "question": "Write the LAST letter of the rearranged sentence: 'confidence / grows / practice / with'",
+        "options": [
+            "E",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "E",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 90,
+        "question": "Write the LAST letter of the rearranged sentence: 'country / protect / soldiers / brave / the'",
+        "options": [
+            "S",
+            "R",
+            "T",
+            "E"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 91,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / guide / others / wisely'",
+        "options": [
+            "S",
+            "Y",
+            "R",
+            "E"
+        ],
+        "answer": "Y",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 92,
+        "question": "Write the LAST letter of the rearranged sentence: 'effort / victory / persistent / brings'",
+        "options": [
+            "Y",
+            "S",
+            "R",
+            "T"
+        ],
+        "answer": "Y",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 93,
+        "question": "Write the LAST letter of the rearranged sentence: 'education / builds / character / strong'",
+        "options": [
+            "G",
+            "R",
+            "S",
+            "T"
+        ],
+        "answer": "G",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 94,
+        "question": "Write the LAST letter of the rearranged sentence: 'future / decisions / shape / today / our'",
+        "options": [
+            "E",
+            "R",
+            "T",
+            "S"
+        ],
+        "answer": "E",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 95,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / responsibility / great / carry'",
+        "options": [
+            "Y",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "Y",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 96,
+        "question": "Write the LAST letter of the rearranged sentence: 'effort / success / creates / continuous'",
+        "options": [
+            "S",
+            "T",
+            "E",
+            "R"
+        ],
+        "answer": "S",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 97,
+        "question": "Write the LAST letter of the rearranged sentence: 'nation / unity / strength / gives / a'",
+        "options": [
+            "N",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "N",
+        "difficulty": "medium",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 98,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / inspire / courage / actions / through'",
+        "options": [
+            "E",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "E",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 99,
+        "question": "Write the LAST letter of the rearranged sentence: 'knowledge / wisdom / creates / experience / and'",
+        "options": [
+            "M",
+            "E",
+            "S",
+            "R"
+        ],
+        "answer": "M",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    },
+    {
+        "id": 100,
+        "question": "Write the LAST letter of the rearranged sentence: 'leaders / nation / build / vision / with / strong'",
+        "options": [
+            "N",
+            "S",
+            "T",
+            "R"
+        ],
+        "answer": "N",
+        "difficulty": "hard",
+        "topic": "sentence_rearrangement"
+    }
+]

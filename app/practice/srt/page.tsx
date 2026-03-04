@@ -18,7 +18,26 @@ export default function SrtTestPage() {
     const [state, setState] = useState<AppState>('intro');
     const [answers, setAnswers] = useState<Record<number, string>>({});
 
-    const handleStart = () => {
+    const handleStart = async () => {
+        // Verify Access
+        const accessRes = await fetch('/api/practice/check-access?module=SRT');
+        if (accessRes.status === 401) {
+            router.push('/auth');
+            return;
+        }
+        const accessData = await accessRes.json();
+        if (!accessData.allowed) {
+            router.push('/pricing');
+            return;
+        }
+
+        // Consume Attempt (POST)
+        await fetch('/api/practice/check-access', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ module: 'SRT' })
+        });
+
         setState('test');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };

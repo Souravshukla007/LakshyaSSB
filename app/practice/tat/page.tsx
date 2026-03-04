@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -88,6 +89,7 @@ function TATRadarChart() {
 
 // ─── Main Page Component ──────────────────────────────────────────────────────
 export default function TATPracticePage() {
+    const router = useRouter();
     const [view, setView] = useState<ViewState>('intro');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [timeLeft, setTimeLeft] = useState(TIME_PER_IMAGE);
@@ -110,7 +112,26 @@ export default function TATPracticePage() {
         return () => clearInterval(timer);
     }, [view, timeLeft]);
 
-    const handleStart = () => {
+    const handleStart = async () => {
+        // Verify Access
+        const accessRes = await fetch('/api/practice/check-access?module=TAT');
+        if (accessRes.status === 401) {
+            router.push('/auth');
+            return;
+        }
+        const accessData = await accessRes.json();
+        if (!accessData.allowed) {
+            router.push('/pricing');
+            return;
+        }
+
+        // Consume Attempt (POST)
+        await fetch('/api/practice/check-access', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ module: 'TAT' })
+        });
+
         setCurrentIndex(0);
         setTimeLeft(TIME_PER_IMAGE);
         setStory('');
