@@ -1,41 +1,29 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-const OIR_FILES = [
-  'oir_analogy.json',
-  'oir_CodeDe.json',
-  'oir_Dice.json',
-  'oir_dictonary.json',
-  'oir_number.json',
-  'oir_odd.json',
-  'oir_Rank.json',
-  'oir_rearrange.json',
-  'oir_sym.json',
-  'oir_wordProb.json'
-];
+import analogy from '@/oir_analogy.json';
+import codeDe from '@/oir_CodeDe.json';
+import dice from '@/oir_Dice.json';
+import dictonary from '@/oir_dictonary.json';
+import number from '@/oir_number.json';
+import odd from '@/oir_odd.json';
+import rank from '@/oir_Rank.json';
+import rearrange from '@/oir_rearrange.json';
+import sym from '@/oir_sym.json';
+import wordProb from '@/oir_wordProb.json';
 
 export async function GET() {
   try {
-    const allQuestions: any[] = [];
-
-    // Read all JSON files
-    for (const fileName of OIR_FILES) {
-      const filePath = path.join(process.cwd(), fileName);
-      if (fs.existsSync(filePath)) {
-        const fileContent = fs.readFileSync(filePath, 'utf-8');
-        try {
-          const questions = JSON.parse(fileContent);
-          if (Array.isArray(questions)) {
-            allQuestions.push(...questions);
-          }
-        } catch (parseError) {
-          console.error(`Error parsing ${fileName}:`, parseError);
-        }
-      } else {
-        console.warn(`File not found: ${filePath}`);
-      }
-    }
+    const allQuestions: any[] = [
+      ...(Array.isArray(analogy) ? analogy : []),
+      ...(Array.isArray(codeDe) ? codeDe : []),
+      ...(Array.isArray(dice) ? dice : []),
+      ...(Array.isArray(dictonary) ? dictonary : []),
+      ...(Array.isArray(number) ? number : []),
+      ...(Array.isArray(odd) ? odd : []),
+      ...(Array.isArray(rank) ? rank : []),
+      ...(Array.isArray(rearrange) ? rearrange : []),
+      ...(Array.isArray(sym) ? sym : []),
+      ...(Array.isArray(wordProb) ? wordProb : [])
+    ];
 
     if (allQuestions.length === 0) {
       return NextResponse.json(
