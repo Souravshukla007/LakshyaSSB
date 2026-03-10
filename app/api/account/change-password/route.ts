@@ -44,5 +44,14 @@ export async function POST(request: NextRequest) {
         data: { passwordHash },
     });
 
+    // Log password change activity
+    await prisma.activityLog.create({
+        data: {
+            userId: session.userId,
+            action: 'PASSWORD_CHANGE',
+            details: 'Password changed successfully',
+        },
+    });
+
     return NextResponse.json({ success: true });
 }

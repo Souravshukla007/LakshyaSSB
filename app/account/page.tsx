@@ -25,6 +25,7 @@ export default async function AccountPage() {
             attemptNumber: true,
             preferredSSBCenter: true,
             plan: true,
+            profileImageUrl: true,
             payments: {
                 orderBy: { createdAt: 'desc' },
                 take: 10,

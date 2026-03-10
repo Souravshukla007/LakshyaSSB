@@ -38,6 +38,7 @@ export async function GET(request: Request) {
                 id: true,
                 fullName: true,
                 targetEntry: true,
+                profileImageUrl: true,
                 medals_total: true,
                 medals_weekly: true,
                 current_streak: true,
@@ -63,6 +64,7 @@ export async function GET(request: Request) {
                 longestStreak: u.longest_streak,
                 weeklyStreak: u.current_streak, // Simplified for now, tracking separate weekly streak requires more schema setup
                 badge: getBadge(tab === 'weekly' ? u.medals_weekly : u.medals_total),
+                avatar: u.profileImageUrl || null,
                 isCurrentUser: !!(currentUserId && u.id === currentUserId)
             };
         });

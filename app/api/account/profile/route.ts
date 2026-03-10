@@ -59,5 +59,15 @@ export async function PATCH(request: NextRequest) {
         },
     });
 
+    // Log profile update activity
+    const changedFields = Object.keys(data).join(', ');
+    await prisma.activityLog.create({
+        data: {
+            userId: session.userId,
+            action: 'PROFILE_UPDATE',
+            details: `Updated: ${changedFields}`,
+        },
+    });
+
     return NextResponse.json(updated);
 }

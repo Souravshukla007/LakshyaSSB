@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useEffect, useTransition, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -22,7 +22,21 @@ interface User {
     attemptNumber: number | null;
     preferredSSBCenter: string | null;
     plan: 'FREE' | 'PRO';
+    profileImageUrl: string | null;
     payments: Payment[];
+}
+
+interface NotifPrefs {
+    loginAlerts: boolean;
+    weeklyDigest: boolean;
+    promoEmails: boolean;
+}
+
+interface ActivityEntry {
+    id: string;
+    action: string;
+    details: string;
+    createdAt: string;
 }
 
 interface Props {
@@ -47,6 +61,183 @@ function Toast({ message, type }: { message: string; type: 'success' | 'error' }
         >
             {type === 'success' ? '✓ ' : '✗ '}
             {message}
+        </div>
+    );
+}
+
+// ─── Helper: Relative Time ────────────────────────────────────────────────────
+
+function timeAgo(dateStr: string): string {
+    const now = new Date();
+    const d = new Date(dateStr);
+    const diffMs = now.getTime() - d.getTime();
+    const diffMin = Math.floor(diffMs / 60000);
+    if (diffMin < 1) return 'Just now';
+    if (diffMin < 60) return `${diffMin}m ago`;
+    const diffH = Math.floor(diffMin / 60);
+    if (diffH < 24) return `${diffH}h ago`;
+    const diffD = Math.floor(diffH / 24);
+    if (diffD === 1) return 'Yesterday';
+    if (diffD < 7) return `${diffD}d ago`;
+    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// ─── Action icon helper ───────────────────────────────────────────────────────
+
+function actionIcon(action: string): { icon: string; color: string } {
+    switch (action) {
+        case 'LOGIN': return { icon: 'fa-right-to-bracket', color: 'text-green-500 bg-green-50' };
+        case 'PROFILE_UPDATE': return { icon: 'fa-user-pen', color: 'text-blue-500 bg-blue-50' };
+        case 'PASSWORD_CHANGE': return { icon: 'fa-key', color: 'text-purple-500 bg-purple-50' };
+        case 'AVATAR_UPLOAD': return { icon: 'fa-camera', color: 'text-orange-500 bg-orange-50' };
+        case 'AVATAR_REMOVE': return { icon: 'fa-image', color: 'text-gray-500 bg-gray-50' };
+        case 'GOOGLE_LOGIN': return { icon: 'fa-brands fa-google', color: 'text-red-500 bg-red-50' };
+        default: return { icon: 'fa-circle-info', color: 'text-gray-500 bg-gray-50' };
+    }
+}
+
+// ─── Section: Profile Header (Avatar) ─────────────────────────────────────────
+
+function ProfileHeader({ user, onAvatarChange }: { user: User; onAvatarChange: (url: string | null) => void }) {
+    const [avatarUrl, setAvatarUrl] = useState<string | null>(user.profileImageUrl);
+    const [uploading, setUploading] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    function showToast(message: string, type: 'success' | 'error') {
+        setToast({ message, type });
+        setTimeout(() => setToast(null), 3000);
+    }
+
+    function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Validate image type
+        if (!file.type.startsWith('image/')) {
+            showToast('Please select an image file', 'error');
+            return;
+        }
+
+        // Validate size (2MB)
+        if (file.size > 2 * 1024 * 1024) {
+            showToast('Image must be under 2MB', 'error');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async () => {
+            const base64 = reader.result as string;
+            setUploading(true);
+            try {
+                const res = await fetch('/api/account/upload-avatar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: base64 }),
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    setAvatarUrl(base64);
+                    onAvatarChange(base64);
+                    showToast('Avatar updated!', 'success');
+                } else {
+                    showToast(data.error || 'Upload failed', 'error');
+                }
+            } catch {
+                showToast('Network error', 'error');
+            } finally {
+                setUploading(false);
+            }
+        };
+        reader.readAsDataURL(file);
+
+        // Reset input
+        e.target.value = '';
+    }
+
+    async function handleRemove() {
+        setUploading(true);
+        try {
+            const res = await fetch('/api/account/upload-avatar', { method: 'DELETE' });
+            if (res.ok) {
+                setAvatarUrl(null);
+                onAvatarChange(null);
+                showToast('Avatar removed', 'success');
+            }
+        } catch {
+            showToast('Network error', 'error');
+        } finally {
+            setUploading(false);
+        }
+    }
+
+    return (
+        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
+            {toast && <Toast {...toast} />}
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+                {/* Avatar */}
+                <div className="relative group">
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-brand-orange/20 shadow-lg">
+                        {avatarUrl ? (
+                            <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                        ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-brand-orange to-orange-400 flex items-center justify-center text-white text-3xl font-bold">
+                                {user.fullName.charAt(0).toUpperCase()}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Overlay on hover */}
+                    <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={uploading}
+                        className="absolute inset-0 w-24 h-24 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-wait"
+                    >
+                        <i className={`fa-solid ${uploading ? 'fa-spinner fa-spin' : 'fa-camera'} text-white text-lg`}></i>
+                    </button>
+
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileSelect}
+                        className="hidden"
+                    />
+                </div>
+
+                {/* Info + buttons */}
+                <div className="text-center sm:text-left flex-1">
+                    <h2 className="font-hero font-bold text-2xl text-brand-dark">{user.fullName}</h2>
+                    <p className="text-sm text-gray-500 mt-0.5">{user.email}</p>
+                    <div className="flex items-center gap-2 mt-1">
+                        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${isPro(user.plan) ? 'bg-brand-orange/10 text-brand-orange' : 'bg-gray-100 text-gray-500'}`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${isPro(user.plan) ? 'bg-brand-orange' : 'bg-gray-400'}`} />
+                            {isPro(user.plan) ? 'PRO' : 'FREE'}
+                        </span>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        <button
+                            onClick={() => fileInputRef.current?.click()}
+                            disabled={uploading}
+                            className="px-4 py-2 text-xs font-bold text-brand-dark bg-gray-100 rounded-full hover:bg-gray-200 transition-all disabled:opacity-50"
+                        >
+                            <i className="fa-solid fa-upload mr-1.5"></i>
+                            {uploading ? 'Uploading…' : 'Upload Photo'}
+                        </button>
+                        {avatarUrl && (
+                            <button
+                                onClick={handleRemove}
+                                disabled={uploading}
+                                className="px-4 py-2 text-xs font-bold text-red-500 bg-red-50 rounded-full hover:bg-red-100 transition-all disabled:opacity-50"
+                            >
+                                <i className="fa-solid fa-trash-can mr-1.5"></i>
+                                Remove
+                            </button>
+                        )}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
@@ -183,6 +374,141 @@ function ProfileSection({ user }: { user: User }) {
                     {isPending ? 'Saving…' : 'Save Changes'}
                 </button>
             </div>
+        </div>
+    );
+}
+
+// ─── Section: Account Activity ────────────────────────────────────────────────
+
+function ActivitySection() {
+    const [logs, setLogs] = useState<ActivityEntry[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch('/api/account/activity')
+            .then(res => res.ok ? res.json() : [])
+            .then(data => setLogs(data))
+            .catch(() => setLogs([]))
+            .finally(() => setLoading(false));
+    }, []);
+
+    return (
+        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
+            <h3 className="font-hero font-bold text-xl text-brand-dark mb-6">
+                <i className="fa-solid fa-clock-rotate-left text-brand-orange mr-2"></i>
+                Account Activity
+            </h3>
+
+            {loading ? (
+                <div className="flex items-center justify-center py-8">
+                    <i className="fa-solid fa-spinner fa-spin text-brand-orange text-xl"></i>
+                </div>
+            ) : logs.length === 0 ? (
+                <p className="text-sm text-gray-400 text-center py-8">No activity recorded yet.</p>
+            ) : (
+                <div className="space-y-3">
+                    {logs.map((log) => {
+                        const { icon, color } = actionIcon(log.action);
+                        return (
+                            <div key={log.id} className="flex items-start gap-4 p-4 bg-brand-bg rounded-2xl border border-gray-50 hover:border-gray-100 transition-colors">
+                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${color}`}>
+                                    <i className={`fa-solid ${icon} text-sm`}></i>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center justify-between gap-2">
+                                        <p className="text-sm font-semibold text-brand-dark truncate">
+                                            {log.action.replace(/_/g, ' ')}
+                                        </p>
+                                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                                            {timeAgo(log.createdAt)}
+                                        </span>
+                                    </div>
+                                    <p className="text-xs text-gray-500 mt-0.5">{log.details}</p>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ─── Section: Notification Preferences ────────────────────────────────────────
+
+function NotificationsSection() {
+    const [prefs, setPrefs] = useState<NotifPrefs>({ loginAlerts: true, weeklyDigest: true, promoEmails: false });
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState<string | null>(null);
+
+    useEffect(() => {
+        fetch('/api/account/notifications')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => { if (data) setPrefs(data); })
+            .catch(() => null)
+            .finally(() => setLoading(false));
+    }, []);
+
+    async function toggle(key: keyof NotifPrefs) {
+        const newValue = !prefs[key];
+        setPrefs(prev => ({ ...prev, [key]: newValue }));
+        setSaving(key);
+        try {
+            await fetch('/api/account/notifications', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ [key]: newValue }),
+            });
+        } catch {
+            // Revert on error
+            setPrefs(prev => ({ ...prev, [key]: !newValue }));
+        } finally {
+            setSaving(null);
+        }
+    }
+
+    const toggles: { key: keyof NotifPrefs; label: string; desc: string; icon: string }[] = [
+        { key: 'loginAlerts', label: 'Login Alerts', desc: 'Get notified when a new device signs in', icon: 'fa-shield-halved' },
+        { key: 'weeklyDigest', label: 'Weekly Digest', desc: 'Receive weekly progress summary and tips', icon: 'fa-envelope' },
+        { key: 'promoEmails', label: 'Promotional Emails', desc: 'Updates about new features and offers', icon: 'fa-gift' },
+    ];
+
+    return (
+        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
+            <h3 className="font-hero font-bold text-xl text-brand-dark mb-6">
+                <i className="fa-solid fa-bell text-brand-orange mr-2"></i>
+                Notification Preferences
+            </h3>
+
+            {loading ? (
+                <div className="flex items-center justify-center py-8">
+                    <i className="fa-solid fa-spinner fa-spin text-brand-orange text-xl"></i>
+                </div>
+            ) : (
+                <div className="space-y-4">
+                    {toggles.map(({ key, label, desc, icon }) => (
+                        <div key={key} className="flex items-center justify-between p-4 bg-brand-bg rounded-2xl border border-gray-50">
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+                                    <i className={`fa-solid ${icon} text-sm`}></i>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-semibold text-brand-dark">{label}</p>
+                                    <p className="text-xs text-gray-500">{desc}</p>
+                                </div>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => toggle(key)}
+                                disabled={saving === key}
+                                className={`relative w-12 h-7 rounded-full transition-colors duration-200 ${prefs[key] ? 'bg-brand-orange' : 'bg-gray-200'} disabled:opacity-50`}
+                            >
+                                <span className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-sm transition-transform duration-200 ${prefs[key] ? 'translate-x-5' : 'translate-x-0'}`} />
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
@@ -463,9 +789,14 @@ function SecuritySection() {
 // ─── Main exported component ──────────────────────────────────────────────────
 
 export default function AccountClient({ user }: Props) {
+    const [, setAvatarVersion] = useState(0);
+
     return (
         <div className="space-y-8">
+            <ProfileHeader user={user} onAvatarChange={() => setAvatarVersion(v => v + 1)} />
             <ProfileSection user={user} />
+            <ActivitySection />
+            <NotificationsSection />
             <SubscriptionSection user={user} />
             <PaymentHistorySection payments={user.payments} />
             <SecuritySection />

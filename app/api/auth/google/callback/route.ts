@@ -137,7 +137,7 @@ export async function GET(request: NextRequest) {
                     fullName: googleUser.name || googleUser.email.split('@')[0],
                     email,
                     googleId: googleUser.sub,
-                    avatarUrl: googleUser.picture || null,
+                    profileImageUrl: googleUser.picture || null,
                     passwordHash: null,
                     plan: 'FREE',
                 },

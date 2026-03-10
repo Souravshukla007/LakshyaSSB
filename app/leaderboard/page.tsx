@@ -17,6 +17,7 @@ interface LeaderboardEntry {
     longestStreak?: number;
     weeklyStreak?: number;
     badge: string;
+    avatar?: string | null;
     isCurrentUser?: boolean;
 }
 
@@ -40,9 +41,13 @@ function PodiumCard({ entry, config }: { entry: LeaderboardEntry; config: typeof
                     {config.title}
                 </p>
 
-                {/* Avatar initial */}
-                <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-lg mx-auto mb-2 sm:mb-3 ${config.rankIndex === 1 ? 'bg-yellow-500' : config.rankIndex === 2 ? 'bg-gray-400' : 'bg-orange-400'}`}>
-                    {entry.username.charAt(0).toUpperCase()}
+                {/* Avatar */}
+                <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-lg mx-auto mb-2 sm:mb-3 overflow-hidden ${config.rankIndex === 1 ? 'bg-yellow-500' : config.rankIndex === 2 ? 'bg-gray-400' : 'bg-orange-400'}`}>
+                    {entry.avatar ? (
+                        <img src={entry.avatar} alt={entry.username} className="w-full h-full object-cover" />
+                    ) : (
+                        entry.username.charAt(0).toUpperCase()
+                    )}
                 </div>
 
                 <p className="text-xs sm:text-sm font-bold text-gray-900 truncate px-1">{entry.username}</p>
@@ -230,8 +235,12 @@ export default function LeaderboardPage() {
                                             <td className="px-6 py-4"><RankPill rank={row.rank} /></td>
                                             <td className="px-4 py-4">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600 shrink-0">
-                                                        {row.username.charAt(0).toUpperCase()}
+                                                    <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600 shrink-0 overflow-hidden">
+                                                        {row.avatar ? (
+                                                            <img src={row.avatar} alt={row.username} className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            row.username.charAt(0).toUpperCase()
+                                                        )}
                                                     </div>
                                                     <div>
                                                         <p className="font-semibold text-gray-900">{row.username}</p>

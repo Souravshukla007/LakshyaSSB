@@ -46,6 +46,15 @@ export async function POST(request: Request) {
             plan: user.plan as 'FREE' | 'PRO',
         });
 
+        // Log login activity
+        await prisma.activityLog.create({
+            data: {
+                userId: user.id,
+                action: 'LOGIN',
+                details: `Signed in via email/password`,
+            },
+        });
+
         return NextResponse.json({
             message: 'Login successful',
             user: {
