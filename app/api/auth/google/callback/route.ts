@@ -126,7 +126,7 @@ export async function GET(request: NextRequest) {
                     where: { id: user.id },
                     data: {
                         googleId: googleUser.sub,
-                        avatarUrl: googleUser.picture || null,
+                        profileImageUrl: googleUser.picture || null,
                     },
                 });
             }
