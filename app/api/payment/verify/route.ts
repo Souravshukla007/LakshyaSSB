@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { activatePro } from '@/lib/plan';
+import { activatePro } from '@/lib/plan-actions';
 
 /**
  * POST /api/payment/verify
