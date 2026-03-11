@@ -1,11 +1,20 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 
 
 export default function PIQResult() {
+    const [isPro, setIsPro] = useState(false);
+
+    useEffect(() => {
+        fetch('/api/auth/status')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => { if (data?.plan === 'PRO') setIsPro(true); })
+            .catch(() => null);
+    }, []);
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -167,7 +176,8 @@ export default function PIQResult() {
                                     </div>
                                 </div>
 
-                                {/* Upgrade Card */}
+                                {/* Upgrade Card — hidden for PRO users */}
+                                {!isPro && (
                                 <div className="bg-white p-8 lg:p-10 rounded-[3rem] border-4 border-brand-orange shadow-2xl relative overflow-hidden">
                                     <div className="absolute -top-5 right-10 bg-brand-orange text-white text-[10px] font-bold px-4 py-2 rounded-full">
                                         PRO
@@ -192,6 +202,7 @@ export default function PIQResult() {
                                         Upgrade to Pro
                                     </Link>
                                 </div>
+                                )}
                             </div>
 
                         </div>

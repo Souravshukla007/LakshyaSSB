@@ -83,7 +83,7 @@ export default function Day2() {
                                     TAT, WAT, SRT and Self Description reveal your subconscious personality. It&apos;s a race against time and your own thoughts.
                                 </p>
                             </div>
-                            <button className="group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            <Link href="/practice" className="block group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                                 <div className="relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center gap-4 pl-8 pr-2 py-3">
                                     <div className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]"></div>
                                     <span className="relative z-10 text-white group-hover:text-brand-dark font-noname font-bold text-base transition-colors duration-[1000ms]">Practice Psych Tests</span>
@@ -91,7 +91,7 @@ export default function Day2() {
                                         <i className="fa-solid fa-bolt text-xs"></i>
                                     </span>
                                 </div>
-                            </button>
+                            </Link>
                         </div>
 
                         {/* Quick Navigation */}
@@ -229,7 +229,7 @@ export default function Day2() {
                                     <Link href="/ssb/day-1" className="flex items-center gap-3 text-sm font-bold text-gray-500 hover:text-brand-orange transition group">
                                         <i className="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> Previous: Day 1
                                     </Link>
-                                    <button className="bg-brand-dark text-white h-14 px-10 rounded-full font-bold shadow-xl hover:bg-brand-orange hover:-translate-y-1 transition-all">Practice Psych Tests</button>
+                                    <Link href="/practice" className="inline-flex items-center justify-center bg-brand-dark text-white h-14 px-10 rounded-full font-bold shadow-xl hover:bg-brand-orange hover:-translate-y-1 transition-all">Practice Psych Tests</Link>
                                     <Link href="/ssb/day-3" className="flex items-center gap-3 text-sm font-bold text-gray-500 hover:text-brand-orange transition group">
                                         Next: Day 3 <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                                     </Link>

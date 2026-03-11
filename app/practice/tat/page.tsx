@@ -7,22 +7,17 @@ import { useRouter } from 'next/navigation';
 // ─── Types and Constants ──────────────────────────────────────────────────────
 type ViewState = 'intro' | 'test' | 'result';
 
-const TAT_IMAGES = [
-    'https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?q=80&w=800&auto=format&fit=crop&grayscale=1', // Discussion / Group
-    'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop&grayscale=1', // Business / Discussion
-    'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=800&auto=format&fit=crop&grayscale=1', // Looking far away
-    'https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=800&auto=format&fit=crop&grayscale=1', // Helping / Reaching out
-    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&auto=format&fit=crop&grayscale=1', // Planning / Working
-    'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=800&auto=format&fit=crop&grayscale=1', // Interaction
-    'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop&grayscale=1', // Handshake / Deal
-    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop&grayscale=1', // Working together
-    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop&grayscale=1', // Team meeting
-    'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800&auto=format&fit=crop&grayscale=1', // Solo studying
-    'https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=800&auto=format&fit=crop&grayscale=1', // Crisis / Intense interaction
-    '', // Blank Slide
-];
-
 const TIME_PER_IMAGE = 4 * 60; // 4 minutes in seconds
+
+// ─── Camera Shutter Sound ──────────────────────────────────────────────────────
+function playShutter() {
+    if (typeof window === 'undefined') return;
+    try {
+        const audio = new Audio('/sound/audio.mp3');
+        audio.volume = 0.8;
+        audio.play().catch(() => null);
+    } catch { /* silently ignore */ }
+}
 
 // ─── SVG Radar Chart ──────────────────────────────────────────────────────────
 function TATRadarChart() {
@@ -89,10 +84,11 @@ function TATRadarChart() {
 export default function TATPracticePage() {
     const router = useRouter();
     const [view, setView] = useState<ViewState>('intro');
+    const [tatImages, setTatImages] = useState<string[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [timeLeft, setTimeLeft] = useState(TIME_PER_IMAGE);
     const [story, setStory] = useState('');
-    const [stories, setStories] = useState<string[]>(Array(TAT_IMAGES.length).fill(''));
+    const [stories, setStories] = useState<string[]>([]);
 
     // Timer logic
     useEffect(() => {
@@ -108,7 +104,13 @@ export default function TATPracticePage() {
         }, 1000);
 
         return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [view, timeLeft]);
+
+    // Play shutter sound when image advances
+    useEffect(() => {
+        if (view === 'test') playShutter();
+    }, [currentIndex, view]);
 
     const handleStart = async () => {
         // Verify Access
@@ -130,10 +132,16 @@ export default function TATPracticePage() {
             body: JSON.stringify({ module: 'TAT' })
         });
 
+        // Fetch a fresh random set of images for this session
+        const imgRes = await fetch('/api/tat/images');
+        const imgData = await imgRes.json();
+        const sessionImages: string[] = imgData.images ?? [];
+
+        setTatImages(sessionImages);
         setCurrentIndex(0);
         setTimeLeft(TIME_PER_IMAGE);
         setStory('');
-        setStories(Array(TAT_IMAGES.length).fill(''));
+        setStories(Array(sessionImages.length).fill(''));
         setView('test');
     };
 
@@ -143,7 +151,7 @@ export default function TATPracticePage() {
         newStories[currentIndex] = story;
         setStories(newStories);
 
-        if (currentIndex < TAT_IMAGES.length - 1) {
+        if (currentIndex < tatImages.length - 1) {
             // Next image
             setCurrentIndex(prev => prev + 1);
             setStory(newStories[currentIndex + 1] || '');
@@ -246,14 +254,14 @@ export default function TATPracticePage() {
                         <div className="flex flex-wrap items-center justify-between mb-6 bg-white/80 backdrop-blur-md px-6 py-4 rounded-2xl border border-gray-100 shadow-sm gap-4">
                             <div>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Progress</p>
-                                <p className="font-bold text-gray-900 text-lg">Image {currentIndex + 1} <span className="text-gray-400 text-sm">/ {TAT_IMAGES.length}</span></p>
+                                <p className="font-bold text-gray-900 text-lg">Image {currentIndex + 1} <span className="text-gray-400 text-sm">/ {tatImages.length}</span></p>
                             </div>
 
                             <div className="flex flex-1 max-w-xs mx-4 items-center">
                                 <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
                                     <div
                                         className="h-full bg-orange-500 transition-all duration-300"
-                                        style={{ width: `${((currentIndex + 1) / TAT_IMAGES.length) * 100}%` }}
+                                        style={{ width: `${((currentIndex + 1) / tatImages.length) * 100}%` }}
                                     ></div>
                                 </div>
                             </div>
@@ -269,11 +277,10 @@ export default function TATPracticePage() {
                         <div className="grid md:grid-cols-2 gap-6 items-start">
                             {/* Left: Image Display */}
                             <div className="bg-white/80 backdrop-blur-md rounded-3xl p-4 border border-gray-100 shadow-lg flex flex-col h-full min-h-[300px]">
-                                {TAT_IMAGES[currentIndex] ? (
+                                {tatImages[currentIndex] ? (
                                     <div className="relative w-full h-full min-h-[300px] md:min-h-[400px] rounded-2xl overflow-hidden bg-gray-100 border border-gray-200">
-                                        {/* Using img for testing, but in production we can use Next/Image */}
                                         <img
-                                            src={TAT_IMAGES[currentIndex]}
+                                            src={tatImages[currentIndex]}
                                             alt={`TAT Image ${currentIndex + 1}`}
                                             className="absolute inset-0 w-full h-full object-cover object-center grayscale opacity-90 contrast-125"
                                         />
@@ -329,7 +336,7 @@ export default function TATPracticePage() {
                                         onClick={handleNext}
                                         className="px-6 py-2.5 bg-gray-900 hover:bg-black text-white text-sm font-bold rounded-xl transition-all shadow-md flex items-center gap-2"
                                     >
-                                        {currentIndex === TAT_IMAGES.length - 1 ? 'Submit Test' : 'Next Image'} <i className="fa-solid fa-arrow-right text-xs"></i>
+                                        {currentIndex === tatImages.length - 1 ? 'Submit Test' : 'Next Image'} <i className="fa-solid fa-arrow-right text-xs"></i>
                                     </button>
                                 </div>
                             </div>

@@ -165,6 +165,21 @@ export default function Practice() {
                                 {renderAction('LECTURETTE', '/practice/lecturette')}
                             </div>
                         </div>
+
+                        {/* GPE */}
+                        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:border-brand-orange/20 transition-all flex flex-col justify-between reveal-scale delay-250 relative overflow-hidden group">
+                            <div className="relative z-10">
+                                <div className="w-14 h-14 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-dark text-2xl mb-6 group-hover:bg-brand-dark group-hover:text-white transition-colors">
+                                    <i className="fa-solid fa-people-group"></i>
+                                </div>
+                                <h3 className="font-hero font-bold text-xl text-brand-dark mb-2">GPE Group Planning</h3>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">GTO Task Practice</p>
+                                <p className="text-sm text-gray-500 font-noname mb-6">Situation-based planning exercise. Analyze a problem map, prioritize tasks and create an action plan like real SSB GTO tasks.</p>
+                            </div>
+                            <div className="relative z-10 w-full">
+                                {renderAction('GPE', '/practice/gpe')}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>        </main>

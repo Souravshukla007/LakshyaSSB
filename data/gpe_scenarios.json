@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "title": "Flood Relief Operation",
+    "situation": "A flash flood has struck a remote village of approximately 800 residents. Roads are washed out and the village is cut off. You are leading a team of 8 with a 45-minute window before sunset. The administrative HQ is 30 km away.",
+    "problems": [
+      "Around 30 people are trapped on rooftops, including 5 elderly and 2 children.",
+      "The local school building is structurally unsafe and may collapse.",
+      "Food and drinking water stocks are depleted. Village has no potable water.",
+      "A pregnant woman requires urgent evacuation for medical care.",
+      "Communication lines are down. The only working phone belongs to the village sarpanch."
+    ],
+    "resources": [
+      "1 motorized rubber boat (capacity: 6 persons)",
+      "2 hand-operated wooden boats (capacity: 4 persons each)",
+      "Medical first aid kit (basic supplies)",
+      "50 meters of rope",
+      "1 vehicle in working condition at the village outskirts",
+      "8 team members (including yourself)",
+      "Sarpanch's mobile phone with limited battery"
+    ],
+    "difficulty": "Hard"
+  },
+  {
+    "id": 2,
+    "title": "Train Accident at a Railway Crossing",
+    "situation": "A passenger train has derailed near a railway crossing 5 km from a city. You arrive on scene with your team within 10 minutes of the incident. Approximately 200 passengers were on board. It is 6 PM and getting dark in about 40 minutes.",
+    "problems": [
+      "3 coaches have overturned. Around 50 passengers are trapped inside.",
+      "A fuel leak is visible near the engine — fire risk is high.",
+      "A local bus carrying 30 passengers has stalled on the railway tracks ahead.",
+      "Injured passengers are scattered over a 300-meter radius.",
+      "Only one road leads to the site and it is blocked by spectators."
+    ],
+    "resources": [
+      "8 team members (including yourself)",
+      "2 mobile fire extinguishers",
+      "First aid kit",
+      "1 megaphone",
+      "2 cars and 1 minivan (your group's transport)",
+      "A nearby petrol station with a tow chain",
+      "Local police (ETA: 20 minutes)"
+    ],
+    "difficulty": "Hard"
+  },
+  {
+    "id": 3,
+    "title": "Highway Building Site Accident",
+    "situation": "A construction site for a national highway has experienced a partial structure collapse. Workers are trapped. The site is 15 km from the nearest hospital. You are in charge of the rescue with your 10-member team. Time available before next shift handover: 1 hour.",
+    "problems": [
+      "6 workers are trapped under debris; at least 2 are critically injured.",
+      "A crane on site has an oil leak and might catch fire.",
+      "One worker is hanging on a partially collapsed scaffolding 8 meters high.",
+      "There is only one working stretcher on site.",
+      "The site manager has gone into a panic and is obstructing rescue."
+    ],
+    "resources": [
+      "10 team members (including yourself)",
+      "Excavator (operator available)",
+      "2 construction cranes (one with oil leak, one functional)",
+      "Basic first aid, no oxygen cylinders",
+      "5 ladders of varying heights",
+      "Heavy ropes and pulleys",
+      "Ambulance (ETA: 25 minutes)"
+    ],
+    "difficulty": "Medium"
+  },
+  {
+    "id": 4,
+    "title": "Forest Fire Near a Tribal Village",
+    "situation": "A rapidly spreading forest fire is heading toward a remote tribal village of 400 residents. Wind speeds are high. You have approximately 90 minutes before the fire reaches the village perimeter. Your team of 7 must coordinate evacuation and containment.",
+    "problems": [
+      "Around 60 elderly and children cannot walk fast — need transport.",
+      "The only motorable path is 4 km and partly blocked by fallen trees.",
+      "A small stream 500m from the village could serve as a firebreak.",
+      "Tribal residents are reluctant to leave their homes due to cultural beliefs.",
+      "Valuable livestock belonging to 20 families are loose and panicking."
+    ],
+    "resources": [
+      "7 team members (including yourself)",
+      "1 tractor with a trailer (capacity: 20 persons)",
+      "2 chainsaws (partly fueled)",
+      "Water tanker (capacity: 3000 litres)",
+      "Fire beaters and shovels",
+      "Village elder (respected figure who can help communicate)",
+      "Helicopter (can fly one sortie, capacity: 8)"
+    ],
+    "difficulty": "Medium"
+  },
+  {
+    "id": 5,
+    "title": "Riot at a Pilgrimage Site",
+    "situation": "A religious pilgrimage site has seen clashes between two groups over access to a sacred shrine. The crowd has swelled to approximately 2,000 people. You are in charge of a team of 12. Situation is volatile — any mishandling could escalate. The main shrine must remain accessible to all.",
+    "problems": [
+      "A group of 200 people is blocking the main gate, refusing to move.",
+      "3 people have been injured in stone pelting; one critically.",
+      "A local politician is inciting the crowd via a loudspeaker.",
+      "Media crews have arrived and are broadcasting live.",
+      "A small fire has been started in one of the outer stalls."
+    ],
+    "resources": [
+      "12 team members (including yourself)",
+      "2 police jeeps",
+      "Megaphone",
+      "Barricades (10 portable units)",
+      "Fire extinguisher (1)",
+      "Vehicle with ambulance markings (no medical equipment)",
+      "Shrine priest (highly respected by both groups)"
+    ],
+    "difficulty": "Hard"
+  }
+]

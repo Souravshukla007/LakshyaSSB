@@ -7,6 +7,16 @@ import watData from '@/data/practice/wat01.json';
 
 type GameState = 'start' | 'test' | 'result';
 
+// ─── Camera Shutter Sound ──────────────────────────────────────────────────────
+function playShutter() {
+    if (typeof window === 'undefined') return;
+    try {
+        const audio = new Audio('/sound/audio.mp3');
+        audio.volume = 0.8;
+        audio.play().catch(() => null);
+    } catch { /* silently ignore */ }
+}
+
 export default function WATModule() {
     const router = useRouter();
     const [gameState, setGameState] = useState<GameState>('start');
@@ -38,6 +48,11 @@ export default function WATModule() {
         return () => clearInterval(timer);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [timeLeft, gameState]);
+
+    // Play shutter sound on each word transition
+    useEffect(() => {
+        if (gameState === 'test') playShutter();
+    }, [currentIndex, gameState]);
 
     const handleStart = async () => {
         // Verify Access
