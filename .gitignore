@@ -38,3 +38,7 @@ next-env.d.ts
 
 # prisma
 /prisma/migrations
+
+# custom admin scripts
+scripts/upgrade-user.js
+/Upgrade-to-Pro.md
