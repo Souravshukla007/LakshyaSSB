@@ -51,9 +51,8 @@ export async function GET(request: Request) {
         const currentUserId = session?.userId;
 
         const leaderboardData = users.map((u, index) => {
-            // Append entry to username if available
-            const entrySuffix = u.targetEntry ? `_${u.targetEntry}` : '';
-            const username = `${u.fullName.split(' ')[0]}${entrySuffix}`;
+            // Use full user name instead of trimming and adding entry suffix
+            const username = u.fullName;
 
             return {
                 rank: index + 1,
