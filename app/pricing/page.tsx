@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import useScrollReveal from "@/hooks/useScrollReveal";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -54,7 +54,7 @@ export default function Pricing() {
 
     return (
         <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
-            <Navbar />
+            
 
             <section className="min-h-screen bg-brand-bg pt-32 pb-20 px-6">
                 <div className="max-w-7xl mx-auto">
@@ -210,7 +210,7 @@ export default function Pricing() {
                 </div>
             </section>
 
-            <Footer />
+            
         </main>
     );
 }

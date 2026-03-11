@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 
 export default function PIQForm() {
     const router = useRouter();
@@ -35,7 +35,7 @@ export default function PIQForm() {
 
     return (
         <>
-            <Navbar />
+            
 
             <main>
                 <section className="min-h-screen bg-brand-bg pt-32 pb-20 px-6">
@@ -376,7 +376,7 @@ export default function PIQForm() {
                 </section>
             </main>
 
-            <Footer />
+            
         </>
     );
 }

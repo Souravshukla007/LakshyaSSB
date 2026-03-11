@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import useScrollReveal from "@/hooks/useScrollReveal";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
@@ -94,7 +94,7 @@ export default function Checkout() {
     return (
         <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
             <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-            <Navbar />
+            
 
             <section className="min-h-screen bg-brand-bg pt-32 sm:pt-40 pb-16 sm:pb-20 px-4 sm:px-6 flex items-center justify-center">
                 <div className="max-w-md w-full relative z-10 reveal-scale">
@@ -141,7 +141,7 @@ export default function Checkout() {
                 </div>
             </section>
 
-            <Footer />
+            
         </main>
     );
 }

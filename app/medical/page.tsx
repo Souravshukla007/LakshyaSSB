@@ -1,7 +1,7 @@
 'use client';
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import type { VisionType, MedicalScoreBreakdown, WeeklyPlan } from "@/lib/medical-score";
@@ -923,7 +923,7 @@ export default function MedicalSimulator() {
 
     return (
         <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
-            <Navbar />
+            
 
             {/* Hero */}
             <section className="pt-32 pb-6 px-6 bg-brand-bg">
@@ -991,7 +991,7 @@ export default function MedicalSimulator() {
                 </div>
             </section>
 
-            <Footer />
+            
         </main>
     );
 }

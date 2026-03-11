@@ -3,20 +3,18 @@ import Link from 'next/link';
 import fs from 'fs';
 import path from 'path';
 import { ArrowRight, Clock, BookOpen, Brain, Target, ShieldCheck } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 
 const CATEGORIES = [
-    { file: 'oir_analogy.json', name: 'Analogy' },
-    { file: 'oir_CodeDe.json', name: 'Coding-Decoding' },
-    { file: 'oir_Dice.json', name: 'Dice Problems' },
-    { file: 'oir_dictonary.json', name: 'Dictionary Order' },
-    { file: 'oir_number.json', name: 'Number Pattern' },
-    { file: 'oir_odd.json', name: 'Odd One Out' },
-    { file: 'oir_Rank.json', name: 'Rank Problems' },
-    { file: 'oir_rearrange.json', name: 'Sentence Rearrangement' },
-    { file: 'oir_sym.json', name: 'Synonym Replacement' },
-    { file: 'oir_wordProb.json', name: 'Arithmetic Word Problems' }
+    { file: 'data/practice/oir_analogy.json', name: 'Analogy' },
+    { file: 'data/practice/oir_CodeDe.json', name: 'Coding-Decoding' },
+    { file: 'data/practice/oir_Dice.json', name: 'Dice Problems' },
+    { file: 'data/practice/oir_dictonary.json', name: 'Dictionary Order' },
+    { file: 'data/practice/oir_number.json', name: 'Number Pattern' },
+    { file: 'data/practice/oir_odd.json', name: 'Odd One Out' },
+    { file: 'data/practice/oir_Rank.json', name: 'Rank Problems' },
+    { file: 'data/practice/oir_rearrange.json', name: 'Sentence Rearrangement' },
+    { file: 'data/practice/oir_sym.json', name: 'Synonym Replacement' },
+    { file: 'data/practice/oir_wordProb.json', name: 'Arithmetic Word Problems' }
 ];
 
 async function getExampleQuestions() {
@@ -48,7 +46,6 @@ export default async function OIRIntroPage() {
 
     return (
         <>
-            <Navbar />
             <div className="min-h-screen bg-[#fafaf9] flex flex-col items-center pb-24 pt-32">
 
                 {/* Hero Section */}
@@ -166,9 +163,7 @@ export default async function OIRIntroPage() {
                         ))}
                     </div>
                 </section>
-
             </div>
-            <Footer />
         </>
     );
 }

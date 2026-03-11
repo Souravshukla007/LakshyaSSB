@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 
 export default function Day5() {
     useEffect(() => {
@@ -50,7 +50,7 @@ export default function Day5() {
 
     return (
         <>
-            <Navbar />
+            
 
             <main>
                 <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-brand-bg">
@@ -232,7 +232,7 @@ export default function Day5() {
                 </section>
             </main>
 
-            <Footer />
+            
         </>
     );
 }

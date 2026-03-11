@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
-import analogy from '@/oir_analogy.json';
-import codeDe from '@/oir_CodeDe.json';
-import dice from '@/oir_Dice.json';
-import dictonary from '@/oir_dictonary.json';
-import number from '@/oir_number.json';
-import odd from '@/oir_odd.json';
-import rank from '@/oir_Rank.json';
-import rearrange from '@/oir_rearrange.json';
-import sym from '@/oir_sym.json';
-import wordProb from '@/oir_wordProb.json';
+import analogy from '@/data/practice/oir_analogy.json';
+import codeDe from '@/data/practice/oir_CodeDe.json';
+import dice from '@/data/practice/oir_Dice.json';
+import dictonary from '@/data/practice/oir_dictonary.json';
+import number from '@/data/practice/oir_number.json';
+import odd from '@/data/practice/oir_odd.json';
+import rank from '@/data/practice/oir_Rank.json';
+import rearrange from '@/data/practice/oir_rearrange.json';
+import sym from '@/data/practice/oir_sym.json';
+import wordProb from '@/data/practice/oir_wordProb.json';
 
 export async function GET() {
   try {

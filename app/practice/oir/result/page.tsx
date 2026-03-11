@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 import { BrainCircuit, CheckCircle2, XCircle, Clock, Target, ArrowRight, Expand, Shrink, ChevronDown } from 'lucide-react';
 
 interface QuestionResult {
@@ -91,7 +91,7 @@ export default function OIRResultPage() {
 
     return (
         <>
-            <Navbar />
+            
             <div className="min-h-screen bg-[#fafaf9] pt-32 pb-24">
                 <div className="max-w-5xl mx-auto px-6">
 
@@ -300,7 +300,7 @@ export default function OIRResultPage() {
 
                 </div>
             </div>
-            <Footer />
+            
         </>
     );
 }

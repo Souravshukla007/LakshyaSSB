@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface EligibilityForm {
@@ -287,7 +287,7 @@ export default function SSBEntryNavigatorPage() {
 
     return (
         <>
-            <Navbar />
+            
 
             <main
                 className="min-h-screen pt-24 pb-20 px-4 md:px-8"
@@ -826,7 +826,7 @@ export default function SSBEntryNavigatorPage() {
                 </div>
             </main>
 
-            <Footer />
+            
         </>
     );
 }

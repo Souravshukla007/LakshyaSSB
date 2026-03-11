@@ -1,7 +1,7 @@
 'use client';
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import useScrollReveal from "@/hooks/useScrollReveal";
 
 export default function OlqReport() {
@@ -9,7 +9,7 @@ export default function OlqReport() {
 
     return (
         <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
-            <Navbar />
+            
 
             <section className="min-h-screen bg-brand-bg pt-32 pb-20 px-6">
                 <div className="max-w-7xl mx-auto">
@@ -110,7 +110,7 @@ export default function OlqReport() {
                 </div>
             </section>
 
-            <Footer />
+            
         </main>
     );
 }

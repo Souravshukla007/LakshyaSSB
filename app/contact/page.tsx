@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 
 export const metadata: Metadata = {
     title: "Contact Us | LakshyaSSB",
@@ -13,7 +13,7 @@ const LAST_UPDATED = "22 February 2026";
 export default function ContactPage() {
     return (
         <main className="antialiased overflow-x-hidden font-sans bg-brand-bg selection:bg-brand-orange selection:text-white">
-            <Navbar />
+            
 
             <section className="pt-40 pb-20 px-6">
                 <div className="max-w-4xl mx-auto">
@@ -119,7 +119,7 @@ export default function ContactPage() {
                 </div>
             </section>
 
-            <Footer />
+            
         </main>
     );
 }

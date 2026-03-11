@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 
 export default function DailyQuestion() {
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function DailyQuestion() {
 
     return (
         <>
-            <Navbar />
+            
 
             <main>
                 <section className="py-24 px-6 bg-brand-bg relative overflow-hidden pt-40">
@@ -163,7 +163,7 @@ export default function DailyQuestion() {
                 </section>
             </main>
 
-            <Footer />
+            
         </>
     );
 }

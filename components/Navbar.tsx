@@ -9,6 +9,7 @@ interface UserProfile {
     fullName: string;
     email: string;
     plan: string;
+    profileImageUrl?: string | null;
 }
 
 export default function Navbar() {
@@ -162,10 +163,14 @@ export default function Navbar() {
                             <div className="relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setDropdownOpen(prev => !prev)}
-                                    className="w-10 h-10 rounded-full bg-gray-200 border border-gray-100 flex items-center justify-center text-brand-dark font-bold text-sm shadow-sm hover:shadow-md transition-all"
+                                    className="w-10 h-10 rounded-full bg-gray-200 border border-gray-100 flex items-center justify-center text-brand-dark font-bold text-sm shadow-sm hover:shadow-md transition-all overflow-hidden"
                                     aria-label="User menu"
                                 >
-                                    {getInitials(user.fullName)}
+                                    {user.profileImageUrl ? (
+                                        <img src={user.profileImageUrl} alt="Profile" className="w-full h-full object-cover" />
+                                    ) : (
+                                        getInitials(user.fullName)
+                                    )}
                                 </button>
 
                                 {dropdownOpen && (
@@ -308,8 +313,12 @@ export default function Navbar() {
                         {user && (
                             <>
                                 <div className="mx-4 my-2 p-4 bg-gray-50 rounded-2xl flex items-center gap-3">
-                                    <div className="w-11 h-11 rounded-full bg-brand-dark flex items-center justify-center text-white font-bold text-sm shrink-0">
-                                        {getInitials(user.fullName)}
+                                    <div className="w-11 h-11 rounded-full bg-brand-dark flex items-center justify-center text-white font-bold text-sm shrink-0 overflow-hidden">
+                                        {user.profileImageUrl ? (
+                                            <img src={user.profileImageUrl} alt="Profile" className="w-full h-full object-cover" />
+                                        ) : (
+                                            getInitials(user.fullName)
+                                        )}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <p className="text-sm font-bold text-brand-dark truncate">{user.fullName}</p>

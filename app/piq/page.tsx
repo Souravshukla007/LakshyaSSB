@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 
 export default function PIQLanding() {
     useEffect(() => {
@@ -28,7 +28,7 @@ export default function PIQLanding() {
 
     return (
         <>
-            <Navbar />
+            
 
             <main>
                 <section className="relative pt-40 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-brand-bg">
@@ -112,7 +112,7 @@ export default function PIQLanding() {
                 </section>
             </main>
 
-            <Footer />
+            
         </>
     );
 }

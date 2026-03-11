@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 
 export default function PIQResult() {
     useEffect(() => {
@@ -36,7 +36,7 @@ export default function PIQResult() {
 
     return (
         <>
-            <Navbar />
+            
 
             <main>
                 <section className="min-h-screen bg-brand-bg pt-32 pb-20 px-6">
@@ -199,7 +199,7 @@ export default function PIQResult() {
                 </section>
             </main>
 
-            <Footer />
+            
         </>
     );
 }

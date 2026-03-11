@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 type Tab = 'overall' | 'weekly' | 'streak';
@@ -121,7 +121,7 @@ export default function LeaderboardPage() {
 
     return (
         <>
-            <Navbar />
+            
 
             {/* ── Grid background canvas ── */}
             <main
@@ -440,7 +440,7 @@ export default function LeaderboardPage() {
                 </div>
             </main>
 
-            <Footer />
+            
         </>
     );
 }

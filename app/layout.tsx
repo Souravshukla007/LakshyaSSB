@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
 import CapacitorBackButtonHandler from "@/components/CapacitorBackButtonHandler";
+import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata: Metadata = {
     title: "LakshaySSB | Elite SSB Preparation Academy",
@@ -27,7 +28,9 @@ export default function RootLayout({
             </head>
             <body className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
                 <CapacitorBackButtonHandler />
-                {children}
+                <LayoutWrapper>
+                    {children}
+                </LayoutWrapper>
                 <Script id="reveal-animation" strategy="afterInteractive">
                     {`
             document.addEventListener('DOMContentLoaded', () => {

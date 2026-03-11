@@ -3,8 +3,8 @@ import { getSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import DashboardClient from './DashboardClient';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 
 export default async function Dashboard() {
     const session = await getSession();
@@ -30,7 +30,7 @@ export default async function Dashboard() {
 
     return (
         <>
-            <Navbar />
+            
             <DashboardClient
                 user={{
                     name: user.fullName,
@@ -42,7 +42,7 @@ export default async function Dashboard() {
                     medals_total: user.medals_total,
                 }}
             />
-            <Footer />
+            
         </>
     );
 }

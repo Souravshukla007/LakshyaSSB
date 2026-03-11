@@ -3,9 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import watData from '../../../wat01.json';
+import watData from '@/data/practice/wat01.json';
 
 type GameState = 'start' | 'test' | 'result';
 
@@ -149,10 +147,7 @@ export default function WATModule() {
     };
 
     return (
-        <main className="antialiased selection:bg-brand-orange selection:text-white font-sans bg-[#faf9f6]">
-            <Navbar />
-
-            {/* Background pattern */}
+        <main className="antialiased selection:bg-brand-orange selection:text-white font-sans bg-[#faf9f6]">            {/* Background pattern */}
             <div className="min-h-screen pt-32 pb-20 px-4 sm:px-6 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] relative z-0">
 
                 <div className="max-w-3xl mx-auto relative z-10">
@@ -397,9 +392,6 @@ export default function WATModule() {
                         </div>
                     )}
                 </div>
-            </div>
-
-            <Footer />
-        </main>
+            </div>        </main>
     );
 }

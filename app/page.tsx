@@ -1,8 +1,6 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Link from "next/link";
 
 export default function Home() {
@@ -33,10 +31,7 @@ export default function Home() {
     }, []);
 
     return (
-        <>
-            <Navbar />
-
-            <main>
+        <>            <main>
                 {/* Hero Section */}
                 <section className="relative pt-40 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-brand-bg">
                     {/* Right Side Grid Background */}
@@ -649,8 +644,6 @@ export default function Home() {
                 </section>
             </main>
 
-            {/* Footer */}
-            <Footer />
         </>
     );
 }

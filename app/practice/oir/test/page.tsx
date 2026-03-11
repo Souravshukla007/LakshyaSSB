@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 
 interface Question {
     id: number;
@@ -154,7 +154,7 @@ export default function OIRTestEngine() {
 
     return (
         <>
-            <Navbar />
+            
 
             <main>
                 <div className="min-h-screen bg-brand-bg pt-32 pb-20 px-6">
@@ -269,7 +269,7 @@ export default function OIRTestEngine() {
                 </div>
             </main>
 
-            <Footer />
+            
         </>
     );
 }

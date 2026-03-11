@@ -3,8 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 
 // ─── Types and Constants ──────────────────────────────────────────────────────
 type ViewState = 'intro' | 'test' | 'result';
@@ -172,8 +170,6 @@ export default function TATPracticePage() {
                 backgroundImage: 'linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)',
                 backgroundSize: '40px 40px'
             }}></div>
-
-            <Navbar />
 
             <main className="flex-1 max-w-5xl w-full mx-auto px-4 md:px-8 pt-28 pb-20 relative z-10 flex flex-col justify-center">
 
@@ -420,8 +416,6 @@ export default function TATPracticePage() {
                 )}
 
             </main>
-
-            <Footer />
         </div>
     );
 }

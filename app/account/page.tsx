@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+
 import AccountClient from './AccountClient';
 
 /**
@@ -55,7 +55,7 @@ export default async function AccountPage() {
 
     return (
         <main className="min-h-screen bg-brand-bg">
-            <Navbar />
+            
 
             <section className="min-h-screen bg-brand-bg pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
                 <div className="max-w-4xl mx-auto">
@@ -72,7 +72,7 @@ export default async function AccountPage() {
                 </div>
             </section>
 
-            <Footer />
+            
         </main>
     );
 }

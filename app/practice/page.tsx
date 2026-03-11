@@ -1,7 +1,5 @@
 'use client';
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import useScrollReveal from "@/hooks/useScrollReveal";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -78,10 +76,7 @@ export default function Practice() {
     };
 
     return (
-        <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
-            <Navbar />
-
-            <section className="min-h-screen bg-brand-bg pt-32 pb-20 px-6">
+        <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">            <section className="min-h-screen bg-brand-bg pt-32 pb-20 px-6">
                 <div className="max-w-7xl mx-auto">
                     <div className="mb-12 reveal">
                         <h1 className="font-hero font-bold text-4xl text-brand-dark mb-2">
@@ -172,9 +167,6 @@ export default function Practice() {
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <Footer />
-        </main>
+            </section>        </main>
     );
 }

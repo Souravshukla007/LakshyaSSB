@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import SrtIntro from '@/components/srt/SrtIntro';
 import SrtTestInterface from '@/components/srt/SrtTestInterface';
 import SrtResult from '@/components/srt/SrtResult';
-import srt01 from '@/srt01.json';
-import srt02 from '@/srt02.json';
+import srt01 from '@/data/practice/srt01.json';
+import srt02 from '@/data/practice/srt02.json';
 
 const allQuestionsRaw = [...srt01, ...srt02];
 const allQuestions = allQuestionsRaw.map((q, idx) => ({ ...q, id: idx + 1 })).slice(0, 60);

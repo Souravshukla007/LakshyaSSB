@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 
 export const metadata: Metadata = {
     title: "About Us | LakshyaSSB",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
     return (
         <main className="antialiased overflow-x-hidden font-sans bg-brand-bg selection:bg-brand-orange selection:text-white">
-            <Navbar />
+            
 
             {/* Hero */}
             <section className="pt-40 pb-20 px-6 bg-brand-bg">
@@ -115,7 +115,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <Footer />
+            
         </main>
     );
 }

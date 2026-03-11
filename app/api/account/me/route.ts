@@ -24,6 +24,7 @@ export async function GET() {
             attemptNumber: true,
             preferredSSBCenter: true,
             plan: true,
+            profileImageUrl: true,
             createdAt: true,
             payments: {
                 orderBy: { createdAt: 'desc' },
