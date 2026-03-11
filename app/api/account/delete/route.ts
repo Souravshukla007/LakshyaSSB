@@ -31,6 +31,10 @@ export async function DELETE(request: NextRequest) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
+    if (user.passwordHash === null) {
+        return NextResponse.json({ error: 'This account uses Google sign-in. Account deletion is restricted.' }, { status: 400 });
+    }
+
     const valid = await bcrypt.compare(password, user.passwordHash);
     if (!valid) {
         return NextResponse.json({ error: 'Incorrect password' }, { status: 400 });
