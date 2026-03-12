@@ -69,6 +69,7 @@ model User {
   practiceAttempts  PracticeAttempt[] // Track 1-free-test usages
   activityLogs     ActivityLog[]
   notificationPref NotificationPref?
+  feedbacks        Feedback[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -313,4 +314,26 @@ model NotificationPref {
   promoEmails  Boolean @default(false)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Feedback Submissions
+// ---------------------------------------------------------------------------
+
+model Feedback {
+  id          String   @id @default(uuid())
+  userId      String?
+  name        String?
+  email       String?
+  userType    String
+  rating      Int
+  features    String[]
+  suggestion  String   @db.Text
+  isAnonymous Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([userId])
 }

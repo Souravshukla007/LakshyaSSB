@@ -5,11 +5,18 @@ import Link from 'next/link';
 
 export default function FeedbackPage() {
     const [isAnonymous, setIsAnonymous] = useState(false);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [userType, setUserType] = useState('');
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+    const [improvement, setImprovement] = useState('');
     const [featureRequest, setFeatureRequest] = useState('');
+    
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
 
     const featuresList = [
         'OIR Practice',
@@ -40,11 +47,49 @@ export default function FeedbackPage() {
         setFeatureRequest(prev => prev ? `${prev}\n${chip}` : chip);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Here you would normally send the data to your API/DB
-        setIsSubmitted(true);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setErrorMsg('');
+        
+        if (!userType) {
+            setErrorMsg('Please select a user type.');
+            return;
+        }
+        if (rating === 0) {
+            setErrorMsg('Please provide a rating.');
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            const suggestion = `Improvement: ${improvement}\n\nFeature Request: ${featureRequest}`.trim();
+
+            const res = await fetch('/api/feedback', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    userType,
+                    rating,
+                    features: selectedFeatures,
+                    suggestion,
+                    isAnonymous
+                })
+            });
+
+            const data = await res.json();
+            if (!res.ok) {
+                throw new Error(data.error || 'Failed to submit feedback');
+            }
+
+            setIsSubmitted(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (err: any) {
+            setErrorMsg(err.message || 'An unexpected error occurred.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     if (isSubmitted) {
@@ -114,11 +159,23 @@ export default function FeedbackPage() {
                         <div className={`grid md:grid-cols-2 gap-6 transition-all duration-300 ${isAnonymous ? 'opacity-30 pointer-events-none h-0 overflow-hidden m-0 p-0' : 'opacity-100 h-auto'}`}>
                             <div>
                                 <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Name (Optional)</label>
-                                <input type="text" placeholder="John Doe" className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent block p-3.5 transition-all outline-none" />
+                                <input 
+                                    type="text" 
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder="John Doe" 
+                                    className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent block p-3.5 transition-all outline-none" 
+                                />
                             </div>
                             <div>
                                 <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Email (Optional)</label>
-                                <input type="email" placeholder="john@example.com" className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent block p-3.5 transition-all outline-none" />
+                                <input 
+                                    type="email" 
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="john@example.com" 
+                                    className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent block p-3.5 transition-all outline-none" 
+                                />
                             </div>
                         </div>
 
@@ -126,8 +183,13 @@ export default function FeedbackPage() {
                         <div>
                             <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">I am a...</label>
                             <div className="relative">
-                                <select className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent block p-3.5 transition-all outline-none appearance-none cursor-pointer">
-                                    <option value="" disabled selected>Select user type</option>
+                                <select 
+                                    value={userType}
+                                    onChange={(e) => setUserType(e.target.value)}
+                                    className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent block p-3.5 transition-all outline-none appearance-none cursor-pointer"
+                                    required
+                                >
+                                    <option value="" disabled>Select user type</option>
                                     <option value="aspirant">SSB Aspirant</option>
                                     <option value="recommended">Recommended Candidate</option>
                                     <option value="trainer">SSB Trainer</option>
@@ -178,6 +240,8 @@ export default function FeedbackPage() {
                             <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">What should we improve?</label>
                             <textarea 
                                 rows={3} 
+                                value={improvement}
+                                onChange={(e) => setImprovement(e.target.value)}
                                 placeholder="Tell us what we can improve..." 
                                 className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent block p-4 transition-all outline-none resize-none"
                             ></textarea>
@@ -212,9 +276,23 @@ export default function FeedbackPage() {
 
                         <hr className="border-gray-100" />
 
+                        {errorMsg && (
+                            <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm font-bold border border-red-100">
+                                <i className="fa-solid fa-triangle-exclamation mr-2" /> {errorMsg}
+                            </div>
+                        )}
+
                         {/* Submit Button */}
-                        <button type="submit" className="w-full py-4 bg-gray-900 hover:bg-black text-white rounded-full font-bold text-sm transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
-                            <i className="fa-solid fa-paper-plane" /> Submit Feedback
+                        <button 
+                            type="submit" 
+                            disabled={isSubmitting}
+                            className="w-full py-4 bg-gray-900 hover:bg-black text-white rounded-full font-bold text-sm transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                        >
+                            {isSubmitting ? (
+                                <><i className="fa-solid fa-spinner fa-spin" /> Submitting...</>
+                            ) : (
+                                <><i className="fa-solid fa-paper-plane" /> Submit Feedback</>
+                            )}
                         </button>
                     </form>
                 </div>

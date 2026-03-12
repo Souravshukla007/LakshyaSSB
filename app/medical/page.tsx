@@ -402,10 +402,22 @@ function Step2Vision({
                             </div>
 
                             {isExpanded && (
-                                <div className="px-5 pb-5 space-y-3 border-t border-orange-100">
+                                <div className="px-5 pb-5 space-y-3 border-t border-orange-100 relative">
                                     <InfoBlock icon="📋" label="Army Medical Standard" text={c.standard} color="blue" />
                                     <InfoBlock icon="⚠️" label="Common Rejection Reason" text={c.rejection} color="red" />
                                     <InfoBlock icon="✅" label="Improvement Advice" text={c.advice} color="green" />
+                                    
+                                    {c.id === 'colorBlind' && (
+                                        <div className="mt-4 p-4 bg-orange-50 rounded-xl border border-orange-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                            <div>
+                                                <p className="text-sm font-bold text-orange-900">Color Vision Simulator</p>
+                                                <p className="text-xs text-orange-700 font-medium mt-0.5">Check your perception using Ishihara-style plates.</p>
+                                            </div>
+                                            <a href="/medical/color-vision-test" className="px-5 py-2.5 bg-brand-dark hover:bg-black text-white text-xs font-bold rounded-full transition-colors whitespace-nowrap shadow-sm">
+                                                Take Test →
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>

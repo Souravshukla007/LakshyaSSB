@@ -56,6 +56,8 @@ export default function DashboardClient({ user }: DashboardClientProps) {
     const [medicalData, setMedicalData] = useState<MedicalLatest | null>(null);
     const [medicalLoading, setMedicalLoading] = useState(true);
 
+    const [colorVisionStatus, setColorVisionStatus] = useState<string | null>(null);
+
     // Fetch PIQ status on mount
     useEffect(() => {
         fetch('/api/piq/latest')
@@ -69,6 +71,12 @@ export default function DashboardClient({ user }: DashboardClientProps) {
             .then((data: MedicalLatest) => setMedicalData(data))
             .catch(() => setMedicalData({ status: 'NO_MEDICAL' }))
             .finally(() => setMedicalLoading(false));
+
+        // Get local color vision test status
+        if (typeof window !== 'undefined') {
+            const cvStatus = localStorage.getItem('lakshya_color_vision_status');
+            if (cvStatus) setColorVisionStatus(cvStatus);
+        }
     }, []);
 
     useEffect(() => {
@@ -704,6 +712,23 @@ export default function DashboardClient({ user }: DashboardClientProps) {
                                                 <span className="px-2 py-1 bg-green-50 text-brand-green text-[10px] font-bold rounded">READY</span>
                                             ) : (
                                                 <span className="px-2 py-1 bg-red-50 text-red-700 text-[10px] font-bold rounded">NEEDS CONSULT</span>
+                                            )}
+                                        </div>
+                                        
+                                        {/* Color Vision Special Row */}
+                                        <div className="flex items-center justify-between p-4 bg-brand-bg rounded-2xl border-l-4 border-l-orange-500">
+                                            <div className="flex items-center gap-3">
+                                                <i className="fa-solid fa-palette text-brand-orange"></i>
+                                                <span className="text-sm font-medium">Color Vision Test</span>
+                                            </div>
+                                            {colorVisionStatus === 'NORMAL' ? (
+                                                <span className="px-2 py-1 bg-green-50 text-brand-green text-[10px] font-bold rounded">PASSED</span>
+                                            ) : colorVisionStatus === 'MILD' || colorVisionStatus === 'DEFICIENT' ? (
+                                                <span className="px-2 py-1 bg-red-50 text-red-700 text-[10px] font-bold rounded">POSSIBLE ISSUE</span>
+                                            ) : (
+                                                <Link href="/medical/color-vision-test" className="px-3 py-1 bg-brand-dark text-white hover:bg-black transition-colors shadow-sm text-[10px] font-bold rounded-full flex items-center gap-1.5">
+                                                    TAKE TEST <i className="fa-solid fa-arrow-right text-[8px]" />
+                                                </Link>
                                             )}
                                         </div>
                                     </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import QuestionNavigator from '@/components/practice/QuestionNavigator';
 
 
 
@@ -158,9 +159,11 @@ export default function OIRTestEngine() {
 
             <main>
                 <div className="min-h-screen bg-brand-bg pt-32 pb-20 px-6">
-                    <div className="max-w-4xl mx-auto">
-
-                        {/* Header Row */}
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
+                        
+                        {/* Left Column: Test Interface */}
+                        <div className="flex flex-col">
+                            {/* Header Row */}
                         <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
                             <div>
                                 <h1 className="font-hero font-bold text-3xl text-brand-dark mb-2">
@@ -264,8 +267,32 @@ export default function OIRTestEngine() {
                                 </button>
                             </div>
                         </div>
+                        </div>
 
+                        {/* Right Column: Navigator Panel */}
+                        <div className="hidden lg:block">
+                            <QuestionNavigator
+                                questions={questions}
+                                currentIndex={currentIndex}
+                                answers={answers}
+                                reviewStatus={reviewStatus}
+                                onNavigate={setCurrentIndex}
+                                onSubmit={submitTest}
+                            />
+                        </div>
                     </div>
+                </div>
+
+                {/* Mobile Navigator Overlay */}
+                <div className="lg:hidden">
+                    <QuestionNavigator
+                        questions={questions}
+                        currentIndex={currentIndex}
+                        answers={answers}
+                        reviewStatus={reviewStatus}
+                        onNavigate={setCurrentIndex}
+                        onSubmit={submitTest}
+                    />
                 </div>
             </main>
 

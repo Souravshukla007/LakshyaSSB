@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import QuestionNavigator from '@/components/practice/QuestionNavigator';
 
 type Question = {
     id: number;
@@ -15,7 +16,13 @@ type SrtTestInterfaceProps = {
 export default function SrtTestInterface({ questions, onSubmit }: SrtTestInterfaceProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState<Record<number, string>>({});
+    const [reviewStatus, setReviewStatus] = useState<Record<number, boolean>>({});
     const [timeLeft, setTimeLeft] = useState(30 * 60);
+
+    const handleMarkReview = () => {
+        if (!questions[currentIndex]) return;
+        setReviewStatus(prev => ({ ...prev, [questions[currentIndex].id]: !prev[questions[currentIndex].id] }));
+    };
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -58,9 +65,12 @@ export default function SrtTestInterface({ questions, onSubmit }: SrtTestInterfa
     if (!currentQuestion) return null;
 
     return (
-        <div className="w-full max-w-6xl mx-auto flex flex-col min-h-[70vh] animate-fadeIn">
-            {/* Top Bar */}
-            <div className="bg-white/90 backdrop-blur-md shadow-sm rounded-2xl mb-6 p-4 flex justify-between items-center border border-gray-100">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-8 min-h-[70vh] animate-fadeIn">
+            
+            {/* Left Column: Test Interface */}
+            <div className="flex flex-col">
+                {/* Top Bar */}
+                <div className="bg-white/90 backdrop-blur-md shadow-sm rounded-2xl mb-6 p-4 flex justify-between items-center border border-gray-100">
                 <div className="flex items-center gap-4">
                     <div className="bg-black text-white px-4 py-1.5 rounded-full text-sm font-medium">
                         Question {currentIndex + 1} of {questions.length}
@@ -124,39 +134,57 @@ export default function SrtTestInterface({ questions, onSubmit }: SrtTestInterfa
 
                     <div className="mt-8 flex items-center justify-between gap-4">
                         <button
-                            onClick={handlePrev}
-                            disabled={currentIndex === 0}
-                            className="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            onClick={handleMarkReview}
+                            className={`px-6 py-3 rounded-xl border font-medium transition-all ${reviewStatus[currentQuestion.id] ? 'border-yellow-200 bg-yellow-50 text-yellow-700' : 'border-gray-200 text-gray-600 hover:bg-gray-50'}`}
                         >
-                            Previous
+                            {reviewStatus[currentQuestion.id] ? 'Unmark Review' : 'Mark Review'}
                         </button>
-                        <button
-                            onClick={handleNext}
-                            disabled={currentIndex === questions.length - 1}
-                            className="flex-1 bg-[#F97316] hover:bg-[#E06512] text-white py-3 px-6 rounded-xl font-medium shadow-md shadow-orange-500/20 hover:shadow-orange-500/40 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            Next Situation
-                        </button>
+                        <div className="flex gap-4 flex-1 justify-end">
+                            <button
+                                onClick={handlePrev}
+                                disabled={currentIndex === 0}
+                                className="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            >
+                                Prev
+                            </button>
+                            <button
+                                onClick={handleNext}
+                                disabled={currentIndex === questions.length - 1}
+                                className="bg-[#F97316] hover:bg-[#E06512] text-white py-3 px-8 rounded-xl font-medium shadow-md transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Next
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Footer Submit */}
-            <div className="mt-8 flex justify-center md:justify-end">
-                <div className="relative group w-full md:w-auto">
-                    <button
-                        onClick={() => onSubmit(answers)}
-                        disabled={!canSubmit}
-                        className="bg-black hover:bg-gray-800 text-white py-4 px-10 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto"
-                    >
-                        Submit Test
-                    </button>
-                    {!canSubmit && (
-                        <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-48 bg-gray-900 text-white text-xs py-2 px-3 rounded-lg text-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                            Answer at least 40 questions to submit early.
-                        </div>
-                    )}
-                </div>
+            </div>
+
+            {/* Right Column: Navigator Panel */}
+            <div className="hidden lg:block relative z-10">
+                <QuestionNavigator
+                    questions={questions}
+                    currentIndex={currentIndex}
+                    answers={answers}
+                    reviewStatus={reviewStatus}
+                    onNavigate={setCurrentIndex}
+                    onSubmit={() => onSubmit(answers)}
+                    isSubmitDisabled={!canSubmit}
+                />
+            </div>
+
+            {/* Mobile Navigator Overlay */}
+            <div className="lg:hidden">
+                <QuestionNavigator
+                    questions={questions}
+                    currentIndex={currentIndex}
+                    answers={answers}
+                    reviewStatus={reviewStatus}
+                    onNavigate={setCurrentIndex}
+                    onSubmit={() => onSubmit(answers)}
+                    isSubmitDisabled={!canSubmit}
+                />
             </div>
         </div>
     );
