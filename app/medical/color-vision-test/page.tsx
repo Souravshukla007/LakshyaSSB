@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import colorVisionDataRaw from '@/data/medical/colorVision.json';
 
 interface PlateData {
     id: number;
@@ -11,7 +10,6 @@ interface PlateData {
     answer: string;
 }
 
-const colorVisionData: PlateData[] = colorVisionDataRaw;
 
 export default function ColorVisionTestPage() {
     const router = useRouter();
@@ -22,6 +20,7 @@ export default function ColorVisionTestPage() {
     const inputRef = useRef<HTMLInputElement>(null);
     const [score, setScore] = useState(0);
     const [isSaving, setIsSaving] = useState(false);
+    const [colorVisionData, setColorVisionData] = useState<PlateData[]>([]);
 
     useEffect(() => {
         if (currentStep === 'test' && inputRef.current) {
@@ -33,7 +32,13 @@ export default function ColorVisionTestPage() {
         setInputValue(answers[colorVisionData[plateIndex].id] || '');
     }, [plateIndex, answers, currentStep]);
 
-    const handleStart = () => {
+    const handleStart = async () => {
+        // Fetch plates from server-side API (TAT pattern)
+        const res = await fetch('/api/medical/color-vision');
+        const data = await res.json();
+        const plates: PlateData[] = data.plates ?? [];
+        setColorVisionData(plates);
+
         setPlateIndex(0);
         setAnswers({});
         setInputValue('');

@@ -181,12 +181,12 @@ export default function GPEPracticePage() {
                         <div className="grid lg:grid-cols-2 gap-6">
                             {/* Left: Scenario Card */}
                             <div className="space-y-5">
-                                {/* Image Holder Placeholder */}
-                                <div className="bg-gray-100 rounded-3xl border border-gray-200 shadow-sm overflow-hidden aspect-video flex items-center justify-center relative">
+                                {/* Image Holder */}
+                                <div className="bg-gray-50 rounded-3xl border border-gray-200 shadow-sm overflow-hidden flex items-center justify-center relative">
                                     {scenario.image ? (
-                                        <img src={scenario.image} alt={scenario.title} className="w-full h-full object-cover" />
+                                        <img src={scenario.image} alt={scenario.title} className="w-full h-auto object-contain rounded-3xl" />
                                     ) : (
-                                        <div className="flex flex-col items-center justify-center text-gray-400">
+                                        <div className="flex flex-col items-center justify-center text-gray-400 py-16">
                                             <i className="fa-solid fa-map text-4xl mb-3" />
                                             <span className="text-xs font-bold uppercase tracking-widest text-center px-4">Situation Map Placeholder<br/>(Image not assigned)</span>
                                         </div>
