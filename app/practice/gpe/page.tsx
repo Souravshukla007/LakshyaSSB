@@ -10,9 +10,8 @@ type ViewState = 'intro' | 'test' | 'result';
 interface GPEScenario {
     id: number;
     title: string;
+    image?: string;
     situation: string;
-    problems: string[];
-    resources: string[];
     difficulty: string;
 }
 
@@ -182,6 +181,18 @@ export default function GPEPracticePage() {
                         <div className="grid lg:grid-cols-2 gap-6">
                             {/* Left: Scenario Card */}
                             <div className="space-y-5">
+                                {/* Image Holder Placeholder */}
+                                <div className="bg-gray-100 rounded-3xl border border-gray-200 shadow-sm overflow-hidden aspect-video flex items-center justify-center relative">
+                                    {scenario.image ? (
+                                        <img src={scenario.image} alt={scenario.title} className="w-full h-full object-cover" />
+                                    ) : (
+                                        <div className="flex flex-col items-center justify-center text-gray-400">
+                                            <i className="fa-solid fa-map text-4xl mb-3" />
+                                            <span className="text-xs font-bold uppercase tracking-widest text-center px-4">Situation Map Placeholder<br/>(Image not assigned)</span>
+                                        </div>
+                                    )}
+                                </div>
+
                                 {/* Situation */}
                                 <div className="bg-white/90 rounded-3xl p-6 border border-gray-100 shadow-sm">
                                     <div className="flex items-center justify-between mb-4">
@@ -193,33 +204,31 @@ export default function GPEPracticePage() {
                                     <p className="text-sm text-gray-600 leading-relaxed font-medium">{scenario.situation}</p>
                                 </div>
 
-                                {/* Problems */}
-                                <div className="bg-red-50/60 rounded-3xl p-6 border border-red-100">
-                                    <h3 className="text-sm font-bold text-red-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-                                        <i className="fa-solid fa-triangle-exclamation text-red-500" /> Problems Identified
+                                {/* How to solve */}
+                                <div className="bg-orange-50 rounded-3xl p-6 border border-orange-100">
+                                    <h3 className="text-sm font-bold text-orange-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <i className="fa-solid fa-lightbulb text-orange-500" /> How to solve
                                     </h3>
-                                    <ul className="space-y-3">
-                                        {scenario.problems.map((p, i) => (
-                                            <li key={i} className="flex gap-3 text-sm text-red-800">
-                                                <span className="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0 text-xs font-bold mt-0.5">{i + 1}</span>
-                                                {p}
-                                            </li>
-                                        ))}
+                                    <ul className="space-y-2 text-sm text-gray-700 font-medium">
+                                        <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Aim</li>
+                                        <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Identify problems (set priorities)</li>
+                                        <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Resources (visible, hidden)</li>
+                                        <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Time and space</li>
+                                        <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Solution</li>
                                     </ul>
                                 </div>
 
-                                {/* Resources */}
-                                <div className="bg-green-50/60 rounded-3xl p-6 border border-green-100">
-                                    <h3 className="text-sm font-bold text-green-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-                                        <i className="fa-solid fa-box-open text-green-600" /> Available Resources
+                                {/* Speed of Advance */}
+                                <div className="bg-blue-50/60 rounded-3xl p-6 border border-blue-100">
+                                    <h3 className="text-sm font-bold text-blue-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <i className="fa-solid fa-gauge-high text-blue-500" /> Speed of Advance
                                     </h3>
-                                    <ul className="space-y-2">
-                                        {scenario.resources.map((r, i) => (
-                                            <li key={i} className="flex gap-3 text-sm text-green-800">
-                                                <span className="text-green-500 mt-0.5">•</span>
-                                                {r}
-                                            </li>
-                                        ))}
+                                    <ul className="space-y-2 text-sm text-gray-700 font-medium font-mono text-[11px] leading-tight flex flex-col gap-1">
+                                        <li className="flex gap-2 items-center"><i className="fa-solid fa-car text-blue-400 w-4"/> MOTOR VEHICLE ON METAL ROAD - <span className="font-bold text-blue-900">40Kmph</span></li>
+                                        <li className="flex gap-2 items-center"><i className="fa-solid fa-ship text-blue-400 w-4"/> MOTOR BOAT - <span className="font-bold text-blue-900">12Kmph</span></li>
+                                        <li className="flex gap-2 items-center"><i className="fa-solid fa-person-walking text-blue-400 w-4"/> WALKING/RUNNING - <span className="font-bold text-blue-900">6-8Kmph</span></li>
+                                        <li className="flex gap-2 items-center"><i className="fa-solid fa-bicycle text-blue-400 w-4"/> CYCLE - <span className="font-bold text-blue-900">15Kmph</span></li>
+                                        <li className="flex gap-2 items-center"><i className="fa-solid fa-tractor text-blue-400 w-4"/> TRACTOR - <span className="font-bold text-blue-900">30Kmph</span></li>
                                     </ul>
                                 </div>
                             </div>

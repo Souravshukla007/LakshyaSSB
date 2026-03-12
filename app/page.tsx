@@ -617,33 +617,97 @@ export default function Home() {
                 </section>
 
                 {/* JOIN NOW BANNER */}
-                <section className="py-24 px-6 mb-12">
-                    <div className="max-w-6xl mx-auto">
-                        <div className="relative rounded-[3rem] bg-brand-dark overflow-hidden p-12 lg:p-20 text-center">
-                            {/* Decor */}
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/20 blur-[100px] rounded-full"></div>
-                            <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-purple/10 blur-[100px] rounded-full"></div>
-
-                            <div className="relative z-10">
-                                <h2 className="font-hero font-bold text-4xl lg:text-6xl text-white mb-6">Earn Your <span className="text-brand-orange">Stars</span>.</h2>
-                                <p className="text-gray-400 max-w-2xl mx-auto mb-12 font-noname">The uniform isn&apos;t just fabric; it&apos;s a responsibility. Start your elite preparation now and join the lineage of defenders of the nation.</p>
-
-                                <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                                    <Link href={isLoggedIn ? '/dashboard' : '/auth'} className="bg-brand-orange hover:bg-white hover:text-brand-dark text-white font-bold h-16 px-10 rounded-full transition-all duration-300 shadow-xl shadow-brand-orange/20 flex items-center justify-center">
-                                        Join Next Batch
-                                    </Link>
-                                    <a href="#" className="bg-transparent border border-white/20 hover:bg-white/5 text-white font-bold h-16 px-10 rounded-full transition-all flex items-center justify-center">
-                                        Talk to a Mentor
-                                    </a>
-                                </div>
-
-                                <p className="mt-8 text-xs text-gray-500 uppercase tracking-widest font-bold">Admission ends in 4D : 12H : 30M</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <HeroBanner />
             </main>
 
         </>
     );
 }
+
+// Reusable Components for Hero Conversion Section
+const HeroCardContainer = ({ children }: { children: React.ReactNode }) => (
+    <div className="max-w-6xl mx-auto">
+        <div className="relative rounded-[3rem] bg-gradient-to-br from-[#0a1128] via-[#2d0a16] to-black overflow-hidden p-12 lg:p-20 text-center border border-white/5 shadow-2xl">
+            {/* Decor */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange/20 blur-[120px] rounded-full opacity-60"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-purple/10 blur-[100px] rounded-full opacity-60"></div>
+            {/* Radial light effect behind headline area */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80% max-w-3xl] h-[400px] bg-brand-orange/5 blur-[100px] rounded-[100%] pointer-events-none"></div>
+
+            <div className="relative z-10 transition-transform hover:scale-[1.005] duration-700 ease-out">
+                {children}
+            </div>
+        </div>
+    </div>
+);
+
+const HeroBanner = () => {
+    return (
+        <section className="py-24 px-6 mb-12 relative overflow-hidden">
+            <HeroCardContainer>
+                {/* Headline */}
+                <h2 className="font-hero font-bold text-4xl lg:text-6xl text-white mb-6 tracking-tight reveal active animate-fade-in transition-all duration-700">
+                    Earn Your <span className="text-brand-orange drop-shadow-[0_0_15px_rgba(255,94,58,0.3)]">Stars</span>.
+                </h2>
+                
+                <p className="text-gray-400 font-noname text-lg max-w-2xl mx-auto mb-10 leading-relaxed reveal delay-100 active animate-fade-in transition-all duration-700">
+                    Train like a future officer. Practice OIR, WAT, SRT and TAT in real SSB simulation tests and track your preparation.
+                </p>
+
+                <div className="reveal delay-200 active animate-fade-in transition-all duration-700">
+                    <HeroButtons />
+                </div>
+
+                <div className="mt-14 reveal delay-300 active animate-fade-in transition-all duration-700">
+                    <TrustMetricsRow />
+                </div>
+
+                <div className="mt-8 reveal delay-400 active animate-fade-in transition-all duration-700">
+                    <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold font-mono">
+                        Start preparing early to maximize your chances of selection.
+                    </p>
+                </div>
+            </HeroCardContainer>
+        </section>
+    );
+};
+
+const HeroButtons = () => (
+    <div className="flex flex-col sm:flex-row gap-5 justify-center">
+        <Link 
+            href="/practice" 
+            className="group relative bg-gradient-to-r from-brand-orange to-[#ff7a59] hover:from-[#ff6b4a] hover:to-[#ff8c70] text-white font-bold h-16 w-full sm:w-auto px-10 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(255,94,58,0.2)] hover:shadow-[0_0_30px_rgba(255,94,58,0.4)] hover:-translate-y-1 flex items-center justify-center gap-3"
+        >
+            Start Free Practice
+        </Link>
+        <Link 
+            href="/ssb-entry-navigator" 
+            className="bg-transparent border border-white/20 hover:bg-white/5 hover:border-white/40 hover:-translate-y-1 text-white font-bold h-16 w-full sm:w-auto px-10 rounded-full transition-all duration-300 flex items-center justify-center gap-3"
+        >
+            Explore SSB Navigator
+        </Link>
+    </div>
+);
+
+const TrustMetricsRow = () => (
+    <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-4">
+        <div className="bg-white/5 rounded-xl px-5 py-3 border border-white/10 flex items-center gap-3 whitespace-nowrap">
+            <span className="w-8 h-8 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center text-xs">
+                <i className="fa-solid fa-layer-group"></i>
+            </span>
+            <span className="text-sm font-bold text-gray-300 font-noname">1200+ Practice Questions</span>
+        </div>
+        <div className="bg-white/5 rounded-xl px-5 py-3 border border-white/10 flex items-center gap-3 whitespace-nowrap">
+            <span className="w-8 h-8 rounded-full bg-[#a78bfa]/20 text-[#a78bfa] flex items-center justify-center text-xs">
+                <i className="fa-solid fa-file-contract"></i>
+            </span>
+            <span className="text-sm font-bold text-gray-300 font-noname">10+ OIR Mock Sets</span>
+        </div>
+        <div className="bg-white/5 rounded-xl px-5 py-3 border border-white/10 flex items-center gap-3 whitespace-nowrap">
+            <span className="w-8 h-8 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center text-xs">
+                <i className="fa-solid fa-stopwatch"></i>
+            </span>
+            <span className="text-sm font-bold text-gray-300 font-noname">Real SSB Simulation</span>
+        </div>
+    </div>
+);

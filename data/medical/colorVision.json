@@ -1,12 +1,52 @@
 [
-    { "id": 1, "image": "/images/color-vision/cb01.jpg", "answer": "12" },
-    { "id": 2, "image": "/images/color-vision/cb04.jpg", "answer": "29" },
-    { "id": 3, "image": "/images/color-vision/cb07.jpg", "answer": "74" },
-    { "id": 4, "image": "/images/color-vision/cb12.jpg", "answer": "97" },
-    { "id": 5, "image": "/images/color-vision/cb15.jpg", "answer": "45" },
-    { "id": 6, "image": "/images/color-vision/cb18.jpg", "answer": "5" },
-    { "id": 7, "image": "/images/color-vision/cb21.jpg", "answer": "73" },
-    { "id": 8, "image": "/images/color-vision/cb24.jpg", "answer": "" },
-    { "id": 9, "image": "/images/color-vision/cb27.jpg", "answer": "26" },
-    { "id": 10, "image": "/images/color-vision/cb30.jpg", "answer": "42" }
+    {
+        "id": 1,
+        "image": "/data/practice/colorBlindness/cb01.jpg",
+        "answer": "12"
+    },
+    {
+        "id": 2,
+        "image": "/data/practice/colorBlindness/cb04.jpg",
+        "answer": "29"
+    },
+    {
+        "id": 3,
+        "image": "/data/practice/colorBlindness/cb07.jpg",
+        "answer": "74"
+    },
+    {
+        "id": 4,
+        "image": "/data/practice/colorBlindness/cb12.jpg",
+        "answer": "97"
+    },
+    {
+        "id": 5,
+        "image": "/data/practice/colorBlindness/cb15.jpg",
+        "answer": "45"
+    },
+    {
+        "id": 6,
+        "image": "/data/practice/colorBlindness/cb18.jpg",
+        "answer": "5"
+    },
+    {
+        "id": 7,
+        "image": "/data/practice/colorBlindness/cb21.jpg",
+        "answer": "73"
+    },
+    {
+        "id": 8,
+        "image": "/data/practice/colorBlindness/cb24.jpg",
+        "answer": ""
+    },
+    {
+        "id": 9,
+        "image": "/data/practice/colorBlindness/cb27.jpg",
+        "answer": "26"
+    },
+    {
+        "id": 10,
+        "image": "/data/practice/colorBlindness/cb30.jpg",
+        "answer": "42"
+    }
 ]

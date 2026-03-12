@@ -1,112 +1,37 @@
 [
   {
     "id": 1,
-    "title": "Flood Relief Operation",
-    "situation": "A flash flood has struck a remote village of approximately 800 residents. Roads are washed out and the village is cut off. You are leading a team of 8 with a 45-minute window before sunset. The administrative HQ is 30 km away.",
-    "problems": [
-      "Around 30 people are trapped on rooftops, including 5 elderly and 2 children.",
-      "The local school building is structurally unsafe and may collapse.",
-      "Food and drinking water stocks are depleted. Village has no potable water.",
-      "A pregnant woman requires urgent evacuation for medical care.",
-      "Communication lines are down. The only working phone belongs to the village sarpanch."
-    ],
-    "resources": [
-      "1 motorized rubber boat (capacity: 6 persons)",
-      "2 hand-operated wooden boats (capacity: 4 persons each)",
-      "Medical first aid kit (basic supplies)",
-      "50 meters of rope",
-      "1 vehicle in working condition at the village outskirts",
-      "8 team members (including yourself)",
-      "Sarpanch's mobile phone with limited battery"
-    ],
+    "title": "Temple Theft and Arms Smuggling",
+    "image": "/data/practice/gpe/gpe01.jpg",
+    "situation": "Narrative\nYou are a group of students who are coming from Rampur and going to Dhanpur in a van to represent your college in the\ninter college fest which begins at 7:30 PM. You stopped at the tea shop at Solapur JN when you notice an injured man\nlying in the tea shop bleeding profusely. On enquiring, he informed that he runs the tea shop and overheard a group of\nthree smugglers planning to loot antique idols from Ram temple at 6:30 PM. The smugglers then plan to make good\ntheir escape towards the forest reserve. They attacked him when he threatened that he will inform the police and left him for\ndead. He further added that the smugglers after destroying his STD booth went away in his jeep for looting. He gives\nyou the number of his jeep and requests you to find his jeep. On saying this he faints. While you were contemplating a\nman comes running towards the tea shop from Solapur. He tells you he had overheard a few people along the road\ndiscussing the landing of arms by boat at Solapur at 6:30 PM. As the mobile network and telephone lines were not working\nin Solapur he was coming to the tea shop to inform the police from the STD booth. Time now is 4:30 PM. What will you\ndo?",
     "difficulty": "Hard"
   },
   {
     "id": 2,
-    "title": "Train Accident at a Railway Crossing",
-    "situation": "A passenger train has derailed near a railway crossing 5 km from a city. You arrive on scene with your team within 10 minutes of the incident. Approximately 200 passengers were on board. It is 6 PM and getting dark in about 40 minutes.",
-    "problems": [
-      "3 coaches have overturned. Around 50 passengers are trapped inside.",
-      "A fuel leak is visible near the engine — fire risk is high.",
-      "A local bus carrying 30 passengers has stalled on the railway tracks ahead.",
-      "Injured passengers are scattered over a 300-meter radius.",
-      "Only one road leads to the site and it is blocked by spectators."
-    ],
-    "resources": [
-      "8 team members (including yourself)",
-      "2 mobile fire extinguishers",
-      "First aid kit",
-      "1 megaphone",
-      "2 cars and 1 minivan (your group's transport)",
-      "A nearby petrol station with a tow chain",
-      "Local police (ETA: 20 minutes)"
-    ],
+    "title": "Train Sabotage at Shanti Village",
+    "image": "/data/practice/gpe/gpe02.jpg",
+    "situation": "You are a group of 10 students returning to your hostel at Dholpur after a picnic at Rampur. Your vehicle developed a problem and you left it at a garage near a petrol pump, and your group decided to enjoy the ferry as your jeep will be repaired by 6 pm.\n\nYou stopped at a tea stall and while having tea, one of your friends found a rifle and accidentally fired a bullet which injured him in his shoulder.\n\nWhile you were thinking about what to do, a boy came to seek your help as his father fell down near the wheat fields from his cart and broke his leg.\n\nAs he finished, a man came on a cycle and informed you that miscreants hidden in Shanti village are planning to remove fish plates of the railway track and blast a train going from Dholpur to Rampur which leaves at 4:45 pm, and they plan to blow it at 5:30 pm over the bridge.\n\nThe villagers are afraid of the goons, so they are not informing the police.\n\nJust as he finished, a woman came asking for help as her cow was stranded in marshy land, and it is the only source of her livelihood.\n\nIt is 4:00 pm now, and you need to reach the hostel before 7 pm. You are also told that a bus leaves from Shampur to Dholpur at 5 pm. Boats are also available at the ferry. No telephone or mobile is working.\n\nWhat will you do in such a situation?",
     "difficulty": "Hard"
   },
   {
     "id": 3,
-    "title": "Highway Building Site Accident",
-    "situation": "A construction site for a national highway has experienced a partial structure collapse. Workers are trapped. The site is 15 km from the nearest hospital. You are in charge of the rescue with your 10-member team. Time available before next shift handover: 1 hour.",
-    "problems": [
-      "6 workers are trapped under debris; at least 2 are critically injured.",
-      "A crane on site has an oil leak and might catch fire.",
-      "One worker is hanging on a partially collapsed scaffolding 8 meters high.",
-      "There is only one working stretcher on site.",
-      "The site manager has gone into a panic and is obstructing rescue."
-    ],
-    "resources": [
-      "10 team members (including yourself)",
-      "Excavator (operator available)",
-      "2 construction cranes (one with oil leak, one functional)",
-      "Basic first aid, no oxygen cylinders",
-      "5 ladders of varying heights",
-      "Heavy ropes and pulleys",
-      "Ambulance (ETA: 25 minutes)"
-    ],
+    "title": "Rafting Expedition and Headworks Sabotage",
+    "image": "/data/practice/gpe/gpe03.jpg",
+    "situation": "You (as many as in the group) have been selected from various units for taking part in a river rafting expedition and attached to a unit in Shakarpur. This morning prior to the expedition, you had set up a temporary camp for carrying out practice on Rajpur–Shakarpur canal.\n\nThis afternoon while some of you had already proceeded to the canal, a few of you were checking the equipment, when a person from TCP at Lanka village came running to the camp and said:\n\nSir, about 10 minutes ago, a bus approached the post master of Lanka village who had received information that some antisocial elements were planning to blow up the water head works at Rajpur at 1600 hrs.\n\nHe also said that the co-driver of a 3-ton vehicle noticed the height being slightly more than the tunnel, and this was a new 3-ton vehicle collected from Rajpur railway siding.\n\nThe person from TCP added that all telephone lines including civil lines are down.\n\nMeanwhile one of you suddenly exclaimed that he had forgotten his life jacket at the unit location.\n\nWhile you were planning the next course of action, one of the members of the group who had initially proceeded to the canal came running and informed that one of the boats had capsized, and one of the occupants had swallowed a lot of water and required immediate evacuation.\n\nADDITIONAL INFORMATION:\n\nThe 1-ton vehicle attached to you had gone to Shakarpur and is likely to return by 1430 hrs.\nThe officer in charge of the rafting team has gone to the Engineer Regiment at Mirpur and will be back by 1700 hrs only.\n\nDue to increased terrorist activities, you have been provided with arms and ammunition.\n\nThere is no police station nearby.\nTime now is 1400 hrs.\n\nWhat will you do in such a situation?",
     "difficulty": "Medium"
   },
   {
     "id": 4,
-    "title": "Forest Fire Near a Tribal Village",
-    "situation": "A rapidly spreading forest fire is heading toward a remote tribal village of 400 residents. Wind speeds are high. You have approximately 90 minutes before the fire reaches the village perimeter. Your team of 7 must coordinate evacuation and containment.",
-    "problems": [
-      "Around 60 elderly and children cannot walk fast — need transport.",
-      "The only motorable path is 4 km and partly blocked by fallen trees.",
-      "A small stream 500m from the village could serve as a firebreak.",
-      "Tribal residents are reluctant to leave their homes due to cultural beliefs.",
-      "Valuable livestock belonging to 20 families are loose and panicking."
-    ],
-    "resources": [
-      "7 team members (including yourself)",
-      "1 tractor with a trailer (capacity: 20 persons)",
-      "2 chainsaws (partly fueled)",
-      "Water tanker (capacity: 3000 litres)",
-      "Fire beaters and shovels",
-      "Village elder (respected figure who can help communicate)",
-      "Helicopter (can fly one sortie, capacity: 8)"
-    ],
+    "title": "Crisis at Kali Lake and Kasori Forest",
+    "image": "/data/practice/gpe/gpe04.jpg",
+    "situation": "You are a group of students (as many as you are) from Govt Engineering college, Dilnagar. Your group had gone for a picnic to Kali Lake by the college van. While you were planning to return to your college for Inter College Musical Nite scheduled at 7.30 PM, one forest guard approached\nyour group for help. You observed that he was bleeding and limping badly.\nOn enquiry, he informed that he was beaten by a group of dacoits, who\nwere planning to steal the precious idol from Seba temple around 4 PM\nand hand it over to smugglers hiding in Kasori Forest Reserve. The guard\nalso informed that another group had decided to loot the passanger train\nbetween DilNagar and Sadak Pur near the Kasori Forest reserve Rail\nBridge on dhir Nadi. The Sadakpur – DilNagar passanger crosses the Dhir\nBrige at about 4.30 PM. As you were contemplating you observed that a\nyoung couple who had also come for picnic was shouting for assistance.\nYou turned and saw that the boat in which the young couple were sitting\nwas drowning and they were desperately screaming for help. You were still\nin shock and trying to keep tour cool, when a fisherman came running for\nhelp as his boat had broken her moorings and was drifting in the Kali Lake.\nThe time now is 3 PM. You as group of dynamic young students , how will\nyou handle the situation?",
     "difficulty": "Medium"
   },
   {
     "id": 5,
-    "title": "Riot at a Pilgrimage Site",
-    "situation": "A religious pilgrimage site has seen clashes between two groups over access to a sacred shrine. The crowd has swelled to approximately 2,000 people. You are in charge of a team of 12. Situation is volatile — any mishandling could escalate. The main shrine must remain accessible to all.",
-    "problems": [
-      "A group of 200 people is blocking the main gate, refusing to move.",
-      "3 people have been injured in stone pelting; one critically.",
-      "A local politician is inciting the crowd via a loudspeaker.",
-      "Media crews have arrived and are broadcasting live.",
-      "A small fire has been started in one of the outer stalls."
-    ],
-    "resources": [
-      "12 team members (including yourself)",
-      "2 police jeeps",
-      "Megaphone",
-      "Barricades (10 portable units)",
-      "Fire extinguisher (1)",
-      "Vehicle with ambulance markings (no medical equipment)",
-      "Shrine priest (highly respected by both groups)"
-    ],
+    "title": "Drug Deal and Train Sabotage at the Rock",
+    "image": "/data/practice/gpe/gpe05.jpg",
+    "situation": "Narrative\nYou are a group of students(as many as the group) of\nShyamgarh College returning after winning Dinpur District Volley\nBall championship. Victory celebration in your college are to\nstart at 7.30 PM.As your Minibus stopped at Petrol pump cum\ngarage to get the headlights of the Minibus repaired ,you saw\nattendant lying in a pool of blood. He told you that some anti\nsocial elements had beaten him up and left him dead before\nlooting all cash and cutting telephones wires. He managed to\nover hear their conversation. They planned to exchange large\nconsignment of drugs in return for Arms from a foreigner near\nthe Rock at 6.65 PM. They had also removed fish plate of both\nrailway tracks near the Rock.You know that Express train\ncrosses at 6.30PM.Also two of their men wer hiding near Ferry\nto kill Tota Ram of Badli Village who was a Police informer .The\nFerry has a Motor boat with a speed of 20 Km per hour which\nthe two men have planned to use for their escape. After telling\nthis hew fell unconscious. Just then one of your friend came\nrunning to tell you that he has to take the Mini Bus to office",
     "difficulty": "Hard"
   }
 ]
