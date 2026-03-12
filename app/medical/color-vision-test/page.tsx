@@ -29,8 +29,9 @@ export default function ColorVisionTestPage() {
     }, [currentStep, plateIndex]);
 
     useEffect(() => {
+        if (!colorVisionData.length || !colorVisionData[plateIndex]) return;
         setInputValue(answers[colorVisionData[plateIndex].id] || '');
-    }, [plateIndex, answers, currentStep]);
+    }, [plateIndex, answers, currentStep, colorVisionData]);
 
     const handleStart = async () => {
         // Fetch plates from server-side API (TAT pattern)
