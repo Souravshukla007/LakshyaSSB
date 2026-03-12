@@ -122,13 +122,16 @@ export default function Day5() {
                                                 <span className="text-[10px] uppercase font-bold tracking-tight">SSB State</span>
                                                 <span className="text-xl font-hero font-bold">Day 5</span>
                                             </div>
-                                            <div className="absolute top-[10%] left-1/2 -translate-x-1/2 px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                            <div className="absolute top-[15%] left-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-door-open text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">Conference Entry</span>
                                             </div>
-                                            <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                            <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-trophy text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">The Result Announcement</span>
                                             </div>
-                                            <div className="absolute left-[10%] top-1/2 -translate-y-1/2 px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                            <div className="absolute top-[15%] right-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-clipboard-question text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">Questions & Feedback</span>
                                             </div>
                                         </div>

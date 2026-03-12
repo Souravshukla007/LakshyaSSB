@@ -123,16 +123,36 @@ export default function Day3() {
                                                 <span className="text-[10px] uppercase font-bold tracking-tight">SSB Stage</span>
                                                 <span className="text-xl font-hero font-bold">Day 3</span>
                                             </div>
-                                            <div className="absolute top-[15%] left-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
-                                                <span className="text-xs font-bold text-brand-dark">GD</span>
+                                            <div className="absolute top-[5%] left-[20%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-users text-brand-orange"></i>
+                                                <span className="text-xs font-bold text-brand-dark">Group Discussion I (International topic)</span>
                                             </div>
-                                            <div className="absolute top-[15%] right-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
-                                                <span className="text-xs font-bold text-brand-dark">GPE</span>
+                                            <div className="absolute top-[30%] left-[5%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-users-viewfinder text-brand-orange"></i>
+                                                <span className="text-xs font-bold text-brand-dark">Group Discussion II (Social topic)</span>
                                             </div>
-                                            <div className="absolute bottom-[15%] left-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
-                                                <span className="text-xs font-bold text-brand-dark">PGT</span>
+                                            <div className="absolute top-[5%] right-[20%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-map text-brand-orange"></i>
+                                                <span className="text-xs font-bold text-brand-dark">Group Planning Exercise</span>
                                             </div>
-                                            <div className="absolute bottom-[15%] right-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                            <div className="absolute top-[30%] right-[5%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-person-running text-brand-orange"></i>
+                                                <span className="text-xs font-bold text-brand-dark">Progressive Group Task</span>
+                                            </div>
+                                            <div className="absolute bottom-[30%] left-[5%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-user-group text-brand-orange"></i>
+                                                <span className="text-xs font-bold text-brand-dark">Half Group Task</span>
+                                            </div>
+                                            <div className="absolute bottom-[5%] left-[20%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-flag-checkered text-brand-orange"></i>
+                                                <span className="text-xs font-bold text-brand-dark">Group Obstacle Race / Snake Race</span>
+                                            </div>
+                                            <div className="absolute bottom-[30%] right-[5%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-bullhorn text-brand-orange"></i>
+                                                <span className="text-xs font-bold text-brand-dark">Lecturette</span>
+                                            </div>
+                                            <div className="absolute bottom-[5%] right-[20%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-user-tie text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">Personal Interview</span>
                                             </div>
                                         </div>

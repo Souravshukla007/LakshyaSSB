@@ -1,50 +1,12 @@
 [
-    {
-        "id": 1,
-        "image": "/color-test/plate1.svg",
-        "options": ["12", "8", "3", "Nothing visible"],
-        "answer": "12"
-    },
-    {
-        "id": 2,
-        "image": "/color-test/plate2.svg",
-        "options": ["8", "3", "7", "Nothing visible"],
-        "answer": "8"
-    },
-    {
-        "id": 3,
-        "image": "/color-test/plate3.svg",
-        "options": ["29", "70", "71", "Nothing visible"],
-        "answer": "29"
-    },
-    {
-        "id": 4,
-        "image": "/color-test/plate4.svg",
-        "options": ["5", "2", "Nothing visible", "15"],
-        "answer": "5"
-    },
-    {
-        "id": 5,
-        "image": "/color-test/plate5.svg",
-        "options": ["3", "5", "8", "Nothing visible"],
-        "answer": "3"
-    },
-    {
-        "id": 6,
-        "image": "/color-test/plate6.svg",
-        "options": ["15", "17", "13", "Nothing visible"],
-        "answer": "15"
-    },
-    {
-        "id": 7,
-        "image": "/color-test/plate7.svg",
-        "options": ["74", "21", "Nothing visible", "42"],
-        "answer": "74"
-    },
-    {
-        "id": 8,
-        "image": "/color-test/plate8.svg",
-        "options": ["6", "8", "9", "Nothing visible"],
-        "answer": "6"
-    }
+    { "id": 1, "image": "/images/color-vision/cb01.jpg", "answer": "12" },
+    { "id": 2, "image": "/images/color-vision/cb04.jpg", "answer": "29" },
+    { "id": 3, "image": "/images/color-vision/cb07.jpg", "answer": "74" },
+    { "id": 4, "image": "/images/color-vision/cb12.jpg", "answer": "97" },
+    { "id": 5, "image": "/images/color-vision/cb15.jpg", "answer": "45" },
+    { "id": 6, "image": "/images/color-vision/cb18.jpg", "answer": "5" },
+    { "id": 7, "image": "/images/color-vision/cb21.jpg", "answer": "73" },
+    { "id": 8, "image": "/images/color-vision/cb24.jpg", "answer": "" },
+    { "id": 9, "image": "/images/color-vision/cb27.jpg", "answer": "26" },
+    { "id": 10, "image": "/images/color-vision/cb30.jpg", "answer": "42" }
 ]

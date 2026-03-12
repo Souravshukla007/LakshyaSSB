@@ -1,94 +1,60 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import colorVisionDataRaw from '@/data/medical/colorVision.json';
 
 interface PlateData {
     id: number;
     image: string;
-    options: string[];
     answer: string;
 }
 
-const colorVisionData: PlateData[] = [
-    {
-        "id": 1,
-        "image": "/color-test/plate1.svg",
-        "options": ["12", "8", "3", "Nothing visible"],
-        "answer": "12"
-    },
-    {
-        "id": 2,
-        "image": "/color-test/plate2.svg",
-        "options": ["8", "3", "7", "Nothing visible"],
-        "answer": "8"
-    },
-    {
-        "id": 3,
-        "image": "/color-test/plate3.svg",
-        "options": ["29", "70", "71", "Nothing visible"],
-        "answer": "29"
-    },
-    {
-        "id": 4,
-        "image": "/color-test/plate4.svg",
-        "options": ["5", "2", "Nothing visible", "15"],
-        "answer": "5"
-    },
-    {
-        "id": 5,
-        "image": "/color-test/plate5.svg",
-        "options": ["3", "5", "8", "Nothing visible"],
-        "answer": "3"
-    },
-    {
-        "id": 6,
-        "image": "/color-test/plate6.svg",
-        "options": ["15", "17", "13", "Nothing visible"],
-        "answer": "15"
-    },
-    {
-        "id": 7,
-        "image": "/color-test/plate7.svg",
-        "options": ["74", "21", "Nothing visible", "42"],
-        "answer": "74"
-    },
-    {
-        "id": 8,
-        "image": "/color-test/plate8.svg",
-        "options": ["6", "8", "9", "Nothing visible"],
-        "answer": "6"
-    }
-];
+const colorVisionData: PlateData[] = colorVisionDataRaw;
 
 export default function ColorVisionTestPage() {
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState<'intro' | 'test' | 'result'>('intro');
     const [plateIndex, setPlateIndex] = useState(0);
     const [answers, setAnswers] = useState<Record<number, string>>({});
+    const [inputValue, setInputValue] = useState('');
+    const inputRef = useRef<HTMLInputElement>(null);
     const [score, setScore] = useState(0);
     const [isSaving, setIsSaving] = useState(false);
+
+    useEffect(() => {
+        if (currentStep === 'test' && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [currentStep, plateIndex]);
+
+    useEffect(() => {
+        setInputValue(answers[colorVisionData[plateIndex].id] || '');
+    }, [plateIndex, answers, currentStep]);
 
     const handleStart = () => {
         setPlateIndex(0);
         setAnswers({});
+        setInputValue('');
         setScore(0);
         setCurrentStep('test');
     };
 
-    const handleSelectOption = (option: string) => {
-        setAnswers(prev => ({ ...prev, [colorVisionData[plateIndex].id]: option }));
-    };
-
     const handleNext = () => {
+        const currentPlateId = colorVisionData[plateIndex].id;
+        const finalValue = inputValue.trim();
+        
+        const updatedAnswers = { ...answers, [currentPlateId]: finalValue };
+        setAnswers(updatedAnswers);
+
         if (plateIndex < colorVisionData.length - 1) {
             setPlateIndex(prev => prev + 1);
         } else {
             // Calculate score
             let correct = 0;
             colorVisionData.forEach(plate => {
-                if (answers[plate.id] === plate.answer) {
+                if (updatedAnswers[plate.id] === plate.answer) {
                     correct++;
                 }
             });
@@ -173,7 +139,7 @@ export default function ColorVisionTestPage() {
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <i className="fa-solid fa-circle-check text-orange-500 mt-1"></i>
-                                    <span>Select the correct answer from the options.</span>
+                                    <span>Type the number in the box and press Enter. Leave blank if nothing is visible.</span>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <i className="fa-solid fa-circle-check text-orange-500 mt-1"></i>
@@ -223,20 +189,24 @@ export default function ColorVisionTestPage() {
 
                             <h3 className="text-xl font-bold text-gray-900 mb-6 text-center w-full">What number do you see?</h3>
 
-                            {/* Options */}
-                            <div className="grid grid-cols-2 gap-4 w-full max-w-md">
-                                {colorVisionData[plateIndex].options.map(opt => {
-                                    const isSelected = answers[colorVisionData[plateIndex].id] === opt;
-                                    return (
-                                        <button 
-                                            key={opt}
-                                            onClick={() => handleSelectOption(opt)}
-                                            className={`p-4 rounded-2xl border-2 font-bold transition-all text-center ${isSelected ? 'border-orange-500 bg-orange-50 text-orange-700' : 'border-gray-100 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50'}`}
-                                        >
-                                            {opt}
-                                        </button>
-                                    );
-                                })}
+                            {/* Number Input Box */}
+                            <div className="w-full max-w-sm flex flex-col items-center">
+                                <input 
+                                    ref={inputRef}
+                                    type="number"
+                                    value={inputValue}
+                                    onChange={(e) => setInputValue(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            e.preventDefault();
+                                            handleNext();
+                                        }
+                                    }}
+                                    placeholder="Enter number..."
+                                    className="w-full text-center text-4xl font-black text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-3xl py-6 px-4 focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/20 transition-all placeholder:text-gray-300 placeholder:text-2xl"
+                                    autoFocus
+                                />
+                                <p className="mt-4 text-sm text-gray-400 font-medium">Leave blank if you see no number.</p>
                             </div>
 
                             {/* Navigation */}
@@ -250,8 +220,7 @@ export default function ColorVisionTestPage() {
                                 </button>
                                 <button 
                                     onClick={handleNext}
-                                    disabled={!answers[colorVisionData[plateIndex].id]}
-                                    className={`flex-1 py-4 rounded-full font-bold transition-all ${answers[colorVisionData[plateIndex].id] ? 'bg-gray-900 text-white hover:bg-black shadow-md' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                                    className={`flex-1 py-4 rounded-full font-bold transition-all bg-gray-900 text-white hover:bg-black shadow-md`}
                                 >
                                     {plateIndex === colorVisionData.length - 1 ? 'Finish' : 'Next'}
                                 </button>

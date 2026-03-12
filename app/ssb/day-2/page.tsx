@@ -129,15 +129,19 @@ export default function Day2() {
 
                                             {/* Nodes */}
                                             <div className="absolute top-[15%] left-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-images text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">TAT</span>
                                             </div>
                                             <div className="absolute top-[15%] right-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-font text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">WAT</span>
                                             </div>
                                             <div className="absolute bottom-[15%] left-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-bolt text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">SRT</span>
                                             </div>
                                             <div className="absolute bottom-[15%] right-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-user-pen text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">Self Description</span>
                                             </div>
                                         </div>

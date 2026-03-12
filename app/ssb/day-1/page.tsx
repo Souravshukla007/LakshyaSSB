@@ -132,18 +132,23 @@ export default function Day1() {
 
                                             {/* Nodes */}
                                             <div className="absolute top-[10%] left-1/2 -translate-x-1/2 px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-brain text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">OIR Test</span>
                                             </div>
                                             <div className="absolute top-[20%] left-[10%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-pen-clip text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">Story Writing</span>
                                             </div>
                                             <div className="absolute top-[20%] right-[10%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-eye text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">PPDT</span>
                                             </div>
                                             <div className="absolute bottom-[20%] left-[10%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-bullhorn text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">Narration</span>
                                             </div>
                                             <div className="absolute bottom-[20%] right-[10%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                                <i className="fa-solid fa-users text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">Group Discussion</span>
                                             </div>
                                             <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 px-4 py-2 bg-brand-orange text-white border border-brand-orange rounded-xl shadow-md flex items-center gap-2">

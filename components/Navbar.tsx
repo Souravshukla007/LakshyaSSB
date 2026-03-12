@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import ApkDownloadModal from './ApkDownloadModal';
+import NotificationBell from './NotificationBell';
 
 interface UserProfile {
     fullName: string;
@@ -157,6 +158,9 @@ export default function Navbar() {
                                 </div>
                             </button>
                         </div>
+
+                        {/* Notification Bell (Desktop & Mobile) */}
+                        <NotificationBell />
 
                         {/* Avatar Dropdown (desktop) — unchanged */}
                         {user && (

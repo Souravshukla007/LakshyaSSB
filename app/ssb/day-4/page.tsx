@@ -130,23 +130,19 @@ export default function Day4() {
                                             </div>
 
                                             {/* Nodes */}
-                                            <div className="absolute top-[10%] left-1/2 -translate-x-1/2 px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                            <div className="absolute top-[20%] right-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
                                                 <i className="fa-solid fa-person-running text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">Individual Obstacles</span>
                                             </div>
-                                            <div className="absolute top-[20%] left-[10%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                            <div className="absolute top-[20%] left-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
                                                 <i className="fa-solid fa-users text-brand-orange"></i>
-                                                <span className="text-xs font-bold text-brand-dark">HGT</span>
+                                                <span className="text-xs font-bold text-brand-dark">Final Group Task</span>
                                             </div>
-                                            <div className="absolute top-[20%] right-[10%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
-                                                <i className="fa-solid fa-bullhorn text-brand-orange"></i>
-                                                <span className="text-xs font-bold text-brand-dark">Lecturette</span>
-                                            </div>
-                                            <div className="absolute bottom-[20%] left-[10%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                            <div className="absolute bottom-[20%] left-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
                                                 <i className="fa-solid fa-medal text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">Command Task</span>
                                             </div>
-                                            <div className="absolute bottom-[20%] right-[10%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
+                                            <div className="absolute bottom-[20%] right-[15%] px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2">
                                                 <i className="fa-solid fa-comments text-brand-orange"></i>
                                                 <span className="text-xs font-bold text-brand-dark">Personal Interview</span>
                                             </div>
