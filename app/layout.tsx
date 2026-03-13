@@ -3,6 +3,8 @@ import "./globals.css";
 import Script from "next/script";
 import CapacitorBackButtonHandler from "@/components/CapacitorBackButtonHandler";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
     title: "LakshaySSB | Elite SSB Preparation Academy",
@@ -46,6 +48,11 @@ export default function RootLayout({
             });
           `}
                 </Script>
+                {/* Vercel Analytics */}
+                <Analytics />
+
+                {/* Vercel Performance Monitoring */}
+                <SpeedInsights />
             </body>
         </html>
     );
