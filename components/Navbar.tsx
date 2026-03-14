@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import ApkDownloadModal from './ApkDownloadModal';
 import NotificationBell from './NotificationBell';
+import HeaderSearch from './search/HeaderSearch';
 
 interface UserProfile {
     fullName: string;
@@ -159,8 +160,13 @@ export default function Navbar() {
                             </button>
                         </div>
 
-                        {/* Notification Bell (Desktop & Mobile) */}
-                        <NotificationBell />
+                        {/* Header Search + Notification (logged-in only) */}
+                        {user && (
+                            <>
+                                <HeaderSearch />
+                                <NotificationBell />
+                            </>
+                        )}
 
                         {/* Avatar Dropdown (desktop) — unchanged */}
                         {user && (

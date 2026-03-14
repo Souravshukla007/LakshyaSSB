@@ -1,0 +1,125 @@
+
+> my-portfolio007@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.12
+   - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 6.4s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/96) ...
+   Generating static pages (24/96) 
+   Generating static pages (48/96) 
+   Generating static pages (72/96) 
+ ✓ Generating static pages (96/96)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    7.88 kB         114 kB
+├ ○ /_not-found                            996 B         103 kB
+├ ○ /about                                 275 B         103 kB
+├ ƒ /account                              5.4 kB         108 kB
+├ ƒ /api                                   275 B         103 kB
+├ ƒ /api/account/activity                  275 B         103 kB
+├ ƒ /api/account/change-password           275 B         103 kB
+├ ƒ /api/account/check-plan                275 B         103 kB
+├ ƒ /api/account/delete                    275 B         103 kB
+├ ƒ /api/account/logout-all                275 B         103 kB
+├ ƒ /api/account/me                        275 B         103 kB
+├ ƒ /api/account/notifications             275 B         103 kB
+├ ƒ /api/account/profile                   275 B         103 kB
+├ ƒ /api/account/upload-avatar             275 B         103 kB
+├ ƒ /api/auth/google                       275 B         103 kB
+├ ƒ /api/auth/google/callback              275 B         103 kB
+├ ƒ /api/auth/login                        275 B         103 kB
+├ ƒ /api/auth/send-otp                     275 B         103 kB
+├ ƒ /api/auth/session                      275 B         103 kB
+├ ƒ /api/auth/signup                       275 B         103 kB
+├ ƒ /api/auth/status                       275 B         103 kB
+├ ƒ /api/auth/verify-otp                   275 B         103 kB
+├ ƒ /api/cron/reset-weekly                 275 B         103 kB
+├ ƒ /api/dashboard/ori                     275 B         103 kB
+├ ƒ /api/feedback                          275 B         103 kB
+├ ƒ /api/gpe/scenario                      275 B         103 kB
+├ ƒ /api/leaderboard                       275 B         103 kB
+├ ƒ /api/leaderboard/overall               275 B         103 kB
+├ ƒ /api/leaderboard/streak                275 B         103 kB
+├ ƒ /api/leaderboard/weekly                275 B         103 kB
+├ ƒ /api/medals/award                      275 B         103 kB
+├ ƒ /api/medical/calculate                 275 B         103 kB
+├ ƒ /api/medical/color-vision              275 B         103 kB
+├ ƒ /api/medical/history                   275 B         103 kB
+├ ƒ /api/medical/latest                    275 B         103 kB
+├ ƒ /api/oir/generate                      275 B         103 kB
+├ ƒ /api/payment/create-order              275 B         103 kB
+├ ƒ /api/payment/verify                    275 B         103 kB
+├ ƒ /api/piq/evaluate                      275 B         103 kB
+├ ƒ /api/piq/history                       275 B         103 kB
+├ ƒ /api/piq/io-questions                  275 B         103 kB
+├ ƒ /api/piq/latest                        275 B         103 kB
+├ ƒ /api/piq/setup                         275 B         103 kB
+├ ƒ /api/practice/access-status            275 B         103 kB
+├ ƒ /api/practice/check-access             275 B         103 kB
+├ ƒ /api/redeem-pro                        275 B         103 kB
+├ ƒ /api/srt/history                       275 B         103 kB
+├ ƒ /api/srt/latest                        275 B         103 kB
+├ ƒ /api/srt/submit                        275 B         103 kB
+├ ƒ /api/tat/history                       275 B         103 kB
+├ ƒ /api/tat/images                        275 B         103 kB
+├ ƒ /api/tat/latest                        275 B         103 kB
+├ ƒ /api/tat/submit                        275 B         103 kB
+├ ƒ /api/user/daily-login                  275 B         103 kB
+├ ƒ /api/wat/history                       275 B         103 kB
+├ ƒ /api/wat/latest                        275 B         103 kB
+├ ƒ /api/wat/submit                        275 B         103 kB
+├ ○ /auth                                4.05 kB         110 kB
+├ ○ /checkout                            3.44 kB         106 kB
+├ ○ /contact                               275 B         103 kB
+├ ○ /daily-question                      2.03 kB         104 kB
+├ ƒ /dashboard                           6.96 kB         113 kB
+├ ○ /feedback                            3.19 kB         109 kB
+├ ○ /leaderboard                         4.56 kB         110 kB
+├ ○ /medical                             8.32 kB         111 kB
+├ ○ /medical/color-vision-test           3.18 kB         109 kB
+├ ○ /olq-report                          1.83 kB         104 kB
+├ ○ /piq                                 1.63 kB         107 kB
+├ ○ /piq-builder                         5.13 kB         111 kB
+├ ○ /piq/form                            2.34 kB         105 kB
+├ ○ /piq/result                          2.43 kB         108 kB
+├ ○ /practice                            3.04 kB         109 kB
+├ ○ /practice/gpe                        3.83 kB         109 kB
+├ ○ /practice/lecturette                 7.71 kB         113 kB
+├ ○ /practice/oir                          165 B         106 kB
+├ ○ /practice/oir/result                 3.81 kB         109 kB
+├ ○ /practice/oir/test                   3.65 kB         106 kB
+├ ○ /practice/srt                          907 B         113 kB
+├ ○ /practice/tat                        4.58 kB         110 kB
+├ ○ /practice/wat                        5.43 kB         111 kB
+├ ○ /pricing                             2.73 kB         108 kB
+├ ○ /privacy                               275 B         103 kB
+├ ○ /refund-policy                         275 B         103 kB
+├ ○ /roadmap                             2.25 kB         108 kB
+├ ○ /robots.txt                            275 B         103 kB
+├ ○ /sitemap.xml                           275 B         103 kB
+├ ○ /srt-test                              952 B         113 kB
+├ ○ /ssb-entry-navigator                 6.78 kB         109 kB
+├ ○ /ssb/day-1                           3.51 kB         109 kB
+├ ○ /ssb/day-2                           3.36 kB         109 kB
+├ ○ /ssb/day-3                           3.41 kB         109 kB
+├ ○ /ssb/day-4                           4.79 kB         110 kB
+├ ○ /ssb/day-5                           3.21 kB         109 kB
+└ ○ /terms                                 275 B         103 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/1255-a390e12b70b4a9fb.js        46 kB
+  ├ chunks/4bd1b696-f785427dddbba9fb.js  54.2 kB
+  └ other shared chunks (total)          2.04 kB
+
+
+ƒ Middleware                             41.1 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

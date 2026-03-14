@@ -1,0 +1,92 @@
+[
+  {
+    "title": "OIR Intelligence Test",
+    "category": "Practice Test",
+    "link": "/practice/oir",
+    "icon": "fa-brain"
+  },
+  {
+    "title": "SRT Rapid Response",
+    "category": "Psychology Test",
+    "link": "/practice/srt",
+    "icon": "fa-bolt"
+  },
+  {
+    "title": "WAT Association Drill",
+    "category": "Psychology Test",
+    "link": "/practice/wat",
+    "icon": "fa-pen"
+  },
+  {
+    "title": "TAT Story Builder",
+    "category": "Psychology Test",
+    "link": "/practice/tat",
+    "icon": "fa-images"
+  },
+  {
+    "title": "Lecturette Trainer",
+    "category": "Communication Practice",
+    "link": "/practice/lecturette",
+    "icon": "fa-microphone-lines"
+  },
+  {
+    "title": "GPE Scenario Practice",
+    "category": "Group Task",
+    "link": "/practice/gpe",
+    "icon": "fa-people-group"
+  },
+  {
+    "title": "Color Vision Test",
+    "category": "Medical Tool",
+    "link": "/medical/color-vision-test",
+    "icon": "fa-vial-circle-check"
+  },
+  {
+    "title": "Medical Readiness",
+    "category": "Medical Tool",
+    "link": "/medical",
+    "icon": "fa-stethoscope"
+  },
+  {
+    "title": "SSB Entry Navigator",
+    "category": "Career Tool",
+    "link": "/ssb-entry-navigator",
+    "icon": "fa-compass"
+  },
+  {
+    "title": "Leaderboard",
+    "category": "Progress",
+    "link": "/leaderboard",
+    "icon": "fa-trophy"
+  },
+  {
+    "title": "Cadet Dashboard",
+    "category": "User Area",
+    "link": "/dashboard",
+    "icon": "fa-gauge-high"
+  },
+  {
+    "title": "Preparation Roadmap",
+    "category": "Guidance",
+    "link": "/roadmap",
+    "icon": "fa-route"
+  },
+  {
+    "title": "Pricing Plans",
+    "category": "Subscription",
+    "link": "/pricing",
+    "icon": "fa-credit-card"
+  },
+  {
+    "title": "PIQ Builder",
+    "category": "Interview Tool",
+    "link": "/piq-builder",
+    "icon": "fa-id-card"
+  },
+  {
+    "title": "OLQ Report",
+    "category": "Assessment",
+    "link": "/olq-report",
+    "icon": "fa-chart-pie"
+  }
+]
