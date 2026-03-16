@@ -13,7 +13,7 @@ function AuthContent() {
 
     // Show error from Google OAuth callback redirect
     useEffect(() => {
-        const error = searchParams.get('error');
+        const error = searchParams?.get('error');
         if (error) {
             setMessage({ type: 'error', text: error });
         }

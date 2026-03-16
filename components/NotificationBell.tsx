@@ -16,9 +16,34 @@ interface Notification {
 export default function NotificationBell() {
     const [isOpen, setIsOpen] = useState(false);
     const [unreadCount, setUnreadCount] = useState(0);
+    const [missionReady, setMissionReady] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const notifications: Notification[] = notificationsData;
+    const visibleNotifications: Notification[] = missionReady
+        ? [
+            {
+                id: 999999,
+                title: 'Daily Mission Ready',
+                description: '🔥 Your LakshyaSSB daily mission is ready.',
+                link: '/#daily-practice',
+                icon: 'fa-fire',
+                isNew: true,
+            },
+            ...notifications,
+        ]
+        : notifications;
+
+    useEffect(() => {
+        fetch('/api/streak/status')
+            .then((res) => (res.ok ? res.json() : null))
+            .then((data) => {
+                if (data?.authenticated && data?.completedToday === false) {
+                    setMissionReady(true);
+                }
+            })
+            .catch(() => null);
+    }, []);
 
     // Initialize unread count from localStorage on mount
     useEffect(() => {
@@ -27,11 +52,11 @@ export default function NotificationBell() {
                 const readState = localStorage.getItem('lakshya_notifications_read');
                 if (readState) {
                     const readIds: number[] = JSON.parse(readState);
-                    const unread = notifications.filter(n => !readIds.includes(n.id)).length;
+                    const unread = visibleNotifications.filter(n => !readIds.includes(n.id)).length;
                     setUnreadCount(unread);
                 } else {
                     // All are unread if no state exists
-                    setUnreadCount(notifications.length);
+                    setUnreadCount(visibleNotifications.length);
                 }
             } catch (error) {
                 console.error("Failed to parse notifications read state", error);
@@ -43,7 +68,7 @@ export default function NotificationBell() {
         // Listen for storage events in case another tab marks them read
         window.addEventListener('storage', fetchReadState);
         return () => window.removeEventListener('storage', fetchReadState);
-    }, [notifications]);
+    }, [visibleNotifications]);
 
     // Close logic when clicking outside
     useEffect(() => {
@@ -63,7 +88,7 @@ export default function NotificationBell() {
 
         if (newIsOpen && unreadCount > 0) {
             try {
-                const allIds = notifications.map(n => n.id);
+                const allIds = visibleNotifications.map(n => n.id);
                 localStorage.setItem('lakshya_notifications_read', JSON.stringify(allIds));
                 setUnreadCount(0);
                 
@@ -111,14 +136,14 @@ export default function NotificationBell() {
 
                 {/* Notification List */}
                 <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
-                    {notifications.length > 0 ? (
+                    {visibleNotifications.length > 0 ? (
                         <div className="flex flex-col">
-                            {notifications.map((notification, index) => (
+                            {visibleNotifications.map((notification, index) => (
                                 <Link 
                                     key={notification.id} 
                                     href={notification.link}
                                     onClick={() => setIsOpen(false)}
-                                    className={`group flex items-start gap-4 p-5 hover:bg-orange-50/30 transition-colors ${index !== notifications.length - 1 ? 'border-b border-gray-50' : ''}`}
+                                    className={`group flex items-start gap-4 p-5 hover:bg-orange-50/30 transition-colors ${index !== visibleNotifications.length - 1 ? 'border-b border-gray-50' : ''}`}
                                 >
                                     {/* Icon Container */}
                                     <div className="w-10 h-10 rounded-xl bg-orange-50 text-brand-orange flex items-center justify-center shrink-0 border border-orange-100/50 group-hover:bg-brand-orange group-hover:text-white transition-colors duration-300 shadow-sm dropdown-icon">

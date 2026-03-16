@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import DailyStreakCard from '@/components/streak/DailyStreakCard';
 
 export default function Home() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -531,28 +532,7 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div className="reveal-right active">
-                                    <div className="bg-white rounded-3xl p-6 text-brand-dark shadow-2xl">
-                                        <div className="flex items-center justify-between mb-8">
-                                            <div className="font-bold">Today&apos;s Practice Task</div>
-                                            <div className="px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-full text-xs font-bold">LIVE</div>
-                                        </div>
-                                        <div className="space-y-4">
-                                            <div className="p-4 bg-brand-bg rounded-xl border border-gray-100 flex items-center justify-between">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-2 h-2 rounded-full bg-brand-orange"></div>
-                                                    <span className="text-sm font-medium">WAT Practice (Set #42)</span>
-                                                </div>
-                                                <button className="text-xs font-bold text-brand-orange">START</button>
-                                            </div>
-                                            <div className="p-4 bg-brand-bg rounded-xl border border-gray-100 flex items-center justify-between opacity-50">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-2 h-2 rounded-full bg-gray-300"></div>
-                                                    <span className="text-sm font-medium">Lecturette: &quot;Indo-Pacific Ties&quot;</span>
-                                                </div>
-                                                <span className="text-[10px] font-bold">LOCKED</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <DailyStreakCard />
                                 </div>
                             </div>
                         </div>

@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { evaluateWat, WatResponse } from '@/lib/watEvaluator';
+import { getSession } from '@/lib/auth';
+import { completePracticeForUser } from '@/lib/streak';
 
 export async function POST(request: Request) {
     try {
-        const userId = request.headers.get('x-user-id');
+        const session = await getSession();
+        const userId = session?.userId || request.headers.get('x-user-id');
         if (!userId) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
@@ -30,10 +33,13 @@ export async function POST(request: Request) {
             }
         });
 
+        const streak = session?.userId ? await completePracticeForUser(session.userId, 'WAT') : null;
+
         return NextResponse.json({
             success: true,
             evaluation,
-            resultId: savedResult.id
+            resultId: savedResult.id,
+            streak,
         });
 
     } catch (error) {

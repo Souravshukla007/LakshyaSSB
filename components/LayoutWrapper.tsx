@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import LakshyaAIMentor from './chat/LakshyaAIMentor';
 
 const noNavRoutes = ['/auth'];
 
@@ -17,6 +18,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                 {children}
             </main>
             {!hideNavFooter && <Footer />}
+            {!hideNavFooter && <LakshyaAIMentor />}
         </div>
     );
 }

@@ -96,7 +96,7 @@ export default function OIRTestEngine() {
         return () => clearInterval(timer);
     }, [timeLeft, isLoading, questions]);
 
-    const submitTest = () => {
+    const submitTest = async () => {
         // Generate evaluation payload
         const results = questions.map((q) => {
             const selectedOption = answers[q.id] || null;
@@ -121,6 +121,14 @@ export default function OIRTestEngine() {
 
         // Store in session storage to pass to Result Page
         sessionStorage.setItem('oir_test_result', JSON.stringify(payload));
+
+        // Mark daily practice completion for streak system (non-blocking UX-safe)
+        fetch('/api/streak/complete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ activityType: 'OIR' }),
+        }).catch(() => null);
+
         router.push('/practice/oir/result');
     };
 

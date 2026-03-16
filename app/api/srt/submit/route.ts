@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { evaluateSrt, SrtInput } from '@/lib/evaluators/srtEvaluator';
+import { completePracticeForUser } from '@/lib/streak';
 
 export async function POST(req: Request) {
     try {
@@ -30,7 +31,9 @@ export async function POST(req: Request) {
             }
         });
 
-        return NextResponse.json({ success: true, result: srtResult, evaluation: evaluationResult });
+        const streak = await completePracticeForUser(session.userId, 'SRT');
+
+        return NextResponse.json({ success: true, result: srtResult, evaluation: evaluationResult, streak });
 
     } catch (error) {
         console.error('SRT Evaluation Error:', error);
