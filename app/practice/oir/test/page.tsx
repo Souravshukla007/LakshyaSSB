@@ -8,12 +8,24 @@ import QuestionNavigator from '@/components/practice/QuestionNavigator';
 
 interface Question {
     id: number;
+    originalId?: number | string;
     question: string;
     options: string[];
     answer: string;
     difficulty: string;
     topic: string;
+    highlightWord?: string;
     explanation: string;
+}
+
+function escapeRegex(value: string) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function inferSynonymWord(questionText: string) {
+    const words = questionText.match(/[A-Za-z]+/g) || [];
+    if (words.length === 0) return '';
+    return words[words.length - 1];
 }
 
 export default function OIRTestEngine() {
@@ -158,6 +170,9 @@ export default function OIRTestEngine() {
     const qId = currentQ.id;
     const isReviewed = reviewStatus[qId];
     const selected = answers[qId] || null;
+    const synonymHighlight = currentQ.topic?.toLowerCase() === 'synonym'
+        ? (currentQ.highlightWord?.trim() || inferSynonymWord(currentQ.question))
+        : '';
 
     return (
         <>
@@ -225,7 +240,18 @@ export default function OIRTestEngine() {
                                     {currentQ.topic}
                                 </div>
                                 <h4 className="text-xl md:text-2xl font-hero font-bold mb-6 leading-relaxed">
-                                    {currentQ.question}
+                                    {synonymHighlight
+                                        ? currentQ.question.split(new RegExp(`(${escapeRegex(synonymHighlight)})`, 'i')).map((part, idx) => {
+                                            if (part.toLowerCase() === synonymHighlight.toLowerCase()) {
+                                                return (
+                                                    <u key={idx} className="decoration-2 decoration-brand-orange underline-offset-4">
+                                                        {part}
+                                                    </u>
+                                                );
+                                            }
+                                            return <span key={idx}>{part}</span>;
+                                        })
+                                        : currentQ.question}
                                 </h4>
                             </div>
 
