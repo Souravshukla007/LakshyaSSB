@@ -66,7 +66,12 @@ export default function SrtTestPage() {
             <div className="px-4 pt-28 pb-8 md:pb-12 sm:px-6 lg:px-8 max-w-7xl mx-auto flex items-center justify-center min-h-[calc(100vh-80px)]">
                 <div className="w-full">
                     {state === 'intro' && <SrtIntro onStart={handleStart} />}
-                    {state === 'test' && <SrtTestInterface questions={allQuestions} onSubmit={handleSubmit} />}
+                    {state === 'test' && (
+                        <SrtTestInterface
+                            questions={allQuestions}
+                            onSubmit={handleSubmit}
+                        />
+                    )}
                     {state === 'result' && <SrtResult onRetake={handleRetake} onDashboard={handleDashboard} />}
                 </div>
             </div>

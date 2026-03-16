@@ -72,6 +72,14 @@ export default function SrtTestInterface({ questions, onSubmit }: SrtTestInterfa
                 {/* Top Bar */}
                 <div className="bg-white/90 backdrop-blur-md shadow-sm rounded-2xl mb-6 p-4 flex justify-between items-center border border-gray-100">
                 <div className="flex items-center gap-4">
+                    <button
+                        onClick={handlePrev}
+                        disabled={currentIndex === 0}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 hover:border-[#F97316] hover:text-[#F97316] transition-all text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:text-gray-700"
+                    >
+                        <span aria-hidden="true">←</span>
+                        Back
+                    </button>
                     <div className="bg-black text-white px-4 py-1.5 rounded-full text-sm font-medium">
                         Question {currentIndex + 1} of {questions.length}
                     </div>

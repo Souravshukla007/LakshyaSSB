@@ -138,6 +138,12 @@ export default function OIRTestEngine() {
         }
     };
 
+    const handlePrev = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(prev => prev - 1);
+        }
+    };
+
     if (isLoading) {
         return (
             <div className="min-h-screen bg-brand-bg flex items-center justify-center font-hero text-2xl font-bold text-brand-dark">
@@ -258,6 +264,13 @@ export default function OIRTestEngine() {
                                         }`}
                                 >
                                     {isReviewed ? 'Unmark Review' : 'Mark for Review'}
+                                </button>
+                                <button
+                                    onClick={handlePrev}
+                                    disabled={currentIndex === 0}
+                                    className="px-8 py-4 rounded-full border border-gray-200 text-sm font-bold text-gray-600 hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    Back
                                 </button>
                                 <button
                                     onClick={handleNext}
