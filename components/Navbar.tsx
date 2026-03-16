@@ -91,7 +91,7 @@ export default function Navbar() {
 
     // Extra link only for logged-in users
     const authNavLinks = [
-        { href: '/', label: 'Home', icon: 'fa-house' },
+        ...(user?.plan === 'PRO' ? [{ href: '/', label: 'Home', icon: 'fa-house' }] : []),
         { href: '/practice', label: 'Practice', icon: 'fa-dumbbell' },
         { href: '/medical', label: 'Medical', icon: 'fa-heart-pulse' },
         ...(user?.plan === 'PRO' ? [] : [{ href: '/pricing', label: 'Pricing', icon: 'fa-credit-card' }]),
