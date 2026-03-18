@@ -65,8 +65,27 @@ export default function LakshyaAIMentor() {
             });
 
             const data = await res.json();
-            const reply = data?.reply || 'I could not generate a response right now. Please try again.';
 
+            if (!res.ok) {
+                const reason = data?.reason;
+                let errorMsg = 'I could not generate a response right now. Please try again.';
+
+                if (reason === 'quota_exceeded') {
+                    const retryIn = data?.retryAfterSeconds;
+                    errorMsg = retryIn
+                        ? `AI quota limit reached. Please retry in about ${Math.ceil(retryIn)} seconds.`
+                        : 'AI quota limit reached. Please try again in a moment.';
+                } else if (reason === 'model_not_found') {
+                    errorMsg = 'AI service is temporarily unavailable. Please try again later.';
+                } else if (data?.error) {
+                    errorMsg = data.error;
+                }
+
+                setMessages((prev) => [...prev, { role: 'assistant', content: errorMsg }]);
+                return;
+            }
+
+            const reply = data?.reply || 'I could not generate a response right now. Please try again.';
             setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
         } catch {
             setMessages((prev) => [
