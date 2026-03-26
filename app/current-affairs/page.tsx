@@ -45,23 +45,23 @@ export default function CurrentAffairsPage() {
             <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto relative z-10">
-                {/* 1. Hero Section */}
-                <div className="mb-16 text-center md:text-left reveal">
-                    <h1 className="font-hero font-bold text-4xl md:text-6xl text-brand-dark mb-4 leading-tight">
-                        Current Affairs for <br className="hidden md:block"/>
-                        <span className="text-brand-orange">SSB Aspirants</span>
-                    </h1>
-                    <p className="text-gray-500 font-noname text-lg md:text-xl max-w-2xl mb-8">
-                        Stay updated with defence-focused news, interview insights, and GD topics converted directly into SSB formats.
-                    </p>
-                    <button className="px-8 py-4 bg-brand-dark text-white rounded-full font-bold text-sm tracking-wide hover:bg-brand-orange transition-all duration-300 hover:shadow-glow">
-                        Start Daily Practice
-                    </button>
-                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12 items-center">
+                    {/* 1. Hero Section */}
+                    <div className="lg:col-span-7 text-center md:text-left reveal">
+                        <h1 className="font-hero font-bold text-4xl md:text-6xl text-brand-dark mb-4 leading-tight">
+                            Current Affairs for <br className="hidden md:block"/>
+                            <span className="text-brand-orange">SSB Aspirants</span>
+                        </h1>
+                        <p className="text-gray-500 font-noname text-lg md:text-xl max-w-2xl mx-auto md:mx-0 mb-8">
+                            Stay updated with defence-focused news, interview insights, and GD topics converted directly into SSB formats.
+                        </p>
+                        <button className="px-8 py-4 bg-brand-dark text-white rounded-full font-bold text-sm tracking-wide hover:bg-brand-orange transition-all duration-300 hover:shadow-glow">
+                            Start Daily Practice
+                        </button>
+                    </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
                     {/* 2. Lecturette Topic of the Day */}
-                    <div className="lg:col-span-1 reveal-scale">
+                    <div className="lg:col-span-5 reveal-scale">
                         <LecturetteCard 
                             topic={news[0]?.lecturette}
                             points={news[0] ? [
@@ -71,24 +71,26 @@ export default function CurrentAffairsPage() {
                             ] : undefined}
                         />
                     </div>
+                </div>
 
-                    {/* Right column with search and filters */}
-                    <div className="lg:col-span-2 flex flex-col justify-end reveal delay-100">
-                        {/* 6. Search Bar */}
-                        <div className="relative mb-8">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <Search className="h-5 w-5 text-gray-400" />
-                            </div>
-                            <input
-                                type="text"
-                                className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl text-sm font-noname focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all shadow-sm"
-                                placeholder="Search current affairs, GD topics..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
+                {/* Search and Filters Row */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 reveal delay-100">
+                    {/* Search Bar */}
+                    <div className="relative w-full md:w-[350px] lg:w-[400px]">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <Search className="h-5 w-5 text-gray-400" />
                         </div>
+                        <input
+                            type="text"
+                            className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl text-sm font-noname focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all shadow-sm"
+                            placeholder="Search current affairs, GD topics..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </div>
 
-                        {/* 2. Category Filters */}
+                    {/* Category Filters */}
+                    <div className="w-full md:w-auto overflow-x-auto pb-2 md:pb-0 scrollbar-hide flex-1 flex md:justify-end">
                         <CategoryFilter 
                             categories={categories} 
                             selectedCategory={selectedCategory} 
