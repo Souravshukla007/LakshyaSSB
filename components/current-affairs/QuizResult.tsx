@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircle2, XCircle, Clock, Trophy, Target } from 'lucide-react';
 import { QuizQuestion } from './QuizInterface';
+import AdBanner, { AD_SLOTS } from '@/components/AdBanner';
 
 interface QuizResultProps {
     questions: QuizQuestion[];
@@ -141,8 +142,11 @@ export default function QuizResult({ questions, userAnswers, timeTaken }: QuizRe
                     );
                 })}
             </div>
-            
-            <div className="mt-12 text-center">
+
+            {/* Ad Banner — shown after quiz result for Guest & FREE users */}
+            <AdBanner slot={AD_SLOTS.QUIZ_RESULT_BOTTOM} className="mt-8" />
+
+            <div className="mt-8 text-center">
                 <a href="/dashboard" className="inline-flex items-center justify-center bg-brand-dark text-white px-8 py-4 rounded-xl font-bold shadow-glow hover:bg-brand-orange transition-all duration-300">
                     Return to Dashboard
                 </a>

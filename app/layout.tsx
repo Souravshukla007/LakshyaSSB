@@ -27,6 +27,13 @@ export default function RootLayout({
                     referrerPolicy="no-referrer"
                 />
                 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Inter:wght@400;500;600;700;900&family=Outfit:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Raleway:wght@700;800&display=swap" rel="stylesheet" />
+                {/* Google AdSense — loaded non-blocking after hydration */}
+                <Script
+                    async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2268345575050436"
+                    crossOrigin="anonymous"
+                    strategy="afterInteractive"
+                />
             </head>
             <body className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
                 <CapacitorBackButtonHandler />

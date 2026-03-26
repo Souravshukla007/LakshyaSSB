@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import AdBanner, { AD_SLOTS } from '@/components/AdBanner';
 
 
 
@@ -191,6 +192,9 @@ export default function LeaderboardPage() {
                             )}
                         </div>
                     </section>
+
+                    {/* Ad Banner — between podium and full rankings table, hidden for PRO */}
+                    <AdBanner slot={AD_SLOTS.LEADERBOARD_MID} />
 
                     {/* ════════════════════════════════════
               FULL TABLE

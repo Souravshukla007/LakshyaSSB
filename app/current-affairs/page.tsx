@@ -8,6 +8,7 @@ import QuizSection from '@/components/current-affairs/QuizSection';
 import { Search } from 'lucide-react';
 import useScrollReveal from '@/hooks/useScrollReveal';
 import seedNews from '@/data/currentAffairs.json'; // Static fallback
+import AdBanner, { AD_SLOTS } from '@/components/AdBanner';
 
 export default function CurrentAffairsPage() {
     useScrollReveal();
@@ -144,6 +145,9 @@ export default function CurrentAffairsPage() {
                         </div>
                     )}
                 </div>
+
+                {/* Ad Banner — visible to Guest & FREE users, hidden for PRO */}
+                <AdBanner slot={AD_SLOTS.CURRENT_AFFAIRS_MID} className="my-8" />
 
                 {/* 5. Weekly Quiz Section */}
                 <div className="reveal">
