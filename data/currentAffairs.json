@@ -1,0 +1,46 @@
+[
+    {
+        "id": "1",
+        "title": "India successfully tests new generation Agni-Prime ballistic missile",
+        "category": "Defence",
+        "date": "2026-03-24",
+        "summary": "India's Strategic Forces Command (SFC), along with Defence Research and Development Organisation (DRDO), successfully flight-tested the new generation ballistic missile Agni-Prime from APJ Abdul Kalam Island off the coast of Odisha.",
+        "ssb_importance": "Crucial for current affairs and defence technology awareness, highlighting India's growing self-reliance in strategic deterrence.",
+        "gd_topic": "Is India's self-reliance in defence manufacturing meeting strategic requirements or still dependent on imports?",
+        "lecturette": "India's Missile Development Programme and Agni Series",
+        "interview_question": "What is the strategic significance of the Agni-Prime missile to India's nuclear deterrence policy?"
+    },
+    {
+        "id": "2",
+        "title": "Indian Navy deploys maritime patrol aircraft to counter piracy in Red Sea",
+        "category": "International",
+        "date": "2026-03-23",
+        "summary": "In response to rising incidents of piracy and drone attacks on merchant vessels, the Indian Navy has significantly enhanced its surveillance operations in the Arabian Sea, deploying P-8I aircraft and advanced destroyers.",
+        "ssb_importance": "Demonstrates India's role as a net security provider in the Indian Ocean Region (IOR).",
+        "gd_topic": "Role of Indian Navy in ensuring maritime security in the Indian Ocean Region.",
+        "lecturette": "India's role as a Net Security Provider in IOR",
+        "interview_question": "How do recent piracy threats affect India's maritime trade, and how is the Navy responding?"
+    },
+    {
+        "id": "3",
+        "title": "Defence Ministry signs major contract for indigenous attack helicopters",
+        "category": "Economy",
+        "date": "2026-03-22",
+        "summary": "The Ministry of Defence signed a pivotal contract with Hindustan Aeronautics Limited (HAL) for the procurement of Light Combat Helicopters (LCH) Prachand to boost the aerial strike capabilities of the Army and Air Force.",
+        "ssb_importance": "Shows the practical application of 'Make in India' in defence, an essential topic for SSB.",
+        "gd_topic": "Make in India in Defence: Success or still a long way to go?",
+        "lecturette": "Aatmanirbhar Bharat in Defence Sector",
+        "interview_question": "Why is the LCH Prachand considered a game-changer for high-altitude warfare?"
+    },
+    {
+        "id": "4",
+        "title": "ISRO successfully launches new earth observation satellite",
+        "category": "Science",
+        "date": "2026-03-20",
+        "summary": "ISRO launched its latest earth observation satellite using the PSLV rocket. The satellite will provide critical data for agriculture, disaster management, and border surveillance.",
+        "ssb_importance": "Space technology is a frequent topic in GDs and Lecturettes. Dual-use tech like satellites are directly relevant.",
+        "gd_topic": "Privatization of the Space Sector: Pros and Cons",
+        "lecturette": "ISRO's achievements and future missions",
+        "interview_question": "How do earth observation satellites contribute to national security and border management?"
+    }
+]

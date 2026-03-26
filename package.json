@@ -26,7 +26,9 @@
     "razorpay": "^2.9.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "resend": "^6.9.2"
+    "resend": "^6.9.2",
+    "rss-parser": "^3.13.0",
+    "@google/generative-ai": "^0.21.0"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.1.0",
