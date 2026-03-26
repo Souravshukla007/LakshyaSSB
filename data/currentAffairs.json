@@ -24,7 +24,7 @@
     {
         "id": "3",
         "title": "Defence Ministry signs major contract for indigenous attack helicopters",
-        "category": "Economy",
+        "category": "Defence",
         "date": "2026-03-22",
         "summary": "The Ministry of Defence signed a pivotal contract with Hindustan Aeronautics Limited (HAL) for the procurement of Light Combat Helicopters (LCH) Prachand to boost the aerial strike capabilities of the Army and Air Force.",
         "ssb_importance": "Shows the practical application of 'Make in India' in defence, an essential topic for SSB.",
@@ -42,5 +42,27 @@
         "gd_topic": "Privatization of the Space Sector: Pros and Cons",
         "lecturette": "ISRO's achievements and future missions",
         "interview_question": "How do earth observation satellites contribute to national security and border management?"
+    },
+    {
+        "id": "5",
+        "title": "PM Modi inaugurates a major new defence corridor in Uttar Pradesh",
+        "category": "India",
+        "date": "2026-03-19",
+        "summary": "The Prime Minister inaugurated a massive new defence manufacturing corridor aimed at boosting domestic production and reducing reliance on foreign arms imports. The facility is expected to bring significant regional employment.",
+        "ssb_importance": "Critical to understand the intersection of national economy and defence modernization, linking directly to Atmanirbhar Bharat.",
+        "gd_topic": "Can domestic defence corridors completely stop India's reliance on foreign defense imports?",
+        "lecturette": "Defense Corridors in India: Boosting Self-Reliance",
+        "interview_question": "How do defense manufacturing corridors help the overall economy and border readiness?"
+    },
+    {
+        "id": "6",
+        "title": "Agnipath Scheme sees record recruitment numbers across all three forces",
+        "category": "India",
+        "date": "2026-03-18",
+        "summary": "An official report highlighted that the Agnipath recruitment scheme has seen a record surge in applicants across the Army, Navy, and Air Force, lowering the average age profile of the armed forces significantly.",
+        "ssb_importance": "Agniveer and the Agnipath scheme is one of the most hotly debated military HR policies and a common topic for GDs.",
+        "gd_topic": "Agnipath Scheme: Does it compromise operational readiness for a younger profile?",
+        "lecturette": "The Agnipath Scheme and its implications for the Indian Armed Forces",
+        "interview_question": "What is your personal opinion on the Agnipath scheme for soldier recruitment?"
     }
 ]

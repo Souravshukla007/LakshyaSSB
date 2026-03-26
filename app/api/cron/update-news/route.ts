@@ -34,10 +34,18 @@ export async function GET(request: Request) {
             const parsedData = await processNewsWithAI(article.title, article.content);
             if (!parsedData) return null;
 
+            // Dynamically detect category
+            const textToAnalyze = (article.title + ' ' + article.content).toLowerCase();
+            let predictedCategory = 'India'; // Default
+            if (/missile|navy|army|air force|drdo|defence|military|weapon|soldier|iaf|isro battle/.test(textToAnalyze)) predictedCategory = 'Defence';
+            else if (/isro|space|satellite|science|research|technology|ai |quantum|innovation/.test(textToAnalyze)) predictedCategory = 'Science';
+            else if (/economy|gdp|inflation|rupee|rbi|budget|trade|finance|market|export/.test(textToAnalyze)) predictedCategory = 'Economy';
+            else if (/china|pakistan|russia|us |nato|international|global|foreign|trump|ukraine/.test(textToAnalyze)) predictedCategory = 'International';
+
             const finalItem: CurrentAffairItem = {
                 id: `news-${Date.now()}-${idx}`,
                 title: article.title,
-                category: 'Defence', // Default, we could prompt Gemini to classify too, but Defence/Geo fits well
+                category: predictedCategory,
                 date: new Date().toISOString().split('T')[0],
                 summary: parsedData.summary,
                 ssb_importance: parsedData.ssb_importance,

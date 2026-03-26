@@ -337,3 +337,24 @@ model Feedback {
   @@index([createdAt])
   @@index([userId])
 }
+
+// ---------------------------------------------------------------------------
+// Current Affairs Storage
+// ---------------------------------------------------------------------------
+
+model CurrentAffair {
+  id                 String   @id @default(uuid())
+  title              String   @unique
+  category           String
+  date               String
+  summary            String   @db.Text
+  ssb_importance     String   @db.Text
+  gd_topic           String   @db.Text
+  lecturette         String   @db.Text
+  interview_question String   @db.Text
+
+  createdAt          DateTime @default(now())
+
+  @@index([category])
+  @@index([createdAt])
+}

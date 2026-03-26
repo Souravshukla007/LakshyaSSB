@@ -11,11 +11,13 @@ import seedNews from '@/data/currentAffairs.json'; // Static fallback
 import AdBanner, { AD_SLOTS } from '@/components/AdBanner';
 
 export default function CurrentAffairsPage() {
-    useScrollReveal();
-    const [news, setNews] = useState<any[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [news, setNews] = useState<any[]>(seedNews as any[]);
+    const [isLoading, setIsLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
+
+    // Add news value as a dependency to scroll reveal
+    useScrollReveal([news.length]);
 
     useEffect(() => {
         fetch('/api/current-affairs')

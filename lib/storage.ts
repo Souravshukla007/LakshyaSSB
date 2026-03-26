@@ -1,8 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { prisma } from './prisma';
 
 const STORAGE_FILE = path.join(process.cwd(), 'data', 'currentAffairs.json');
-const MAX_STORED_ITEMS = 100; // Keep file size manageable
 
 export interface CurrentAffairItem {
     id: string;
@@ -18,37 +18,60 @@ export interface CurrentAffairItem {
 
 export async function getStoredNews(): Promise<CurrentAffairItem[]> {
     try {
+        // Query the database for the latest 50 articles
+        const dbArticles = await prisma.currentAffair.findMany({
+            orderBy: { createdAt: 'desc' },
+            take: 50,
+        });
+
+        // Map DB models to interface
+        if (dbArticles.length > 0) {
+            return dbArticles.map(a => ({
+                id: a.id,
+                title: a.title,
+                category: a.category,
+                date: a.date,
+                summary: a.summary,
+                ssb_importance: a.ssb_importance,
+                gd_topic: a.gd_topic,
+                lecturette: a.lecturette,
+                interview_question: a.interview_question
+            }));
+        }
+
+        // Fallback: If DB is empty, read the dummy seed data
         const fileContent = await fs.readFile(STORAGE_FILE, 'utf-8');
         return JSON.parse(fileContent);
     } catch (error) {
+        console.error('Error in getStoredNews:', error);
         return [];
     }
 }
 
 export async function storeNewArticles(newArticles: CurrentAffairItem[]) {
     try {
-        const existingArticles = await getStoredNews();
-        
-        // 1. Deduplication: Filter out articles whose title already exists
-        const existingTitles = new Set(existingArticles.map(a => a.title.toLowerCase()));
-        
-        const uniqueNewArticles = newArticles.filter(a => {
-            return !existingTitles.has(a.title.toLowerCase());
+        if (!newArticles || newArticles.length === 0) return;
+
+        // Map interface to DB models (omit id to let DB generate uuid)
+        const dbReadyArticles = newArticles.map(a => ({
+            title: a.title,
+            category: a.category,
+            date: a.date,
+            summary: a.summary,
+            ssb_importance: a.ssb_importance,
+            gd_topic: a.gd_topic,
+            lecturette: a.lecturette,
+            interview_question: a.interview_question
+        }));
+
+        // Insert using createMany with skipDuplicates: true (using @unique on title)
+        const result = await prisma.currentAffair.createMany({
+            data: dbReadyArticles,
+            skipDuplicates: true
         });
 
-        if (uniqueNewArticles.length === 0) {
-            console.log("No new unique articles to store.");
-            return;
-        }
-
-        // 2. Prepend new articles and slice to MAX_STORED_ITEMS
-        const mergedArticles = [...uniqueNewArticles, ...existingArticles].slice(0, MAX_STORED_ITEMS);
-        
-        // 3. Atomically-safe write (write to temp file then rename is best, but standard writeFile is okay for low concurrency)
-        await fs.writeFile(STORAGE_FILE, JSON.stringify(mergedArticles, null, 2), 'utf-8');
-        
-        console.log(`Successfully stored ${uniqueNewArticles.length} new articles.`);
+        console.log(`Successfully stored ${result.count} NEW unique articles to the database.`);
     } catch (error) {
-        console.error('Failed to store news articles:', error);
+        console.error('Failed to store news articles to DB:', error);
     }
 }
