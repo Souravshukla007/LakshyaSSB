@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+
+export const dynamic = 'force-dynamic';
 
 /**
  * GET /api/auth/google
@@ -31,8 +34,7 @@ export async function GET() {
     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
 
     // Set state in a short-lived cookie for CSRF validation
-    const response = NextResponse.redirect(googleAuthUrl);
-    response.cookies.set('google_oauth_state', state, {
+    (await cookies()).set('google_oauth_state', state, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
@@ -40,5 +42,5 @@ export async function GET() {
         path: '/',
     });
 
-    return response;
+    return NextResponse.redirect(googleAuthUrl);
 }
