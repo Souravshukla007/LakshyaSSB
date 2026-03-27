@@ -8,7 +8,6 @@ const parser = new Parser({
 
 const RSS_FEEDS = [
     // Defence-focused & National feeds
-    'https://www.defense.gov/DesktopModules/ArticleCS/RSS.ashx?max=10&Types=1&Site=945',
     'https://www.thehindu.com/news/national/feeder/default.rss',
     'http://feeds.bbci.co.uk/news/world/asia/india/rss.xml'
 ];
