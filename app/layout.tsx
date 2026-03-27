@@ -17,7 +17,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <head>
                 <link
                     rel="stylesheet"
@@ -35,7 +35,7 @@ export default function RootLayout({
                     strategy="afterInteractive"
                 />
             </head>
-            <body className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
+            <body className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg" suppressHydrationWarning>
                 <CapacitorBackButtonHandler />
                 <LayoutWrapper>
                     {children}

@@ -27,16 +27,16 @@ News Title: {TITLE}
 News Content: {CONTENT}`;
 
 export async function processNewsWithAI(title: string, content: string, retries = 1): Promise<SSBParsedNews | null> {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ 
+        model: "gemini-2.0-flash",
+        generationConfig: { responseMimeType: "application/json" }
+    });
     const prompt = PROMPT_TEMPLATE.replace("{TITLE}", title).replace("{CONTENT}", content);
 
     for (let attempt = 0; attempt <= retries; attempt++) {
         try {
             const result = await model.generateContent(prompt);
-            const responseText = result.response.text()
-                .replace(/```json/g, '')
-                .replace(/```/g, '')
-                .trim();
+            const responseText = result.response.text().trim();
             
             const parsedData: SSBParsedNews = JSON.parse(responseText);
             

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 type ChatMessage = {
     role: 'user' | 'assistant';
@@ -23,13 +24,48 @@ export default function LakshyaAIMentor() {
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
 
     useEffect(() => {
-        if (isOpen && messages.length === 0) {
+        let isMounted = true;
+        
+        // 1. Check auth status first
+        fetch('/api/auth/status')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => { 
+                if (isMounted) {
+                    const loggedIn = !!data?.isLoggedIn;
+                    setIsLoggedIn(loggedIn);
+                    
+                    // 2. If logged in, fetch history
+                    if (loggedIn) {
+                        fetch('/api/chat/history')
+                            .then(r => r.ok ? r.json() : null)
+                            .then(historyData => {
+                                if (isMounted && historyData?.messages) {
+                                    if (historyData.messages.length > 0) {
+                                        setMessages(historyData.messages);
+                                    } else {
+                                        setMessages([{ role: 'assistant', content: WELCOME_MESSAGE }]);
+                                    }
+                                }
+                            });
+                    }
+                } 
+            })
+            .catch(() => null);
+
+        return () => { isMounted = false; };
+    }, []);
+
+    useEffect(() => {
+        // Only trigger fallback welcome message if explicitly not logged in and no messages
+        if (isOpen && messages.length === 0 && isLoggedIn === false) {
             setMessages([{ role: 'assistant', content: WELCOME_MESSAGE }]);
         }
-    }, [isOpen, messages.length]);
+    }, [isOpen, messages.length, isLoggedIn]);
 
     useEffect(() => {
         if (!scrollRef.current) return;
@@ -75,6 +111,8 @@ export default function LakshyaAIMentor() {
                     errorMsg = retryIn
                         ? `AI quota limit reached. Please retry in about ${Math.ceil(retryIn)} seconds.`
                         : 'AI quota limit reached. Please try again in a moment.';
+                } else if (reason === 'free_limit_reached') {
+                    errorMsg = data.error; 
                 } else if (reason === 'model_not_found') {
                     errorMsg = 'AI service is temporarily unavailable. Please try again later.';
                 } else if (data?.error) {
@@ -105,7 +143,14 @@ export default function LakshyaAIMentor() {
             {/* Floating launcher */}
             <div className="fixed bottom-6 right-6 z-[80] group">
                 <button
-                    onClick={() => setIsOpen((v) => !v)}
+                    onClick={() => {
+                        if (isLoggedIn === false) {
+                            alert("Please login first to unlock the LakshyaSSB AI Mentor.");
+                            router.push('/auth');
+                            return;
+                        }
+                        setIsOpen((v) => !v);
+                    }}
                     className="w-14 h-14 rounded-full bg-brand-dark text-white shadow-2xl hover:shadow-brand-orange/30 hover:scale-105 transition-all duration-300 flex items-center justify-center"
                     aria-label="Ask Lakshya AI Mentor"
                 >

@@ -67,6 +67,8 @@ model User {
   watResults     WatResult[] // WAT history
   tatResults     TatResult[] // TAT history
   practiceAttempts  PracticeAttempt[] // Track 1-free-test usages
+  oirQuestionHistory OirQuestionHistory[] // OIR test tracking
+  chatMessages     ChatMessage[] // Persistent AI conversations
   activityLogs     ActivityLog[]
   notificationPref NotificationPref?
   feedbacks        Feedback[]
@@ -357,4 +359,36 @@ model CurrentAffair {
 
   @@index([category])
   @@index([createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// OIR Question History (Raw SQL fallback added to Schema to prevent drop)
+// ---------------------------------------------------------------------------
+
+model OirQuestionHistory {
+  id          String   @id @default(dbgenerated("gen_random_uuid()::text"))
+  userId      String
+  questionKey String
+  seenAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionKey], map: "OirQuestionHistory_user_question_unique")
+  @@index([userId, seenAt], map: "OirQuestionHistory_user_seen_idx")
+}
+
+// ---------------------------------------------------------------------------
+// Persistent Chat History
+// ---------------------------------------------------------------------------
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  userId    String
+  role      String   // "user" | "assistant"
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
 }

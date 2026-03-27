@@ -11,7 +11,8 @@ const FREE_FEATURES = [
     { text: "1 OIR test (limited)", included: true },
     { text: "10 WAT words per day", included: true },
     { text: "2 TAT images per day", included: true },
-    { text: "Basic OLQ radar", included: true },
+    { text: "3 AI Mentor Chats per day", included: true },
+    { text: "Ad-Supported Experience", included: true },
     { text: "AI Evaluation & Trends", included: false },
     { text: "PIQ Builder", included: false },
     { text: "Interview Preparation", included: false },
@@ -19,9 +20,9 @@ const FREE_FEATURES = [
 
 const PRO_FEATURES = [
     { text: "Unlimited Practice Tests", included: true },
+    { text: "Unlimited AI Mentor Chats", included: true },
     { text: "Full AI Psych Evaluation", included: true },
-    { text: "OLQ Trends & Weekly Graphs", included: true },
-    { text: "Badge System & Streaks", included: true },
+    { text: "Ad-Free Premium Experience", included: true },
     { text: "PIQ Builder + Interview Qs", included: true },
     { text: "Priority Email Support", included: true },
     { text: "Lifetime Access (One-Time Purchase)", included: true },
@@ -30,6 +31,8 @@ const PRO_FEATURES = [
 const COMPARISON_ROWS = [
     { feature: "AI Evaluation", free: false, pro: true },
     { feature: "Unlimited Practice", free: false, pro: true },
+    { feature: "Lakshya AI Mentor", free: "3 / day", pro: "Unlimited" },
+    { feature: "Advertisements", free: "Included", pro: "Zero Ads" },
     { feature: "OLQ Trends", free: false, pro: true },
     { feature: "PIQ Builder", free: false, pro: true },
     { feature: "Interview Preparation", free: false, pro: true },

@@ -11,8 +11,8 @@ import seedNews from '@/data/currentAffairs.json'; // Static fallback
 import AdBanner, { AD_SLOTS } from '@/components/AdBanner';
 
 export default function CurrentAffairsPage() {
-    const [news, setNews] = useState<any[]>(seedNews as any[]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [news, setNews] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -37,9 +37,17 @@ export default function CurrentAffairsPage() {
     const categories = ['All', 'Defence', 'International', 'India', 'Economy', 'Science'];
 
     const filteredNews = news.filter((item) => {
-        const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
-        const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                              item.summary.toLowerCase().includes(searchQuery.toLowerCase());
+        if (!item) return false;
+        
+        // Safely extract and normalize strings for case-insensitive matching
+        const itemCategory = (item.category || '').toLowerCase();
+        const selectedCat = selectedCategory.toLowerCase();
+        const matchesCategory = selectedCategory === 'All' || itemCategory === selectedCat;
+        
+        const titleMatch = (item.title || '').toLowerCase().includes(searchQuery.toLowerCase());
+        const summaryMatch = (item.summary || '').toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesSearch = titleMatch || summaryMatch;
+        
         return matchesCategory && matchesSearch;
     });
 

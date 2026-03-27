@@ -37,20 +37,33 @@ export async function GET() {
         const newsToProcess = allNews.slice(0, 15);
         const newsText = JSON.stringify(newsToProcess.map(n => ({ title: n.title, summary: n.summary })));
 
-        // 2. Generate MCQs using Gemini (v1beta is default in SDK >=0.21)
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // 2. Generate MCQs using Gemini with strict JSON enforcement and auto-retry
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-2.0-flash",
+            generationConfig: { responseMimeType: "application/json" }
+        });
         const prompt = PROMPT_TEMPLATE.replace("{NEWS_DATA}", newsText);
 
-        const result = await model.generateContent(prompt);
-        let responseText = result.response.text().trim();
+        let quizData: any[] = [];
+        let retries = 0;
         
-        // Cleanup potential markdown wrappers
-        responseText = responseText.replace(/```json/gi, '').replace(/```/g, '').trim();
+        while (retries < 2) {
+            try {
+                const result = await model.generateContent(prompt);
+                const responseText = result.response.text().trim();
+                quizData = JSON.parse(responseText);
 
-        const quizData = JSON.parse(responseText);
-
-        if (!Array.isArray(quizData) || quizData.length === 0) {
-            throw new Error("Invalid format returned by AI");
+                if (Array.isArray(quizData) && quizData.length > 0) {
+                    break; // Success
+                }
+                throw new Error("Invalid format returned by AI: Not a valid Array");
+            } catch (err) {
+                retries++;
+                console.warn(`Gemini Generation Attempt ${retries} failed. Retrying...`, err);
+                if (retries >= 2) throw err; // Bubble up if it truly fails
+                // Short pause before retrying
+                await new Promise(res => setTimeout(res, 800));
+            }
         }
 
         // Return the quiz. Cache with a short-lived header instead of ISR

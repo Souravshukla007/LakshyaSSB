@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { getSession } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 type IncomingMessage = {
   role: 'user' | 'assistant';
@@ -93,6 +95,52 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'AI service is not configured' }, { status: 500 });
     }
 
+    const session = await getSession();
+    if (!session?.userId) {
+      return NextResponse.json({ error: 'Unauthorized. Please login to continue.' }, { status: 401 });
+    }
+
+    // Lookup user to enforce daily limits
+    const user = await prisma.user.findUnique({
+      where: { id: session.userId },
+      select: { is_pro: true }
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    if (!user.is_pro) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const todaysMessageCount = await prisma.chatMessage.count({
+        where: {
+          userId: session.userId,
+          role: 'user',
+          createdAt: {
+            gte: today,
+          },
+        },
+      });
+
+      if (todaysMessageCount >= 3) {
+        return NextResponse.json({
+          error: 'You have reached your free tier limit of 3 conversations per day. Please upgrade to Pro to continue chatting with LakshyaSSB AI Mentor.',
+          reason: 'free_limit_reached'
+        }, { status: 403 });
+      }
+    }
+
+    // Save the User Message to DB
+    await prisma.chatMessage.create({
+      data: {
+        userId: session.userId,
+        role: 'user',
+        content: message
+      }
+    });
+
     const safeHistory = history
       .slice(-5)
       .filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
@@ -155,6 +203,15 @@ export async function POST(request: Request) {
       const reply =
         data?.candidates?.[0]?.content?.parts?.[0]?.text ||
         'I can help with SSB preparation, PIQ, psychology tests, and interview guidance. Please ask your question again briefly.';
+
+      // Save the AI Reply to DB
+      await prisma.chatMessage.create({
+        data: {
+          userId: session.userId,
+          role: 'assistant',
+          content: reply
+        }
+      });
 
       return NextResponse.json({ reply });
     }

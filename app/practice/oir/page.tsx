@@ -22,7 +22,7 @@ async function getExampleQuestions() {
 
     for (const { file, name } of CATEGORIES) {
         try {
-            const filePath = path.join(process.cwd(), file);
+            const filePath = path.join(/*turbopackIgnore: true*/ process.cwd(), file);
             if (fs.existsSync(filePath)) {
                 const fileContent = fs.readFileSync(filePath, 'utf-8');
                 const questions = JSON.parse(fileContent);
