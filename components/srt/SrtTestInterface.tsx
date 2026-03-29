@@ -96,75 +96,47 @@ export default function SrtTestInterface({ questions, onSubmit }: SrtTestInterfa
             </div>
 
             {/* Main Content Area */}
-            <div className="flex-1 grid md:grid-cols-2 gap-6 min-h-0 items-stretch">
+            <div className="flex-1 flex flex-col gap-6 min-h-0 items-stretch">
 
-                {/* Left Column: Question */}
-                <div className="bg-white/90 backdrop-blur-md shadow-card rounded-2xl p-6 md:p-8 border border-gray-100 flex flex-col justify-start">
-                    <h2 className="text-gray-500 font-medium mb-4 text-sm uppercase tracking-wider">Situation {currentIndex + 1}</h2>
-                    <p className="text-2xl md:text-3xl font-medium text-gray-900 leading-relaxed mb-6">
-                        {currentQuestion.question}
-                    </p>
+                {/* Question Area */}
+                <div className="bg-white/90 backdrop-blur-md shadow-card rounded-2xl p-6 md:p-10 border border-gray-100 flex flex-col justify-between h-full relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-48 h-48 bg-orange-50 rounded-bl-full -z-10 opacity-50 mix-blend-multiply"></div>
+                    
+                    <div>
+                        <h2 className="text-gray-500 font-medium mb-4 text-sm uppercase tracking-wider">Situation {currentIndex + 1}</h2>
+                        <p className="text-3xl md:text-4xl font-medium text-gray-900 leading-relaxed mb-10">
+                            {currentQuestion.question}
+                        </p>
+                    </div>
 
-                    <div className="mt-auto hidden md:block opacity-70">
-                        <div className="bg-orange-50 rounded-xl p-4 border border-orange-100/50 mt-8">
-                            <p className="text-sm text-[#F97316] font-medium mb-1">Tips:</p>
-                            <ul className="text-xs text-gray-600 space-y-1">
-                                <li>• Write short, action-oriented points.</li>
-                                <li>• Maximize practical outcomes.</li>
-                                <li>• Don't assume non-existent resources.</li>
-                            </ul>
+                    <div className="mt-auto">
+                        <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between gap-4 flex-wrap">
+                            <button
+                                onClick={handleMarkReview}
+                                className={`px-6 py-3 rounded-xl border font-medium transition-all ${reviewStatus[currentQuestion.id] ? 'border-yellow-200 bg-yellow-50 text-yellow-700' : 'border-gray-200 text-gray-600 hover:bg-gray-50'}`}
+                            >
+                                {reviewStatus[currentQuestion.id] ? 'Unmark Review' : 'Mark Review'}
+                            </button>
+                            <div className="flex gap-4 flex-1 justify-end">
+                                <button
+                                    onClick={handlePrev}
+                                    disabled={currentIndex === 0}
+                                    className="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    Prev
+                                </button>
+                                <button
+                                    onClick={handleNext}
+                                    disabled={currentIndex === questions.length - 1}
+                                    className="bg-[#F97316] hover:bg-[#E06512] text-white py-3 px-8 rounded-xl font-medium shadow-md transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    Next
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Right Column: Interaction */}
-                <div className="bg-white/90 backdrop-blur-md shadow-card rounded-2xl p-6 md:p-8 border border-gray-100 flex flex-col relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-orange-50 rounded-bl-full -z-10 opacity-50 mix-blend-multiply"></div>
-
-                    <label className="block text-gray-700 font-medium mb-3" htmlFor="response">
-                        Your Response
-                    </label>
-                    <textarea
-                        id="response"
-                        value={currentAnswer}
-                        onChange={handleTextareaChange}
-                        placeholder="Write your response in 2–3 lines..."
-                        className="w-full flex-1 bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-800 resize-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent outline-none transition-all shadow-inner text-lg leading-relaxed min-h-[200px]"
-                        maxLength={300}
-                    />
-
-                    <div className="flex justify-between items-center mt-3 text-sm">
-                        <span className={`text-gray-400 ${currentAnswer.length >= 280 ? 'text-orange-500' : ''}`}>
-                            {currentAnswer.length} / 300 characters
-                        </span>
-                        {currentAnswer.length > 0 && <span className="text-[#10B981] flex items-center gap-1"><svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Saved</span>}
-                    </div>
-
-                    <div className="mt-8 flex items-center justify-between gap-4">
-                        <button
-                            onClick={handleMarkReview}
-                            className={`px-6 py-3 rounded-xl border font-medium transition-all ${reviewStatus[currentQuestion.id] ? 'border-yellow-200 bg-yellow-50 text-yellow-700' : 'border-gray-200 text-gray-600 hover:bg-gray-50'}`}
-                        >
-                            {reviewStatus[currentQuestion.id] ? 'Unmark Review' : 'Mark Review'}
-                        </button>
-                        <div className="flex gap-4 flex-1 justify-end">
-                            <button
-                                onClick={handlePrev}
-                                disabled={currentIndex === 0}
-                                className="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                            >
-                                Prev
-                            </button>
-                            <button
-                                onClick={handleNext}
-                                disabled={currentIndex === questions.length - 1}
-                                className="bg-[#F97316] hover:bg-[#E06512] text-white py-3 px-8 rounded-xl font-medium shadow-md transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                Next
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             </div>

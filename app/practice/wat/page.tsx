@@ -276,34 +276,7 @@ export default function WATModule() {
                                     </div>
                                 </div>
 
-                                {/* Input Area */}
-                                <div className="max-w-xl mx-auto mt-4">
-                                    <textarea
-                                        value={response}
-                                        onChange={(e) => setResponse(e.target.value)}
-                                        placeholder="Write one complete sentence..."
-                                        className="w-full h-36 bg-brand-bg border-2 border-gray-100 rounded-2xl p-6 text-xl text-brand-dark focus:outline-none focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 transition-all font-noname resize-none shadow-inner"
-                                        autoFocus
-                                        onKeyDown={(e) => {
-                                            if (e.key === 'Enter' && !e.shiftKey) {
-                                                e.preventDefault();
-                                                handleNextWord();
-                                            }
-                                        }}
-                                    />
 
-                                    <div className="flex justify-between items-center mt-6">
-                                        <div className="text-xs text-gray-400 font-bold tracking-wider uppercase">
-                                            Press <kbd className="px-2 py-1 bg-gray-100 border border-gray-200 rounded-md shadow-sm mx-1">Enter ↵</kbd> to submit
-                                        </div>
-                                        <button
-                                            onClick={handleNextWord}
-                                            className="px-8 py-3.5 rounded-full bg-brand-dark text-white font-bold hover:bg-brand-orange transition-all shadow-lg hover:shadow-brand-orange/40 group flex items-center gap-2"
-                                        >
-                                            Next <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     )}
@@ -321,9 +294,6 @@ export default function WATModule() {
                             ) : (
                                 <>
                                     <div className="text-center mb-12 border-b border-gray-100 pb-12">
-                                        <h1 className="font-hero font-bold text-4xl sm:text-5xl text-brand-dark mb-6">
-                                            WAT Psychological <span className="text-brand-orange">Evaluation</span>
-                                        </h1>
 
                                         <div className="mt-10 flex justify-center">
                                             <div className="bg-brand-bg rounded-[2.5rem] p-10 border border-gray-100 shadow-sm relative">
@@ -388,18 +358,24 @@ export default function WATModule() {
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-col sm:flex-row gap-6 justify-center pt-10 border-t border-gray-100">
+                                    <div className="flex flex-col sm:flex-row gap-4 justify-center pt-10 border-t border-gray-100">
                                         <button
                                             onClick={() => setGameState('start')}
-                                            className="px-12 py-5 rounded-full border-2 border-brand-dark text-brand-dark font-bold text-lg hover:bg-brand-dark hover:text-white transition-all text-center"
+                                            className="px-10 py-4 rounded-full border-2 border-brand-dark text-brand-dark font-bold text-lg hover:bg-brand-dark hover:text-white transition-all hover:-translate-y-0.5 text-center"
                                         >
-                                            <i className="fa-solid fa-rotate-right mr-2"></i> Retake WAT
+                                            <i className="fa-solid fa-rotate-right mr-2"></i> Retake Test
                                         </button>
                                         <Link
                                             href="/practice"
-                                            className="px-12 py-5 rounded-full bg-brand-orange text-white font-bold text-lg hover:bg-[#e06512] transition-all text-center shadow-xl hover:shadow-brand-orange/40 hover:-translate-y-1"
+                                            className="px-10 py-4 rounded-full bg-brand-orange text-white font-bold text-lg hover:bg-[#e06512] transition-all hover:-translate-y-0.5 text-center shadow-xl hover:shadow-brand-orange/40"
                                         >
-                                            Go to Dashboard <i className="fa-solid fa-arrow-right ml-2"></i>
+                                            <i className="fa-solid fa-dumbbell mr-2"></i> Go to Practice
+                                        </Link>
+                                        <Link
+                                            href="/dashboard"
+                                            className="px-10 py-4 rounded-full bg-brand-bg border-2 border-gray-200 text-brand-dark font-bold text-lg hover:border-brand-dark transition-all hover:-translate-y-0.5 text-center"
+                                        >
+                                            <i className="fa-solid fa-house mr-2"></i> Go to Dashboard
                                         </Link>
                                     </div>
                                 </>

@@ -274,11 +274,11 @@ export default function TATPracticePage() {
                             </div>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-6 items-start">
-                            {/* Left: Image Display */}
-                            <div className="bg-white/80 backdrop-blur-md rounded-3xl p-4 border border-gray-100 shadow-lg flex flex-col h-full min-h-[300px]">
+                        <div className="w-full">
+                            {/* Image Display — Full Width */}
+                            <div className="bg-white/80 backdrop-blur-md rounded-3xl p-4 border border-gray-100 shadow-lg flex flex-col">
                                 {tatImages[currentIndex] ? (
-                                    <div className="relative w-full h-full min-h-[300px] md:min-h-[400px] rounded-2xl overflow-hidden bg-gray-100 border border-gray-200">
+                                    <div className="relative w-full min-h-[420px] md:min-h-[520px] rounded-2xl overflow-hidden bg-gray-100 border border-gray-200">
                                         <img
                                             src={tatImages[currentIndex]}
                                             alt={`TAT Image ${currentIndex + 1}`}
@@ -287,7 +287,7 @@ export default function TATPracticePage() {
                                     </div>
                                 ) : (
                                     /* Blank Slide */
-                                    <div className="relative w-full h-full min-h-[300px] md:min-h-[400px] rounded-2xl bg-white border-2 border-dashed border-gray-200 flex flex-col items-center justify-center p-8 text-center">
+                                    <div className="relative w-full min-h-[420px] md:min-h-[520px] rounded-2xl bg-white border-2 border-dashed border-gray-200 flex flex-col items-center justify-center p-8 text-center">
                                         <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center text-orange-500 text-2xl mb-4">
                                             <i className="fa-regular fa-image border-orange-500"></i>
                                         </div>
@@ -307,39 +307,6 @@ export default function TATPracticePage() {
                                     </div>
                                 </div>
                             </div>
-
-                            {/* Right: Story Input */}
-                            <div className="bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-gray-100 shadow-lg flex flex-col h-full mt-4 md:mt-0">
-                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-                                    <i className="fa-solid fa-pen-nib text-orange-500"></i> Write Your Story
-                                </h3>
-
-                                <textarea
-                                    value={story}
-                                    onChange={(e) => setStory(e.target.value)}
-                                    placeholder="Start writing here... Make sure you cover the past, present, and future of the situation with a logical outcome."
-                                    className="w-full flex-1 min-h-[250px] resize-none bg-gray-50/50 border border-gray-200 rounded-2xl p-5 text-gray-700 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all"
-                                    spellCheck="false"
-                                ></textarea>
-
-                                <div className="mt-4 flex items-center justify-between">
-                                    <div className="flex items-center gap-2">
-                                        <span className={`text-xs font-bold px-3 py-1 rounded-full ${wordsCount >= 100 ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-500'}`}>
-                                            {wordsCount} Words
-                                        </span>
-                                        {wordsCount < 100 && (
-                                            <span className="text-[10px] text-gray-400 font-medium">Aim for 100-150 words</span>
-                                        )}
-                                    </div>
-
-                                    <button
-                                        onClick={handleNext}
-                                        className="px-6 py-2.5 bg-gray-900 hover:bg-black text-white text-sm font-bold rounded-xl transition-all shadow-md flex items-center gap-2"
-                                    >
-                                        {currentIndex === tatImages.length - 1 ? 'Submit Test' : 'Next Image'} <i className="fa-solid fa-arrow-right text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
@@ -351,13 +318,7 @@ export default function TATPracticePage() {
                 ════════════════════════════════════════════════════════════════════════ */}
                 {view === 'result' && (
                     <div className="w-full max-w-4xl mx-auto animate-fadeIn">
-                        <div className="text-center mb-10">
-                            <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-2">Test Completed</p>
-                            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">TAT Psychological Analysis</h2>
-                            <p className="text-gray-500 text-sm md:text-base max-w-lg mx-auto">
-                                Based on your 12 stories, our AI has extracted your core Officer Like Qualities and behavioral patterns.
-                            </p>
-                        </div>
+
 
                         <div className="bg-white/90 backdrop-blur-md rounded-[2.5rem] p-6 md:p-10 border border-gray-100 shadow-xl grid md:grid-cols-2 gap-10 items-center overflow-hidden relative">
 
@@ -408,13 +369,25 @@ export default function TATPracticePage() {
                                     </ul>
                                 </div>
 
-                                <div className="pt-4 flex flex-col sm:flex-row gap-3">
-                                    <Link href="/dashboard" className="flex-1 text-center py-3.5 bg-gray-900 hover:bg-black text-white text-sm font-bold rounded-xl transition-all shadow-md shadow-gray-900/20">
-                                        View Dashboard
-                                    </Link>
-                                    <button onClick={handleStart} className="flex-1 text-center py-3.5 bg-orange-50 hover:bg-orange-100 text-orange-600 text-sm font-bold rounded-xl transition-all border border-orange-200 shadow-sm">
-                                        Retake TAT
+                                <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-4 justify-center">
+                                    <button
+                                        onClick={handleStart}
+                                        className="px-10 py-4 rounded-full border-2 border-gray-900 text-gray-900 font-bold text-sm hover:bg-gray-900 hover:text-white transition-all hover:-translate-y-0.5 text-center"
+                                    >
+                                        <i className="fa-solid fa-rotate-right mr-2"></i> Retake Test
                                     </button>
+                                    <Link
+                                        href="/practice"
+                                        className="px-10 py-4 rounded-full bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 transition-all hover:-translate-y-0.5 text-center shadow-xl hover:shadow-orange-500/40"
+                                    >
+                                        <i className="fa-solid fa-dumbbell mr-2"></i> Go to Practice
+                                    </Link>
+                                    <Link
+                                        href="/dashboard"
+                                        className="px-10 py-4 rounded-full bg-gray-50 border-2 border-gray-200 text-gray-900 font-bold text-sm hover:border-gray-900 transition-all hover:-translate-y-0.5 text-center"
+                                    >
+                                        <i className="fa-solid fa-house mr-2"></i> Go to Dashboard
+                                    </Link>
                                 </div>
                             </div>
 

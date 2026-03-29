@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 type SrtResultProps = {
     onRetake: () => void;
@@ -35,7 +36,6 @@ export default function SrtResult({ onRetake, onDashboard }: SrtResultProps) {
 
             <div className="bg-white/90 backdrop-blur-md shadow-card rounded-3xl p-8 mb-8 border border-gray-100 text-center relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-400 to-[#F97316]"></div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-6">SRT Evaluation Report</h1>
 
                 <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
                     <div className="text-center">
@@ -125,19 +125,25 @@ export default function SrtResult({ onRetake, onDashboard }: SrtResultProps) {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
+            <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-4 justify-center mt-10">
                 <button
                     onClick={onRetake}
-                    className="w-full sm:w-auto px-8 py-4 rounded-xl font-medium border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm"
+                    className="px-10 py-4 rounded-full border-2 border-gray-900 text-gray-900 font-bold text-sm hover:bg-gray-900 hover:text-white transition-all hover:-translate-y-0.5 text-center"
                 >
-                    Retake SRT
+                    <i className="fa-solid fa-rotate-right mr-2"></i> Retake Test
                 </button>
-                <button
-                    onClick={onDashboard}
-                    className="w-full sm:w-auto px-8 py-4 rounded-xl font-medium bg-black text-white hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl"
+                <Link
+                    href="/practice"
+                    className="px-10 py-4 rounded-full bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 transition-all hover:-translate-y-0.5 text-center shadow-xl hover:shadow-orange-500/40"
                 >
-                    View Dashboard
-                </button>
+                    <i className="fa-solid fa-dumbbell mr-2"></i> Go to Practice
+                </Link>
+                <Link
+                    href="/dashboard"
+                    className="px-10 py-4 rounded-full bg-gray-50 border-2 border-gray-200 text-gray-900 font-bold text-sm hover:border-gray-900 transition-all hover:-translate-y-0.5 text-center"
+                >
+                    <i className="fa-solid fa-house mr-2"></i> Go to Dashboard
+                </Link>
             </div>
 
         </div>

@@ -178,13 +178,13 @@ export default function GPEPracticePage() {
                             </div>
                         </div>
 
-                        <div className="grid lg:grid-cols-2 gap-6">
-                            {/* Left: Scenario Card */}
-                            <div className="space-y-5">
+                        <div className="flex flex-col gap-6 w-full max-w-5xl mx-auto">
+                            {/* Scenario Grid */}
+                            <div className="grid md:grid-cols-2 gap-5 md:gap-6">
                                 {/* Image Holder */}
-                                <div className="bg-gray-50 rounded-3xl border border-gray-200 shadow-sm overflow-hidden flex items-center justify-center relative">
+                                <div className="bg-gray-50 rounded-3xl border border-gray-200 shadow-sm overflow-hidden flex items-center justify-center relative md:min-h-[400px]">
                                     {scenario.image ? (
-                                        <img src={scenario.image} alt={scenario.title} className="w-full h-auto object-contain rounded-3xl" />
+                                        <img src={scenario.image} alt={scenario.title} className="w-full h-full object-contain rounded-3xl p-2" />
                                     ) : (
                                         <div className="flex flex-col items-center justify-center text-gray-400 py-16">
                                             <i className="fa-solid fa-map text-4xl mb-3" />
@@ -194,75 +194,52 @@ export default function GPEPracticePage() {
                                 </div>
 
                                 {/* Situation */}
-                                <div className="bg-white/90 rounded-3xl p-6 border border-gray-100 shadow-sm">
+                                <div className="bg-white/90 rounded-3xl p-6 md:p-8 border border-gray-100 shadow-sm flex flex-col">
                                     <div className="flex items-center justify-between mb-4">
                                         <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest">Situation</h3>
                                         <span className={`text-[10px] font-bold px-3 py-1 rounded-full border ${difficultyColor(scenario.difficulty)}`}>
                                             {scenario.difficulty}
                                         </span>
                                     </div>
-                                    <p className="text-sm text-gray-600 leading-relaxed font-medium">{scenario.situation}</p>
+                                    <p className="text-sm text-gray-600 leading-relaxed font-medium whitespace-pre-wrap">{scenario.situation}</p>
                                 </div>
 
                                 {/* How to solve */}
-                                <div className="bg-orange-50 rounded-3xl p-6 border border-orange-100">
+                                <div className="bg-orange-50 rounded-3xl p-6 md:p-8 border border-orange-100 flex flex-col">
                                     <h3 className="text-sm font-bold text-orange-900 uppercase tracking-widest mb-4 flex items-center gap-2">
                                         <i className="fa-solid fa-lightbulb text-orange-500" /> How to solve
                                     </h3>
-                                    <ul className="space-y-2 text-sm text-gray-700 font-medium">
-                                        <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Aim</li>
-                                        <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Identify problems (set priorities)</li>
-                                        <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Resources (visible, hidden)</li>
-                                        <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Time and space</li>
-                                        <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Solution</li>
+                                    <ul className="space-y-4 text-sm text-gray-700 font-medium">
+                                        <li className="flex gap-3 items-center"><span className="text-orange-500 font-bold">•</span> Aim</li>
+                                        <li className="flex gap-3 items-center"><span className="text-orange-500 font-bold">•</span> Identify problems (set priorities)</li>
+                                        <li className="flex gap-3 items-center"><span className="text-orange-500 font-bold">•</span> Resources (visible, hidden)</li>
+                                        <li className="flex gap-3 items-center"><span className="text-orange-500 font-bold">•</span> Time and space</li>
+                                        <li className="flex gap-3 items-center"><span className="text-orange-500 font-bold">•</span> Solution</li>
                                     </ul>
                                 </div>
 
                                 {/* Speed of Advance */}
-                                <div className="bg-blue-50/60 rounded-3xl p-6 border border-blue-100">
+                                <div className="bg-blue-50/60 rounded-3xl p-6 md:p-8 border border-blue-100 flex flex-col">
                                     <h3 className="text-sm font-bold text-blue-900 uppercase tracking-widest mb-4 flex items-center gap-2">
                                         <i className="fa-solid fa-gauge-high text-blue-500" /> Speed of Advance
                                     </h3>
-                                    <ul className="space-y-2 text-sm text-gray-700 font-medium font-mono text-[11px] leading-tight flex flex-col gap-1">
-                                        <li className="flex gap-2 items-center"><i className="fa-solid fa-car text-blue-400 w-4"/> MOTOR VEHICLE ON METAL ROAD - <span className="font-bold text-blue-900">40Kmph</span></li>
-                                        <li className="flex gap-2 items-center"><i className="fa-solid fa-ship text-blue-400 w-4"/> MOTOR BOAT - <span className="font-bold text-blue-900">12Kmph</span></li>
-                                        <li className="flex gap-2 items-center"><i className="fa-solid fa-person-walking text-blue-400 w-4"/> WALKING/RUNNING - <span className="font-bold text-blue-900">6-8Kmph</span></li>
-                                        <li className="flex gap-2 items-center"><i className="fa-solid fa-bicycle text-blue-400 w-4"/> CYCLE - <span className="font-bold text-blue-900">15Kmph</span></li>
-                                        <li className="flex gap-2 items-center"><i className="fa-solid fa-tractor text-blue-400 w-4"/> TRACTOR - <span className="font-bold text-blue-900">30Kmph</span></li>
+                                    <ul className="space-y-4 text-sm text-gray-700 font-medium font-mono text-[12px] leading-tight flex flex-col justify-center flex-1">
+                                        <li className="flex gap-3 items-center"><i className="fa-solid fa-car text-blue-400 w-5 text-center"/> MOTOR VEHICLE ON METAL ROAD - <span className="font-bold text-blue-900 ml-auto">40Kmph</span></li>
+                                        <li className="flex gap-3 items-center"><i className="fa-solid fa-ship text-blue-400 w-5 text-center"/> MOTOR BOAT - <span className="font-bold text-blue-900 ml-auto">12Kmph</span></li>
+                                        <li className="flex gap-3 items-center"><i className="fa-solid fa-person-walking text-blue-400 w-5 text-center"/> WALKING/RUNNING - <span className="font-bold text-blue-900 ml-auto">6-8Kmph</span></li>
+                                        <li className="flex gap-3 items-center"><i className="fa-solid fa-bicycle text-blue-400 w-5 text-center"/> CYCLE - <span className="font-bold text-blue-900 ml-auto">15Kmph</span></li>
+                                        <li className="flex gap-3 items-center"><i className="fa-solid fa-tractor text-blue-400 w-5 text-center"/> TRACTOR - <span className="font-bold text-blue-900 ml-auto">30Kmph</span></li>
                                     </ul>
                                 </div>
-                            </div>
-
-                            {/* Right: Text Areas */}
-                            <div className="bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-gray-100 shadow-lg flex flex-col gap-5">
-                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest flex items-center gap-2">
-                                    <i className="fa-solid fa-pen-nib text-orange-500" /> Plan Your Solution
-                                </h3>
-
-                                {[
-                                    { label: '1. Identify Problems', placeholder: 'List the key problems in order of priority. Explain why each is critical and what immediate risk it carries...', value: identifyProblems, setter: setIdentifyProblems },
-                                    { label: '2. Action Plan', placeholder: 'Describe your step-by-step action plan. Assign team members to specific tasks, state the sequence and justify your resource allocation...', value: actionPlan, setter: setActionPlan },
-                                    { label: '3. Time Management Strategy', placeholder: 'Break down your 20-minute window into phases. What happens in the first 5 minutes, next 10, and final phase?', value: timeManagement, setter: setTimeManagement },
-                                ].map(({ label, placeholder, value, setter }) => (
-                                    <div key={label}>
-                                        <label className="block text-xs font-bold text-gray-700 mb-2">{label}</label>
-                                        <textarea
-                                            value={value}
-                                            onChange={e => setter(e.target.value)}
-                                            placeholder={placeholder}
-                                            rows={4}
-                                            className="w-full resize-none bg-gray-50/50 border border-gray-200 rounded-2xl p-4 text-gray-700 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all"
-                                            spellCheck={false}
-                                        />
-                                    </div>
-                                ))}
-
-                                <button
-                                    onClick={handleSubmit}
-                                    className="mt-auto px-6 py-3 bg-gray-900 hover:bg-black text-white text-sm font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
-                                >
-                                    Submit Plan <i className="fa-solid fa-arrow-right text-xs" />
-                                </button>
+                                
+                                <div className="md:col-span-2 pt-4 flex justify-end">
+                                    <button
+                                        onClick={handleSubmit}
+                                        className="px-8 py-4 bg-gray-900 hover:bg-black text-white text-sm font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
+                                    >
+                                        Finish Scenario <i className="fa-solid fa-arrow-right text-xs" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -271,13 +248,7 @@ export default function GPEPracticePage() {
                 {/* ── RESULT VIEW ── */}
                 {view === 'result' && scenario && (
                     <div className="w-full max-w-4xl mx-auto">
-                        <div className="text-center mb-10">
-                            <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-2">Exercise Completed</p>
-                            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">GPE Analysis</h2>
-                            <p className="text-gray-500 text-sm md:text-base max-w-lg mx-auto">
-                                Your plan for <strong>{scenario.title}</strong> has been recorded.
-                            </p>
-                        </div>
+
 
                         <div className="bg-white/90 backdrop-blur-md rounded-[2.5rem] p-6 md:p-10 border border-gray-100 shadow-xl space-y-8">
                             <div className="flex items-center justify-between pb-6 border-b border-gray-100">
@@ -290,28 +261,27 @@ export default function GPEPracticePage() {
                                 </span>
                             </div>
 
-                            {[
-                                { label: '1. Problem Identification', value: identifyProblems, icon: 'fa-list-check' },
-                                { label: '2. Action Plan', value: actionPlan, icon: 'fa-route' },
-                                { label: '3. Time Management Strategy', value: timeManagement, icon: 'fa-clock' },
-                            ].map(({ label, value, icon }) => (
-                                <div key={label} className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
-                                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                        <i className={`fa-solid ${icon} text-orange-500`} /> {label}
-                                    </h4>
-                                    <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
-                                        {value || <span className="italic text-gray-400">No answer provided.</span>}
-                                    </p>
-                                </div>
-                            ))}
 
-                            <div className="pt-4 flex flex-col sm:flex-row gap-3">
-                                <Link href="/dashboard" className="flex-1 text-center py-3.5 bg-gray-900 hover:bg-black text-white text-sm font-bold rounded-xl transition-all shadow-md">
-                                    View Dashboard
-                                </Link>
-                                <button onClick={handleStart} className="flex-1 text-center py-3.5 bg-orange-50 hover:bg-orange-100 text-orange-600 text-sm font-bold rounded-xl transition-all border border-orange-200 shadow-sm">
-                                    Try Another Scenario
+
+                            <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-4 justify-center">
+                                <button
+                                    onClick={handleStart}
+                                    className="px-10 py-4 rounded-full border-2 border-gray-900 text-gray-900 font-bold text-sm hover:bg-gray-900 hover:text-white transition-all hover:-translate-y-0.5 text-center"
+                                >
+                                    <i className="fa-solid fa-rotate-right mr-2"></i> Try Another Scenario
                                 </button>
+                                <Link
+                                    href="/practice"
+                                    className="px-10 py-4 rounded-full bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 transition-all hover:-translate-y-0.5 text-center shadow-xl hover:shadow-orange-500/40"
+                                >
+                                    <i className="fa-solid fa-dumbbell mr-2"></i> Go to Practice
+                                </Link>
+                                <Link
+                                    href="/dashboard"
+                                    className="px-10 py-4 rounded-full bg-gray-50 border-2 border-gray-200 text-gray-900 font-bold text-sm hover:border-gray-900 transition-all hover:-translate-y-0.5 text-center"
+                                >
+                                    <i className="fa-solid fa-house mr-2"></i> Go to Dashboard
+                                </Link>
                             </div>
                         </div>
                     </div>
