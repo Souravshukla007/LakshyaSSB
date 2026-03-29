@@ -220,11 +220,12 @@ function NavButtons({
 // STEP 1 — BMI CALCULATOR
 // ══════════════════════════════════════════════════════════════════════════════
 function Step1BMI({
-    height, setHeight, weight, setWeight, onNext,
+    height, setHeight, weight, setWeight, onNext, nextLabel = "Continue to Vision Check"
 }: {
     height: string; setHeight: (v: string) => void;
     weight: string; setWeight: (v: string) => void;
     onNext: () => void;
+    nextLabel?: string;
 }) {
     const h = parseFloat(height);
     const w = parseFloat(weight);
@@ -297,7 +298,7 @@ function Step1BMI({
                 )}
             </div>
 
-            <NavButtons onBack={() => { }} onNext={onNext} nextLabel="Continue to Vision Check" backDisabled />
+            <NavButtons onBack={() => { }} onNext={onNext} nextLabel={nextLabel} backDisabled />
         </div>
     );
 }
@@ -964,7 +965,14 @@ export default function MedicalSimulator() {
                                 <Step1BMI
                                     height={height} setHeight={setHeight}
                                     weight={weight} setWeight={setWeight}
-                                    onNext={next}
+                                    onNext={() => {
+                                        if (!isLoggedIn) {
+                                            router.push('/auth');
+                                            return;
+                                        }
+                                        next();
+                                    }}
+                                    nextLabel={isLoggedIn ? "Continue to Vision Check" : "Sign in to Vision Check"}
                                 />
                             )}
                             {step === 1 && (

@@ -91,11 +91,11 @@ export default function Home() {
                                     {/* Overlay Info Card */}
                                     <div className="absolute bottom-6 left-6 right-6 glass-card p-6 rounded-2xl border border-white/40 flex items-center justify-between">
                                         <div>
-                                            <div className="text-[10px] text-brand-orange uppercase font-bold tracking-widest mb-1">Next Batch Starting</div>
-                                            <div className="text-lg font-bold text-brand-dark">1st March 2026</div>
+                                            <div className="text-[10px] text-brand-orange uppercase font-bold tracking-widest mb-1">Lakshya SSB</div>
+                                            <div className="text-lg font-hero font-bold text-brand-dark">Prepare. Perform. <span className="text-brand-orange">Prevail.</span></div>
                                         </div>
                                         <div className="flex flex-col items-end">
-                                            <div className="text-[10px] text-gray-400 font-bold mb-1">Limited Seats</div>
+                                            <div className="text-sm text-brand-dark font-bold mb-1 font-hero tracking-wide">वीर भोग्या वसुंधरा</div>
                                             <div className="flex gap-1 text-brand-yellow text-[10px]">
                                                 <i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i>
                                             </div>
@@ -155,12 +155,12 @@ export default function Home() {
                                 <div className="absolute left-[23px] top-0 bottom-0 w-[2px] bg-gray-200 z-0 lg:hidden"></div>
 
                                 {/* Day 1 */}
-                                <Link href="/ssb/day-1" className="group cursor-pointer reveal-scale relative z-10">
-                                    <div className="flex flex-col items-center lg:items-start">
+                                <Link href="/ssb/day-1" className="group cursor-pointer reveal-scale relative z-10 h-full">
+                                    <div className="flex flex-col items-center lg:items-start h-full">
                                         <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300 relative">
                                             1
                                         </div>
-                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full">
+                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full flex-1">
                                             <div className="flex justify-between items-start mb-4">
                                                 <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Day 1</span>
                                                 <i className="fa-solid fa-id-card-clip text-gray-300 group-hover:text-brand-orange transition-colors"></i>
@@ -172,12 +172,12 @@ export default function Home() {
                                 </Link>
 
                                 {/* Day 2 */}
-                                <Link href="/ssb/day-2" className="group cursor-pointer reveal-scale delay-100 relative z-10">
-                                    <div className="flex flex-col items-center lg:items-start">
+                                <Link href="/ssb/day-2" className="group cursor-pointer reveal-scale delay-100 relative z-10 h-full">
+                                    <div className="flex flex-col items-center lg:items-start h-full">
                                         <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300">
                                             2
                                         </div>
-                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full">
+                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full flex-1">
                                             <div className="flex justify-between items-start mb-4">
                                                 <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Day 2</span>
                                                 <i className="fa-solid fa-brain text-gray-300 group-hover:text-brand-orange transition-colors"></i>
@@ -189,12 +189,12 @@ export default function Home() {
                                 </Link>
 
                                 {/* Day 3 */}
-                                <Link href="/ssb/day-3" className="group cursor-pointer reveal-scale delay-200 relative z-10">
-                                    <div className="flex flex-col items-center lg:items-start">
+                                <Link href="/ssb/day-3" className="group cursor-pointer reveal-scale delay-200 relative z-10 h-full">
+                                    <div className="flex flex-col items-center lg:items-start h-full">
                                         <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300">
                                             3
                                         </div>
-                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full">
+                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full flex-1">
                                             <div className="flex justify-between items-start mb-4">
                                                 <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Day 3</span>
                                                 <i className="fa-solid fa-users-gear text-gray-300 group-hover:text-brand-orange transition-colors"></i>
@@ -206,12 +206,12 @@ export default function Home() {
                                 </Link>
 
                                 {/* Day 4 */}
-                                <Link href="/ssb/day-4" className="group cursor-pointer reveal-scale delay-300 relative z-10">
-                                    <div className="flex flex-col items-center lg:items-start">
+                                <Link href="/ssb/day-4" className="group cursor-pointer reveal-scale delay-300 relative z-10 h-full">
+                                    <div className="flex flex-col items-center lg:items-start h-full">
                                         <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300">
                                             4
                                         </div>
-                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full">
+                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full flex-1">
                                             <div className="flex justify-between items-start mb-4">
                                                 <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Day 4</span>
                                                 <i className="fa-solid fa-person-military-pointing text-gray-300 group-hover:text-brand-orange transition-colors"></i>
@@ -223,12 +223,12 @@ export default function Home() {
                                 </Link>
 
                                 {/* Day 5 */}
-                                <Link href="/ssb/day-5" className="group cursor-pointer reveal-scale delay-400 relative z-10">
-                                    <div className="flex flex-col items-center lg:items-start">
+                                <Link href="/ssb/day-5" className="group cursor-pointer reveal-scale delay-400 relative z-10 h-full">
+                                    <div className="flex flex-col items-center lg:items-start h-full">
                                         <div className="w-12 h-12 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold mb-6 border-4 border-brand-bg group-hover:bg-brand-orange transition-colors duration-300">
                                             5
                                         </div>
-                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full">
+                                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-brand-orange/30 group-hover:-translate-y-2 transition-all duration-300 w-full flex-1">
                                             <div className="flex justify-between items-start mb-4">
                                                 <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Day 5</span>
                                                 <i className="fa-solid fa-trophy text-gray-300 group-hover:text-brand-orange transition-colors"></i>

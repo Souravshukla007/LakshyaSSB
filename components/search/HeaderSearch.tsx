@@ -23,7 +23,20 @@ export default function HeaderSearch() {
     const normalizedQuery = query.trim().toLowerCase();
     const results = useMemo(() => {
         if (!normalizedQuery) return searchItems;
-        return searchItems.filter((item) => item.title.toLowerCase().includes(normalizedQuery));
+        
+        const queryTokens = normalizedQuery.split(' ').filter(Boolean);
+
+        return searchItems.filter((item) => {
+            const titleMatch = item.title.toLowerCase().includes(normalizedQuery);
+            const categoryMatch = item.category.toLowerCase().includes(normalizedQuery);
+            
+            const keywordMatch = item.keywords?.some((keyword) => {
+                const lowerK = keyword.toLowerCase();
+                return lowerK.includes(normalizedQuery) || queryTokens.some(token => lowerK.includes(token));
+            });
+
+            return titleMatch || categoryMatch || keywordMatch;
+        });
     }, [normalizedQuery]);
 
     const openSearch = () => {

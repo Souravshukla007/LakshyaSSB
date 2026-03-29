@@ -151,10 +151,10 @@ export default function LakshyaAIMentor() {
                         }
                         setIsOpen((v) => !v);
                     }}
-                    className="w-14 h-14 rounded-full bg-brand-dark text-white shadow-2xl hover:shadow-brand-orange/30 hover:scale-105 transition-all duration-300 flex items-center justify-center"
+                    className="w-14 h-14 rounded-full bg-white shadow-2xl border-2 border-brand-orange hover:shadow-brand-orange/30 hover:scale-105 transition-all duration-300 flex items-center justify-center overflow-hidden"
                     aria-label="Ask Lakshya AI Mentor"
                 >
-                    <i className="fa-solid fa-comment-dots text-lg" />
+                    <img src="/chatBot_logo/chat_lakshya.png" alt="Lakshya AI Mentor" className="w-[90%] h-[90%] object-contain rounded-full" />
                 </button>
                 <div className="hidden sm:block pointer-events-none absolute right-16 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brand-dark text-white text-xs font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg">
                     Ask Lakshya AI Mentor
@@ -200,8 +200,8 @@ export default function LakshyaAIMentor() {
                             {messages.map((msg, idx) => (
                                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                     {msg.role === 'assistant' && (
-                                        <div className="w-7 h-7 rounded-full bg-brand-orange/15 text-brand-orange flex items-center justify-center text-xs mr-2 mt-1 shrink-0">
-                                            <i className="fa-solid fa-robot" />
+                                        <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center overflow-hidden mr-2 shrink-0 bg-white">
+                                            <img src="/chatBot_logo/chat_lakshya.png" alt="AI Mentor" className="w-[90%] h-[90%] object-contain" />
                                         </div>
                                     )}
                                     <div
@@ -217,9 +217,9 @@ export default function LakshyaAIMentor() {
                             ))}
 
                             {isLoading && (
-                                <div className="flex justify-start">
-                                    <div className="w-7 h-7 rounded-full bg-brand-orange/15 text-brand-orange flex items-center justify-center text-xs mr-2 mt-1 shrink-0">
-                                        <i className="fa-solid fa-robot" />
+                                <div className="flex justify-start items-end">
+                                    <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center overflow-hidden mr-2 shrink-0 bg-white">
+                                        <img src="/chatBot_logo/chat_lakshya.png" alt="AI Mentor" className="w-[90%] h-[90%] object-contain" />
                                     </div>
                                     <div className="bg-gray-100 px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
                                         <div className="flex items-center gap-1">
