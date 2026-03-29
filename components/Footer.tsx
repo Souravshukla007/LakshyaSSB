@@ -14,7 +14,7 @@ export default function Footer() {
                 <div className="col-span-1 md:col-span-1">
                     <div className="flex items-center gap-2 mb-6">
                         <span className="text-3xl font-logo font-black text-white tracking-tight">
-                            Lakshya <span className="text-brand-orange">SSB</span>
+                            Lakshya<span className="text-brand-orange">SSB</span>
                         </span>
                     </div>
                     <p className="text-gray-500 leading-relaxed">

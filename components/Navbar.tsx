@@ -125,7 +125,7 @@ export default function Navbar() {
                     <div className="flex items-center gap-12">
                         <Link href="/" className="flex items-center gap-2">
                             <span className="text-3xl font-logo font-black text-brand-dark tracking-tight">
-                                Lakshya <span className="text-brand-orange">SSB</span>
+                                Lakshya<span className="text-brand-orange">SSB</span>
                             </span>
                         </Link>
 
