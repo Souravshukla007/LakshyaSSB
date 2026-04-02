@@ -9,11 +9,11 @@ interface ApkDownloadModalProps {
 
 export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalProps) {
     // Configurable info for the APK
-    const apkVersion = "1.0.0";
-    const apkSize = "18.5 MB";
-    const lastUpdated = "Oct 25, 2026";
+    const apkVersion = "1.1.1";
+    const apkSize = "25.2 MB";
+    const lastUpdated = "Apr 2, 2026";
     // Assuming the APK is placed in the public/downloads folder
-    const apkDownloadUrl = "/downloads/LakshyaSSB_v1.0.0.apk";
+    const apkDownloadUrl = "/downloads/LakshyaSSB_v1.1.1.apk";
 
     // Close on escape key
     useEffect(() => {
