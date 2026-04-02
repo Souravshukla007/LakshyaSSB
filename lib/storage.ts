@@ -25,8 +25,9 @@ export async function getStoredNews(): Promise<CurrentAffairItem[]> {
             take: 50,
         });
 
-        // Map DB models to interface
-        if (dbArticles.length > 0) {
+        // Use DB articles only if we have a meaningful number (≥3)
+        // This prevents showing a near-empty DB while seed data has more content
+        if (dbArticles.length >= 3) {
             return dbArticles.map(a => ({
                 id: a.id,
                 title: a.title,
@@ -41,12 +42,19 @@ export async function getStoredNews(): Promise<CurrentAffairItem[]> {
             }));
         }
 
-        // Fallback: If DB is empty, read the dummy seed data
+        // Fallback: If DB is empty/stale, read the updated seed data
+        console.log('[storage] DB has < 3 articles, falling back to seed JSON');
         const fileContent = await fs.readFile(STORAGE_FILE, 'utf-8');
         return JSON.parse(fileContent);
     } catch (error) {
         console.error('Error in getStoredNews:', error);
-        return [];
+        // Last resort: try reading seed file directly
+        try {
+            const fileContent = await fs.readFile(STORAGE_FILE, 'utf-8');
+            return JSON.parse(fileContent);
+        } catch {
+            return [];
+        }
     }
 }
 

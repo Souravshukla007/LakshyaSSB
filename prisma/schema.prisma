@@ -349,6 +349,7 @@ model CurrentAffair {
   title              String   @unique
   category           String
   date               String
+  url                String?  @db.Text
   summary            String   @db.Text
   ssb_importance     String   @db.Text
   gd_topic           String   @db.Text
