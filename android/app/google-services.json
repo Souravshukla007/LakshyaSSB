@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "822781441102",
+    "project_id": "lakshyassb-f85c5",
+    "storage_bucket": "lakshyassb-f85c5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822781441102:android:d6db1c5ad2576bbd1e7f1f",
+        "android_client_info": {
+          "package_name": "in.lakshyassb.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKQcCnwwZP2crLqXYceMPhMTmdAcwjmHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

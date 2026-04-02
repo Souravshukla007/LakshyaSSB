@@ -4,4 +4,7 @@
     <string name="title_activity_main">Lakshya SSB</string>
     <string name="package_name">in.lakshyassb.app</string>
     <string name="custom_url_scheme">in.lakshyassb.app</string>
+    <!-- The Google Auth plugin uses this for the server-side validation -->
+    <!-- You need to find your Web Client ID in the Google Cloud Console or Firebase Authentication settings -->
+    <string name="server_client_id">822781441102-hssrs7efk670i9o8m9nes0b3gp16b8br.apps.googleusercontent.com</string>
 </resources>

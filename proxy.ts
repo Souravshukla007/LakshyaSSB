@@ -22,7 +22,7 @@ const PRO_PROTECTED = [
     // If there are tests under /ssb, they would be protected.
 ];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Slide the session expiry window forward on every request

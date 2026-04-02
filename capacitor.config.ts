@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.lakshyassb.app',
+  appId: 'in.lakshyassb.app',
   appName: 'Lakshya SSB',
   // Web asset dir is ignored when server.url is set, but required by type
   webDir: 'public',
@@ -16,9 +16,16 @@ const config: CapacitorConfig = {
     ]
   },
   android: {
-    allowMixedContent: true
+    allowMixedContent: true,
+    // Fix for "Error 403: disallowed_useragent" when using Google Auth in a WebView
+    overrideUserAgent: 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36'
   },
   plugins: {
+    GoogleAuth: {
+      scopes: ["profile", "email"],
+      serverClientId: "822781441102-hssrs7efk670i9o8m9nes0b3gp16b8br.apps.googleusercontent.com",
+      forceCodeForRefreshToken: true,
+    },
     SplashScreen: {
       launchShowDuration: 3000,
       launchAutoHide: true,

@@ -1,10 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+
+# android build artifacts
+android/.idea/
+android/.gradle/
+android/app/build/
+android/build/
 
 # testing
 /coverage

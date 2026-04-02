@@ -3,6 +3,8 @@
 import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { GoogleAuth } from '@capacitor-community/google-auth';
+import { Capacitor } from '@capacitor/core';
 
 function AuthContent() {
     const searchParams = useSearchParams();
@@ -19,10 +21,47 @@ function AuthContent() {
         }
     }, [searchParams]);
 
-    const handleGoogleLogin = () => {
+    const handleGoogleLogin = async () => {
         setLoading(true);
         setMessage(null);
-        window.location.href = '/api/auth/google';
+        try {
+            if (Capacitor.isNativePlatform()) {
+                // ✅ Native Android/iOS: bypasses WebView — uses official Google Sign-In sheet
+                const { GoogleAuth } = await import('@capacitor-community/google-auth');
+                const nativeUser = await GoogleAuth.signIn();
+                const idToken = nativeUser.authentication.idToken;
+
+                if (!idToken) {
+                    throw new Error('No idToken received from Google');
+                }
+
+                // Send the idToken to our backend to verify and create a session
+                const response = await fetch('/api/auth/google/native', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idToken }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    setMessage({ type: 'success', text: `Welcome back, ${data.user.fullName}!` });
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1000);
+                } else {
+                    throw new Error(data.error || 'Native Google login failed');
+                }
+            } else {
+                // ✅ Web browser: standard OAuth redirect (works fine outside WebView)
+                window.location.href = '/api/auth/google';
+            }
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Google login failed. Please try again.';
+            console.error('Google Auth Error:', error);
+            setMessage({ type: 'error', text: errorMessage });
+            setLoading(false);
+        }
     };
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
