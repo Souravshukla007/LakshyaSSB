@@ -9,6 +9,7 @@ interface NewsCardProps {
         title: string;
         category: string;
         date: string;
+        url?: string;
         summary: string;
         ssb_importance: string;
         gd_topic: string;
@@ -77,9 +78,23 @@ export default function NewsCard({ data, isTopNews }: NewsCardProps) {
             </div>
 
             {/* Action */}
-            <button className="w-full py-3 bg-brand-dark text-white rounded-xl font-bold text-sm text-center hover:bg-brand-orange transition-all duration-300 hover:shadow-glow">
-                Read More
-            </button>
+            {data?.url ? (
+                <a
+                    href={data.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3 bg-brand-dark text-white rounded-xl font-bold text-sm text-center hover:bg-brand-orange transition-all duration-300 hover:shadow-glow flex items-center justify-center gap-2"
+                >
+                    Read More
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+            ) : (
+                <button className="w-full py-3 bg-brand-dark text-white rounded-xl font-bold text-sm text-center hover:bg-brand-orange transition-all duration-300 hover:shadow-glow">
+                    Read More
+                </button>
+            )}
         </div>
     );
 }

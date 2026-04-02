@@ -9,6 +9,7 @@ export interface CurrentAffairItem {
     title: string;
     category: string;
     date: string;
+    url?: string;           // Source article URL (from GNews)
     summary: string;
     ssb_importance: string;
     gd_topic: string;
@@ -31,6 +32,7 @@ export async function getStoredNews(): Promise<CurrentAffairItem[]> {
                 title: a.title,
                 category: a.category,
                 date: a.date,
+                url: (a as any).url || undefined,
                 summary: a.summary,
                 ssb_importance: a.ssb_importance,
                 gd_topic: a.gd_topic,
@@ -57,6 +59,7 @@ export async function storeNewArticles(newArticles: CurrentAffairItem[]) {
             title: a.title,
             category: a.category,
             date: a.date,
+            url: a.url || null,
             summary: a.summary,
             ssb_importance: a.ssb_importance,
             gd_topic: a.gd_topic,
