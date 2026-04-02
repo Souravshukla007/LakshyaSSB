@@ -27,7 +27,9 @@ interface GoogleUserInfo {
  * and either logs in an existing user or creates a new one.
  */
 export async function GET(request: NextRequest) {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const host = request.headers.get('host');
+    const protocol = request.headers.get('x-forwarded-proto') || 'https';
+    const baseUrl = host ? `${protocol}://${host}` : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000');
 
     try {
         const { searchParams } = new URL(request.url);
@@ -64,7 +66,7 @@ export async function GET(request: NextRequest) {
                 code,
                 client_id: process.env.GOOGLE_CLIENT_ID!,
                 client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-                redirect_uri: process.env.GOOGLE_REDIRECT_URI!,
+                redirect_uri: host ? `${protocol}://${host}/api/auth/google/callback` : process.env.GOOGLE_REDIRECT_URI!,
                 grant_type: 'authorization_code',
             }),
         });

@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
@@ -7,9 +7,15 @@ export const dynamic = 'force-dynamic';
  * GET /api/auth/google
  * Redirects the user to Google's OAuth 2.0 consent screen.
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
     const clientId = process.env.GOOGLE_CLIENT_ID;
-    const redirectUri = process.env.GOOGLE_REDIRECT_URI;
+    
+    const host = request.headers.get('host');
+    const protocol = request.headers.get('x-forwarded-proto') || 'https';
+    
+    // Dynamically resolve redirect URI to match the exact domain the user is visiting,
+    // falling back to environment variable if domain cannot be resolved.
+    const redirectUri = host ? `${protocol}://${host}/api/auth/google/callback` : process.env.GOOGLE_REDIRECT_URI;
 
     if (!clientId || !redirectUri) {
         return NextResponse.json(
