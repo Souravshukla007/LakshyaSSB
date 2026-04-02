@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { signSession } from '@/lib/auth';
+import { getAppBaseUrl, getGoogleRedirectUri } from '@/lib/google-oauth';
 
 interface GoogleTokenResponse {
     access_token: string;
@@ -27,10 +28,8 @@ interface GoogleUserInfo {
  * and either logs in an existing user or creates a new one.
  */
 export async function GET(request: NextRequest) {
-    const host = request.headers.get('host');
-    const isLocalhost = host?.includes('localhost') || host?.includes('127.0.0.1') || !!host?.match(/^\d+\.\d+\.\d+\.\d+/);
-    const protocol = request.headers.get('x-forwarded-proto') || (isLocalhost ? 'http' : 'https');
-    const baseUrl = host ? `${protocol}://${host}` : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000');
+    const baseUrl = getAppBaseUrl(request);
+    const redirectUri = getGoogleRedirectUri(request);
 
     try {
         const { searchParams } = new URL(request.url);
@@ -67,7 +66,7 @@ export async function GET(request: NextRequest) {
                 code,
                 client_id: process.env.GOOGLE_CLIENT_ID!,
                 client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-                redirect_uri: host ? `${protocol}://${host}/api/auth/google/callback` : process.env.GOOGLE_REDIRECT_URI!,
+                redirect_uri: redirectUri,
                 grant_type: 'authorization_code',
             }),
         });

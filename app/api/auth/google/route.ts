@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { getGoogleRedirectUri } from '@/lib/google-oauth';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,14 +10,10 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET(request: NextRequest) {
     const clientId = process.env.GOOGLE_CLIENT_ID;
-    
-    const host = request.headers.get('host');
-    const isLocalhost = host?.includes('localhost') || host?.includes('127.0.0.1') || !!host?.match(/^\d+\.\d+\.\d+\.\d+/);
-    const protocol = request.headers.get('x-forwarded-proto') || (isLocalhost ? 'http' : 'https');
-    
-    // Dynamically resolve redirect URI to match the exact domain the user is visiting,
-    // falling back to environment variable if domain cannot be resolved.
-    const redirectUri = host ? `${protocol}://${host}/api/auth/google/callback` : process.env.GOOGLE_REDIRECT_URI;
+    const redirectUri = getGoogleRedirectUri(request);
+
+    // 🔍 Debug: visible in Vercel logs — verify this matches your Google Cloud Console URI exactly
+    console.log('[google-oauth] redirectUri sent to Google:', redirectUri);
 
     if (!clientId || !redirectUri) {
         return NextResponse.json(
