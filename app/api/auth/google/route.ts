@@ -11,7 +11,8 @@ export async function GET(request: NextRequest) {
     const clientId = process.env.GOOGLE_CLIENT_ID;
     
     const host = request.headers.get('host');
-    const protocol = request.headers.get('x-forwarded-proto') || 'https';
+    const isLocalhost = host?.includes('localhost') || host?.includes('127.0.0.1') || !!host?.match(/^\d+\.\d+\.\d+\.\d+/);
+    const protocol = request.headers.get('x-forwarded-proto') || (isLocalhost ? 'http' : 'https');
     
     // Dynamically resolve redirect URI to match the exact domain the user is visiting,
     // falling back to environment variable if domain cannot be resolved.

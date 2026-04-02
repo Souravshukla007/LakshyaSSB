@@ -28,7 +28,8 @@ interface GoogleUserInfo {
  */
 export async function GET(request: NextRequest) {
     const host = request.headers.get('host');
-    const protocol = request.headers.get('x-forwarded-proto') || 'https';
+    const isLocalhost = host?.includes('localhost') || host?.includes('127.0.0.1') || !!host?.match(/^\d+\.\d+\.\d+\.\d+/);
+    const protocol = request.headers.get('x-forwarded-proto') || (isLocalhost ? 'http' : 'https');
     const baseUrl = host ? `${protocol}://${host}` : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000');
 
     try {
