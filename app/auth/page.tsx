@@ -3,7 +3,7 @@
 import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { GoogleAuth } from '@capacitor-community/google-auth';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { Capacitor } from '@capacitor/core';
 
 function AuthContent() {
@@ -27,7 +27,7 @@ function AuthContent() {
         try {
             if (Capacitor.isNativePlatform()) {
                 // ✅ Native Android/iOS: bypasses WebView — uses official Google Sign-In sheet
-                const { GoogleAuth } = await import('@capacitor-community/google-auth');
+                const { GoogleAuth } = await import('@codetrix-studio/capacitor-google-auth');
                 const nativeUser = await GoogleAuth.signIn();
                 const idToken = nativeUser.authentication.idToken;
 

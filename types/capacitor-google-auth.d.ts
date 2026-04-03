@@ -1,4 +1,4 @@
-declare module '@capacitor-community/google-auth' {
+declare module '@codetrix-studio/capacitor-google-auth' {
     export interface GoogleAuthUser {
         authentication: {
             idToken: string;
