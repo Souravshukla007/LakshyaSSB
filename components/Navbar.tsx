@@ -91,10 +91,10 @@ export default function Navbar() {
 
     // Extra link only for logged-in users
     const authNavLinks = [
-        ...(user?.plan === 'PRO' ? [{ href: '/', label: 'Home', icon: 'fa-house' }] : []),
+        ...([{ href: '/', label: 'Home', icon: 'fa-house' }]),
         { href: '/practice', label: 'Practice', icon: 'fa-dumbbell' },
         { href: '/medical', label: 'Medical', icon: 'fa-heart-pulse' },
-        ...(user?.plan === 'PRO' ? [] : [{ href: '/pricing', label: 'Pricing', icon: 'fa-credit-card' }]),
+        ...([]),
         { href: '/leaderboard', label: 'Leaderboard', icon: 'fa-trophy' },
         { href: '/ssb-entry-navigator', label: 'SSB Entry Navigator', icon: 'fa-compass' },
     ];
@@ -188,7 +188,7 @@ export default function Navbar() {
                                         <div className="px-4 py-3 border-b border-gray-50 mb-1">
                                             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Cadet Profile</p>
                                             <p className="text-sm font-bold text-brand-dark truncate">{user.fullName}</p>
-                                            {user.plan === 'PRO' && (
+                                            {true && (
                                                 <span className="inline-block mt-1 px-2 py-0.5 bg-brand-orange/10 text-brand-orange text-[10px] font-bold rounded-full uppercase tracking-wider">
                                                     PRO Active
                                                 </span>
@@ -202,7 +202,7 @@ export default function Navbar() {
                                             className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors">
                                             <i className="fa-solid fa-chart-pie w-4" /> OLQ Report
                                         </Link>
-                                        {user.plan !== 'PRO' && (
+                                        {false && (
                                             <Link href="/pricing" onClick={() => setDropdownOpen(false)}
                                                 className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors">
                                                 <i className="fa-solid fa-credit-card w-4" /> Pricing
@@ -333,7 +333,7 @@ export default function Navbar() {
                                     <div className="flex-1 min-w-0">
                                         <p className="text-sm font-bold text-brand-dark truncate">{user.fullName}</p>
                                         <p className="text-xs text-gray-400 truncate">{user.email}</p>
-                                        {user.plan === 'PRO' && (
+                                        {true && (
                                             <span className="inline-block mt-0.5 px-2 py-0.5 bg-brand-orange/10 text-brand-orange text-[9px] font-bold rounded-full uppercase tracking-wider">
                                                 PRO Active
                                             </span>
@@ -353,12 +353,12 @@ export default function Navbar() {
                                     <Link
                                         href="/olq-report"
                                         onClick={closeMobile}
-                                        className={`flex items-center gap-2 p-3 bg-gray-50 rounded-2xl text-sm text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange transition ${user?.plan === 'PRO' ? 'col-span-2 justify-center' : ''}`}
+                                        className={`flex items-center gap-2 p-3 bg-gray-50 rounded-2xl text-sm text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange transition ${true ? 'col-span-2 justify-center' : ''}`}
                                     >
                                         <i className="fa-solid fa-chart-pie text-gray-400 text-sm" />
                                         OLQ Report
                                     </Link>
-                                    {user.plan !== 'PRO' && (
+                                    {false && (
                                         <Link
                                             href="/pricing"
                                             onClick={closeMobile}

@@ -914,7 +914,7 @@ export default function MedicalSimulator() {
             .then(res => res.ok ? res.json() : null)
             .then(data => {
                 if (data?.isLoggedIn) setIsLoggedIn(true);
-                if (data?.plan === 'PRO') setIsPro(true);
+                if (data) setIsPro(true);
             })
             .catch(() => null);
     }, []);

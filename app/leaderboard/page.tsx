@@ -88,7 +88,7 @@ export default function LeaderboardPage() {
         // Fetch User status
         fetch('/api/auth/status')
             .then(res => res.ok ? res.json() : null)
-            .then(data => { if (isMounted && data?.plan === 'PRO') setIsPro(true); })
+            .then(data => { if (isMounted && data) setIsPro(true); })
             .catch(() => null);
 
         const fetchLeaderboard = async () => {

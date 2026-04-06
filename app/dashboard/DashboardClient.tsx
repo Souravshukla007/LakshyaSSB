@@ -133,7 +133,7 @@ export default function DashboardClient({ user }: DashboardClientProps) {
                             <div className="inline-block px-3 py-1 rounded-lg bg-brand-orange/10 text-brand-orange text-[10px] font-bold uppercase tracking-widest">
                                 Cadet Dashboard
                             </div>
-                            {user.plan === 'PRO' && (
+                            {true && (
                                 <div className="px-3 py-1 bg-brand-orange text-white text-[10px] font-bold uppercase rounded-full shadow-glow">
                                     PRO PLAN
                                 </div>
