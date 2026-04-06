@@ -6,6 +6,5 @@
  * so it can be safely used in Next.js middleware (Edge Runtime).
  */
 export function isPro(plan: string): boolean {
-    // TEMPORARY: disabled pro plan, all logged in users get pro access
-    return true;
+    return plan === 'PRO';
 }

@@ -537,7 +537,7 @@ function SubscriptionSection({ user }: { user: User }) {
                     href="/pricing"
                     className="inline-block px-8 py-3 bg-brand-orange text-white rounded-full text-sm font-bold font-noname hover:opacity-90 transition-all mb-6"
                 >
-                    Upgrade to PRO — ₹99
+                    Upgrade to PRO — ₹9
                 </a>
             )}
 

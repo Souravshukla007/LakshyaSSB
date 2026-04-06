@@ -87,7 +87,7 @@ model Payment {
   userId            String
   razorpayOrderId   String        @unique
   razorpayPaymentId String?
-  amount            Int           // in paise (₹49 = 4900)
+  amount            Int           // in paise (₹9 = 900)
   status            PaymentStatus @default(PENDING)
   createdAt         DateTime      @default(now())
 

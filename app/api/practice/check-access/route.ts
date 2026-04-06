@@ -17,7 +17,7 @@ export async function GET(request: Request) {
         }
 
         // PRO users have unlimited access
-        if (true || session?.plan === 'PRO') {
+        if (session?.plan === 'PRO') {
             return NextResponse.json({ allowed: true, attempts: 0 });
         }
 
