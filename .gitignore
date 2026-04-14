@@ -48,6 +48,7 @@ next-env.d.ts
 # custom admin scripts
 scripts/upgrade-user.js
 /Upgrade-to-Pro.md
+/LakshyaSSB_TechStack_Interview_Guide.md
 
 # Firebase / Google secrets — NEVER commit these
 google-services.json
