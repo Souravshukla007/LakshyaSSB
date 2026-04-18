@@ -9,11 +9,8 @@ export default function Home() {
 
     useEffect(() => {
         let isMounted = true;
-        fetch('/api/auth/status')
-            .then(res => res.ok ? res.json() : null)
-            .then(data => { if (isMounted && data?.isLoggedIn) setIsLoggedIn(true); })
-            .catch(() => null);
 
+        // --- Scroll-reveal observer (shared by both code paths) ---
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -23,7 +20,54 @@ export default function Home() {
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
+        const setupReveal = () => {
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
+                .forEach(el => revealObserver.observe(el));
+        };
+
+        // --- Auth cache: skip DB roundtrip if we have a fresh result (5 min TTL) ---
+        const AUTH_CACHE_KEY = 'lssb_auth_cache';
+        const AUTH_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+        try {
+            const raw = localStorage.getItem(AUTH_CACHE_KEY);
+            if (raw) {
+                const { isLoggedIn: cachedLogin, ts } = JSON.parse(raw);
+                if (Date.now() - ts < AUTH_CACHE_TTL) {
+                    // Use cached value immediately — no DB roundtrip
+                    if (isMounted) setIsLoggedIn(cachedLogin);
+                    setupReveal();
+                    // Background refresh so cache stays accurate
+                    fetch('/api/auth/status')
+                        .then(res => res.ok ? res.json() : null)
+                        .then(data => {
+                            const val = data?.isLoggedIn ?? false;
+                            try {
+                                localStorage.setItem(AUTH_CACHE_KEY, JSON.stringify({ isLoggedIn: val, ts: Date.now() }));
+                            } catch { /* ignore */ }
+                            if (isMounted) setIsLoggedIn(val);
+                        })
+                        .catch(() => null);
+                    return () => { isMounted = false; revealObserver.disconnect(); };
+                }
+            }
+        } catch {
+            // localStorage unavailable (private / incognito) — fall through to normal fetch
+        }
+
+        // Normal path: fetch auth status, then cache it
+        fetch('/api/auth/status')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                const val = data?.isLoggedIn ?? false;
+                if (isMounted) setIsLoggedIn(val);
+                try {
+                    localStorage.setItem(AUTH_CACHE_KEY, JSON.stringify({ isLoggedIn: val, ts: Date.now() }));
+                } catch { /* ignore */ }
+            })
+            .catch(() => null);
+
+        setupReveal();
 
         return () => {
             isMounted = false;

@@ -172,7 +172,7 @@ export default function PIQBuilderPage() {
             setLatest(lat);
             setHistory(Array.isArray(hist) ? hist : []);
             setIoQs(Array.isArray(io.questions) ? io.questions : []);
-            if (user) setIsPro(true);
+            if (user?.plan === 'PRO') setIsPro(true);
         }).catch(console.error).finally(() => setLoading(false));
 
         // Reveal animations

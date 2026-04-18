@@ -11,7 +11,7 @@ export default function PIQResult() {
     useEffect(() => {
         fetch('/api/auth/status')
             .then(res => res.ok ? res.json() : null)
-            .then(data => { if (data) setIsPro(true); })
+            .then(data => { if (data?.plan === 'PRO') setIsPro(true); })
             .catch(() => null);
     }, []);
 

@@ -75,6 +75,8 @@ export default function Navbar() {
 
     const handleLogout = async () => {
         setMobileMenuOpen(false);
+        // Clear auth cache so the next homepage visit doesn't flash a stale "logged in" state
+        try { localStorage.removeItem('lssb_auth_cache'); } catch { /* ignore */ }
         await fetch('/api/account/logout-all', { method: 'POST' });
         router.push('/auth');
         router.refresh();
@@ -188,7 +190,7 @@ export default function Navbar() {
                                         <div className="px-4 py-3 border-b border-gray-50 mb-1">
                                             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Cadet Profile</p>
                                             <p className="text-sm font-bold text-brand-dark truncate">{user.fullName}</p>
-                                            {true && (
+                                            {user?.plan === 'PRO' && (
                                                 <span className="inline-block mt-1 px-2 py-0.5 bg-brand-orange/10 text-brand-orange text-[10px] font-bold rounded-full uppercase tracking-wider">
                                                     PRO Active
                                                 </span>
@@ -333,7 +335,7 @@ export default function Navbar() {
                                     <div className="flex-1 min-w-0">
                                         <p className="text-sm font-bold text-brand-dark truncate">{user.fullName}</p>
                                         <p className="text-xs text-gray-400 truncate">{user.email}</p>
-                                        {true && (
+                                        {user?.plan === 'PRO' && (
                                             <span className="inline-block mt-0.5 px-2 py-0.5 bg-brand-orange/10 text-brand-orange text-[9px] font-bold rounded-full uppercase tracking-wider">
                                                 PRO Active
                                             </span>

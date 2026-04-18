@@ -19,6 +19,12 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
+                {/* DNS Preconnects — let browser open connections early */}
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+                <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+
+                {/* Font Awesome — kept as CDN, preconnect above reduces latency */}
                 <link
                     rel="stylesheet"
                     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -26,7 +32,11 @@ export default function RootLayout({
                     crossOrigin="anonymous"
                     referrerPolicy="no-referrer"
                 />
-                <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Inter:wght@400;500;600;700;900&family=Outfit:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Raleway:wght@700;800&display=swap" rel="stylesheet" />
+                {/* Google Fonts — trimmed from 5 families to 2 (saves ~3 extra roundtrips) */}
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+                    rel="stylesheet"
+                />
                 {/* Google AdSense — loaded non-blocking after hydration */}
                 <Script
                     async
