@@ -49,6 +49,8 @@ next-env.d.ts
 scripts/upgrade-user.js
 /Upgrade-to-Pro.md
 /LakshyaSSB_TechStack_Interview_Guide.md
+/Razorpay_Integration_Guide.md
+/Saarathi_finance_AppDev_Interview_Guide.md
 
 # Firebase / Google secrets — NEVER commit these
 google-services.json
