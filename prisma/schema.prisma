@@ -52,37 +52,24 @@ model User {
 
   // Leaderboard & Medal System
   medals_total   Int       @default(0)
-  notifications UserNotification[]
-  }
+  medals_weekly  Int       @default(0)
+  current_streak Int       @default(0)
 
-  model UserNotification {
-  id        String   @id @default(uuid())
-  userId    String
-  title     String
-  message   String
-  type      String   @default("SYSTEM") // achievement, medal, alert, info
-  link      String?
-  isRead    Boolean  @default(false)
-  createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId, createdAt])
-  }
   // Relations
-  payments       Payment[]
-  medicalResults MedicalResult[]
-  piqSubmission  PiqSubmission?
-  piqScores      PiqScore[]
-  srtResults     SrtResult[] // SRT history
-  watResults     WatResult[] // WAT history
-  tatResults     TatResult[] // TAT history
-  practiceAttempts  PracticeAttempt[] // Track 1-free-test usages
-  oirQuestionHistory OirQuestionHistory[] // OIR test tracking
-  chatMessages     ChatMessage[] // Persistent AI conversations
-  activityLogs     ActivityLog[]
-  notificationPref NotificationPref?
-  feedbacks        Feedback[]
+  notifications    UserNotification[]
+  payments         Payment[]
+  medicalResults   MedicalResult[]
+  piqSubmission    PiqSubmission?
+  piqScores        PiqScore[]
+  srtResults       SrtResult[]
+  watResults       WatResult[]
+  tatResults       TatResult[]
+  practiceAttempts    PracticeAttempt[]
+  oirQuestionHistory  OirQuestionHistory[]
+  chatMessages       ChatMessage[]
+  activityLogs       ActivityLog[]
+  notificationPref   NotificationPref?
+  feedbacks          Feedback[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -91,6 +78,21 @@ model User {
   @@index([medals_total])
   @@index([medals_weekly])
   @@index([current_streak])
+}
+
+model UserNotification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      String   @default("SYSTEM")
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
 }
 
 model Payment {
