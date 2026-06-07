@@ -17,9 +17,11 @@ export default function SrtTestPage() {
     const router = useRouter();
     const [state, setState] = useState<AppState>('intro');
     const [answers, setAnswers] = useState<Record<number, string>>({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [evaluationResult, setEvaluationResult] = useState<any>(null);
 
     const handleStart = async () => {
-        // Verify Access
+        // ... same access check logic ...
         const accessRes = await fetch('/api/practice/check-access?module=SRT');
         if (accessRes.status === 401) {
             router.push('/auth');
@@ -38,18 +40,45 @@ export default function SrtTestPage() {
             body: JSON.stringify({ module: 'SRT' })
         });
 
+        setEvaluationResult(null);
         setState('test');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const handleSubmit = (submittedAnswers: Record<number, string>) => {
+    const handleSubmit = async (submittedAnswers: Record<number, string>) => {
         setAnswers(submittedAnswers);
         setState('result');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        setIsSubmitting(true);
+        try {
+            const inputs = allQuestions.map(q => ({
+                question_id: q.id,
+                theme: q.theme,
+                difficulty: q.difficulty,
+                user_response: submittedAnswers[q.id] || ''
+            }));
+
+            const res = await fetch('/api/srt/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ inputs })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setEvaluationResult(data.evaluation);
+            }
+        } catch (error) {
+            console.error('Failed to submit SRT:', error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleRetake = () => {
         setAnswers({});
+        setEvaluationResult(null);
         setState('intro');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -72,7 +101,13 @@ export default function SrtTestPage() {
                             onSubmit={handleSubmit}
                         />
                     )}
-                    {state === 'result' && <SrtResult onRetake={handleRetake} onDashboard={handleDashboard} />}
+                    {state === 'result' && (
+                        <SrtResult 
+                            result={evaluationResult} 
+                            onRetake={handleRetake} 
+                            onDashboard={handleDashboard} 
+                        />
+                    )}
                 </div>
             </div>
         </div>

@@ -29,10 +29,10 @@ Skip the folders and jump straight into the production code implementation of ke
 | Feature | Key Logic File | Role / Purpose |
 | :--- | :--- | :--- |
 | **🔐 Isomorphic Auth** | [`lib/auth.ts`](./lib/auth.ts) | Custom JWT generation via `jose` inside `httpOnly` rolling cookies. |
-| **🧠 Psychological Eval** | [`lib/evaluators/tatEvaluator.ts`](./lib/evaluators/tatEvaluator.ts) | Local NLP keyword evaluation heuristics and story scoring. |
-| **🧠 WAT Psych Eval** | [`lib/watEvaluator.ts`](./lib/watEvaluator.ts) | Multi-tier word-difficulty semantic assessment matrices. |
+| **🧠 Psychological Eval** | [`lib/evaluators/tat-evaluator.ts`](./lib/evaluators/tat-evaluator.ts) | Local NLP keyword evaluation heuristics and story scoring. |
+| **🧠 WAT Psych Eval** | [`lib/evaluators/wat-evaluator.ts`](./lib/evaluators/wat-evaluator.ts) | Multi-tier word-difficulty semantic assessment matrices. |
 | **💳 Webhook Validation** | [`app/api/payment/verify/route.ts`](./app/api/payment/verify/route.ts) | Secure server-side signature validation and payment capture. |
-| **🤖 AI Pipeline** | [`lib/aiProcessor.ts`](./lib/aiProcessor.ts) | Resilient Gemini 1.5 Flash query templates, JSON enforcement, and retry delays. |
+| **🤖 AI Pipeline** | [`lib/ai-processor.ts`](./lib/ai-processor.ts) | Resilient Gemini 1.5 Flash query templates, JSON enforcement, and retry delays. |
 | **📱 Native Setup** | [`capacitor.config.ts`](./capacitor.config.ts) | Webview redirects, splash screens, and user agent overrides. |
 
 ---
@@ -342,11 +342,11 @@ LakshyaSSB/
 ├── components/                 # Reusable React UI Elements (Navbar, Streak tracker, Paywall cards)
 ├── lib/                        # Logic engines & helper scripts
 │   ├── evaluators/             # Native regex NLP evaluation engines
-│   │   ├── srtEvaluator.ts
-│   │   └── tatEvaluator.ts
-│   ├── aiProcessor.ts          # Core Google Gemini prompt pipeline
-│   ├── auth.ts                 # JWT signing, cookie management, session validations
-│   ├── gNewsFetcher.ts         # GNews API scrapers
+│   │   ├── srt-evaluator.ts
+│   │   └── tat-evaluator.ts
+│   ├── ai-processor.ts       # Core Google Gemini prompt pipeline
+│   ├── auth.ts              # JWT signing, cookie management, session validations
+│   ├── gnews-fetcher.ts      # GNews API scrapers
 │   ├── medals.ts               # Gamified award heuristics
 │   └── prisma.ts               # Type-safe database connection instance
 ├── prisma/                     # Database schema definitions
@@ -470,3 +470,6 @@ LakshyaSSB is not just a typical CRUD application; it represents a **complex, ed
 
 ---
 *Built with 🧡 for Indian Armed Forces Aspirants.*
+ants.*
+ed Forces Aspirants.*
+ed Forces Aspirants.*

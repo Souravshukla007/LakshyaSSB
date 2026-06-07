@@ -19,33 +19,47 @@ export default function NotificationBell() {
     const [unreadCount, setUnreadCount] = useState(0);
     const [missionReady, setMissionReady] = useState(false);
     const [caNotifications, setCaNotifications] = useState<Notification[]>([]);
+    const [userNotifications, setUserNotifications] = useState<Notification[]>([]);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const staticNotifications: Notification[] = (notificationsData as Notification[]);
 
-    // Fetch latest current affairs for notifications
+    // Fetch user-specific notifications from DB
+    useEffect(() => {
+        fetch('/api/notifications')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data?.success && Array.isArray(data.data)) {
+                    const mapped: Notification[] = data.data.map((n: any) => ({
+                        id: n.id,
+                        title: n.title,
+                        description: n.message,
+                        link: n.link || '/dashboard',
+                        icon: n.type === 'medal' ? 'fa-medal' : 'fa-bell',
+                        isNew: !n.isRead,
+                        category: 'platform' as const,
+                    }));
+                    setUserNotifications(mapped);
+                }
+            })
+            .catch(() => null);
+    }, []);
+
+    // Fetch latest current affairs
     useEffect(() => {
         fetch('/api/current-affairs')
             .then(res => res.ok ? res.json() : null)
             .then(data => {
-                if (data?.success && Array.isArray(data.data) && data.data.length > 0) {
-                    const today = new Date();
-                    const twoDaysAgo = new Date(today);
-                    twoDaysAgo.setDate(today.getDate() - 2);
-
-                    const mapped: Notification[] = data.data.slice(0, 3).map((item: any, idx: number) => {
-                        const articleDate = new Date(item.date || Date.now());
-                        const isRecent = articleDate >= twoDaysAgo;
-                        return {
-                            id: `ca_${item.date || 'nodate'}_${idx}`,
-                            title: item.title,
-                            description: item.summary?.slice(0, 80) + '…',
-                            link: '/current-affairs',
-                            icon: 'fa-newspaper',
-                            isNew: isRecent,
-                            category: 'ca' as const,
-                        };
-                    });
+                if (data?.success && Array.isArray(data.data)) {
+                    const mapped: Notification[] = data.data.slice(0, 3).map((item: any, idx: number) => ({
+                        id: `ca_${item.date}_${idx}`,
+                        title: item.title,
+                        description: item.summary?.slice(0, 80) + '…',
+                        link: '/current-affairs',
+                        icon: 'fa-newspaper',
+                        isNew: true,
+                        category: 'ca' as const,
+                    }));
                     setCaNotifications(mapped);
                 }
             })
@@ -76,29 +90,14 @@ export default function NotificationBell() {
 
     const visibleNotifications: Notification[] = [
         ...(missionReady ? [missionNotification] : []),
+        ...userNotifications,
         ...caNotifications,
         ...staticNotifications,
     ];
 
-    // Initialize unread count from localStorage
+    // Update unread count
     useEffect(() => {
-        const fetchReadState = () => {
-            try {
-                const readState = localStorage.getItem('lakshya_notifications_read');
-                if (readState) {
-                    const readIds: (string | number)[] = JSON.parse(readState);
-                    const unread = visibleNotifications.filter(n => !readIds.includes(n.id as string)).length;
-                    setUnreadCount(unread);
-                } else {
-                    setUnreadCount(visibleNotifications.length);
-                }
-            } catch {
-                setUnreadCount(0);
-            }
-        };
-        fetchReadState();
-        window.addEventListener('storage', fetchReadState);
-        return () => window.removeEventListener('storage', fetchReadState);
+        setUnreadCount(visibleNotifications.filter(n => n.isNew).length);
     }, [visibleNotifications]);
 
     // Close on outside click
@@ -116,24 +115,23 @@ export default function NotificationBell() {
         const newIsOpen = !isOpen;
         setIsOpen(newIsOpen);
         if (newIsOpen && unreadCount > 0) {
-            try {
-                const allIds = visibleNotifications.map(n => n.id);
-                localStorage.setItem('lakshya_notifications_read', JSON.stringify(allIds));
-                setUnreadCount(0);
-                window.dispatchEvent(new Event('storage'));
-            } catch {
-                // ignore
+            const unreadIds = visibleNotifications.filter(n => n.isNew && typeof n.id === 'string').map(n => n.id);
+            if (unreadIds.length > 0) {
+                fetch('/api/notifications', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ notificationIds: unreadIds })
+                }).catch(() => null);
             }
+            setUnreadCount(0);
         }
     };
 
-    // Separate CA from platform for section labels
     const caItems = visibleNotifications.filter(n => n.category === 'ca');
     const otherItems = visibleNotifications.filter(n => n.category !== 'ca');
 
     return (
         <div className="relative" ref={dropdownRef}>
-            {/* Bell Button */}
             <button
                 onClick={handleToggle}
                 className={`relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 group
@@ -142,7 +140,6 @@ export default function NotificationBell() {
                 aria-label="Notifications"
             >
                 <i className={`fa-solid fa-bell text-sm transition-transform duration-300 ${isOpen ? 'rotate-12 scale-110' : 'group-hover:rotate-12 group-hover:scale-110'}`} />
-                
                 {unreadCount > 0 && (
                     <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-orange opacity-75"></span>
@@ -153,14 +150,11 @@ export default function NotificationBell() {
                 )}
             </button>
 
-            {/* Dropdown Panel */}
             <div className={`absolute top-full right-0 mt-3 w-80 sm:w-80 md:w-96 bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 transform origin-top-right transition-all duration-300 z-[100] ${isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 -translate-y-2 pointer-events-none'}`}>
-                
-                {/* Header */}
                 <div className="px-5 py-4 border-b border-gray-50 flex justify-between items-center bg-gray-50/50 rounded-t-2xl">
                     <div>
                         <h3 className="text-sm font-bold text-brand-dark">Updates</h3>
-                        <p className="text-[11px] font-medium text-gray-500 mt-0.5 tracking-wide">Latest news & improvements</p>
+                        <p className="text-[11px] font-medium text-gray-500 mt-0.5 tracking-wide">Latest achievements & news</p>
                     </div>
                 </div>
 
@@ -172,7 +166,14 @@ export default function NotificationBell() {
                         </div>
                     ) : (
                         <div className="flex flex-col">
-                            {/* Current Affairs Section */}
+                            {otherItems.map((notification, index) => (
+                                <NotificationItem
+                                    key={notification.id}
+                                    notification={notification}
+                                    isLast={index === otherItems.length - 1 && caItems.length === 0}
+                                    onClose={() => setIsOpen(false)}
+                                />
+                            ))}
                             {caItems.length > 0 && (
                                 <>
                                     <div className="px-5 py-2.5 bg-orange-50/60 border-b border-orange-100/50 flex items-center gap-2">
@@ -183,27 +184,7 @@ export default function NotificationBell() {
                                         <NotificationItem
                                             key={notification.id}
                                             notification={notification}
-                                            isLast={index === caItems.length - 1 && otherItems.length === 0}
-                                            onClose={() => setIsOpen(false)}
-                                        />
-                                    ))}
-                                </>
-                            )}
-
-                            {/* Platform Updates Section */}
-                            {otherItems.length > 0 && (
-                                <>
-                                    {caItems.length > 0 && (
-                                        <div className="px-5 py-2.5 bg-gray-50/80 border-b border-gray-100 flex items-center gap-2">
-                                            <i className="fa-solid fa-bell text-gray-400 text-[10px]" />
-                                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Platform Updates</span>
-                                        </div>
-                                    )}
-                                    {otherItems.map((notification, index) => (
-                                        <NotificationItem
-                                            key={notification.id}
-                                            notification={notification}
-                                            isLast={index === otherItems.length - 1}
+                                            isLast={index === caItems.length - 1}
                                             onClose={() => setIsOpen(false)}
                                         />
                                     ))}
@@ -239,9 +220,6 @@ function NotificationItem({ notification, isLast, onClose }: {
                     )}
                 </div>
                 <p className="text-[13px] text-gray-500 leading-relaxed font-medium line-clamp-2 pr-2">{notification.description}</p>
-                <div className="mt-3 flex items-center gap-1.5 text-xs font-bold text-brand-orange group-hover:text-orange-600 group-hover:pl-0.5 transition-all w-fit">
-                    View Details <i className="fa-solid fa-arrow-right text-[10px]" />
-                </div>
             </div>
         </Link>
     );

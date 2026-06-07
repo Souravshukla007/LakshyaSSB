@@ -6,8 +6,8 @@ const config: CapacitorConfig = {
   // Web asset dir is ignored when server.url is set, but required by type
   webDir: 'public',
   server: {
-    // This is the MOST IMPORTANT setting
-    url: 'https://lakshya-ssb.vercel.app',
+    // This is the MOST IMPORTANT setting — MUST match your production domain
+    url: 'https://lakshyassb.online',
     cleartext: true,
     allowNavigation: [
       "checkout.razorpay.com",

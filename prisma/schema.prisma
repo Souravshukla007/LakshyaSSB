@@ -52,12 +52,23 @@ model User {
 
   // Leaderboard & Medal System
   medals_total   Int       @default(0)
-  medals_weekly  Int       @default(0)
-  current_streak Int       @default(0)
-  longest_streak Int       @default(0)
-  last_login     DateTime?
-  is_pro         Boolean   @default(false)
+  notifications UserNotification[]
+  }
 
+  model UserNotification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      String   @default("SYSTEM") // achievement, medal, alert, info
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  }
   // Relations
   payments       Payment[]
   medicalResults MedicalResult[]

@@ -2,33 +2,49 @@ import React from 'react';
 import Link from 'next/link';
 
 type SrtResultProps = {
+    result: any;
     onRetake: () => void;
     onDashboard: () => void;
 };
 
-export default function SrtResult({ onRetake, onDashboard }: SrtResultProps) {
-    // Mock data for UI presentation
-    const overallScore = 74;
+export default function SrtResult({ result, onRetake, onDashboard }: SrtResultProps) {
+    if (!result) return (
+        <div className="bg-white/90 backdrop-blur-md rounded-3xl p-20 border border-gray-100 shadow-xl text-center">
+            <div className="w-16 h-16 border-4 border-gray-200 border-t-orange-500 rounded-full animate-spin mx-auto mb-8"></div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Evaluating Reactions</h2>
+            <p className="text-gray-500 font-medium">Please wait while we analyze your situational responses...</p>
+        </div>
+    );
 
-    const themes = [
-        { name: 'Leadership', score: 78 },
-        { name: 'Courage', score: 70 },
-        { name: 'Responsibility', score: 82 },
-        { name: 'Emotional Control', score: 65 },
-        { name: 'Initiative', score: 75 },
-        { name: 'Integrity', score: 80 },
-    ];
+    const overallScore = result.totalScore;
 
-    const indicators = [
+    const themes = Object.entries(result.themeScores || {}).map(([name, data]: [string, any]) => ({
+        name: name.replace('_', ' '),
+        score: Math.round(data.percentage)
+    }));
+
+    const indicators = result.riskLevel === 'LOW' ? [
         'High action orientation',
-        'Good crisis handling',
-        'Moderate emotional balance'
+        'Strong problem-solving mindset',
+        'Positive outcome orientation'
+    ] : result.riskLevel === 'MODERATE' ? [
+        'Moderate action orientation',
+        'Good logic, needs more speed',
+        'Some dependency on others'
+    ] : [
+        'Low action orientation',
+        'Passive approach to problems',
+        'High dependency on authority'
     ];
 
-    const suggestions = [
+    const suggestions = result.riskLevel === 'LOW' ? [
+        'Maintain consistency in reactions',
+        'Practice time-bound simulations',
+        'Refine the brevity of your responses'
+    ] : [
         'Improve decisiveness under stress',
         'Avoid delayed reaction statements',
-        'Reduce over-dependence on authority'
+        'Focus on immediate practical actions'
     ];
 
     return (

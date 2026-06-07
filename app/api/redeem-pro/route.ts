@@ -48,6 +48,7 @@ export async function POST() {
         where: { id: session.userId },
         data: {
             medals_total: { decrement: PRO_COST },
+            plan: 'PRO',
             is_pro: true,
         },
         select: {
@@ -55,6 +56,15 @@ export async function POST() {
             medals_weekly: true,
             is_pro: true,
         },
+    });
+
+    // Create activity log
+    await prisma.activityLog.create({
+        data: {
+            userId: session.userId,
+            action: 'PRO_REDEEM',
+            details: `Redeemed PRO membership using ${PRO_COST} medals.`,
+        }
     });
 
     return NextResponse.json({

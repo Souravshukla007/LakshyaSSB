@@ -27,7 +27,7 @@ function startOfISTDay(d: Date = new Date()): Date {
 
 // ─── types ───────────────────────────────────────────────────────────────────
 
-export type AwardType = 'login' | 'piq' | 'daily_question';
+export type AwardType = 'login' | 'piq' | 'daily_question' | 'practice';
 
 export interface AwardResult {
     awarded: number;
@@ -99,6 +99,8 @@ export async function awardMedals(
         awarded = Math.floor(score / 10);
     } else if (type === 'daily_question') {
         awarded = 1;
+    } else if (type === 'practice') {
+        awarded = 2; // Fixed 2 medals for any psychological test completion
     }
 
     // ── Persist atomically ───────────────────────────────────────────────────
@@ -118,6 +120,28 @@ export async function awardMedals(
             longest_streak: true,
         },
     });
+
+    // Create activity log for the award
+    if (awarded > 0) {
+        await prisma.activityLog.create({
+            data: {
+                userId,
+                action: 'MEDAL_AWARD',
+                details: `Earned ${awarded} medals via ${type}.`,
+            }
+        });
+
+        // Create persistent notification for the user
+        await prisma.userNotification.create({
+            data: {
+                userId,
+                title: 'Medals Earned! 🎖️',
+                message: `Congratulations! You've earned ${awarded} medals for your ${type === 'practice' ? 'practice session' : type.replace('_', ' ')}.`,
+                type: 'medal',
+                link: '/dashboard',
+            }
+        });
+    }
 
     return {
         awarded,

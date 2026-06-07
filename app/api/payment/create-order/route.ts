@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { getSession } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 /**
  * POST /api/payment/create-order
@@ -45,6 +46,16 @@ export async function POST() {
         }
 
         const order = await response.json();
+
+        // Save order to DB for tracking & webhook reconciliation
+        await prisma.payment.create({
+            data: {
+                userId: session.userId,
+                razorpayOrderId: order.id,
+                amount,
+                status: 'PENDING',
+            },
+        });
 
         return NextResponse.json({
             orderId: order.id,

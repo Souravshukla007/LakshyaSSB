@@ -89,8 +89,11 @@ export default function LecturettePage() {
 
     // Recording
     const mediaRef = useRef<MediaRecorder | null>(null);
+    const chunksRef = useRef<Blob[]>([]);
     const [recording, setRecording] = useState(false);
     const [canRecord, setCanRecord] = useState(false);
+    const [isEvaluating, setIsEvaluating] = useState(false);
+    const [aiEvaluation, setAiEvaluation] = useState<any>(null);
 
     // Evaluation
     const [scores, setScores] = useState<EvalScores>({ confidence: 5, clarity: 5, content: 5, knowledge: 5, timeManagement: 5 });
@@ -135,6 +138,7 @@ export default function LecturettePage() {
         setSelectedTopic(topic);
         setPrepLeft(PREP_TIME);
         setPrepUsed(0);
+        setAiEvaluation(null);
         playShutter();
         setView('prep');
     };
@@ -150,13 +154,58 @@ export default function LecturettePage() {
         setSpeechUsed(0);
         playShutter();
         setView('speech');
+        // Auto start recording if possible
+        startRecording();
     }, [prepLeft]);
 
-    const handleSpeechEnd = useCallback(() => {
-        setSpeechUsed(SPEECH_TIME - speechLeft);
-        stopRecording();
-        setView('eval');
-    }, [speechLeft]);
+    const submitSpeech = async (blob: Blob) => {
+        if (!selectedTopic) return;
+        setIsEvaluating(true);
+        try {
+            const formData = new FormData();
+            formData.append('audio', blob);
+            formData.append('topic', selectedTopic.topic);
+            formData.append('duration', (SPEECH_TIME - speechLeft).toString());
+
+            const res = await fetch('/api/practice/lecturette/evaluate', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setAiEvaluation(data);
+                // Also update manual scores based on AI if needed, or just show both
+                setScores({
+                    confidence: data.confidence,
+                    clarity: data.clarity,
+                    content: data.contentScore,
+                    knowledge: data.contentScore,
+                    timeManagement: Math.round(((SPEECH_TIME - speechLeft) / SPEECH_TIME) * 10)
+                });
+            }
+        } catch (error) {
+            console.error('Failed to evaluate speech:', error);
+        } finally {
+            setIsEvaluating(false);
+        }
+    };
+
+    const handleSpeechEnd = useCallback(async () => {
+        const usedTime = SPEECH_TIME - speechLeft;
+        setSpeechUsed(usedTime);
+        
+        if (mediaRef.current && recording) {
+            mediaRef.current.onstop = async () => {
+                const audioBlob = new Blob(chunksRef.current, { type: 'audio/webm' });
+                submitSpeech(audioBlob);
+            };
+            stopRecording();
+        }
+        
+        playShutter();
+        setView('result');
+    }, [speechLeft, recording]);
 
     const handleSubmitEval = () => {
         if (!selectedTopic) return;
@@ -169,14 +218,20 @@ export default function LecturettePage() {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             const mr = new MediaRecorder(stream);
+            chunksRef.current = [];
+            mr.ondataavailable = (e) => {
+                if (e.data.size > 0) chunksRef.current.push(e.data);
+            };
             mr.start();
             mediaRef.current = mr;
             setRecording(true);
         } catch { setRecording(false); }
     };
     const stopRecording = () => {
-        mediaRef.current?.stop();
-        mediaRef.current?.stream?.getTracks().forEach(t => t.stop());
+        if (mediaRef.current && mediaRef.current.state !== 'inactive') {
+            mediaRef.current.stop();
+            mediaRef.current.stream?.getTracks().forEach(t => t.stop());
+        }
         setRecording(false);
     };
 
@@ -487,7 +542,7 @@ export default function LecturettePage() {
                 )}
 
                 {/* ══ RESULT VIEW ═════════════════════════════════════════════════════════ */}
-                {view === 'result' && selectedTopic && feedback && (
+                {view === 'result' && selectedTopic && (
                     <div className="animate-fadeIn max-w-4xl mx-auto">
                         <div className="text-center mb-10">
                             <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-2">Session Complete</p>
@@ -495,64 +550,103 @@ export default function LecturettePage() {
                             <p className="text-gray-400 text-sm">Topic: <strong className="text-gray-700">{selectedTopic.topic}</strong></p>
                         </div>
 
-                        {/* Stats row */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                            {[
-                                { label: 'Prep Used', value: prepUsedDisplay, icon: 'fa-hourglass-half' },
-                                { label: 'Speech Duration', value: speechUsedDisplay, icon: 'fa-microphone' },
-                                { label: 'Avg Score', value: `${avgScore}/10`, icon: 'fa-star' },
-                                { label: 'Difficulty', value: selectedTopic.difficulty.charAt(0).toUpperCase() + selectedTopic.difficulty.slice(1), icon: 'fa-gauge' },
-                            ].map((s, i) => (
-                                <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm text-center">
-                                    <i className={`fa-solid ${s.icon} text-orange-500 text-xl mb-2`} />
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{s.label}</p>
-                                    <p className="text-lg font-black text-gray-900">{s.value}</p>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Score breakdown */}
-                        <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm mb-6">
-                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-6">Score Breakdown</h3>
-                            <div className="space-y-4">
-                                {([
-                                    { key: 'confidence', label: 'Confidence' },
-                                    { key: 'clarity', label: 'Clarity' },
-                                    { key: 'content', label: 'Content' },
-                                    { key: 'knowledge', label: 'Knowledge' },
-                                    { key: 'timeManagement', label: 'Time Mgmt' },
-                                ] as { key: keyof EvalScores; label: string }[]).map(({ key, label }) => (
-                                    <div key={key} className="flex items-center gap-4">
-                                        <span className="text-xs font-bold text-gray-500 w-24 flex-shrink-0">{label}</span>
-                                        <div className="flex-1 bg-gray-100 h-2 rounded-full overflow-hidden">
-                                            <div className="h-full bg-orange-500 rounded-full transition-all" style={{ width: `${scores[key] * 10}%` }} />
+                        {isEvaluating ? (
+                            <div className="bg-white rounded-[2.5rem] p-16 border border-gray-100 shadow-xl text-center">
+                                <div className="w-16 h-16 border-4 border-gray-200 border-t-orange-500 rounded-full animate-spin mx-auto mb-8" />
+                                <h3 className="text-xl font-bold text-gray-900 mb-2">AI Assessing Your Speech...</h3>
+                                <p className="text-gray-500">Analyzing your tone, speed, and content relevancy.</p>
+                            </div>
+                        ) : (
+                            <>
+                                {/* Stats row */}
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                                    {[
+                                        { label: 'Speaking Speed', value: `${aiEvaluation?.wpm || 0} WPM`, icon: 'fa-gauge-high' },
+                                        { label: 'Confidence Score', value: `${aiEvaluation?.confidence || 0}/10`, icon: 'fa-check-double' },
+                                        { label: 'Filler Count', value: aiEvaluation?.fillerCount || 0, icon: 'fa-keyboard' },
+                                        { label: 'Speech Duration', value: speechUsedDisplay, icon: 'fa-microphone' },
+                                    ].map((s, i) => (
+                                        <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm text-center">
+                                            <i className={`fa-solid ${s.icon} text-orange-500 text-xl mb-2`} />
+                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{s.label}</p>
+                                            <p className="text-lg font-black text-gray-900">{s.value}</p>
                                         </div>
-                                        <span className="text-sm font-black text-gray-900 w-8 text-right">{scores[key]}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                                    ))}
+                                </div>
 
-                        {/* AI Feedback */}
-                        <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm mb-8">
-                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                <i className="fa-solid fa-robot text-orange-500" /> AI-Style Feedback
-                            </h3>
-                            <div className="space-y-4">
-                                <div className="p-5 bg-green-50 rounded-2xl border border-green-100">
-                                    <p className="text-[10px] font-bold text-green-700 uppercase tracking-widest mb-2 flex items-center gap-1.5"><i className="fa-solid fa-thumbs-up" /> Strength</p>
-                                    <p className="text-sm text-green-800 leading-relaxed">{feedback.strength}</p>
+                                {/* Psychological Metrics & Tone */}
+                                <div className="grid md:grid-cols-3 gap-6 mb-6">
+                                    <div className="md:col-span-2 bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
+                                        <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-6">Psychological Metrics</h3>
+                                        <div className="space-y-4">
+                                            {[
+                                                { label: 'Confidence', score: aiEvaluation?.confidence || 0 },
+                                                { label: 'Clarity', score: aiEvaluation?.clarity || 0 },
+                                                { label: 'Content Depth', score: aiEvaluation?.contentScore || 0 },
+                                            ].map(({ label, score }) => (
+                                                <div key={label} className="flex items-center gap-4">
+                                                    <span className="text-xs font-bold text-gray-500 w-24 flex-shrink-0">{label}</span>
+                                                    <div className="flex-1 bg-gray-100 h-2 rounded-full overflow-hidden">
+                                                        <div className="h-full bg-orange-500 rounded-full transition-all" style={{ width: `${score * 10}%` }} />
+                                                    </div>
+                                                    <span className="text-sm font-black text-gray-900 w-8 text-right">{score}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="bg-orange-50 rounded-3xl p-8 border border-orange-100 shadow-sm flex flex-col justify-center text-center">
+                                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-orange-500 text-xl mb-4 mx-auto shadow-sm">
+                                            <i className="fa-solid fa-volume-high" />
+                                        </div>
+                                        <p className="text-[10px] font-bold text-orange-400 uppercase tracking-widest mb-1">Tone Analysis</p>
+                                        <p className="text-lg font-bold text-orange-900 leading-tight">
+                                            {aiEvaluation?.tone || 'Steady and Clear'}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="p-5 bg-orange-50 rounded-2xl border border-orange-100">
-                                    <p className="text-[10px] font-bold text-orange-700 uppercase tracking-widest mb-2 flex items-center gap-1.5"><i className="fa-solid fa-arrow-up-right-dots" /> Area to Improve</p>
-                                    <p className="text-sm text-orange-800 leading-relaxed">{feedback.improve}</p>
+
+                                {/* Filler Words Detection */}
+                                {aiEvaluation?.fillerWords?.length > 0 && (
+                                    <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm mb-6 flex flex-wrap items-center gap-3">
+                                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Filler Words:</span>
+                                        {aiEvaluation.fillerWords.map((w: string) => (
+                                            <span key={w} className="px-3 py-1 bg-gray-50 border border-gray-200 rounded-full text-xs font-bold text-gray-600">"{w}"</span>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Transcript */}
+                                <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm mb-6">
+                                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <i className="fa-solid fa-file-lines text-orange-500" /> Speech Transcript
+                                    </h3>
+                                    <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 text-sm text-gray-700 leading-relaxed font-noname max-h-40 overflow-y-auto">
+                                        {aiEvaluation?.transcript || 'Transcript could not be generated.'}
+                                    </div>
                                 </div>
-                                <div className="p-5 bg-blue-50 rounded-2xl border border-blue-100">
-                                    <p className="text-[10px] font-bold text-blue-700 uppercase tracking-widest mb-2 flex items-center gap-1.5"><i className="fa-solid fa-layer-group" /> Speech Structure</p>
-                                    <p className="text-sm text-blue-800 leading-relaxed">{feedback.structure}</p>
+
+                                {/* AI Feedback */}
+                                <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm mb-8">
+                                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                        <i className="fa-solid fa-robot text-orange-500" /> GTO Officer Feedback
+                                    </h3>
+                                    <div className="space-y-4">
+                                        <div className="p-5 bg-green-50 rounded-2xl border border-green-100">
+                                            <p className="text-[10px] font-bold text-green-700 uppercase tracking-widest mb-2 flex items-center gap-1.5"><i className="fa-solid fa-thumbs-up" /> Strength</p>
+                                            <p className="text-sm text-green-800 leading-relaxed">{aiEvaluation?.feedback?.strengths || 'Analyzing strengths...'}</p>
+                                        </div>
+                                        <div className="p-5 bg-orange-50 rounded-2xl border border-orange-100">
+                                            <p className="text-[10px] font-bold text-orange-700 uppercase tracking-widest mb-2 flex items-center gap-1.5"><i className="fa-solid fa-arrow-up-right-dots" /> Area to Improve</p>
+                                            <p className="text-sm text-orange-800 leading-relaxed">{aiEvaluation?.feedback?.weaknesses || 'Analyzing areas of improvement...'}</p>
+                                        </div>
+                                        <div className="p-5 bg-blue-50 rounded-2xl border border-blue-100">
+                                            <p className="text-[10px] font-bold text-blue-700 uppercase tracking-widest mb-2 flex items-center gap-1.5"><i className="fa-solid fa-lightbulb" /> Tip for next time</p>
+                                            <p className="text-sm text-blue-800 leading-relaxed">{aiEvaluation?.feedback?.tips || 'Getting tips...'}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </>
+                        )}
 
                         {/* Actions */}
                         <div className="flex flex-col sm:flex-row gap-3">

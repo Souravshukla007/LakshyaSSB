@@ -38,28 +38,34 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-        // Check for duplicate — idempotency guard
-        const existing = await prisma.payment.findFirst({
-            where: { razorpayPaymentId: razorpay_payment_id },
-        });
+        // Atomic transaction to update user and payment record
+        await prisma.$transaction(async (tx) => {
+            // 1. Update User to PRO
+            await tx.user.update({
+                where: { id: session.userId },
+                data: { 
+                    plan: 'PRO',
+                    is_pro: true
+                },
+            });
 
-        if (existing) {
-            // If payment already processed, ensure PRO is activated and return success
-            await activatePro(session.userId);
-            return NextResponse.json({ success: true, message: 'Payment verified successfully.' });
-        }
-
-        // Upgrade user to PRO and record payment atomically
-        await activatePro(session.userId);
-
-        await prisma.payment.create({
-            data: {
-                userId: session.userId,
-                razorpayOrderId: razorpay_order_id,
-                razorpayPaymentId: razorpay_payment_id,
-                amount: 900, // ₹9 in paise
-                status: 'SUCCESS',
-            },
+            // 2. Update or Create Payment record
+            // Since we now create it in /create-order, we should update it.
+            // But we use upsert to be safe and handle cases where create-order DB call might have failed.
+            await tx.payment.upsert({
+                where: { razorpayOrderId: razorpay_order_id },
+                update: {
+                    razorpayPaymentId: razorpay_payment_id,
+                    status: 'SUCCESS',
+                },
+                create: {
+                    userId: session.userId,
+                    razorpayOrderId: razorpay_order_id,
+                    razorpayPaymentId: razorpay_payment_id,
+                    amount: 900,
+                    status: 'SUCCESS',
+                },
+            });
         });
 
         return NextResponse.json({

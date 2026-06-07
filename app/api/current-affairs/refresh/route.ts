@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { fetchGNews } from '@/lib/gNewsFetcher';
-import { enhanceForSSB, getCategory } from '@/lib/ssbEnhancer';
+import { fetchGNews } from '@/lib/gnews-fetcher';
+import { enhanceForSSB, getCategory } from '@/lib/ssb-enhancer';
 import { storeNewArticles, CurrentAffairItem } from '@/lib/storage';
 
 export const dynamic = 'force-dynamic';

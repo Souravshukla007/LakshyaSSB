@@ -48,6 +48,65 @@ interface MedicalLatestExists {
 }
 type MedicalLatest = MedicalLatestNone | MedicalLatestExists;
 
+// ─── Psych API Response Types ──────────────────────────────────────────────
+interface PsychLatestNone { status: 'NO_DATA' }
+interface PsychLatestExists {
+    status: 'HAS_DATA';
+    overallScore: number;
+    insight: string;
+    lastUpdated: string;
+    olqs: { leadership: number; initiative: number; responsibility: number; social_adaptability: number; confidence: number; };
+}
+type PsychLatest = PsychLatestNone | PsychLatestExists;
+
+function DashboardRadarChart({ olqs }: { olqs: any }) {
+    const cx = 100, cy = 100, maxR = 80;
+    const stats = [
+        { label: 'Leadership', value: olqs.leadership },
+        { label: 'Initiative', value: olqs.initiative },
+        { label: 'Responsibility', value: olqs.responsibility },
+        { label: 'Social Adj.', value: olqs.social_adaptability },
+        { label: 'Confidence', value: olqs.confidence },
+    ];
+
+    const n = stats.length;
+    const angles = stats.map((_, i) => (2 * Math.PI * i) / n - Math.PI / 2);
+    const gridCircles = [20, 40, 60, 80];
+    const dataPoints = stats.map((s, i) => {
+        const v = s.value / 100;
+        return {
+            x: cx + maxR * v * Math.cos(angles[i]),
+            y: cy + maxR * v * Math.sin(angles[i]),
+        };
+    });
+
+    const dataPath = dataPoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ') + 'Z';
+
+    return (
+        <svg viewBox="0 0 200 200" className="w-full h-full">
+            {gridCircles.map(v => (
+                <circle key={v} cx={cx} cy={cy} r={maxR * v / 100} fill="none" stroke="#e5e7eb" strokeWidth="0.5" strokeDasharray="2,2" />
+            ))}
+            {stats.map((_, i) => (
+                <line key={i} x1={cx} y1={cy} x2={cx + maxR * Math.cos(angles[i])} y2={cy + maxR * Math.sin(angles[i])} stroke="#e5e7eb" strokeWidth="0.5" />
+            ))}
+            <path d={dataPath} fill="rgba(255, 94, 58, 0.2)" stroke="#FF5E3A" strokeWidth="2" strokeLinejoin="round" />
+            {dataPoints.map((p, i) => (
+                <circle key={i} cx={p.x} cy={p.y} r="2.5" fill="#FF5E3A" />
+            ))}
+            {stats.map((s, i) => {
+                const lx = cx + (maxR + 15) * Math.cos(angles[i]);
+                const ly = cy + (maxR + 15) * Math.sin(angles[i]);
+                return (
+                    <text key={s.label} x={lx} y={ly + 2} textAnchor="middle" className="text-[7px] font-bold fill-gray-400 uppercase tracking-tighter">
+                        {s.label}
+                    </text>
+                );
+            })}
+        </svg>
+    );
+}
+
 export default function DashboardClient({ user }: DashboardClientProps) {
     const counterRef = useRef<HTMLDivElement>(null);
     const [piqData, setPiqData] = useState<PIQLatest | null>(null);
@@ -56,9 +115,12 @@ export default function DashboardClient({ user }: DashboardClientProps) {
     const [medicalData, setMedicalData] = useState<MedicalLatest | null>(null);
     const [medicalLoading, setMedicalLoading] = useState(true);
 
+    const [psychData, setPsychData] = useState<PsychLatest | null>(null);
+    const [psychLoading, setPsychLoading] = useState(true);
+
     const [colorVisionStatus, setColorVisionStatus] = useState<string | null>(null);
 
-    // Fetch PIQ status on mount
+    // Fetch data on mount
     useEffect(() => {
         fetch('/api/piq/latest')
             .then(r => r.json())
@@ -71,6 +133,12 @@ export default function DashboardClient({ user }: DashboardClientProps) {
             .then((data: MedicalLatest) => setMedicalData(data))
             .catch(() => setMedicalData({ status: 'NO_MEDICAL' }))
             .finally(() => setMedicalLoading(false));
+
+        fetch('/api/dashboard/psych-summary')
+            .then(r => r.json())
+            .then((data: PsychLatest) => setPsychData(data))
+            .catch(() => setPsychData({ status: 'NO_DATA' }))
+            .finally(() => setPsychLoading(false));
 
         // Get local color vision test status
         if (typeof window !== 'undefined') {
@@ -174,34 +242,32 @@ export default function DashboardClient({ user }: DashboardClientProps) {
                                 <img src="https://images.unsplash.com/photo-1725399633872-32ba508b0607?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxCcmFpbiUyMHdpdGglMjBjaGVja2xpc3QlMjBpbGx1c3RyYXRpb258ZW58MHx8fHwxNzcxMTAzNjI3fDA&ixlib=rb-4.1.0&w=60&h=60&fit=crop&fm=jpg&q=80" className="w-12 h-12" alt="AI Logic" />
                             </div>
 
-                            <div className="grid md:grid-cols-2 gap-8 items-center">
-                                <div className="relative aspect-square bg-brand-bg rounded-3xl p-6 flex items-center justify-center border border-gray-100 overflow-hidden">
-                                    {/* SVG Radar Chart Simulation */}
-                                    <svg viewBox="0 0 200 200" className="w-full h-full">
-                                        <polygon points="100,20 160,80 180,150 100,180 20,150 40,80" fill="none" stroke="#e5e7eb" strokeWidth="1"></polygon>
-                                        <polygon points="100,40 140,85 160,140 100,160 50,140 60,85" fill="none" stroke="#e5e7eb" strokeWidth="1"></polygon>
-                                        <polygon points="100,45 150,90 170,160 100,170 30,140 50,70" fill="rgba(255, 94, 58, 0.2)" stroke="#FF5E3A" strokeWidth="2"></polygon>
-                                        <text x="100" y="15" textAnchor="middle" className="text-[8px] font-bold fill-gray-400 uppercase">Leadership</text>
-                                        <text x="185" y="80" textAnchor="start" className="text-[8px] font-bold fill-gray-400 uppercase">Initiative</text>
-                                        <text x="185" y="160" textAnchor="start" className="text-[8px] font-bold fill-gray-400 uppercase">Responsibility</text>
-                                        <text x="100" y="195" textAnchor="middle" className="text-[8px] font-bold fill-gray-400 uppercase">Communication</text>
-                                        <text x="15" y="160" textAnchor="end" className="text-[8px] font-bold fill-gray-400 uppercase">Teamwork</text>
-                                        <text x="15" y="80" textAnchor="end" className="text-[8px] font-bold fill-gray-400 uppercase">Intel</text>
-                                    </svg>
+                            {psychLoading ? (
+                                <div className="py-20 flex justify-center items-center"><div className="w-8 h-8 border-4 border-gray-200 border-t-brand-orange rounded-full animate-spin"></div></div>
+                            ) : psychData?.status === 'NO_DATA' ? (
+                                <div className="py-10 text-center bg-brand-bg rounded-3xl border border-dashed border-gray-200">
+                                    <p className="text-gray-400 text-sm font-bold uppercase mb-4">No Psych Data Found</p>
+                                    <Link href="/practice" className="px-6 py-2 bg-brand-dark text-white rounded-full text-xs font-bold hover:bg-brand-orange transition-all">Start Practicing</Link>
                                 </div>
-                                <div className="space-y-4">
-                                    <div className="p-4 rounded-2xl bg-brand-bg border border-gray-100">
-                                        <div className="flex justify-between items-end mb-2">
-                                            <span className="text-[10px] font-bold uppercase text-gray-400">Analysis Summary</span>
-                                            <span className="text-xs font-bold text-brand-orange">72% Overall Match</span>
-                                        </div>
-                                        <p className="text-[11px] text-gray-500 font-noname leading-relaxed italic">"Your SRT responses show high responsibility (80%), but Initiative (65%) can be improved by taking quicker actions in TAT stories."</p>
+                            ) : (
+                                <div className="grid md:grid-cols-2 gap-8 items-center">
+                                    <div className="relative aspect-square bg-brand-bg rounded-3xl p-6 flex items-center justify-center border border-gray-100 overflow-hidden">
+                                        <DashboardRadarChart olqs={psychData!.olqs} />
                                     </div>
-                                    <Link href="/olq-report" className="w-full block text-center py-4 bg-brand-dark text-white rounded-full font-bold text-sm shadow-xl shadow-brand-dark/20 hover:bg-brand-orange transition-all duration-300">
-                                        View Full Report
-                                    </Link>
+                                    <div className="space-y-4">
+                                        <div className="p-4 rounded-2xl bg-brand-bg border border-gray-100">
+                                            <div className="flex justify-between items-end mb-2">
+                                                <span className="text-[10px] font-bold uppercase text-gray-400">Analysis Summary</span>
+                                                <span className="text-xs font-bold text-brand-orange">{psychData!.overallScore}% Overall Match</span>
+                                            </div>
+                                            <p className="text-[11px] text-gray-500 font-noname leading-relaxed italic">"{psychData!.insight}"</p>
+                                        </div>
+                                        <Link href="/olq-report" className="w-full block text-center py-4 bg-brand-dark text-white rounded-full font-bold text-sm shadow-xl shadow-brand-dark/20 hover:bg-brand-orange transition-all duration-300">
+                                            View Full Report
+                                        </Link>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
 
                         {/* OLQ PROGRESS TRACKER */}

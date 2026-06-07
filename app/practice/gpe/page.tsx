@@ -41,36 +41,64 @@ export default function GPEPracticePage() {
         return () => { if (timerRef.current) clearInterval(timerRef.current); };
     }, [view, timeLeft]);
 
+    const [isEvaluating, setIsEvaluating] = useState(false);
+    const [evaluationResult, setEvaluationResult] = useState<any>(null);
+
     const handleStart = async () => {
-        // Access check
+        // ... access checks ...
         const accessRes = await fetch('/api/practice/check-access?module=GPE');
         if (accessRes.status === 401) { router.push('/auth'); return; }
         const accessData = await accessRes.json();
         if (!accessData.allowed) { router.push('/pricing'); return; }
 
-        // Consume attempt
         await fetch('/api/practice/check-access', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ module: 'GPE' }),
         });
 
-        // Fetch random scenario
         const res = await fetch('/api/gpe/scenario');
         const data: GPEScenario = await res.json();
         setScenario(data);
 
-        // Reset state
         setIdentifyProblems('');
         setActionPlan('');
         setTimeManagement('');
         setTimeLeft(TOTAL_TIME);
+        setEvaluationResult(null);
         setView('test');
+    };
+
+    const submitGPE = async () => {
+        if (!scenario) return;
+        setIsEvaluating(true);
+        setView('result');
+        try {
+            const res = await fetch('/api/gpe/evaluate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    situation: scenario.situation,
+                    identifiedProblems,
+                    actionPlan,
+                    timeManagement
+                })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setEvaluationResult(data);
+            }
+        } catch (error) {
+            console.error('GPE Submission Error:', error);
+        } finally {
+            setIsEvaluating(false);
+        }
     };
 
     const handleSubmit = () => {
         if (timerRef.current) clearInterval(timerRef.current);
-        setView('result');
+        submitGPE();
     };
 
     // Timer display
@@ -232,12 +260,40 @@ export default function GPEPracticePage() {
                                     </ul>
                                 </div>
                                 
+                                {/* Solution Inputs */}
+                                <div className="md:col-span-2 space-y-6">
+                                    <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-sm">
+                                        <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                            <i className="fa-solid fa-list-check text-orange-500" /> 1. Identify Problems (Prioritized)
+                                        </h3>
+                                        <textarea
+                                            value={identifyProblems}
+                                            onChange={(e) => setIdentifyProblems(e.target.value)}
+                                            placeholder="List the problems in order of priority (e.g. 1. Saving a life, 2. Stopping a theft...)"
+                                            className="w-full h-32 bg-gray-50 border border-gray-100 rounded-2xl p-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/20"
+                                        />
+                                    </div>
+
+                                    <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-sm">
+                                        <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                            <i className="fa-solid fa-person-running text-orange-500" /> 2. Action Plan & Solution
+                                        </h3>
+                                        <textarea
+                                            value={actionPlan}
+                                            onChange={(e) => setActionPlan(e.target.value)}
+                                            placeholder="Write your detailed plan: who goes where, using what resource, and what they do."
+                                            className="w-full h-48 bg-gray-50 border border-gray-100 rounded-2xl p-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/20"
+                                        />
+                                    </div>
+                                </div>
+
                                 <div className="md:col-span-2 pt-4 flex justify-end">
                                     <button
                                         onClick={handleSubmit}
-                                        className="px-8 py-4 bg-gray-900 hover:bg-black text-white text-sm font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
+                                        disabled={!actionPlan}
+                                        className="px-8 py-4 bg-gray-900 hover:bg-black text-white text-sm font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
                                     >
-                                        Finish Scenario <i className="fa-solid fa-arrow-right text-xs" />
+                                        Submit Solution for AI Evaluation <i className="fa-solid fa-brain text-xs" />
                                     </button>
                                 </div>
                             </div>
@@ -248,12 +304,10 @@ export default function GPEPracticePage() {
                 {/* ── RESULT VIEW ── */}
                 {view === 'result' && scenario && (
                     <div className="w-full max-w-4xl mx-auto">
-
-
                         <div className="bg-white/90 backdrop-blur-md rounded-[2.5rem] p-6 md:p-10 border border-gray-100 shadow-xl space-y-8">
                             <div className="flex items-center justify-between pb-6 border-b border-gray-100">
                                 <div>
-                                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Scenario Completed</p>
+                                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">GPE Solution Evaluated</p>
                                     <h3 className="text-xl font-bold text-gray-900">{scenario.title}</h3>
                                 </div>
                                 <span className={`text-sm font-bold px-4 py-2 rounded-full border ${difficultyColor(scenario.difficulty)}`}>
@@ -261,7 +315,79 @@ export default function GPEPracticePage() {
                                 </span>
                             </div>
 
+                            {isEvaluating ? (
+                                <div className="py-12 flex flex-col items-center justify-center text-center">
+                                    <div className="w-12 h-12 border-4 border-gray-200 border-t-orange-500 rounded-full animate-spin mb-4" />
+                                    <h3 className="text-lg font-bold text-gray-900">Officer is reviewing your plan...</h3>
+                                    <p className="text-sm text-gray-500">Evaluating your reasoning ability and organizing skills.</p>
+                                </div>
+                            ) : evaluationResult ? (
+                                <div className="animate-fadeIn space-y-8">
+                                    {/* Overall Score */}
+                                    <div className="flex items-center gap-8 p-6 bg-orange-50 rounded-3xl border border-orange-100">
+                                        <div className="text-center">
+                                            <div className="text-4xl font-black text-orange-600">{evaluationResult.score}%</div>
+                                            <div className="text-[10px] font-bold text-orange-400 uppercase tracking-widest">Match Score</div>
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                                {[
+                                                    { label: 'Reasoning', val: evaluationResult.reasoningScore },
+                                                    { label: 'Organizing', val: evaluationResult.organizingScore },
+                                                    { label: 'Initiative', val: evaluationResult.initiativeScore },
+                                                    { label: 'Social', val: evaluationResult.socialScore },
+                                                ].map(s => (
+                                                    <div key={s.label}>
+                                                        <div className="text-xs font-bold text-gray-500 uppercase mb-1">{s.label}</div>
+                                                        <div className="h-1.5 w-full bg-orange-200 rounded-full overflow-hidden">
+                                                            <div className="h-full bg-orange-600" style={{ width: `${s.val * 10}%` }} />
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                    {/* Detailed Feedback */}
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div className="p-6 bg-green-50 rounded-2xl border border-green-100">
+                                            <h4 className="text-xs font-bold text-green-700 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                                <i className="fa-solid fa-circle-check" /> Strengths
+                                            </h4>
+                                            <p className="text-sm text-green-800 leading-relaxed">{evaluationResult.feedback.strengths}</p>
+                                        </div>
+                                        <div className="p-6 bg-red-50 rounded-2xl border border-red-100">
+                                            <h4 className="text-xs font-bold text-red-700 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                                <i className="fa-solid fa-circle-exclamation" /> Improvements
+                                            </h4>
+                                            <p className="text-sm text-red-800 leading-relaxed">{evaluationResult.feedback.weaknesses}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Problems Analysis */}
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                                            <h4 className="text-xs font-bold text-gray-700 uppercase tracking-widest mb-3">Resource Usage Analysis</h4>
+                                            <p className="text-sm text-gray-600 leading-relaxed">{evaluationResult.feedback.resourceUsage}</p>
+                                        </div>
+
+                                        {evaluationResult.feedback.missedProblems?.length > 0 && (
+                                            <div className="p-6 bg-yellow-50 rounded-2xl border border-yellow-100">
+                                                <h4 className="text-xs font-bold text-yellow-700 uppercase tracking-widest mb-3">You Missed These Problems:</h4>
+                                                <ul className="space-y-2">
+                                                    {evaluationResult.feedback.missedProblems.map((p: string, i: number) => (
+                                                        <li key={i} className="text-sm text-yellow-800 flex gap-2">
+                                                            <span className="font-bold">•</span> {p}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="text-center py-10 text-gray-400">Failed to load evaluation.</div>
+                            )}
 
                             <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-4 justify-center">
                                 <button

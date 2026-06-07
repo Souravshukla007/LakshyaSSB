@@ -9,6 +9,8 @@ import { Capacitor } from '@capacitor/core';
 function AuthContent() {
     const searchParams = useSearchParams();
     const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
+    const [forgotStep, setForgotStep] = useState<'request' | 'reset' | null>(null);
+    const [forgotEmail, setForgotEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
     const [showPassword, setShowPassword] = useState(false);
@@ -98,6 +100,79 @@ function AuthContent() {
         }
     };
 
+    const handleSendResetOTP = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setMessage(null);
+
+        const formData = new FormData(e.currentTarget);
+        const email = formData.get('email') as string;
+
+        try {
+            const response = await fetch('/api/auth/send-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setForgotEmail(email);
+                setForgotStep('reset');
+                setMessage({ type: 'success', text: 'Verification code sent to your email.' });
+            } else {
+                setMessage({ type: 'error', text: data.error || 'Failed to send code' });
+            }
+        } catch (error) {
+            setMessage({ type: 'error', text: 'An error occurred. Please try again.' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setMessage(null);
+
+        const formData = new FormData(e.currentTarget);
+        const otp = formData.get('otp') as string;
+        const newPassword = formData.get('newPassword') as string;
+        const confirmPassword = formData.get('confirmPassword') as string;
+
+        if (newPassword !== confirmPassword) {
+            setMessage({ type: 'error', text: 'Passwords do not match' });
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/auth/reset-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: forgotEmail, otp, newPassword }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage({ type: 'success', text: data.message });
+                setTimeout(() => {
+                    setForgotStep(null);
+                    setActiveTab('login');
+                    setMessage(null);
+                }, 2000);
+            } else {
+                setMessage({ type: 'error', text: data.error || 'Reset failed' });
+            }
+        } catch (error) {
+            setMessage({ type: 'error', text: 'An error occurred. Please try again.' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
@@ -106,24 +181,23 @@ function AuthContent() {
         const formData = new FormData(e.currentTarget);
         const fullName = formData.get('fullName') as string;
         const email = formData.get('email') as string;
-        const targetEntry = formData.get('targetEntry') as string;
         const password = formData.get('password') as string;
+        const targetEntry = formData.get('targetEntry') as string;
 
         try {
             const response = await fetch('/api/auth/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fullName, email, targetEntry, password }),
+                body: JSON.stringify({ fullName, email, password, targetEntry }),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                setMessage({ type: 'success', text: 'Account created successfully! You can now login.' });
+                setMessage({ type: 'success', text: 'Account created successfully! Welcome aboard.' });
                 setTimeout(() => {
-                    setActiveTab('login');
-                    setMessage(null);
-                }, 2000);
+                    window.location.href = '/';
+                }, 1500);
             } else {
                 setMessage({ type: 'error', text: data.error || 'Signup failed' });
             }
@@ -133,8 +207,6 @@ function AuthContent() {
             setLoading(false);
         }
     };
-
-
 
     return (
         <>
@@ -199,29 +271,146 @@ function AuthContent() {
                                 )}
 
                                 {/* Toggle Tabs */}
-                                <div className="flex mb-10 bg-gray-100 p-1 rounded-2xl w-fit">
-                                    <button
-                                        onClick={() => { setActiveTab('login'); setMessage(null); }}
-                                        className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'login'
-                                            ? 'bg-white text-brand-dark shadow-sm'
-                                            : 'text-gray-500 hover:text-brand-dark'
-                                            }`}
-                                    >
-                                        Login
-                                    </button>
-                                    <button
-                                        onClick={() => { setActiveTab('signup'); setMessage(null); }}
-                                        className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'signup'
-                                            ? 'bg-white text-brand-dark shadow-sm'
-                                            : 'text-gray-500 hover:text-brand-dark'
-                                            }`}
-                                    >
-                                        Sign Up
-                                    </button>
-                                </div>
+                                {!forgotStep && (
+                                    <div className="flex mb-10 bg-gray-100 p-1 rounded-2xl w-fit">
+                                        <button
+                                            onClick={() => { setActiveTab('login'); setMessage(null); }}
+                                            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'login'
+                                                ? 'bg-white text-brand-dark shadow-sm'
+                                                : 'text-gray-500 hover:text-brand-dark'
+                                                }`}
+                                        >
+                                            Login
+                                        </button>
+                                        <button
+                                            onClick={() => { setActiveTab('signup'); setMessage(null); }}
+                                            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === 'signup'
+                                                ? 'bg-white text-brand-dark shadow-sm'
+                                                : 'text-gray-500 hover:text-brand-dark'
+                                                }`}
+                                        >
+                                            Sign Up
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* Forgot Password - Request Step */}
+                                {forgotStep === 'request' && (
+                                    <div className="transition-all duration-500">
+                                        <div className="flex items-center gap-2 mb-6">
+                                            <button 
+                                                onClick={() => setForgotStep(null)}
+                                                className="text-gray-400 hover:text-brand-orange transition-colors"
+                                            >
+                                                <i className="fa-solid fa-arrow-left"></i>
+                                            </button>
+                                            <h3 className="font-hero font-bold text-3xl text-brand-dark">Reset Password</h3>
+                                        </div>
+                                        <p className="text-gray-500 text-sm mb-8 font-noname">Enter your email address to receive a verification code.</p>
+
+                                        <form className="space-y-5" onSubmit={handleSendResetOTP}>
+                                            <div>
+                                                <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 font-mono">Email Address</label>
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    placeholder="cadet@academy.in"
+                                                    required
+                                                    disabled={loading}
+                                                    className="w-full h-14 bg-gray-50 border border-gray-100 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
+                                                />
+                                            </div>
+
+                                            <button
+                                                type="submit"
+                                                disabled={loading}
+                                                className="w-full group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                <div className="relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center justify-between pl-8 pr-2 py-3">
+                                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]"></div>
+                                                    <span className="relative z-10 text-white group-hover:text-brand-dark font-noname font-bold text-base transition-colors duration-[1000ms]">
+                                                        {loading ? 'Sending Code...' : 'Send Reset Code'}
+                                                    </span>
+                                                    <span className="relative z-10 bg-white text-brand-dark w-10 h-10 rounded-full flex items-center justify-center">
+                                                        <i className="fa-solid fa-paper-plane text-xs"></i>
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
+                                )}
+
+                                {/* Forgot Password - Reset Step */}
+                                {forgotStep === 'reset' && (
+                                    <div className="transition-all duration-500">
+                                        <div className="flex items-center gap-2 mb-6">
+                                            <button 
+                                                onClick={() => setForgotStep('request')}
+                                                className="text-gray-400 hover:text-brand-orange transition-colors"
+                                            >
+                                                <i className="fa-solid fa-arrow-left"></i>
+                                            </button>
+                                            <h3 className="font-hero font-bold text-3xl text-brand-dark">Set New Password</h3>
+                                        </div>
+                                        <p className="text-gray-500 text-sm mb-8 font-noname">We've sent a 6-digit code to <strong>{forgotEmail}</strong>.</p>
+
+                                        <form className="space-y-4" onSubmit={handleResetPassword}>
+                                            <div>
+                                                <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 font-mono">Verification Code</label>
+                                                <input
+                                                    type="text"
+                                                    name="otp"
+                                                    placeholder="123456"
+                                                    maxLength={6}
+                                                    required
+                                                    disabled={loading}
+                                                    className="w-full h-12 bg-gray-50 border border-gray-100 rounded-xl px-4 text-center tracking-[1em] font-bold text-lg focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 font-mono">New Password</label>
+                                                <input
+                                                    type="password"
+                                                    name="newPassword"
+                                                    placeholder="••••••••"
+                                                    required
+                                                    disabled={loading}
+                                                    className="w-full h-12 bg-gray-50 border border-gray-100 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 font-mono">Confirm New Password</label>
+                                                <input
+                                                    type="password"
+                                                    name="confirmPassword"
+                                                    placeholder="••••••••"
+                                                    required
+                                                    disabled={loading}
+                                                    className="w-full h-12 bg-gray-50 border border-gray-100 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange transition-all disabled:opacity-50"
+                                                />
+                                            </div>
+
+                                            <button
+                                                type="submit"
+                                                disabled={loading}
+                                                className="w-full group relative bg-brand-dark p-[2px] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                <div className="relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center justify-between pl-8 pr-2 py-3">
+                                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full transition-transform duration-[1500ms] ease-out group-hover:scale-[30]"></div>
+                                                    <span className="relative z-10 text-white group-hover:text-brand-dark font-noname font-bold text-base transition-colors duration-[1000ms]">
+                                                        {loading ? 'Resetting...' : 'Reset Password'}
+                                                    </span>
+                                                    <span className="relative z-10 bg-white text-brand-dark w-10 h-10 rounded-full flex items-center justify-center">
+                                                        <i className="fa-solid fa-check text-xs"></i>
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
+                                )}
 
                                 {/* Login Form */}
-                                {activeTab === 'login' && (
+                                {activeTab === 'login' && !forgotStep && (
                                     <div className="transition-all duration-500">
                                         <h3 className="font-hero font-bold text-3xl text-brand-dark mb-2">Welcome Back</h3>
                                         <p className="text-gray-500 text-sm mb-8 font-noname">Enter your details to access your dashboard.</p>
@@ -241,7 +430,13 @@ function AuthContent() {
                                             <div>
                                                 <div className="flex justify-between items-center mb-2">
                                                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest font-mono">Password</label>
-                                                    <a href="#" className="text-[10px] font-bold text-brand-orange hover:underline">Forgot Password?</a>
+                                                    <button 
+                                                        type="button"
+                                                        onClick={() => { setForgotStep('request'); setMessage(null); }}
+                                                        className="text-[10px] font-bold text-brand-orange hover:underline"
+                                                    >
+                                                        Forgot Password?
+                                                    </button>
                                                 </div>
                                                 <div className="relative">
                                                     <input

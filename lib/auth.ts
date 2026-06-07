@@ -3,8 +3,15 @@ import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 // Read from env — never hard-code in production
-const secretKey = process.env.JWT_SECRET ?? 'fallback-dev-secret-change-me';
-const key = new TextEncoder().encode(secretKey);
+const secretKey = process.env.JWT_SECRET;
+
+if (!secretKey) {
+    if (process.env.NODE_ENV === 'production') {
+        throw new Error('JWT_SECRET environment variable is required in production');
+    }
+}
+
+const key = new TextEncoder().encode(secretKey || 'dev-only-insecure-fallback');
 
 export interface SessionPayload {
     userId: string;
