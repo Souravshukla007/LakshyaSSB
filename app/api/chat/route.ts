@@ -103,14 +103,14 @@ export async function POST(request: Request) {
     // Lookup user to enforce daily limits
     const user = await prisma.user.findUnique({
       where: { id: session.userId },
-      select: { is_pro: true }
+      select: { plan: true }
     });
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    if (!user.is_pro) {
+    if (user.plan !== 'PRO') {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 

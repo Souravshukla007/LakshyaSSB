@@ -13,11 +13,10 @@ export async function POST(request: Request) {
             where: { email: session.email },
             select: {
                 id: true,
-                last_login: true,
                 current_streak: true,
-                longest_streak: true,
                 medals_total: true,
-                medals_weekly: true
+                medals_weekly: true,
+                updatedAt: true
             }
         });
 
@@ -26,36 +25,26 @@ export async function POST(request: Request) {
         }
 
         const now = new Date();
-        const lastLogin = user.last_login;
+        const lastUpdate = user.updatedAt;
         let isNewDay = true;
-        let isMissedDay = false;
 
-        if (lastLogin) {
+        if (lastUpdate) {
             const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const lastLoginDate = new Date(lastLogin.getFullYear(), lastLogin.getMonth(), lastLogin.getDate());
+            const lastUpdateDate = new Date(lastUpdate.getFullYear(), lastUpdate.getMonth(), lastUpdate.getDate());
 
-            const diffTime = Math.abs(today.getTime() - lastLoginDate.getTime());
+            const diffTime = Math.abs(today.getTime() - lastUpdateDate.getTime());
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             if (diffDays === 0) {
                 // Already logged in today
                 isNewDay = false;
-            } else if (diffDays > 1) {
-                // Missed at least one calendar day
-                isMissedDay = true;
             }
         }
 
         if (isNewDay) {
-            const newStreak = isMissedDay ? 1 : user.current_streak + 1;
-            const newLongestStreak = Math.max(newStreak, user.longest_streak);
-
             await prisma.user.update({
                 where: { id: user.id },
                 data: {
-                    last_login: now,
-                    current_streak: newStreak,
-                    longest_streak: newLongestStreak,
                     medals_total: { increment: 1 },
                     medals_weekly: { increment: 1 }
                 }

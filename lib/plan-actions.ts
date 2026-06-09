@@ -10,8 +10,7 @@ export async function activatePro(userId: string): Promise<void> {
     await prisma.user.update({
         where: { id: userId },
         data: { 
-            plan: 'PRO',
-            is_pro: true
+            plan: 'PRO'
         },
     });
 }

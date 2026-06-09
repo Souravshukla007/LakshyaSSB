@@ -9,13 +9,13 @@ export async function GET() {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Always read is_pro from DB (not just JWT) as it can change via redemption
+    // Always read plan from DB (not just JWT) as it can change via redemption
     const dbUser = await prisma.user.findUnique({
         where: { id: session.userId },
-        select: { is_pro: true },
+        select: { plan: true },
     });
 
-    const callerIsPro = dbUser?.is_pro ?? false;
+    const callerIsPro = dbUser?.plan === 'PRO';
     const data = await getOverallLeaderboard(session.userId, callerIsPro);
 
     const userEntry = data.find((e) => e.isCurrentUser);

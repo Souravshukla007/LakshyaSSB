@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   const users = await prisma.user.findMany({
-    select: { email: true, plan: true, is_pro: true }
+    select: { email: true, plan: true }
   });
   console.log(users);
 }

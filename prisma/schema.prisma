@@ -54,6 +54,8 @@ model User {
   medals_total   Int       @default(0)
   medals_weekly  Int       @default(0)
   current_streak Int       @default(0)
+  longest_streak Int       @default(0)
+  last_login     DateTime?
 
   // Relations
   notifications    UserNotification[]

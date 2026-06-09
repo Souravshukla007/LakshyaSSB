@@ -79,7 +79,7 @@ export default function GPEPracticePage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     situation: scenario.situation,
-                    identifiedProblems,
+                    identifyProblems,
                     actionPlan,
                     timeManagement
                 })

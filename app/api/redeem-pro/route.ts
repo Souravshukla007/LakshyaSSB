@@ -16,7 +16,7 @@ export async function POST() {
             id: true,
             fullName: true,
             medals_total: true,
-            is_pro: true,
+            plan: true,
         },
     });
 
@@ -24,7 +24,7 @@ export async function POST() {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    if (user.is_pro) {
+    if (user.plan === 'PRO') {
         return NextResponse.json(
             { error: 'You are already a Pro member via medal redemption.' },
             { status: 409 },
@@ -49,12 +49,11 @@ export async function POST() {
         data: {
             medals_total: { decrement: PRO_COST },
             plan: 'PRO',
-            is_pro: true,
         },
         select: {
             medals_total: true,
             medals_weekly: true,
-            is_pro: true,
+            plan: true,
         },
     });
 
@@ -69,7 +68,7 @@ export async function POST() {
 
     return NextResponse.json({
         message: 'Congratulations! You are now a Pro member! 🎖️',
-        is_pro: updated.is_pro,
+        isPro: updated.plan === 'PRO',
         medals_total: updated.medals_total,
         medals_weekly: updated.medals_weekly,
     });

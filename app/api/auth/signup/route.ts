@@ -6,7 +6,7 @@ import { signSession } from '@/lib/auth';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { fullName, email, password } = body;
+        const { fullName, email, password, targetEntry } = body;
 
         // Validate
         if (!fullName || !email || !password) {
@@ -41,6 +41,7 @@ export async function POST(request: Request) {
                 fullName: fullName.trim(),
                 email: email.toLowerCase().trim(),
                 passwordHash,
+                targetEntry: targetEntry || null,
                 plan: 'FREE',
             },
             select: {

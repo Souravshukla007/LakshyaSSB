@@ -14,7 +14,7 @@ export interface LeaderboardEntry {
     name: string;
     medals: number;
     streak: number;
-    is_pro: boolean;
+    isPro: boolean;
     isCurrentUser: boolean;
 }
 
@@ -49,7 +49,7 @@ async function buildLeaderboard(
             medals_total: true,
             medals_weekly: true,
             current_streak: true,
-            is_pro: true,
+            plan: true,
         },
     });
 
@@ -59,7 +59,7 @@ async function buildLeaderboard(
         name: u.fullName,
         medals: sortKey === 'medals_weekly' ? u.medals_weekly : u.medals_total,
         streak: u.current_streak,
-        is_pro: u.is_pro,
+        isPro: u.plan === 'PRO',
         isCurrentUser: u.id === callerId,
     });
 
@@ -77,7 +77,7 @@ async function buildLeaderboard(
                     medals_total: true,
                     medals_weekly: true,
                     current_streak: true,
-                    is_pro: true,
+                    plan: true,
                 },
             });
 

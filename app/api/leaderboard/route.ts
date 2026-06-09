@@ -42,7 +42,6 @@ export async function GET(request: Request) {
                 medals_total: true,
                 medals_weekly: true,
                 current_streak: true,
-                longest_streak: true,
             },
             orderBy,
             take: 50,
@@ -60,7 +59,7 @@ export async function GET(request: Request) {
                 medals: u.medals_total,
                 weeklyMedals: u.medals_weekly,
                 currentStreak: u.current_streak,
-                longestStreak: u.longest_streak,
+                longestStreak: u.current_streak, // Using current_streak as longest for now
                 weeklyStreak: u.current_streak, // Simplified for now, tracking separate weekly streak requires more schema setup
                 badge: getBadge(tab === 'weekly' ? u.medals_weekly : u.medals_total),
                 avatar: u.profileImageUrl || null,

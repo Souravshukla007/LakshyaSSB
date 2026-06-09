@@ -11,10 +11,10 @@ export async function GET() {
 
     const dbUser = await prisma.user.findUnique({
         where: { id: session.userId },
-        select: { is_pro: true },
+        select: { plan: true },
     });
 
-    const callerIsPro = dbUser?.is_pro ?? false;
+    const callerIsPro = dbUser?.plan === 'PRO';
     const data = await getStreakLeaderboard(session.userId, callerIsPro);
 
     const userEntry = data.find((e) => e.isCurrentUser);

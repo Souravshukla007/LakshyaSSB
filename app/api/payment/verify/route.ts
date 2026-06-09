@@ -44,8 +44,7 @@ export async function POST(request: NextRequest) {
             await tx.user.update({
                 where: { id: session.userId },
                 data: { 
-                    plan: 'PRO',
-                    is_pro: true
+                    plan: 'PRO'
                 },
             });
 

@@ -17,20 +17,38 @@ export default function SrtTestPage() {
     const router = useRouter();
     const [state, setState] = useState<AppState>('intro');
     const [answers, setAnswers] = useState<Record<number, string>>({});
+    const [result, setResult] = useState<any>(null);
 
     const handleStart = () => {
         setState('test');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const handleSubmit = (submittedAnswers: Record<number, string>) => {
+    const handleSubmit = async (submittedAnswers: Record<number, string>) => {
         setAnswers(submittedAnswers);
         setState('result');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Submit to API for evaluation
+        try {
+            const res = await fetch('/api/srt/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ inputs: Object.values(submittedAnswers) })
+            });
+            
+            if (res.ok) {
+                const data = await res.json();
+                setResult(data);
+            }
+        } catch (error) {
+            console.error('Error submitting SRT:', error);
+        }
     };
 
     const handleRetake = () => {
         setAnswers({});
+        setResult(null);
         setState('intro');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -59,7 +77,7 @@ export default function SrtTestPage() {
                 <div className="w-full">
                     {state === 'intro' && <SrtIntro onStart={handleStart} />}
                     {state === 'test' && <SrtTestInterface questions={allQuestions} onSubmit={handleSubmit} />}
-                    {state === 'result' && <SrtResult onRetake={handleRetake} onDashboard={handleDashboard} />}
+                    {state === 'result' && <SrtResult result={result} onRetake={handleRetake} onDashboard={handleDashboard} />}
                 </div>
             </div>
         </div>
