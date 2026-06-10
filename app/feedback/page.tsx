@@ -59,6 +59,10 @@ export default function FeedbackPage() {
             setErrorMsg('Please provide a rating.');
             return;
         }
+        if (!improvement.trim() && !featureRequest.trim()) {
+            setErrorMsg('Please share at least one improvement or feature request.');
+            return;
+        }
 
         setIsSubmitting(true);
         try {
