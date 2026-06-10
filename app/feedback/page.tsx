@@ -25,6 +25,8 @@ export default function FeedbackPage() {
         'SRT Practice',
         'Lecturette Trainer',
         'SSB Entry Navigator',
+        'Group Planning Exercise',
+        'Medical Simulator',
     ];
 
     const quickChips = [
@@ -229,8 +231,12 @@ export default function FeedbackPage() {
                             <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-4">Most Useful Feature(s)</label>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 {featuresList.map(f => (
-                                    <label key={f} className={`flex items-center p-3.5 rounded-xl border cursor-pointer transition-all ${selectedFeatures.includes(f) ? 'bg-orange-50 border-orange-200 text-orange-800' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}>
-                                        <div className={`w-5 h-5 rounded flex items-center justify-center mr-3 border transition-colors ${selectedFeatures.includes(f) ? 'bg-orange-500 border-orange-500 text-white' : 'border-gray-300'}`}>
+                                    <label
+                                        key={f}
+                                        onClick={() => toggleFeature(f)}
+                                        className={`flex items-center p-3.5 rounded-xl border cursor-pointer transition-all select-none ${selectedFeatures.includes(f) ? 'bg-orange-50 border-orange-200 text-orange-800' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
+                                    >
+                                        <div className={`w-5 h-5 rounded flex items-center justify-center mr-3 border transition-colors flex-shrink-0 ${selectedFeatures.includes(f) ? 'bg-orange-500 border-orange-500 text-white' : 'border-gray-300'}`}>
                                             {selectedFeatures.includes(f) && <i className="fa-solid fa-check text-[10px]" />}
                                         </div>
                                         <span className="text-sm font-medium">{f}</span>
