@@ -102,7 +102,7 @@ graph TD
     subgraph API [Next.js Backend API Layer]
         RZP_SDK -->|Verifies payment| VerifyAPI[Verify API /api/payment/verify]
         CAP_G -->|Logs in| GoogleAPI[Google Auth API /api/auth/google]
-        UI -->|Submits WAT/TAT/SRT| EvalAPI[Psych Evaluation API /api/wat|tat|srt]
+        UI -->|Submits WAT/TAT/SRT| EvalAPI[Psych Evaluation API /api/wat /tat /srt]
         UI -->|Gets news & updates| AffairAPI[Current Affairs API]
         UI -->|Requests OTP| OtpAPI[OTP API /api/auth/send-otp]
     end
