@@ -10,9 +10,9 @@ const config: CapacitorConfig = {
     url: 'https://lakshyassb.online',
     cleartext: true,
     allowNavigation: [
+      "lakshyassb.online",
       "checkout.razorpay.com",
-      "api.razorpay.com",
-      "*"
+      "api.razorpay.com"
     ]
   },
   android: {

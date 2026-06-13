@@ -12,12 +12,13 @@ export const maxDuration = 60;
  * and stores to DB. Run every 6 hours via Vercel Cron.
  */
 export async function GET(request: Request) {
-    // Security: only allow requests with the correct secret
+    // Security: require CRON_SECRET to be configured AND matched (fail closed)
+    const cronSecret = process.env.CRON_SECRET;
+    if (!cronSecret) {
+        return new NextResponse('CRON_SECRET not configured', { status: 503 });
+    }
     const authHeader = request.headers.get('authorization');
-    if (
-        process.env.CRON_SECRET &&
-        authHeader !== `Bearer ${process.env.CRON_SECRET}`
-    ) {
+    if (authHeader !== `Bearer ${cronSecret}`) {
         return new NextResponse('Unauthorized', { status: 401 });
     }
 

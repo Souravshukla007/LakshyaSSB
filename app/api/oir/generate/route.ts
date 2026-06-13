@@ -102,21 +102,15 @@ export async function GET() {
         selectedBase = [...selectedBase, ...remainingPool.slice(0, questionCount - selectedBase.length)];
       }
 
-      // Persist served questions as seen
+      // Persist served questions as seen (parameterized — no manual escaping)
       if (selectedBase.length > 0) {
-        const values = selectedBase
-          .map((q) => {
-            const key = toQuestionKey(q).replace(/'/g, "''");
-            const uid = session.userId.replace(/'/g, "''");
-            return `('${uid}', '${key}')`;
-          })
-          .join(', ');
-
-        await prisma.$executeRawUnsafe(`
-          INSERT INTO "OirQuestionHistory" ("userId", "questionKey")
-          VALUES ${values}
-          ON CONFLICT ("userId", "questionKey") DO NOTHING
-        `);
+        await prisma.oirQuestionHistory.createMany({
+          data: selectedBase.map((q) => ({
+            userId: session.userId,
+            questionKey: toQuestionKey(q),
+          })),
+          skipDuplicates: true,
+        });
       }
     } else {
       // Guest/unauthenticated fallback: regular random selection

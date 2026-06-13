@@ -1,16 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 /**
- * POST /api/cron/reset-weekly
+ * /api/cron/reset-weekly
  *
  * Resets medals_weekly = 0 for every user.
  * Secured with CRON_SECRET — never exposed to browser sessions.
  *
- * Schedule this via Vercel Cron or any external scheduler at:
- *   Sunday 23:59 IST  →  Sunday 18:29 UTC
+ * Vercel Cron issues GET requests, so the work lives in GET. POST is kept for
+ * external schedulers. Schedule (see vercel.json): Sunday 18:29 UTC (23:59 IST).
  */
-export async function POST(request: NextRequest) {
+async function handleReset(request: NextRequest) {
     const cronSecret = process.env.CRON_SECRET;
 
     if (!cronSecret) {
@@ -46,4 +48,12 @@ export async function POST(request: NextRequest) {
         reset: result.count,
         timestamp: now.toISOString(),
     });
+}
+
+export async function GET(request: NextRequest) {
+    return handleReset(request);
+}
+
+export async function POST(request: NextRequest) {
+    return handleReset(request);
 }

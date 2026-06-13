@@ -79,24 +79,15 @@ export default function ColorVisionTestPage() {
     const saveResult = async (correct: number) => {
         try {
             setIsSaving(true);
-            const total = colorVisionData.length;
+            const total = colorVisionData.length || 1; // guard against divide-by-zero before data loads
             const percentage = (correct / total) * 100;
             let status = 'DEFICIENT';
             if (percentage >= 90) status = 'NORMAL';
             else if (percentage >= 60) status = 'MILD';
 
-            // We save it to localStorage for dashboard reading since this is a self-assessment tool
-            // in a real app, you might sync this to the db.
+            // Self-assessment tool: persist to localStorage for dashboard reading.
             localStorage.setItem('lakshya_color_vision_status', status);
             localStorage.setItem('lakshya_color_vision_score', `${correct}/${total}`);
-            
-            // Also attempt to fire an API if we want to log the activity (optional)
-            await fetch('/api/medical/color-vision-save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ correct, total, status })
-            }).catch(() => {});
-
         } finally {
             setIsSaving(false);
         }

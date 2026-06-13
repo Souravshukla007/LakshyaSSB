@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { completePracticeForUser } from '@/lib/streak';
 import { awardMedals } from '@/lib/medals';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { freeEvalLimitReached, recordEvalCompletion } from '@/lib/practice-limit';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -12,6 +13,14 @@ export async function POST(req: Request) {
         const session = await getSession();
         if (!session?.userId) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        // Enforce FREE-tier single-attempt limit server-side
+        if (await freeEvalLimitReached(session.userId, session.plan, 'SRT')) {
+            return NextResponse.json(
+                { error: 'Free limit reached. Upgrade to Pro for unlimited attempts.', reason: 'free_limit_reached' },
+                { status: 403 },
+            );
         }
 
         const body = await req.json();
@@ -60,6 +69,7 @@ export async function POST(req: Request) {
         // 3. Award Medals & Streak
         const medalResult = await awardMedals(session.userId, 'practice');
         const streak = await completePracticeForUser(session.userId, 'SRT');
+        await recordEvalCompletion(session.userId, session.plan, 'SRT');
 
         return NextResponse.json({ 
             success: true, 

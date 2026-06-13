@@ -2,17 +2,29 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getSession } from '@/lib/auth';
 import { awardMedals } from '@/lib/medals';
+import { freeEvalLimitReached, recordEvalCompletion } from '@/lib/practice-limit';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export async function POST(req: NextRequest) {
     try {
         const session = await getSession();
-        if (!session) {
+        if (!session?.userId) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { situation, identifiedProblems, actionPlan, timeManagement } = await req.json();
+        // Enforce FREE-tier single-attempt limit server-side
+        if (await freeEvalLimitReached(session.userId, session.plan, 'GPE')) {
+            return NextResponse.json(
+                { error: 'Free limit reached. Upgrade to Pro for unlimited attempts.', reason: 'free_limit_reached' },
+                { status: 403 },
+            );
+        }
+
+        // Client sends `identifyProblems`; accept both spellings for safety.
+        const reqBody = await req.json();
+        const { situation, actionPlan, timeManagement } = reqBody;
+        const identifiedProblems = reqBody.identifyProblems ?? reqBody.identifiedProblems ?? '';
 
         if (!situation || !actionPlan) {
             return NextResponse.json({ error: 'Missing situation or action plan' }, { status: 400 });
@@ -57,6 +69,7 @@ export async function POST(req: NextRequest) {
 
         // Award Medals
         const medalResult = await awardMedals(session.userId, 'practice');
+        await recordEvalCompletion(session.userId, session.plan, 'GPE');
 
         return NextResponse.json({ ...evaluation, medals: medalResult });
 

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getStoredNews } from '@/lib/storage';
+import { getSession } from '@/lib/auth';
 
 // Never statically pre-render this route — Gemini must only be called at request time
 export const dynamic = 'force-dynamic';
@@ -26,6 +27,12 @@ Current Affairs Data:
 
 export async function GET() {
     try {
+        // Require authentication — this route invokes a paid AI model per request.
+        const session = await getSession();
+        if (!session?.userId) {
+            return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+        }
+
         console.log("Generating fresh Daily Current Affairs Quiz...");
         
         // 1. Fetch the latest 10 stored news items

@@ -132,14 +132,9 @@ export async function POST(request: Request) {
       }
     }
 
-    // Save the User Message to DB
-    await prisma.chatMessage.create({
-      data: {
-        userId: session.userId,
-        role: 'user',
-        content: message
-      }
-    });
+    // Note: the user message is persisted only after a successful AI reply
+    // (see the success branch below) so failed attempts don't consume the
+    // free-tier daily quota or leave orphaned messages.
 
     const safeHistory = history
       .slice(-5)
@@ -204,13 +199,12 @@ export async function POST(request: Request) {
         data?.candidates?.[0]?.content?.parts?.[0]?.text ||
         'I can help with SSB preparation, PIQ, psychology tests, and interview guidance. Please ask your question again briefly.';
 
-      // Save the AI Reply to DB
-      await prisma.chatMessage.create({
-        data: {
-          userId: session.userId,
-          role: 'assistant',
-          content: reply
-        }
+      // Persist the user message and the AI reply together, only on success
+      await prisma.chatMessage.createMany({
+        data: [
+          { userId: session.userId, role: 'user', content: message },
+          { userId: session.userId, role: 'assistant', content: reply },
+        ],
       });
 
       return NextResponse.json({ reply });

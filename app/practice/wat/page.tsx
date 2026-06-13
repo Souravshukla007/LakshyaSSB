@@ -106,14 +106,11 @@ export default function WATModule() {
     const submitTest = async (finalAnswers: typeof answers) => {
         setIsSubmitting(true);
         try {
-            // We use a mock user-id since authentication context isn't fully integrated into this specific component yet
-            const userId = 'placeholder-user-id'; // Ideally this comes from useSession() or similar auth hook
-
+            // Auth is resolved server-side from the session cookie.
             const res = await fetch('/api/wat/submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'x-user-id': userId // simulating auth header 
                 },
                 body: JSON.stringify({ responses: finalAnswers })
             });

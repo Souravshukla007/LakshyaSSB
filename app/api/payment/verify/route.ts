@@ -2,11 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { activatePro } from '@/lib/plan-actions';
 
 /**
  * POST /api/payment/verify
- * Verifies Razorpay payment signature, upgrades user to PRO for 30 days,
+ * Verifies the Razorpay payment signature, upgrades the user to PRO (lifetime),
  * and records the payment.
  */
 export async function POST(request: NextRequest) {
@@ -27,14 +26,25 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Payment not configured' }, { status: 500 });
     }
 
-    // Verify HMAC-SHA256 signature
+    // Verify HMAC-SHA256 signature using a timing-safe comparison
     const expectedSignature = crypto
         .createHmac('sha256', keySecret)
         .update(`${razorpay_order_id}|${razorpay_payment_id}`)
         .digest('hex');
 
-    if (expectedSignature !== razorpay_signature) {
+    const sigBuf = Buffer.from(razorpay_signature);
+    const expBuf = Buffer.from(expectedSignature);
+    if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) {
         return NextResponse.json({ error: 'Invalid payment signature' }, { status: 400 });
+    }
+
+    // Ensure the order was created by THIS user (prevents claiming another user's order)
+    const existingOrder = await prisma.payment.findUnique({
+        where: { razorpayOrderId: razorpay_order_id },
+        select: { userId: true },
+    });
+    if (existingOrder && existingOrder.userId !== session.userId) {
+        return NextResponse.json({ error: 'Order does not belong to this user' }, { status: 403 });
     }
 
     try {
@@ -43,14 +53,12 @@ export async function POST(request: NextRequest) {
             // 1. Update User to PRO
             await tx.user.update({
                 where: { id: session.userId },
-                data: { 
+                data: {
                     plan: 'PRO'
                 },
             });
 
             // 2. Update or Create Payment record
-            // Since we now create it in /create-order, we should update it.
-            // But we use upsert to be safe and handle cases where create-order DB call might have failed.
             await tx.payment.upsert({
                 where: { razorpayOrderId: razorpay_order_id },
                 update: {

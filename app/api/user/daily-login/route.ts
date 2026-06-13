@@ -16,7 +16,7 @@ export async function POST(request: Request) {
                 current_streak: true,
                 medals_total: true,
                 medals_weekly: true,
-                updatedAt: true
+                last_login: true
             }
         });
 
@@ -25,17 +25,14 @@ export async function POST(request: Request) {
         }
 
         const now = new Date();
-        const lastUpdate = user.updatedAt;
+        const lastLogin = user.last_login;
         let isNewDay = true;
 
-        if (lastUpdate) {
+        if (lastLogin) {
             const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const lastUpdateDate = new Date(lastUpdate.getFullYear(), lastUpdate.getMonth(), lastUpdate.getDate());
+            const lastLoginDate = new Date(lastLogin.getFullYear(), lastLogin.getMonth(), lastLogin.getDate());
 
-            const diffTime = Math.abs(today.getTime() - lastUpdateDate.getTime());
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-            if (diffDays === 0) {
+            if (today.getTime() === lastLoginDate.getTime()) {
                 // Already logged in today
                 isNewDay = false;
             }
@@ -46,7 +43,8 @@ export async function POST(request: Request) {
                 where: { id: user.id },
                 data: {
                     medals_total: { increment: 1 },
-                    medals_weekly: { increment: 1 }
+                    medals_weekly: { increment: 1 },
+                    last_login: now
                 }
             });
             return NextResponse.json({ message: 'Daily login bonus awarded!', awarded: true });

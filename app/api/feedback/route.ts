@@ -23,6 +23,15 @@ export async function POST(request: Request) {
             );
         }
 
+        // Rating must be an integer between 1 and 5
+        const ratingNum = Number(rating);
+        if (!Number.isInteger(ratingNum) || ratingNum < 1 || ratingNum > 5) {
+            return NextResponse.json(
+                { error: 'Rating must be an integer between 1 and 5' },
+                { status: 400 }
+            );
+        }
+
         // Try to get session to link user, optional
         let userId: string | null = null;
         try {
@@ -40,7 +49,7 @@ export async function POST(request: Request) {
                 name: isAnonymous ? null : name,
                 email: isAnonymous ? null : email,
                 userType,
-                rating: Number(rating),
+                rating: ratingNum,
                 features: features || [],
                 suggestion,
                 isAnonymous: Boolean(isAnonymous),

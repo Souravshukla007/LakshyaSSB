@@ -12,16 +12,19 @@ export const maxDuration = 60;
  * Used for local testing and on-demand updates.
  */
 export async function GET(request: Request) {
-    // Allow local dev (no secret needed) OR valid Bearer token
+    // Allow local dev (no secret needed) OR valid Bearer token.
+    // In production the secret MUST be configured and matched (fail closed).
     const authHeader = request.headers.get('authorization');
     const isDev = process.env.NODE_ENV === 'development';
 
-    if (
-        !isDev &&
-        process.env.CRON_SECRET &&
-        authHeader !== `Bearer ${process.env.CRON_SECRET}`
-    ) {
-        return new NextResponse('Unauthorized', { status: 401 });
+    if (!isDev) {
+        const cronSecret = process.env.CRON_SECRET;
+        if (!cronSecret) {
+            return new NextResponse('CRON_SECRET not configured', { status: 503 });
+        }
+        if (authHeader !== `Bearer ${cronSecret}`) {
+            return new NextResponse('Unauthorized', { status: 401 });
+        }
     }
 
     try {

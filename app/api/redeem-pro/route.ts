@@ -43,13 +43,45 @@ export async function POST() {
         );
     }
 
-    // Atomic decrement + flag set
-    const updated = await prisma.user.update({
-        where: { id: session.userId },
+    // Atomic, race-safe redemption: only decrements + upgrades if the user is
+    // still non-PRO AND has enough medals at the moment of the write. This
+    // prevents concurrent requests from driving medals negative or double-granting.
+    const result = await prisma.user.updateMany({
+        where: {
+            id: session.userId,
+            plan: { not: 'PRO' },
+            medals_total: { gte: PRO_COST },
+        },
         data: {
             medals_total: { decrement: PRO_COST },
             plan: 'PRO',
         },
+    });
+
+    if (result.count === 0) {
+        // Lost the race (already PRO or medals changed) — re-read for an accurate message
+        const fresh = await prisma.user.findUnique({
+            where: { id: session.userId },
+            select: { medals_total: true, plan: true },
+        });
+        if (fresh?.plan === 'PRO') {
+            return NextResponse.json(
+                { error: 'You are already a Pro member via medal redemption.' },
+                { status: 409 },
+            );
+        }
+        return NextResponse.json(
+            {
+                error: `Not enough medals. You need ${PRO_COST}, but have ${fresh?.medals_total ?? 0}.`,
+                medals_total: fresh?.medals_total ?? 0,
+                required: PRO_COST,
+            },
+            { status: 422 },
+        );
+    }
+
+    const updated = await prisma.user.findUnique({
+        where: { id: session.userId },
         select: {
             medals_total: true,
             medals_weekly: true,
@@ -68,8 +100,8 @@ export async function POST() {
 
     return NextResponse.json({
         message: 'Congratulations! You are now a Pro member! 🎖️',
-        isPro: updated.plan === 'PRO',
-        medals_total: updated.medals_total,
-        medals_weekly: updated.medals_weekly,
+        isPro: updated?.plan === 'PRO',
+        medals_total: updated?.medals_total ?? 0,
+        medals_weekly: updated?.medals_weekly ?? 0,
     });
 }
