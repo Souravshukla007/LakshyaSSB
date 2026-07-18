@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { Capacitor } from '@capacitor/core';
+import { requireOnline } from '@/lib/offline/online-guard';
 
 function AuthContent() {
     const searchParams = useSearchParams();
@@ -24,6 +25,9 @@ function AuthContent() {
     }, [searchParams]);
 
     const handleGoogleLogin = async () => {
+        // Google sign-in uses a native Capacitor plugin / OAuth redirect (NOT fetch),
+        // so the global fetch guard can't cover it — surface the popup explicitly.
+        if (!requireOnline()) return;
         setLoading(true);
         setMessage(null);
         try {

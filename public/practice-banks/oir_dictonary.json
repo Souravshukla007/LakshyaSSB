@@ -1,0 +1,1315 @@
+[
+    {
+        "id": 0,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Apple",
+            "Banana",
+            "Cat",
+            "Dog"
+        ],
+        "answer": "Apple",
+        "difficulty": "easy",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 1,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Tiger",
+            "Lion",
+            "Elephant",
+            "Dog"
+        ],
+        "answer": "Dog",
+        "difficulty": "easy",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 2,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Car",
+            "Bus",
+            "Train",
+            "Aeroplane"
+        ],
+        "answer": "Aeroplane",
+        "difficulty": "easy",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 3,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Orange",
+            "Mango",
+            "Banana",
+            "Apple"
+        ],
+        "answer": "Apple",
+        "difficulty": "easy",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 4,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Pen",
+            "Pencil",
+            "Paper",
+            "Paint"
+        ],
+        "answer": "Paint",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 5,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Table",
+            "Chair",
+            "Bed",
+            "Desk"
+        ],
+        "answer": "Bed",
+        "difficulty": "easy",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 6,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Monkey",
+            "Tiger",
+            "Elephant",
+            "Lion"
+        ],
+        "answer": "Elephant",
+        "difficulty": "easy",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 7,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Rose",
+            "Lily",
+            "Lotus",
+            "Tulip"
+        ],
+        "answer": "Lily",
+        "difficulty": "easy",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 8,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Computer",
+            "Camera",
+            "Calculator",
+            "Cable"
+        ],
+        "answer": "Cable",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 9,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "School",
+            "Science",
+            "Scholar",
+            "Schedule"
+        ],
+        "answer": "Schedule",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 10,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Dog",
+            "Deer",
+            "Donkey",
+            "Dolphin"
+        ],
+        "answer": "Deer",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 11,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Army",
+            "Air",
+            "Arrow",
+            "Art"
+        ],
+        "answer": "Air",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 12,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Banana",
+            "Band",
+            "Bank",
+            "Banner"
+        ],
+        "answer": "Banana",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 13,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Clock",
+            "Cloth",
+            "Cloud",
+            "Clown"
+        ],
+        "answer": "Clock",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 14,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Apple",
+            "Application",
+            "Apply",
+            "Appoint"
+        ],
+        "answer": "Appoint",
+        "difficulty": "hard",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 15,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Train",
+            "Truck",
+            "Trick",
+            "Tree"
+        ],
+        "answer": "Tree",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 16,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Flower",
+            "Flame",
+            "Flat",
+            "Flash"
+        ],
+        "answer": "Flame",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 17,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Station",
+            "Statue",
+            "Status",
+            "Static"
+        ],
+        "answer": "Static",
+        "difficulty": "hard",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 18,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Mountain",
+            "Mouse",
+            "Mouth",
+            "Move"
+        ],
+        "answer": "Mountain",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 19,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Green",
+            "Great",
+            "Greed",
+            "Greet"
+        ],
+        "answer": "Great",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 20,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Planet",
+            "Plane",
+            "Plant",
+            "Plan"
+        ],
+        "answer": "Plan",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 21,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Science",
+            "Scene",
+            "Scent",
+            "School"
+        ],
+        "answer": "Scene",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 22,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Dog",
+            "Door",
+            "Dot",
+            "Dove"
+        ],
+        "answer": "Dog",
+        "difficulty": "easy",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 23,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Ant",
+            "Anchor",
+            "Angle",
+            "Animal"
+        ],
+        "answer": "Anchor",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 24,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Book",
+            "Boot",
+            "Booth",
+            "Boost"
+        ],
+        "answer": "Book",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 25,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Call",
+            "Calm",
+            "Calendar",
+            "Calf"
+        ],
+        "answer": "Calf",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 26,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Dog",
+            "Cat",
+            "Ant",
+            "Bee"
+        ],
+        "answer": "Ant",
+        "difficulty": "easy",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 27,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Chair",
+            "Chain",
+            "Chalk",
+            "Champion"
+        ],
+        "answer": "Chain",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 28,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Driver",
+            "Drink",
+            "Drill",
+            "Drive"
+        ],
+        "answer": "Drill",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 29,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Elephant",
+            "Elevator",
+            "Elegant",
+            "Element"
+        ],
+        "answer": "Elegant",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 30,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Forest",
+            "Forget",
+            "Fork",
+            "Form"
+        ],
+        "answer": "Forget",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 31,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Great",
+            "Green",
+            "Greet",
+            "Greed"
+        ],
+        "answer": "Great",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 32,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Hero",
+            "Heron",
+            "Herd",
+            "Her"
+        ],
+        "answer": "Her",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 33,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Jump",
+            "Jungle",
+            "Junior",
+            "Jury"
+        ],
+        "answer": "Junior",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 34,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "King",
+            "Kind",
+            "Kingdom",
+            "Kindness"
+        ],
+        "answer": "Kind",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 35,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Lion",
+            "Line",
+            "Link",
+            "Lint"
+        ],
+        "answer": "Line",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 36,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Market",
+            "Mark",
+            "Marker",
+            "Marketing"
+        ],
+        "answer": "Mark",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 37,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Nation",
+            "Native",
+            "Nature",
+            "Natural"
+        ],
+        "answer": "Nation",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 38,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Office",
+            "Officer",
+            "Official",
+            "Offer"
+        ],
+        "answer": "Offer",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 39,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Paper",
+            "Parcel",
+            "Parent",
+            "Park"
+        ],
+        "answer": "Paper",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 40,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Queen",
+            "Query",
+            "Quest",
+            "Queue"
+        ],
+        "answer": "Queen",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 41,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "River",
+            "Rival",
+            "Rivet",
+            "Risk"
+        ],
+        "answer": "Risk",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 42,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "School",
+            "Scholar",
+            "Science",
+            "Scope"
+        ],
+        "answer": "Scholar",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 43,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Table",
+            "Tablet",
+            "Tab",
+            "Taboo"
+        ],
+        "answer": "Tab",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 44,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Under",
+            "Undo",
+            "Unit",
+            "Union"
+        ],
+        "answer": "Under",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 45,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Value",
+            "Valve",
+            "Van",
+            "Vanish"
+        ],
+        "answer": "Value",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 46,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Water",
+            "Watch",
+            "Waste",
+            "Wave"
+        ],
+        "answer": "Waste",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 47,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Yellow",
+            "Yield",
+            "Yard",
+            "Year"
+        ],
+        "answer": "Yard",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 48,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Zero",
+            "Zebra",
+            "Zen",
+            "Zeal"
+        ],
+        "answer": "Zeal",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 49,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Apple",
+            "Application",
+            "Apply",
+            "Appoint"
+        ],
+        "answer": "Appoint",
+        "difficulty": "hard",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 50,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Ban",
+            "Band",
+            "Bank",
+            "Banner"
+        ],
+        "answer": "Ban",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 51,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Ball",
+            "Balance",
+            "Balcony",
+            "Bald"
+        ],
+        "answer": "Balance",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 52,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Catch",
+            "Category",
+            "Cater",
+            "Cat"
+        ],
+        "answer": "Cat",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 53,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Dance",
+            "Danger",
+            "Danish",
+            "Dare"
+        ],
+        "answer": "Dance",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 54,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Early",
+            "Earn",
+            "Earth",
+            "Ease"
+        ],
+        "answer": "Early",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 55,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Fair",
+            "Faith",
+            "Fall",
+            "False"
+        ],
+        "answer": "Fair",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 56,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Game",
+            "Gap",
+            "Garden",
+            "Gas"
+        ],
+        "answer": "Game",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 57,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Happy",
+            "Harbor",
+            "Hard",
+            "Harm"
+        ],
+        "answer": "Happy",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 58,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Ice",
+            "Idea",
+            "Ideal",
+            "Idle"
+        ],
+        "answer": "Ice",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 59,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Job",
+            "Join",
+            "Joke",
+            "Journal"
+        ],
+        "answer": "Job",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 60,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Key",
+            "Keep",
+            "Kettle",
+            "Kernel"
+        ],
+        "answer": "Keep",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 61,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Lake",
+            "Lamp",
+            "Land",
+            "Lane"
+        ],
+        "answer": "Lake",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 62,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Machine",
+            "Magic",
+            "Magnet",
+            "Magazine"
+        ],
+        "answer": "Machine",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 63,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Nation",
+            "Native",
+            "Natural",
+            "Nature"
+        ],
+        "answer": "Nation",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 64,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Ocean",
+            "Occupy",
+            "Occur",
+            "Occasion"
+        ],
+        "answer": "Occasion",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 65,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Page",
+            "Paint",
+            "Pair",
+            "Palm"
+        ],
+        "answer": "Page",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 66,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Quick",
+            "Quiet",
+            "Quilt",
+            "Quit"
+        ],
+        "answer": "Quick",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 67,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Rain",
+            "Raise",
+            "Rally",
+            "Ramp"
+        ],
+        "answer": "Rain",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 68,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Safe",
+            "Sail",
+            "Saint",
+            "Salt"
+        ],
+        "answer": "Safe",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 69,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Tank",
+            "Tape",
+            "Target",
+            "Task"
+        ],
+        "answer": "Tank",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 70,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Unit",
+            "Union",
+            "Unique",
+            "Universal"
+        ],
+        "answer": "Union",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 71,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Value",
+            "Valve",
+            "Van",
+            "Vanish"
+        ],
+        "answer": "Value",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 72,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Wall",
+            "Wallet",
+            "Wander",
+            "Want"
+        ],
+        "answer": "Wall",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 73,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Xenon",
+            "Xerox",
+            "Xylophone",
+            "Xenial"
+        ],
+        "answer": "Xenial",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 74,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Year",
+            "Yellow",
+            "Yield",
+            "Yarn"
+        ],
+        "answer": "Yarn",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 75,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Zebra",
+            "Zero",
+            "Zen",
+            "Zeal"
+        ],
+        "answer": "Zeal",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 76,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Ant",
+            "Anchor",
+            "Angle",
+            "Animal"
+        ],
+        "answer": "Anchor",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 77,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Ball",
+            "Balance",
+            "Balcony",
+            "Bald"
+        ],
+        "answer": "Balance",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 78,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Call",
+            "Calm",
+            "Calendar",
+            "Calf"
+        ],
+        "answer": "Calf",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 79,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Drive",
+            "Driver",
+            "Drill",
+            "Drink"
+        ],
+        "answer": "Drill",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 80,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Flower",
+            "Flame",
+            "Flash",
+            "Flat"
+        ],
+        "answer": "Flame",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 81,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Green",
+            "Great",
+            "Greed",
+            "Greet"
+        ],
+        "answer": "Great",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 82,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Hero",
+            "Her",
+            "Herd",
+            "Heron"
+        ],
+        "answer": "Her",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 83,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Jump",
+            "Jungle",
+            "Junior",
+            "Jury"
+        ],
+        "answer": "Junior",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 84,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "King",
+            "Kind",
+            "Kingdom",
+            "Kindness"
+        ],
+        "answer": "Kind",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 85,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Lion",
+            "Line",
+            "Link",
+            "Lint"
+        ],
+        "answer": "Line",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 86,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Mark",
+            "Marker",
+            "Market",
+            "Marketing"
+        ],
+        "answer": "Mark",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 87,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Native",
+            "Nature",
+            "Nation",
+            "Natural"
+        ],
+        "answer": "Nation",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 88,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Offer",
+            "Office",
+            "Officer",
+            "Official"
+        ],
+        "answer": "Offer",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 89,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Paper",
+            "Parcel",
+            "Parent",
+            "Park"
+        ],
+        "answer": "Paper",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 90,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Queen",
+            "Query",
+            "Quest",
+            "Queue"
+        ],
+        "answer": "Queen",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 91,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "River",
+            "Rival",
+            "Risk",
+            "Rivet"
+        ],
+        "answer": "Risk",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 92,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "School",
+            "Scholar",
+            "Science",
+            "Scope"
+        ],
+        "answer": "Scholar",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 93,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Tab",
+            "Table",
+            "Tablet",
+            "Taboo"
+        ],
+        "answer": "Tab",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 94,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Under",
+            "Undo",
+            "Unit",
+            "Union"
+        ],
+        "answer": "Under",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 95,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Value",
+            "Valve",
+            "Van",
+            "Vanish"
+        ],
+        "answer": "Value",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 96,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Watch",
+            "Waste",
+            "Wave",
+            "Water"
+        ],
+        "answer": "Waste",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 97,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Yard",
+            "Year",
+            "Yellow",
+            "Yield"
+        ],
+        "answer": "Yard",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 98,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Zebra",
+            "Zeal",
+            "Zen",
+            "Zero"
+        ],
+        "answer": "Zeal",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 99,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Apple",
+            "Application",
+            "Apply",
+            "Appoint"
+        ],
+        "answer": "Appoint",
+        "difficulty": "hard",
+        "topic": "dictionary_order"
+    },
+    {
+        "id": 100,
+        "question": "Which word comes first in dictionary order?",
+        "options": [
+            "Ban",
+            "Band",
+            "Bank",
+            "Banner"
+        ],
+        "answer": "Ban",
+        "difficulty": "medium",
+        "topic": "dictionary_order"
+    }
+]

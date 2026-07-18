@@ -1,0 +1,1315 @@
+[
+    {
+        "id": 0,
+        "question": "Find the odd one out.",
+        "options": [
+            "Apple",
+            "Mango",
+            "Potato",
+            "Banana"
+        ],
+        "answer": "Potato",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 1,
+        "question": "Find the odd one out.",
+        "options": [
+            "Dog",
+            "Cat",
+            "Tiger",
+            "Car"
+        ],
+        "answer": "Car",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 2,
+        "question": "Find the odd one out.",
+        "options": [
+            "Rose",
+            "Lotus",
+            "Lily",
+            "Chair"
+        ],
+        "answer": "Chair",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 3,
+        "question": "Find the odd one out.",
+        "options": [
+            "Car",
+            "Bus",
+            "Train",
+            "Table"
+        ],
+        "answer": "Table",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 4,
+        "question": "Find the odd one out.",
+        "options": [
+            "Gold",
+            "Silver",
+            "Iron",
+            "Water"
+        ],
+        "answer": "Water",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 5,
+        "question": "Find the odd one out.",
+        "options": [
+            "Sun",
+            "Moon",
+            "Star",
+            "Stone"
+        ],
+        "answer": "Stone",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 6,
+        "question": "Find the odd one out.",
+        "options": [
+            "Tiger",
+            "Lion",
+            "Leopard",
+            "Cow"
+        ],
+        "answer": "Cow",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 7,
+        "question": "Find the odd one out.",
+        "options": [
+            "Table",
+            "Chair",
+            "Bed",
+            "Car"
+        ],
+        "answer": "Car",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 8,
+        "question": "Find the odd one out.",
+        "options": [
+            "Potato",
+            "Tomato",
+            "Carrot",
+            "Mango"
+        ],
+        "answer": "Mango",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 9,
+        "question": "Find the odd one out.",
+        "options": [
+            "Doctor",
+            "Teacher",
+            "Engineer",
+            "Banana"
+        ],
+        "answer": "Banana",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 10,
+        "question": "Find the odd one out.",
+        "options": [
+            "Pen",
+            "Pencil",
+            "Eraser",
+            "Laptop"
+        ],
+        "answer": "Laptop",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 11,
+        "question": "Find the odd one out.",
+        "options": [
+            "January",
+            "February",
+            "March",
+            "Monday"
+        ],
+        "answer": "Monday",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 12,
+        "question": "Find the odd one out.",
+        "options": [
+            "Circle",
+            "Triangle",
+            "Square",
+            "Dog"
+        ],
+        "answer": "Dog",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 13,
+        "question": "Find the odd one out.",
+        "options": [
+            "Copper",
+            "Iron",
+            "Aluminium",
+            "Wood"
+        ],
+        "answer": "Wood",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 14,
+        "question": "Find the odd one out.",
+        "options": [
+            "Asia",
+            "Africa",
+            "Europe",
+            "Amazon"
+        ],
+        "answer": "Amazon",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 15,
+        "question": "Find the odd one out.",
+        "options": [
+            "Cow",
+            "Goat",
+            "Sheep",
+            "Lion"
+        ],
+        "answer": "Lion",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 16,
+        "question": "Find the odd one out.",
+        "options": [
+            "Car",
+            "Bike",
+            "Truck",
+            "Boat"
+        ],
+        "answer": "Boat",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 17,
+        "question": "Find the odd one out.",
+        "options": [
+            "Rose",
+            "Sunflower",
+            "Tulip",
+            "Grass"
+        ],
+        "answer": "Grass",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 18,
+        "question": "Find the odd one out.",
+        "options": [
+            "Doctor",
+            "Nurse",
+            "Patient",
+            "Engineer"
+        ],
+        "answer": "Engineer",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 19,
+        "question": "Find the odd one out.",
+        "options": [
+            "Book",
+            "Magazine",
+            "Newspaper",
+            "Laptop"
+        ],
+        "answer": "Laptop",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 20,
+        "question": "Find the odd one out.",
+        "options": [
+            "Mercury",
+            "Venus",
+            "Earth",
+            "Moon"
+        ],
+        "answer": "Moon",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 21,
+        "question": "Find the odd one out.",
+        "options": [
+            "Lion",
+            "Tiger",
+            "Cat",
+            "Elephant"
+        ],
+        "answer": "Elephant",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 22,
+        "question": "Find the odd one out.",
+        "options": [
+            "Apple",
+            "Banana",
+            "Orange",
+            "Carrot"
+        ],
+        "answer": "Carrot",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 23,
+        "question": "Find the odd one out.",
+        "options": [
+            "Dog",
+            "Wolf",
+            "Fox",
+            "Tiger"
+        ],
+        "answer": "Tiger",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 24,
+        "question": "Find the odd one out.",
+        "options": [
+            "Air",
+            "Water",
+            "Soil",
+            "Light"
+        ],
+        "answer": "Light",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 25,
+        "question": "Find the odd one out.",
+        "options": [
+            "Keyboard",
+            "Mouse",
+            "Monitor",
+            "Printer"
+        ],
+        "answer": "Printer",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 26,
+        "question": "Find the odd one out.",
+        "options": [
+            "Red",
+            "Blue",
+            "Green",
+            "Tiger"
+        ],
+        "answer": "Tiger",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 27,
+        "question": "Find the odd one out.",
+        "options": [
+            "Circle",
+            "Oval",
+            "Rectangle",
+            "Cube"
+        ],
+        "answer": "Cube",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 28,
+        "question": "Find the odd one out.",
+        "options": [
+            "Delhi",
+            "Mumbai",
+            "London",
+            "India"
+        ],
+        "answer": "India",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 29,
+        "question": "Find the odd one out.",
+        "options": [
+            "Laptop",
+            "Tablet",
+            "Smartphone",
+            "Television"
+        ],
+        "answer": "Television",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 30,
+        "question": "Find the odd one out.",
+        "options": [
+            "Car",
+            "Bus",
+            "Train",
+            "Aeroplane"
+        ],
+        "answer": "Train",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 31,
+        "question": "Find the odd one out.",
+        "options": [
+            "Dog",
+            "Cat",
+            "Horse",
+            "Eagle"
+        ],
+        "answer": "Eagle",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 32,
+        "question": "Find the odd one out.",
+        "options": [
+            "Sun",
+            "Mars",
+            "Jupiter",
+            "Saturn"
+        ],
+        "answer": "Sun",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 33,
+        "question": "Find the odd one out.",
+        "options": [
+            "Pen",
+            "Brush",
+            "Marker",
+            "Paper"
+        ],
+        "answer": "Paper",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 34,
+        "question": "Find the odd one out.",
+        "options": [
+            "Milk",
+            "Cheese",
+            "Butter",
+            "Rice"
+        ],
+        "answer": "Rice",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 35,
+        "question": "Find the odd one out.",
+        "options": [
+            "January",
+            "April",
+            "June",
+            "Sunday"
+        ],
+        "answer": "Sunday",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 36,
+        "question": "Find the odd one out.",
+        "options": [
+            "Copper",
+            "Gold",
+            "Silver",
+            "Plastic"
+        ],
+        "answer": "Plastic",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 37,
+        "question": "Find the odd one out.",
+        "options": [
+            "Snake",
+            "Lizard",
+            "Frog",
+            "Crocodile"
+        ],
+        "answer": "Frog",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 38,
+        "question": "Find the odd one out.",
+        "options": [
+            "Triangle",
+            "Square",
+            "Rectangle",
+            "Sphere"
+        ],
+        "answer": "Sphere",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 39,
+        "question": "Find the odd one out.",
+        "options": [
+            "Doctor",
+            "Lawyer",
+            "Engineer",
+            "Hospital"
+        ],
+        "answer": "Hospital",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 40,
+        "question": "Find the odd one out.",
+        "options": [
+            "Banana",
+            "Apple",
+            "Grapes",
+            "Potato"
+        ],
+        "answer": "Potato",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 41,
+        "question": "Find the odd one out.",
+        "options": [
+            "Dog",
+            "Cat",
+            "Lion",
+            "Parrot"
+        ],
+        "answer": "Parrot",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 42,
+        "question": "Find the odd one out.",
+        "options": [
+            "Keyboard",
+            "Mouse",
+            "Monitor",
+            "Desk"
+        ],
+        "answer": "Desk",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 43,
+        "question": "Find the odd one out.",
+        "options": [
+            "Red",
+            "Green",
+            "Blue",
+            "Dog"
+        ],
+        "answer": "Dog",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 44,
+        "question": "Find the odd one out.",
+        "options": [
+            "River",
+            "Lake",
+            "Ocean",
+            "Mountain"
+        ],
+        "answer": "Mountain",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 45,
+        "question": "Find the odd one out.",
+        "options": [
+            "Clock",
+            "Watch",
+            "Calendar",
+            "Table"
+        ],
+        "answer": "Table",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 46,
+        "question": "Find the odd one out.",
+        "options": [
+            "Cow",
+            "Buffalo",
+            "Goat",
+            "Tiger"
+        ],
+        "answer": "Tiger",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 47,
+        "question": "Find the odd one out.",
+        "options": [
+            "Airplane",
+            "Helicopter",
+            "Ship",
+            "Train"
+        ],
+        "answer": "Ship",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 48,
+        "question": "Find the odd one out.",
+        "options": [
+            "Lion",
+            "Tiger",
+            "Leopard",
+            "Wolf"
+        ],
+        "answer": "Wolf",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 49,
+        "question": "Find the odd one out.",
+        "options": [
+            "Doctor",
+            "Teacher",
+            "Pilot",
+            "Banana"
+        ],
+        "answer": "Banana",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 50,
+        "question": "Find the odd one out.",
+        "options": [
+            "Apple",
+            "Orange",
+            "Mango",
+            "Tomato"
+        ],
+        "answer": "Tomato",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 51,
+        "question": "Find the odd one out.",
+        "options": [
+            "Iron",
+            "Copper",
+            "Aluminium",
+            "Wood"
+        ],
+        "answer": "Wood",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 52,
+        "question": "Find the odd one out.",
+        "options": [
+            "Circle",
+            "Triangle",
+            "Square",
+            "Cylinder"
+        ],
+        "answer": "Cylinder",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 53,
+        "question": "Find the odd one out.",
+        "options": [
+            "Asia",
+            "Europe",
+            "Africa",
+            "Nile"
+        ],
+        "answer": "Nile",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 54,
+        "question": "Find the odd one out.",
+        "options": [
+            "Dog",
+            "Cat",
+            "Horse",
+            "Fish"
+        ],
+        "answer": "Fish",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 55,
+        "question": "Find the odd one out.",
+        "options": [
+            "Milk",
+            "Butter",
+            "Cheese",
+            "Apple"
+        ],
+        "answer": "Apple",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 56,
+        "question": "Find the odd one out.",
+        "options": [
+            "Pen",
+            "Pencil",
+            "Paper",
+            "Eraser"
+        ],
+        "answer": "Paper",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 57,
+        "question": "Find the odd one out.",
+        "options": [
+            "Keyboard",
+            "Mouse",
+            "Monitor",
+            "Printer"
+        ],
+        "answer": "Printer",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 58,
+        "question": "Find the odd one out.",
+        "options": [
+            "Sun",
+            "Moon",
+            "Mars",
+            "Jupiter"
+        ],
+        "answer": "Moon",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 59,
+        "question": "Find the odd one out.",
+        "options": [
+            "Apple",
+            "Banana",
+            "Carrot",
+            "Mango"
+        ],
+        "answer": "Carrot",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 60,
+        "question": "Find the odd one out.",
+        "options": [
+            "Lion",
+            "Tiger",
+            "Leopard",
+            "Deer"
+        ],
+        "answer": "Deer",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 61,
+        "question": "Find the odd one out.",
+        "options": [
+            "Car",
+            "Bike",
+            "Bus",
+            "Boat"
+        ],
+        "answer": "Boat",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 62,
+        "question": "Find the odd one out.",
+        "options": [
+            "Teacher",
+            "Doctor",
+            "Engineer",
+            "Hospital"
+        ],
+        "answer": "Hospital",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 63,
+        "question": "Find the odd one out.",
+        "options": [
+            "Red",
+            "Blue",
+            "Green",
+            "Chair"
+        ],
+        "answer": "Chair",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 64,
+        "question": "Find the odd one out.",
+        "options": [
+            "Apple",
+            "Orange",
+            "Banana",
+            "Potato"
+        ],
+        "answer": "Potato",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 65,
+        "question": "Find the odd one out.",
+        "options": [
+            "Dog",
+            "Cat",
+            "Cow",
+            "Eagle"
+        ],
+        "answer": "Eagle",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 66,
+        "question": "Find the odd one out.",
+        "options": [
+            "Circle",
+            "Square",
+            "Triangle",
+            "Dog"
+        ],
+        "answer": "Dog",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 67,
+        "question": "Find the odd one out.",
+        "options": [
+            "Table",
+            "Chair",
+            "Sofa",
+            "Car"
+        ],
+        "answer": "Car",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 68,
+        "question": "Find the odd one out.",
+        "options": [
+            "Rose",
+            "Lily",
+            "Lotus",
+            "Stone"
+        ],
+        "answer": "Stone",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 69,
+        "question": "Find the odd one out.",
+        "options": [
+            "Train",
+            "Car",
+            "Bus",
+            "Tree"
+        ],
+        "answer": "Tree",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 70,
+        "question": "Find the odd one out.",
+        "options": [
+            "Gold",
+            "Silver",
+            "Iron",
+            "Chair"
+        ],
+        "answer": "Chair",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 71,
+        "question": "Find the odd one out.",
+        "options": [
+            "Apple",
+            "Mango",
+            "Banana",
+            "Laptop"
+        ],
+        "answer": "Laptop",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 72,
+        "question": "Find the odd one out.",
+        "options": [
+            "Dog",
+            "Cat",
+            "Horse",
+            "Chair"
+        ],
+        "answer": "Chair",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 73,
+        "question": "Find the odd one out.",
+        "options": [
+            "Sun",
+            "Moon",
+            "Star",
+            "Book"
+        ],
+        "answer": "Book",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 74,
+        "question": "Find the odd one out.",
+        "options": [
+            "Pen",
+            "Pencil",
+            "Marker",
+            "Car"
+        ],
+        "answer": "Car",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 75,
+        "question": "Find the odd one out.",
+        "options": [
+            "Table",
+            "Chair",
+            "Bed",
+            "Laptop"
+        ],
+        "answer": "Laptop",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 76,
+        "question": "Find the odd one out.",
+        "options": [
+            "Rose",
+            "Lotus",
+            "Lily",
+            "Dog"
+        ],
+        "answer": "Dog",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 77,
+        "question": "Find the odd one out.",
+        "options": [
+            "Train",
+            "Car",
+            "Bus",
+            "Banana"
+        ],
+        "answer": "Banana",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 78,
+        "question": "Find the odd one out.",
+        "options": [
+            "Gold",
+            "Silver",
+            "Iron",
+            "Tiger"
+        ],
+        "answer": "Tiger",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 79,
+        "question": "Find the odd one out.",
+        "options": [
+            "Apple",
+            "Banana",
+            "Carrot",
+            "Orange"
+        ],
+        "answer": "Carrot",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 80,
+        "question": "Find the odd one out.",
+        "options": [
+            "Cow",
+            "Goat",
+            "Sheep",
+            "Lion"
+        ],
+        "answer": "Lion",
+        "difficulty": "medium",
+        "topic": "classification"
+    },
+    {
+        "id": 81,
+        "question": "Find the odd one out.",
+        "options": [
+            "Asia",
+            "Europe",
+            "Africa",
+            "Dog"
+        ],
+        "answer": "Dog",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 82,
+        "question": "Find the odd one out.",
+        "options": [
+            "Circle",
+            "Triangle",
+            "Square",
+            "Car"
+        ],
+        "answer": "Car",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 83,
+        "question": "Find the odd one out.",
+        "options": [
+            "Doctor",
+            "Teacher",
+            "Engineer",
+            "Pen"
+        ],
+        "answer": "Pen",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 84,
+        "question": "Find the odd one out.",
+        "options": [
+            "Milk",
+            "Butter",
+            "Cheese",
+            "Laptop"
+        ],
+        "answer": "Laptop",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 85,
+        "question": "Find the odd one out.",
+        "options": [
+            "Dog",
+            "Cat",
+            "Horse",
+            "Train"
+        ],
+        "answer": "Train",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 86,
+        "question": "Find the odd one out.",
+        "options": [
+            "Pen",
+            "Pencil",
+            "Notebook",
+            "Tiger"
+        ],
+        "answer": "Tiger",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 87,
+        "question": "Find the odd one out.",
+        "options": [
+            "Sun",
+            "Mars",
+            "Earth",
+            "Chair"
+        ],
+        "answer": "Chair",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 88,
+        "question": "Find the odd one out.",
+        "options": [
+            "Lion",
+            "Tiger",
+            "Wolf",
+            "Banana"
+        ],
+        "answer": "Banana",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 89,
+        "question": "Find the odd one out.",
+        "options": [
+            "Car",
+            "Bus",
+            "Train",
+            "Laptop"
+        ],
+        "answer": "Laptop",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 90,
+        "question": "Find the odd one out.",
+        "options": [
+            "Rose",
+            "Tulip",
+            "Sunflower",
+            "Car"
+        ],
+        "answer": "Car",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 91,
+        "question": "Find the odd one out.",
+        "options": [
+            "Cow",
+            "Goat",
+            "Sheep",
+            "Laptop"
+        ],
+        "answer": "Laptop",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 92,
+        "question": "Find the odd one out.",
+        "options": [
+            "Pen",
+            "Pencil",
+            "Brush",
+            "Dog"
+        ],
+        "answer": "Dog",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 93,
+        "question": "Find the odd one out.",
+        "options": [
+            "Apple",
+            "Banana",
+            "Orange",
+            "Car"
+        ],
+        "answer": "Car",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 94,
+        "question": "Find the odd one out.",
+        "options": [
+            "Table",
+            "Chair",
+            "Sofa",
+            "Lion"
+        ],
+        "answer": "Lion",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 95,
+        "question": "Find the odd one out.",
+        "options": [
+            "Train",
+            "Car",
+            "Bus",
+            "Flower"
+        ],
+        "answer": "Flower",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 96,
+        "question": "Find the odd one out.",
+        "options": [
+            "Sun",
+            "Moon",
+            "Star",
+            "Laptop"
+        ],
+        "answer": "Laptop",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 97,
+        "question": "Find the odd one out.",
+        "options": [
+            "Dog",
+            "Cat",
+            "Horse",
+            "Pen"
+        ],
+        "answer": "Pen",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 98,
+        "question": "Find the odd one out.",
+        "options": [
+            "Apple",
+            "Banana",
+            "Carrot",
+            "Laptop"
+        ],
+        "answer": "Laptop",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 99,
+        "question": "Find the odd one out.",
+        "options": [
+            "Circle",
+            "Triangle",
+            "Square",
+            "Laptop"
+        ],
+        "answer": "Laptop",
+        "difficulty": "easy",
+        "topic": "classification"
+    },
+    {
+        "id": 100,
+        "question": "Find the odd one out.",
+        "options": [
+            "Doctor",
+            "Teacher",
+            "Engineer",
+            "Banana"
+        ],
+        "answer": "Banana",
+        "difficulty": "easy",
+        "topic": "classification"
+    }
+]

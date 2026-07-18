@@ -3,6 +3,13 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import QuestionNavigator from '@/components/practice/QuestionNavigator';
+import { useOnlineStatus } from '@/hooks/useOnlineStatus';
+import {
+    loadBankFromCache,
+    selectQuestions,
+    type RawQuestion,
+} from '@/lib/offline/practice-bank';
+import OfflineFallback from '@/components/offline/OfflineFallback';
 
 
 
@@ -30,16 +37,92 @@ function inferSynonymWord(questionText: string) {
 
 export default function OIRTestEngine() {
     const router = useRouter();
+    const connectivity = useOnlineStatus();
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState<Record<number, string>>({});
     const [reviewStatus, setReviewStatus] = useState<Record<number, boolean>>({});
     const [timeLeft, setTimeLeft] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
+    // Offline: practice bank unavailable / invalid -> render fallback, do not start flow (Req 4.6, 4.7)
+    const [offlineUnavailable, setOfflineUnavailable] = useState(false);
 
     useEffect(() => {
+        // Capture connectivity at test-start time. Offline flag drives the branch below.
+        const startedOffline = connectivity === 'offline';
+
+        // OFFLINE branch (Req 4.4-4.7, 7.1, 10.1): skip access checks and /api/oir/generate,
+        // build the question pool from cached oir_* banks, and select client-side.
+        async function loadOfflineQuestions() {
+            // Discover available banks from the practice-bank index.
+            let index: unknown;
+            try {
+                const idxRes = await fetch('/practice-banks/index.json');
+                if (!idxRes.ok) throw new Error(`index status ${idxRes.status}`);
+                index = await idxRes.json();
+            } catch {
+                // Index missing / unreachable -> practice unavailable offline.
+                setOfflineUnavailable(true);
+                return;
+            }
+
+            const banks = (index as { banks?: Array<{ id?: unknown }> } | null)?.banks;
+            const oirBankIds = Array.isArray(banks)
+                ? banks
+                    .map((b) => b?.id)
+                    .filter((id): id is string => typeof id === 'string' && id.startsWith('oir_'))
+                : [];
+
+            if (oirBankIds.length === 0) {
+                setOfflineUnavailable(true);
+                return;
+            }
+
+            // Merge all OIR category banks into a single pool (mirrors /api/oir/generate).
+            const pool: RawQuestion[] = [];
+            for (const bankId of oirBankIds) {
+                try {
+                    const bankQuestions = await loadBankFromCache(bankId);
+                    pool.push(...bankQuestions);
+                } catch {
+                    // A single missing/invalid bank is skipped; other cached banks still count.
+                }
+            }
+
+            if (pool.length === 0) {
+                setOfflineUnavailable(true);
+                return;
+            }
+
+            // Random count in [35, 50], clamped to the pool size (mirrors the online 35-50 rule).
+            const randomCount = Math.min(
+                Math.floor(Math.random() * (50 - 35 + 1)) + 35,
+                pool.length
+            );
+            const selected = selectQuestions(pool, randomCount);
+
+            // Normalize to the response shape the flow expects (id per paper + originalId).
+            const mapped: Question[] = selected.map((q, idx) => {
+                const raw = q as RawQuestion & { id?: number | string };
+                return {
+                    ...raw,
+                    originalId: raw.id,
+                    id: idx + 1,
+                } as unknown as Question;
+            });
+
+            setQuestions(mapped);
+            // Timing rule: 3 questions per minute => (count / 3) * 60 seconds
+            setTimeLeft((mapped.length / 3) * 60);
+        }
+
         async function loadQuestions() {
             try {
+                if (startedOffline) {
+                    await loadOfflineQuestions();
+                    return;
+                }
+
                 // 1. Verify Access
                 const accessRes = await fetch('/api/practice/check-access?module=OIR');
                 if (accessRes.status === 401) {
@@ -78,6 +161,7 @@ export default function OIRTestEngine() {
             }
         }
         loadQuestions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router]);
 
     // Timer Effect
@@ -119,15 +203,20 @@ export default function OIRTestEngine() {
             timeTaken: ((questions.length / 3) * 60) - timeLeft
         };
 
-        // Store in session storage to pass to Result Page
+        // Store in session storage to pass to Result Page.
+        // The OIR test is auto-scored client-side (isCorrect above), so results render
+        // locally without any server round-trip — valid both online and offline (Req 4.5).
         sessionStorage.setItem('oir_test_result', JSON.stringify(payload));
 
-        // Mark daily practice completion for streak system (non-blocking UX-safe)
-        fetch('/api/streak/complete', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ activityType: 'OIR' }),
-        }).catch(() => null);
+        // Mark daily practice completion for streak system (non-blocking UX-safe).
+        // Skipped while offline: the DB-backed streak call is online-only (Req 4.5, 10.1).
+        if (connectivity === 'online') {
+            fetch('/api/streak/complete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ activityType: 'OIR' }),
+            }).catch(() => null);
+        }
 
         router.push('/practice/oir/result');
     };
@@ -169,6 +258,22 @@ export default function OIRTestEngine() {
             <div className="min-h-screen bg-brand-bg flex items-center justify-center font-hero text-2xl font-bold text-brand-dark">
                 Generating your randomized OIR Test...
             </div>
+        );
+    }
+
+    // Offline and no usable practice bank: show the fallback and do not start the flow.
+    // In-progress answers state is preserved (component stays mounted) (Req 4.6, 4.7, 7.1).
+    if (offlineUnavailable) {
+        return (
+            <main>
+                <div className="min-h-screen bg-brand-bg pt-32 pb-20 px-6 flex items-start justify-center">
+                    <OfflineFallback
+                        title="Practice unavailable offline"
+                        message="This OIR practice set hasn't been saved for offline use yet. Reconnect once to download it, then you can practice without a connection."
+                        onRetry={() => window.location.reload()}
+                    />
+                </div>
+            </main>
         );
     }
 

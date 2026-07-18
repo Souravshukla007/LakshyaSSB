@@ -1,0 +1,1302 @@
+[
+    {
+        "id": 1,
+        "question": "If CAT is coded as DBU, how is DOG coded?",
+        "options": [
+            "EPH",
+            "EPG",
+            "EOG",
+            "FQI"
+        ],
+        "answer": "EPH",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 2,
+        "question": "If BAT is coded as CBU, how is CAR coded?",
+        "options": [
+            "DBS",
+            "DBR",
+            "EBR",
+            "DAR"
+        ],
+        "answer": "DBS",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 3,
+        "question": "If PEN is coded as QFO, how is MAP coded?",
+        "options": [
+            "NBQ",
+            "NBO",
+            "MBQ",
+            "NCP"
+        ],
+        "answer": "NBQ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 4,
+        "question": "If BOOK is coded as CPPL, how is COOL coded?",
+        "options": [
+            "DPPM",
+            "DPPN",
+            "DPOM",
+            "CPOM"
+        ],
+        "answer": "DPPM",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 5,
+        "question": "If TREE is coded as USFF, how is FREE coded?",
+        "options": [
+            "GSFF",
+            "HSFF",
+            "FSFF",
+            "FRFF"
+        ],
+        "answer": "GSFF",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 6,
+        "question": "If CAT is coded as XZG, how is DOG coded?",
+        "options": [
+            "WLT",
+            "WLT",
+            "WLT",
+            "WLT"
+        ],
+        "answer": "WLT",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 7,
+        "question": "If BAD is coded as YZW, how is FED coded?",
+        "options": [
+            "UVX",
+            "VWX",
+            "UWX",
+            "TWX"
+        ],
+        "answer": "UVX",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 8,
+        "question": "If SUN is coded as TVO, how is DAY coded?",
+        "options": [
+            "EBZ",
+            "ECZ",
+            "EBY",
+            "DBZ"
+        ],
+        "answer": "EBZ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 9,
+        "question": "If RAT is coded as SBU, how is MAT coded?",
+        "options": [
+            "NBU",
+            "NBU",
+            "NBU",
+            "NBU"
+        ],
+        "answer": "NBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 10,
+        "question": "If GOAT is coded as HPBU, how is LION coded?",
+        "options": [
+            "MJPO",
+            "MJPN",
+            "NKPO",
+            "MIPO"
+        ],
+        "answer": "MJPO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 11,
+        "question": "If ABC is coded as BCD, how is XYZ coded?",
+        "options": [
+            "YZA",
+            "YAB",
+            "ZAB",
+            "ZBC"
+        ],
+        "answer": "YZA",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 12,
+        "question": "If BIRD is coded as CJSE, how is LION coded?",
+        "options": [
+            "MJPO",
+            "MJON",
+            "NIPO",
+            "MJQN"
+        ],
+        "answer": "MJPO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 13,
+        "question": "If FISH is coded as GJTI, how is BIRD coded?",
+        "options": [
+            "CJSE",
+            "DJSE",
+            "CKSE",
+            "CJTE"
+        ],
+        "answer": "CJSE",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 14,
+        "question": "If PEN is coded as 123, MAP as 456, what is code for PAN?",
+        "options": [
+            "153",
+            "163",
+            "143",
+            "152"
+        ],
+        "answer": "153",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 15,
+        "question": "If RED is coded as SFE, how is BLUE coded?",
+        "options": [
+            "CMVF",
+            "CMWE",
+            "CMUE",
+            "BMVF"
+        ],
+        "answer": "CMVF",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 16,
+        "question": "If APPLE is coded as BQQMF, how is MANGO coded?",
+        "options": [
+            "NBOHP",
+            "NBPHO",
+            "NBOHO",
+            "NBPHP"
+        ],
+        "answer": "NBOHP",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 17,
+        "question": "If DOG is coded as EPH, how is CAT coded?",
+        "options": [
+            "DBU",
+            "DBT",
+            "EBU",
+            "CBU"
+        ],
+        "answer": "DBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 18,
+        "question": "If BALL is coded as CBMM, how is CALL coded?",
+        "options": [
+            "DBMM",
+            "EBMM",
+            "DBNL",
+            "DBLL"
+        ],
+        "answer": "DBMM",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 19,
+        "question": "If SUN is coded as TVO, how is RUN coded?",
+        "options": [
+            "SVO",
+            "SVO",
+            "SVP",
+            "TVO"
+        ],
+        "answer": "SVO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 20,
+        "question": "If PEN is coded as QFO, how is TEN coded?",
+        "options": [
+            "UFO",
+            "UFO",
+            "UFO",
+            "UFP"
+        ],
+        "answer": "UFO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 21,
+        "question": "If CAT is coded as 3120, DOG as 4157, how is GOD coded?",
+        "options": [
+            "7415",
+            "7514",
+            "7154",
+            "7451"
+        ],
+        "answer": "7415",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 22,
+        "question": "If BAT is coded as 2120, CAT as 3120, how is RAT coded?",
+        "options": [
+            "1820",
+            "1821",
+            "1720",
+            "1920"
+        ],
+        "answer": "1820",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 23,
+        "question": "If MAN is coded as NBO, how is FAN coded?",
+        "options": [
+            "GBO",
+            "GBO",
+            "HBO",
+            "FBO"
+        ],
+        "answer": "GBO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 24,
+        "question": "If PEN is coded as 123, HEN as 423, what is code for HEP?",
+        "options": [
+            "421",
+            "431",
+            "413",
+            "423"
+        ],
+        "answer": "421",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 25,
+        "question": "If BOX is coded as CPY, how is FOX coded?",
+        "options": [
+            "GPY",
+            "GQY",
+            "FPY",
+            "GPZ"
+        ],
+        "answer": "GPY",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 26,
+        "question": "If DAY is coded as EBZ, how is SAY coded?",
+        "options": [
+            "TBZ",
+            "TBY",
+            "SBZ",
+            "TCZ"
+        ],
+        "answer": "TBZ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 27,
+        "question": "If PEN is coded as QFO, how is MEN coded?",
+        "options": [
+            "NFO",
+            "NFP",
+            "NFO",
+            "NFO"
+        ],
+        "answer": "NFO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 28,
+        "question": "If CAT is coded as DBU, how is HAT coded?",
+        "options": [
+            "IBU",
+            "IBV",
+            "HBV",
+            "IBT"
+        ],
+        "answer": "IBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 29,
+        "question": "If DOG is coded as EPH, how is LOG coded?",
+        "options": [
+            "MPH",
+            "MPG",
+            "NPH",
+            "LPH"
+        ],
+        "answer": "MPH",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 30,
+        "question": "If CAR is coded as DBS, how is FAR coded?",
+        "options": [
+            "GBS",
+            "FBS",
+            "HBS",
+            "GCS"
+        ],
+        "answer": "GBS",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 31,
+        "question": "If BAT is coded as CBU, how is MAT coded?",
+        "options": [
+            "NBU",
+            "MBU",
+            "OBU",
+            "NBU"
+        ],
+        "answer": "NBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 32,
+        "question": "If CAT is coded as XZG, how is BAT coded?",
+        "options": [
+            "YZG",
+            "WZG",
+            "XZH",
+            "WZH"
+        ],
+        "answer": "YZG",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 33,
+        "question": "If MAP is coded as NBQ, how is SAP coded?",
+        "options": [
+            "TBQ",
+            "SBQ",
+            "UBQ",
+            "TCQ"
+        ],
+        "answer": "TBQ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 34,
+        "question": "If RAT is coded as SBU, how is FAT coded?",
+        "options": [
+            "GBU",
+            "GBV",
+            "HBU",
+            "GCU"
+        ],
+        "answer": "GBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 35,
+        "question": "If PEN is coded as 123, PAN coded as 153, what is code for NAP?",
+        "options": [
+            "315",
+            "351",
+            "531",
+            "135"
+        ],
+        "answer": "351",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 36,
+        "question": "If RED is coded as SFE, how is BED coded?",
+        "options": [
+            "CFE",
+            "DFE",
+            "BFE",
+            "CGE"
+        ],
+        "answer": "CFE",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 37,
+        "question": "If FISH is coded as GJTI, how is WISH coded?",
+        "options": [
+            "XJTI",
+            "YJTI",
+            "XIUI",
+            "XITI"
+        ],
+        "answer": "XJTI",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 38,
+        "question": "If LION is coded as MJPO, how is NOSE coded?",
+        "options": [
+            "OPTF",
+            "OPSF",
+            "OPTE",
+            "OPTF"
+        ],
+        "answer": "OPTF",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 39,
+        "question": "If BAT is coded as 2120, CAT as 3120, what is code for DAT?",
+        "options": [
+            "4120",
+            "5120",
+            "3121",
+            "2121"
+        ],
+        "answer": "4120",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 40,
+        "question": "If PEN is coded as QFO, how is DEN coded?",
+        "options": [
+            "EFO",
+            "DFO",
+            "FFO",
+            "EGO"
+        ],
+        "answer": "EFO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 41,
+        "question": "If CAT is coded as DBU, how is PAT coded?",
+        "options": [
+            "QBU",
+            "PBU",
+            "RBU",
+            "QBV"
+        ],
+        "answer": "QBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 42,
+        "question": "If DOG is coded as EPH, how is FOG coded?",
+        "options": [
+            "GPH",
+            "GPG",
+            "HPH",
+            "GQH"
+        ],
+        "answer": "GPH",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 43,
+        "question": "If MAP coded NBQ, how is CAP coded?",
+        "options": [
+            "DBQ",
+            "CBQ",
+            "EBQ",
+            "DCQ"
+        ],
+        "answer": "DBQ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 44,
+        "question": "If RAT coded SBU, how is BAT coded?",
+        "options": [
+            "CBU",
+            "DBU",
+            "ABU",
+            "CBV"
+        ],
+        "answer": "CBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 45,
+        "question": "If DAY coded EBZ, how is MAY coded?",
+        "options": [
+            "NBZ",
+            "MBZ",
+            "OBZ",
+            "NCZ"
+        ],
+        "answer": "NBZ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 46,
+        "question": "If SUN coded TVO, how is FUN coded?",
+        "options": [
+            "GVO",
+            "GVP",
+            "FVO",
+            "HVO"
+        ],
+        "answer": "GVO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 47,
+        "question": "If BOX coded CPY, how is TOY coded?",
+        "options": [
+            "UPZ",
+            "UPY",
+            "VPY",
+            "TPY"
+        ],
+        "answer": "UPZ",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 48,
+        "question": "If PEN coded QFO, how is FAN coded?",
+        "options": [
+            "GBO",
+            "GFO",
+            "FBO",
+            "HBO"
+        ],
+        "answer": "GBO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 49,
+        "question": "If BAT coded CBU, how is CAT coded?",
+        "options": [
+            "DBU",
+            "EBU",
+            "DBV",
+            "CBV"
+        ],
+        "answer": "DBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 50,
+        "question": "If RED coded SFE, how is LED coded?",
+        "options": [
+            "MFE",
+            "NFE",
+            "LFE",
+            "OFE"
+        ],
+        "answer": "MFE",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 51,
+        "question": "If CAT is coded as DBU, how is BAT coded?",
+        "options": [
+            "CBU",
+            "DBU",
+            "BBU",
+            "DBV"
+        ],
+        "answer": "CBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 52,
+        "question": "If DOG is coded as EPH, how is LOG coded?",
+        "options": [
+            "MPH",
+            "LQH",
+            "NPH",
+            "MPG"
+        ],
+        "answer": "MPH",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 53,
+        "question": "If MAP is coded as NBQ, how is NAP coded?",
+        "options": [
+            "OBQ",
+            "OCP",
+            "OBO",
+            "NBP"
+        ],
+        "answer": "OBQ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 54,
+        "question": "If PEN is coded as QFO, how is MEN coded?",
+        "options": [
+            "NFO",
+            "OFO",
+            "NFP",
+            "MFO"
+        ],
+        "answer": "NFO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 55,
+        "question": "If SUN is coded as TVO, how is RUN coded?",
+        "options": [
+            "SVO",
+            "SVP",
+            "RVN",
+            "SVN"
+        ],
+        "answer": "SVO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 56,
+        "question": "If RED is coded as SFE, how is BED coded?",
+        "options": [
+            "CFE",
+            "DFE",
+            "CFF",
+            "BFE"
+        ],
+        "answer": "CFE",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 57,
+        "question": "If BOX is coded as CPY, how is FOX coded?",
+        "options": [
+            "GPY",
+            "FQY",
+            "HPY",
+            "GQY"
+        ],
+        "answer": "GPY",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 58,
+        "question": "If DAY is coded as EBZ, how is SAY coded?",
+        "options": [
+            "TBZ",
+            "SBZ",
+            "UBZ",
+            "TCZ"
+        ],
+        "answer": "TBZ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 59,
+        "question": "If RAT is coded as SBU, how is FAT coded?",
+        "options": [
+            "GBU",
+            "HBU",
+            "GCU",
+            "FBV"
+        ],
+        "answer": "GBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 60,
+        "question": "If BAT is coded as CBU, how is HAT coded?",
+        "options": [
+            "IBU",
+            "HBU",
+            "JBU",
+            "ICU"
+        ],
+        "answer": "IBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 61,
+        "question": "If CAT is coded as 3120 and BAT as 2120, how is RAT coded?",
+        "options": [
+            "1820",
+            "1720",
+            "1821",
+            "1920"
+        ],
+        "answer": "1820",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 62,
+        "question": "If PEN coded 123 and MAP coded 456, what is code for PAN?",
+        "options": [
+            "153",
+            "165",
+            "143",
+            "162"
+        ],
+        "answer": "153",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 63,
+        "question": "If ABC coded as 123 and CAB coded as 312, how is BCA coded?",
+        "options": [
+            "231",
+            "321",
+            "213",
+            "132"
+        ],
+        "answer": "231",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 64,
+        "question": "If DOG coded 4157, CAT coded 3120, how is GOD coded?",
+        "options": [
+            "7415",
+            "7154",
+            "7514",
+            "7451"
+        ],
+        "answer": "7415",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 65,
+        "question": "If PEN coded QFO, TEN coded UFO, how is HEN coded?",
+        "options": [
+            "IFO",
+            "JFO",
+            "HFN",
+            "HFO"
+        ],
+        "answer": "IFO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 66,
+        "question": "If APPLE coded BQQMF, how is TABLE coded?",
+        "options": [
+            "UBCMF",
+            "UBCMG",
+            "UBDME",
+            "UBBLF"
+        ],
+        "answer": "UBCMF",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 67,
+        "question": "If TREE coded USFF, how is FREE coded?",
+        "options": [
+            "GSFF",
+            "HSFF",
+            "FSFF",
+            "GRFF"
+        ],
+        "answer": "GSFF",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 68,
+        "question": "If BALL coded CBMM, how is CALL coded?",
+        "options": [
+            "DBMM",
+            "EBMM",
+            "DBNL",
+            "DCMM"
+        ],
+        "answer": "DBMM",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 69,
+        "question": "If FISH coded GJTI, how is WISH coded?",
+        "options": [
+            "XJTI",
+            "YJTI",
+            "XIUI",
+            "XITI"
+        ],
+        "answer": "XJTI",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 70,
+        "question": "If LION coded MJPO, how is KING coded?",
+        "options": [
+            "LJOH",
+            "LJPH",
+            "LJOG",
+            "KJPH"
+        ],
+        "answer": "LJOH",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 71,
+        "question": "If RED coded SFE, how is FED coded?",
+        "options": [
+            "GFE",
+            "FFE",
+            "HFE",
+            "EFE"
+        ],
+        "answer": "GFE",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 72,
+        "question": "If SUN coded TVO, how is GUN coded?",
+        "options": [
+            "HVO",
+            "HVP",
+            "IVO",
+            "HVN"
+        ],
+        "answer": "HVO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 73,
+        "question": "If MAP coded NBQ, how is CAP coded?",
+        "options": [
+            "DBQ",
+            "CBQ",
+            "EBQ",
+            "DCQ"
+        ],
+        "answer": "DBQ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 74,
+        "question": "If BAT coded CBU, how is PAT coded?",
+        "options": [
+            "QBU",
+            "RBU",
+            "PBU",
+            "QBV"
+        ],
+        "answer": "QBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 75,
+        "question": "If DOG coded EPH, how is FOG coded?",
+        "options": [
+            "GPH",
+            "HPH",
+            "GQH",
+            "GPG"
+        ],
+        "answer": "GPH",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 76,
+        "question": "If DAY coded EBZ, how is WAY coded?",
+        "options": [
+            "XBZ",
+            "WBZ",
+            "YBZ",
+            "XAZ"
+        ],
+        "answer": "XBZ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 77,
+        "question": "If PEN coded QFO, how is DEN coded?",
+        "options": [
+            "EFO",
+            "DFO",
+            "FFO",
+            "EGO"
+        ],
+        "answer": "EFO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 78,
+        "question": "If CAT coded DBU, how is MAT coded?",
+        "options": [
+            "NBU",
+            "MBU",
+            "OBU",
+            "MCU"
+        ],
+        "answer": "NBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 79,
+        "question": "If BOX coded CPY, how is TOY coded?",
+        "options": [
+            "UPZ",
+            "UPY",
+            "VPY",
+            "TPY"
+        ],
+        "answer": "UPZ",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 80,
+        "question": "If RAT coded SBU, how is MAT coded?",
+        "options": [
+            "NBU",
+            "MBU",
+            "OBU",
+            "NCU"
+        ],
+        "answer": "NBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 81,
+        "question": "If PEN coded QFO, how is FAN coded?",
+        "options": [
+            "GBO",
+            "GFO",
+            "FBO",
+            "HBO"
+        ],
+        "answer": "GBO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 82,
+        "question": "If BAT coded CBU, how is CAT coded?",
+        "options": [
+            "DBU",
+            "EBU",
+            "DBV",
+            "CBV"
+        ],
+        "answer": "DBU",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 83,
+        "question": "If RED coded SFE, how is LED coded?",
+        "options": [
+            "MFE",
+            "NFE",
+            "LFE",
+            "OFE"
+        ],
+        "answer": "MFE",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 84,
+        "question": "If MAP coded NBQ, how is SAP coded?",
+        "options": [
+            "TBQ",
+            "SBQ",
+            "UBQ",
+            "TCQ"
+        ],
+        "answer": "TBQ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 85,
+        "question": "If CAT coded DBU, how is CAP coded?",
+        "options": [
+            "DBQ",
+            "DCU",
+            "DBV",
+            "DCV"
+        ],
+        "answer": "DBQ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 86,
+        "question": "If DOG coded EPH, how is DIG coded?",
+        "options": [
+            "EJH",
+            "EIH",
+            "FJH",
+            "FHH"
+        ],
+        "answer": "EJH",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 87,
+        "question": "If SUN coded TVO, how is SIN coded?",
+        "options": [
+            "TJO",
+            "TIO",
+            "UJO",
+            "TJP"
+        ],
+        "answer": "TJO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 88,
+        "question": "If BAT coded CBU, how is BAR coded?",
+        "options": [
+            "CBS",
+            "CBT",
+            "CBR",
+            "CBQ"
+        ],
+        "answer": "CBS",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 89,
+        "question": "If BOX coded CPY, how is BOY coded?",
+        "options": [
+            "CPZ",
+            "CPY",
+            "CQZ",
+            "CQY"
+        ],
+        "answer": "CPZ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 90,
+        "question": "If MAP coded NBQ, how is MAD coded?",
+        "options": [
+            "NBE",
+            "NBD",
+            "NCD",
+            "NBC"
+        ],
+        "answer": "NBE",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 91,
+        "question": "If RAT coded SBU, how is RAM coded?",
+        "options": [
+            "SBN",
+            "SBO",
+            "SBN",
+            "SBO"
+        ],
+        "answer": "SBN",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 92,
+        "question": "If CAT coded DBU, how is CAR coded?",
+        "options": [
+            "DBS",
+            "DBT",
+            "DCR",
+            "DBR"
+        ],
+        "answer": "DBS",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 93,
+        "question": "If DAY coded EBZ, how is BAY coded?",
+        "options": [
+            "CBZ",
+            "DBZ",
+            "CBY",
+            "DBY"
+        ],
+        "answer": "CBZ",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 94,
+        "question": "If PEN coded QFO, how is PIN coded?",
+        "options": [
+            "QJO",
+            "QIN",
+            "RJO",
+            "QIO"
+        ],
+        "answer": "QJO",
+        "difficulty": "easy",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 95,
+        "question": "If BOX coded CPY, how is BOXER coded?",
+        "options": [
+            "CPYFS",
+            "DPYFS",
+            "CPZFS",
+            "CPYFR"
+        ],
+        "answer": "CPYFS",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 96,
+        "question": "If CAT coded DBU, how is CART coded?",
+        "options": [
+            "DBSU",
+            "DBTT",
+            "DBSU",
+            "DBTU"
+        ],
+        "answer": "DBSU",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 97,
+        "question": "If DOG coded EPH, how is DOGS coded?",
+        "options": [
+            "EPHT",
+            "EPIS",
+            "EPHS",
+            "EPHU"
+        ],
+        "answer": "EPHT",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 98,
+        "question": "If PEN coded QFO, how is PENS coded?",
+        "options": [
+            "QFOT",
+            "QFOS",
+            "QFON",
+            "QFOP"
+        ],
+        "answer": "QFOT",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 99,
+        "question": "If SUN coded TVO, how is SUNS coded?",
+        "options": [
+            "TVOT",
+            "TVOS",
+            "TVON",
+            "TVOP"
+        ],
+        "answer": "TVOT",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    },
+    {
+        "id": 100,
+        "question": "If MAP coded NBQ, how is MAPS coded?",
+        "options": [
+            "NBQT",
+            "NBQS",
+            "NBQR",
+            "NBQP"
+        ],
+        "answer": "NBQT",
+        "difficulty": "medium",
+        "topic": "coding_decoding"
+    }
+]

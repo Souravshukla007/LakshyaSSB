@@ -5,6 +5,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import type { VisionType, MedicalScoreBreakdown, WeeklyPlan } from "@/lib/medical-score";
+import { useOnlineStatus } from "@/hooks/useOnlineStatus";
 
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -597,6 +598,12 @@ function Step4Report({
     const [hasSaved, setHasSaved] = useState(false);
     const hasFetched = useRef(false);
 
+    // Connectivity gating (Req 5.2, 5.4): while offline, the "Save to Dashboard"
+    // create action is disabled and blocked client-side so cached/entered data is
+    // left unchanged. Re-enables automatically when connectivity returns.
+    const connectivity = useOnlineStatus();
+    const isOffline = connectivity === 'offline';
+
     const showToast = useCallback((msg: string) => {
         setToast(msg);
         setTimeout(() => setToast(null), 3500);
@@ -616,6 +623,12 @@ function Step4Report({
 
     const handleSave = async () => {
         if (isSaving || hasSaved) return;
+        // Block the mutation while offline (Req 5.4): do not touch the server,
+        // keep the entered data intact, and surface an inline error indication.
+        if (isOffline) {
+            showToast('⚠ Saving is unavailable offline');
+            return;
+        }
         setIsSaving(true);
         try {
             const res = await fetch('/api/medical/calculate', {
@@ -871,10 +884,11 @@ function Step4Report({
                 {status !== 'guest' && (
                     <button
                         onClick={handleSave}
-                        disabled={isSaving || hasSaved}
-                        className="flex-[1.5] px-6 py-3.5 rounded-2xl bg-brand-orange text-white text-sm font-bold hover:opacity-90 transition-all disabled:opacity-50"
+                        disabled={isSaving || hasSaved || isOffline}
+                        title={isOffline ? 'Unavailable offline' : undefined}
+                        className="flex-[1.5] px-6 py-3.5 rounded-2xl bg-brand-orange text-white text-sm font-bold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {isSaving ? 'Saving...' : hasSaved ? '✓ Saved to Dashboard' : '💾 Save to Dashboard'}
+                        {isSaving ? 'Saving...' : hasSaved ? '✓ Saved to Dashboard' : isOffline ? '🔌 Unavailable offline' : '💾 Save to Dashboard'}
                     </button>
                 )}
                 <button
@@ -884,6 +898,15 @@ function Step4Report({
                     🔄 Restart
                 </button>
             </div>
+
+            {/* Offline notice for the read-only report (Req 5.4): the report above is
+                computed locally and remains fully viewable, but saving it to the
+                dashboard requires connectivity. */}
+            {isOffline && status !== 'guest' && (
+                <p className="-mt-3 mb-6 text-xs font-semibold text-amber-600 flex items-center gap-1.5">
+                    <span>⚠</span> Saving is unavailable offline. Your report is shown from a local calculation and was not sent to the dashboard.
+                </p>
+            )}
         </div>
     );
 }

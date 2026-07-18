@@ -3,9 +3,16 @@
 
 
 import useScrollReveal from "@/hooks/useScrollReveal";
+import { useOnlineStatus } from "@/hooks/useOnlineStatus";
 
 export default function OlqReport() {
     useScrollReveal();
+
+    // Connectivity gating (Req 5.2, 5.4): this is a read-only report. While offline,
+    // the report stays fully viewable but the PDF export (an online-only action) is
+    // disabled and blocked client-side. Re-enables automatically when back online.
+    const connectivity = useOnlineStatus();
+    const isOffline = connectivity === 'offline';
 
     return (
         <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
@@ -22,9 +29,21 @@ export default function OlqReport() {
                                 Psychologist's view of your projected officer-like qualities.
                             </p>
                         </div>
-                        <button className="px-6 py-3 bg-brand-dark text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-brand-orange transition-all">
-                            Download PDF
-                        </button>
+                        <div className="flex flex-col items-end gap-2">
+                            <button
+                                onClick={() => { if (isOffline) return; }}
+                                disabled={isOffline}
+                                title={isOffline ? 'Unavailable offline' : undefined}
+                                className="px-6 py-3 bg-brand-dark text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-brand-orange transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-brand-dark"
+                            >
+                                {isOffline ? '🔌 Unavailable offline' : 'Download PDF'}
+                            </button>
+                            {isOffline && (
+                                <span className="text-[10px] font-semibold text-amber-600">
+                                    ⚠ PDF export needs an internet connection.
+                                </span>
+                            )}
+                        </div>
                     </div>
 
                     <div className="grid lg:grid-cols-12 gap-12">

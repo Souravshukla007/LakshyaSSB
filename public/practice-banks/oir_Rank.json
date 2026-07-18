@@ -1,0 +1,1302 @@
+[
+    {
+        "id": 1,
+        "question": "Ravi is 7th from the top in a class of 30 students. What is his rank from the bottom?",
+        "options": [
+            "23",
+            "24",
+            "22",
+            "25"
+        ],
+        "answer": "24",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 2,
+        "question": "In a line of 40 students, Amit is 12th from the left. What is his position from the right?",
+        "options": [
+            "29",
+            "28",
+            "30",
+            "27"
+        ],
+        "answer": "29",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 3,
+        "question": "Seema ranks 9th from the bottom in a class of 35 students. What is her rank from the top?",
+        "options": [
+            "27",
+            "26",
+            "28",
+            "25"
+        ],
+        "answer": "27",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 4,
+        "question": "In a class of 50 students, Rahul ranks 18th from the top. What is his rank from the bottom?",
+        "options": [
+            "33",
+            "32",
+            "31",
+            "34"
+        ],
+        "answer": "33",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 5,
+        "question": "In a row of 25 students, Neha is 6th from the left. What is her position from the right?",
+        "options": [
+            "20",
+            "19",
+            "21",
+            "18"
+        ],
+        "answer": "20",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 6,
+        "question": "Rohit ranks 14th from the top in a class of 40 students. What is his rank from the bottom?",
+        "options": [
+            "27",
+            "28",
+            "26",
+            "29"
+        ],
+        "answer": "27",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 7,
+        "question": "In a line of 30 students, Karan is 11th from the right. What is his position from the left?",
+        "options": [
+            "19",
+            "20",
+            "21",
+            "18"
+        ],
+        "answer": "20",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 8,
+        "question": "Anita ranks 5th from the bottom in a class of 32 students. What is her rank from the top?",
+        "options": [
+            "28",
+            "27",
+            "26",
+            "29"
+        ],
+        "answer": "28",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 9,
+        "question": "In a class of 36 students, Ajay ranks 10th from the top. What is his rank from the bottom?",
+        "options": [
+            "27",
+            "26",
+            "28",
+            "25"
+        ],
+        "answer": "27",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 10,
+        "question": "In a row of 45 students, Sita is 13th from the left. What is her position from the right?",
+        "options": [
+            "33",
+            "32",
+            "34",
+            "31"
+        ],
+        "answer": "33",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 11,
+        "question": "In a class, Ramesh is 12th from top and 20th from bottom. How many students are there in the class?",
+        "options": [
+            "31",
+            "32",
+            "30",
+            "33"
+        ],
+        "answer": "31",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 12,
+        "question": "In a line, Mohan is 15th from the left and 18th from the right. How many students are in the line?",
+        "options": [
+            "32",
+            "33",
+            "31",
+            "34"
+        ],
+        "answer": "32",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 13,
+        "question": "Rita is 10th from top and 15th from bottom in a class. How many students are there?",
+        "options": [
+            "24",
+            "25",
+            "26",
+            "23"
+        ],
+        "answer": "24",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 14,
+        "question": "A boy is 8th from left and 12th from right in a row. How many students are there?",
+        "options": [
+            "19",
+            "20",
+            "21",
+            "18"
+        ],
+        "answer": "19",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 15,
+        "question": "In a class, Anil is 17th from top and 14th from bottom. How many students are there?",
+        "options": [
+            "30",
+            "31",
+            "29",
+            "32"
+        ],
+        "answer": "30",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 16,
+        "question": "A student ranks 9th from top and 13th from bottom. Find total students.",
+        "options": [
+            "21",
+            "20",
+            "22",
+            "19"
+        ],
+        "answer": "21",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 17,
+        "question": "A girl ranks 6th from top and 18th from bottom. Find total students.",
+        "options": [
+            "23",
+            "24",
+            "25",
+            "22"
+        ],
+        "answer": "23",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 18,
+        "question": "In a row, Raj is 7th from left and 9th from right. Total students?",
+        "options": [
+            "15",
+            "16",
+            "14",
+            "17"
+        ],
+        "answer": "15",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 19,
+        "question": "A student ranks 16th from top and 10th from bottom. Total students?",
+        "options": [
+            "25",
+            "26",
+            "27",
+            "24"
+        ],
+        "answer": "25",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 20,
+        "question": "Rohit ranks 11th from top and 12th from bottom. Find total students.",
+        "options": [
+            "22",
+            "23",
+            "21",
+            "24"
+        ],
+        "answer": "22",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 21,
+        "question": "In a class of 40 students, Ravi ranks 12th from top. After two students above him leave, what is his new rank?",
+        "options": [
+            "10",
+            "11",
+            "12",
+            "9"
+        ],
+        "answer": "10",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 22,
+        "question": "In a row of 50 students, Anil is 20th from left. After 5 students ahead leave, what is his new rank?",
+        "options": [
+            "15",
+            "16",
+            "14",
+            "13"
+        ],
+        "answer": "15",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 23,
+        "question": "In a class of 30 students, Priya ranks 8th from bottom. What is her rank from top?",
+        "options": [
+            "23",
+            "22",
+            "21",
+            "24"
+        ],
+        "answer": "23",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 24,
+        "question": "A student is 9th from left and 17th from right. Total students?",
+        "options": [
+            "25",
+            "26",
+            "24",
+            "27"
+        ],
+        "answer": "25",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 25,
+        "question": "Rohit is 14th from top and 16th from bottom. Total students?",
+        "options": [
+            "29",
+            "30",
+            "28",
+            "31"
+        ],
+        "answer": "29",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 26,
+        "question": "In a class of 48 students, Ajay ranks 15th from top. What is his rank from bottom?",
+        "options": [
+            "34",
+            "33",
+            "32",
+            "35"
+        ],
+        "answer": "34",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 27,
+        "question": "A boy ranks 7th from bottom in class of 25 students. Rank from top?",
+        "options": [
+            "19",
+            "18",
+            "20",
+            "17"
+        ],
+        "answer": "19",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 28,
+        "question": "In a row of 60 students, Mohit is 25th from left. Rank from right?",
+        "options": [
+            "36",
+            "35",
+            "34",
+            "37"
+        ],
+        "answer": "36",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 29,
+        "question": "In a class, a student ranks 14th from top and 18th from bottom. Total students?",
+        "options": [
+            "31",
+            "32",
+            "30",
+            "33"
+        ],
+        "answer": "31",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 30,
+        "question": "In a row, Riya is 16th from left and 20th from right. Total students?",
+        "options": [
+            "35",
+            "36",
+            "34",
+            "37"
+        ],
+        "answer": "35",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 31,
+        "question": "In a class of 70 students, Aman ranks 22nd from top. Rank from bottom?",
+        "options": [
+            "49",
+            "48",
+            "47",
+            "50"
+        ],
+        "answer": "49",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 32,
+        "question": "In a line of 90 students, Ritu ranks 33rd from left. Rank from right?",
+        "options": [
+            "58",
+            "57",
+            "56",
+            "59"
+        ],
+        "answer": "58",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 33,
+        "question": "A student ranks 18th from bottom in class of 55 students. Rank from top?",
+        "options": [
+            "38",
+            "37",
+            "36",
+            "39"
+        ],
+        "answer": "38",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 34,
+        "question": "In a class of 80 students, Mohan ranks 40th from top. Rank from bottom?",
+        "options": [
+            "41",
+            "40",
+            "39",
+            "42"
+        ],
+        "answer": "41",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 35,
+        "question": "In a row of 35 students, Neha is 15th from right. Rank from left?",
+        "options": [
+            "21",
+            "20",
+            "19",
+            "22"
+        ],
+        "answer": "21",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 36,
+        "question": "A student ranks 13th from top and 11th from bottom. Total students?",
+        "options": [
+            "23",
+            "24",
+            "22",
+            "25"
+        ],
+        "answer": "23",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 37,
+        "question": "A boy ranks 6th from left and 9th from right. Total students?",
+        "options": [
+            "14",
+            "15",
+            "16",
+            "13"
+        ],
+        "answer": "14",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 38,
+        "question": "In a class of 28 students, Ajay ranks 7th from bottom. Rank from top?",
+        "options": [
+            "22",
+            "21",
+            "20",
+            "23"
+        ],
+        "answer": "22",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 39,
+        "question": "In a class of 90 students, Rahul ranks 25th from top. Rank from bottom?",
+        "options": [
+            "66",
+            "65",
+            "64",
+            "67"
+        ],
+        "answer": "66",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 40,
+        "question": "In a line of 75 students, Kiran ranks 30th from left. Rank from right?",
+        "options": [
+            "46",
+            "45",
+            "44",
+            "47"
+        ],
+        "answer": "46",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 41,
+        "question": "In a row, a student ranks 20th from left and 30th from right. Total students?",
+        "options": [
+            "49",
+            "50",
+            "48",
+            "51"
+        ],
+        "answer": "49",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 42,
+        "question": "A student ranks 12th from bottom in class of 45 students. Rank from top?",
+        "options": [
+            "34",
+            "33",
+            "32",
+            "35"
+        ],
+        "answer": "34",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 43,
+        "question": "In a class of 65 students, Ramesh ranks 22nd from top. Rank from bottom?",
+        "options": [
+            "44",
+            "43",
+            "42",
+            "45"
+        ],
+        "answer": "44",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 44,
+        "question": "A girl ranks 17th from bottom in class of 60 students. Rank from top?",
+        "options": [
+            "44",
+            "43",
+            "42",
+            "45"
+        ],
+        "answer": "44",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 45,
+        "question": "In a row of 100 students, Ajay ranks 37th from left. Rank from right?",
+        "options": [
+            "64",
+            "63",
+            "62",
+            "65"
+        ],
+        "answer": "64",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 46,
+        "question": "In a row of 45 students, Neha ranks 11th from right. Rank from left?",
+        "options": [
+            "35",
+            "34",
+            "36",
+            "33"
+        ],
+        "answer": "35",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 47,
+        "question": "In a class, student ranks 14th from top and 21st from bottom. Total students?",
+        "options": [
+            "34",
+            "35",
+            "36",
+            "33"
+        ],
+        "answer": "34",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 48,
+        "question": "A student ranks 10th from left and 25th from right. Total students?",
+        "options": [
+            "34",
+            "35",
+            "36",
+            "33"
+        ],
+        "answer": "34",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 49,
+        "question": "In a class of 72 students, Aman ranks 29th from top. Rank from bottom?",
+        "options": [
+            "44",
+            "43",
+            "45",
+            "42"
+        ],
+        "answer": "44",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 50,
+        "question": "In a line of 80 students, Ravi ranks 35th from left. Rank from right?",
+        "options": [
+            "46",
+            "45",
+            "44",
+            "47"
+        ],
+        "answer": "46",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 51,
+        "question": "In a class of 60 students, Riya ranks 18th from the top. What is her rank from the bottom?",
+        "options": [
+            "43",
+            "42",
+            "41",
+            "44"
+        ],
+        "answer": "43",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 52,
+        "question": "A student ranks 15th from the bottom in a class of 50 students. What is his rank from the top?",
+        "options": [
+            "36",
+            "35",
+            "34",
+            "37"
+        ],
+        "answer": "36",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 53,
+        "question": "In a row of 70 students, Mohit ranks 25th from the left. What is his rank from the right?",
+        "options": [
+            "46",
+            "45",
+            "44",
+            "47"
+        ],
+        "answer": "46",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 54,
+        "question": "In a class, a student ranks 16th from top and 19th from bottom. How many students are there?",
+        "options": [
+            "34",
+            "35",
+            "33",
+            "36"
+        ],
+        "answer": "34",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 55,
+        "question": "In a line, a boy ranks 12th from left and 21st from right. How many students are there?",
+        "options": [
+            "32",
+            "33",
+            "31",
+            "34"
+        ],
+        "answer": "32",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 56,
+        "question": "In a class of 45 students, Neha ranks 14th from the top. What is her rank from the bottom?",
+        "options": [
+            "32",
+            "31",
+            "30",
+            "33"
+        ],
+        "answer": "32",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 57,
+        "question": "In a row of 80 students, Rahul ranks 29th from left. What is his rank from right?",
+        "options": [
+            "52",
+            "51",
+            "50",
+            "53"
+        ],
+        "answer": "52",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 58,
+        "question": "A student ranks 22nd from bottom in class of 65 students. What is his rank from top?",
+        "options": [
+            "44",
+            "43",
+            "42",
+            "45"
+        ],
+        "answer": "44",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 59,
+        "question": "In a class, a student ranks 11th from top and 27th from bottom. Total students?",
+        "options": [
+            "37",
+            "38",
+            "36",
+            "39"
+        ],
+        "answer": "37",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 60,
+        "question": "In a line of students, A is 19th from the left and 18th from the right. How many students are there?",
+        "options": [
+            "36",
+            "37",
+            "35",
+            "38"
+        ],
+        "answer": "36",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 61,
+        "question": "In a class of 55 students, Ajay ranks 21st from top. What is his rank from bottom?",
+        "options": [
+            "35",
+            "34",
+            "33",
+            "36"
+        ],
+        "answer": "35",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 62,
+        "question": "A student ranks 13th from bottom in class of 48 students. What is his rank from top?",
+        "options": [
+            "36",
+            "35",
+            "34",
+            "37"
+        ],
+        "answer": "36",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 63,
+        "question": "In a row of 90 students, Pooja ranks 34th from left. What is her rank from right?",
+        "options": [
+            "57",
+            "56",
+            "55",
+            "58"
+        ],
+        "answer": "57",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 64,
+        "question": "In a class, a student ranks 20th from top and 15th from bottom. Total students?",
+        "options": [
+            "34",
+            "35",
+            "33",
+            "36"
+        ],
+        "answer": "34",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 65,
+        "question": "In a row, Ramesh ranks 17th from left and 25th from right. Total students?",
+        "options": [
+            "41",
+            "42",
+            "40",
+            "43"
+        ],
+        "answer": "41",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 66,
+        "question": "In a class of 72 students, Meena ranks 24th from the top. What is her rank from the bottom?",
+        "options": [
+            "49",
+            "48",
+            "47",
+            "50"
+        ],
+        "answer": "49",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 67,
+        "question": "A student ranks 18th from bottom in class of 60 students. What is his rank from top?",
+        "options": [
+            "43",
+            "42",
+            "41",
+            "44"
+        ],
+        "answer": "43",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 68,
+        "question": "In a row of 75 students, Kunal ranks 32nd from left. What is his rank from right?",
+        "options": [
+            "44",
+            "43",
+            "42",
+            "45"
+        ],
+        "answer": "44",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 69,
+        "question": "A student ranks 14th from top and 26th from bottom. Total students?",
+        "options": [
+            "39",
+            "40",
+            "38",
+            "41"
+        ],
+        "answer": "39",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 70,
+        "question": "In a line, a girl ranks 21st from left and 30th from right. Total students?",
+        "options": [
+            "50",
+            "51",
+            "49",
+            "52"
+        ],
+        "answer": "50",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 71,
+        "question": "In a class of 85 students, Ravi ranks 33rd from top. What is his rank from bottom?",
+        "options": [
+            "53",
+            "52",
+            "51",
+            "54"
+        ],
+        "answer": "53",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 72,
+        "question": "A student ranks 19th from bottom in class of 70 students. What is his rank from top?",
+        "options": [
+            "52",
+            "51",
+            "50",
+            "53"
+        ],
+        "answer": "52",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 73,
+        "question": "In a row of 65 students, Anu ranks 24th from left. What is her rank from right?",
+        "options": [
+            "42",
+            "41",
+            "40",
+            "43"
+        ],
+        "answer": "42",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 74,
+        "question": "A student ranks 18th from top and 21st from bottom. Total students?",
+        "options": [
+            "38",
+            "39",
+            "37",
+            "40"
+        ],
+        "answer": "38",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 75,
+        "question": "In a line, Mohan ranks 27th from left and 18th from right. Total students?",
+        "options": [
+            "44",
+            "45",
+            "43",
+            "46"
+        ],
+        "answer": "44",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 76,
+        "question": "In a class of 68 students, Ritu ranks 20th from top. What is her rank from bottom?",
+        "options": [
+            "49",
+            "48",
+            "47",
+            "50"
+        ],
+        "answer": "49",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 77,
+        "question": "A student ranks 25th from bottom in class of 90 students. What is his rank from top?",
+        "options": [
+            "66",
+            "65",
+            "64",
+            "67"
+        ],
+        "answer": "66",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 78,
+        "question": "In a row of 88 students, Nikhil ranks 36th from left. What is his rank from right?",
+        "options": [
+            "53",
+            "52",
+            "51",
+            "54"
+        ],
+        "answer": "53",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 79,
+        "question": "A student ranks 22nd from top and 30th from bottom. Total students?",
+        "options": [
+            "51",
+            "52",
+            "50",
+            "53"
+        ],
+        "answer": "51",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 80,
+        "question": "In a row, a girl ranks 15th from left and 40th from right. Total students?",
+        "options": [
+            "54",
+            "55",
+            "53",
+            "56"
+        ],
+        "answer": "54",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 81,
+        "question": "In a class of 95 students, Raj ranks 41st from top. What is his rank from bottom?",
+        "options": [
+            "55",
+            "54",
+            "53",
+            "56"
+        ],
+        "answer": "55",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 82,
+        "question": "A student ranks 28th from bottom in class of 75 students. What is his rank from top?",
+        "options": [
+            "48",
+            "47",
+            "46",
+            "49"
+        ],
+        "answer": "48",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 83,
+        "question": "In a row of 120 students, Arjun ranks 50th from left. What is his rank from right?",
+        "options": [
+            "71",
+            "70",
+            "69",
+            "72"
+        ],
+        "answer": "71",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 84,
+        "question": "A student ranks 30th from top and 25th from bottom. Total students?",
+        "options": [
+            "54",
+            "55",
+            "53",
+            "56"
+        ],
+        "answer": "54",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 85,
+        "question": "In a line, Pankaj ranks 34th from left and 29th from right. Total students?",
+        "options": [
+            "62",
+            "63",
+            "61",
+            "64"
+        ],
+        "answer": "62",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 86,
+        "question": "In a class of 110 students, Kiran ranks 52nd from top. What is his rank from bottom?",
+        "options": [
+            "59",
+            "58",
+            "57",
+            "60"
+        ],
+        "answer": "59",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 87,
+        "question": "A student ranks 31st from bottom in class of 100 students. What is his rank from top?",
+        "options": [
+            "70",
+            "69",
+            "68",
+            "71"
+        ],
+        "answer": "70",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 88,
+        "question": "In a row of 140 students, Neeraj ranks 66th from left. What is his rank from right?",
+        "options": [
+            "75",
+            "74",
+            "73",
+            "76"
+        ],
+        "answer": "75",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 89,
+        "question": "A student ranks 44th from top and 38th from bottom. Total students?",
+        "options": [
+            "81",
+            "82",
+            "80",
+            "83"
+        ],
+        "answer": "81",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 90,
+        "question": "In a line, a boy ranks 25th from left and 50th from right. Total students?",
+        "options": [
+            "74",
+            "75",
+            "73",
+            "76"
+        ],
+        "answer": "74",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 91,
+        "question": "In a class of 150 students, Aman ranks 70th from top. What is his rank from bottom?",
+        "options": [
+            "81",
+            "80",
+            "79",
+            "82"
+        ],
+        "answer": "81",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 92,
+        "question": "A student ranks 45th from bottom in class of 120 students. What is his rank from top?",
+        "options": [
+            "76",
+            "75",
+            "74",
+            "77"
+        ],
+        "answer": "76",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 93,
+        "question": "In a row of 130 students, Riya ranks 59th from left. What is her rank from right?",
+        "options": [
+            "72",
+            "71",
+            "70",
+            "73"
+        ],
+        "answer": "72",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 94,
+        "question": "A student ranks 33rd from top and 44th from bottom. Total students?",
+        "options": [
+            "76",
+            "77",
+            "75",
+            "78"
+        ],
+        "answer": "76",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 95,
+        "question": "In a line, Ankit ranks 48th from left and 53rd from right. Total students?",
+        "options": [
+            "100",
+            "101",
+            "99",
+            "102"
+        ],
+        "answer": "100",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 96,
+        "question": "In a class of 200 students, Rohit ranks 88th from top. What is his rank from bottom?",
+        "options": [
+            "113",
+            "112",
+            "111",
+            "114"
+        ],
+        "answer": "113",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 97,
+        "question": "A student ranks 62nd from bottom in class of 180 students. What is his rank from top?",
+        "options": [
+            "119",
+            "118",
+            "117",
+            "120"
+        ],
+        "answer": "119",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 98,
+        "question": "In a row of 160 students, Asha ranks 72nd from left. What is her rank from right?",
+        "options": [
+            "89",
+            "88",
+            "87",
+            "90"
+        ],
+        "answer": "89",
+        "difficulty": "easy",
+        "topic": "ranking"
+    },
+    {
+        "id": 99,
+        "question": "A student ranks 55th from top and 66th from bottom. Total students?",
+        "options": [
+            "120",
+            "121",
+            "119",
+            "122"
+        ],
+        "answer": "120",
+        "difficulty": "medium",
+        "topic": "ranking"
+    },
+    {
+        "id": 100,
+        "question": "In a line, Mohit ranks 64th from left and 35th from right. Total students?",
+        "options": [
+            "98",
+            "99",
+            "97",
+            "100"
+        ],
+        "answer": "98",
+        "difficulty": "medium",
+        "topic": "ranking"
+    }
+]

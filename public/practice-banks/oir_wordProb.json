@@ -1,0 +1,665 @@
+[
+    {
+        "id": 0,
+        "question": "If a worker earns ₹200 per day, how much will he earn in 5 days?",
+        "options": [
+            "₹800",
+            "₹900",
+            "₹1000",
+            "₹1200"
+        ],
+        "answer": "₹1000",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 1,
+        "question": "A man earns ₹500 per day. What will he earn in 6 days?",
+        "options": [
+            "₹2500",
+            "₹3000",
+            "₹3200",
+            "₹3500"
+        ],
+        "answer": "₹3000",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 2,
+        "question": "If 3 workers earn ₹600 in a day together, how much does one worker earn per day?",
+        "options": [
+            "₹150",
+            "₹200",
+            "₹250",
+            "₹300"
+        ],
+        "answer": "₹200",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 3,
+        "question": "If a worker earns ₹250 per day, what will he earn in 8 days?",
+        "options": [
+            "₹1800",
+            "₹2000",
+            "₹2100",
+            "₹2200"
+        ],
+        "answer": "₹2000",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 4,
+        "question": "If 4 workers together earn ₹800 per day, how much does each earn?",
+        "options": [
+            "₹100",
+            "₹150",
+            "₹200",
+            "₹250"
+        ],
+        "answer": "₹200",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 5,
+        "question": "The ratio of boys to girls is 2:3. If boys are 20, how many girls are there?",
+        "options": [
+            "25",
+            "30",
+            "35",
+            "40"
+        ],
+        "answer": "30",
+        "difficulty": "easy",
+        "topic": "ratio"
+    },
+    {
+        "id": 6,
+        "question": "The ratio of apples to oranges is 5:4. If apples are 25, oranges are?",
+        "options": [
+            "15",
+            "18",
+            "20",
+            "22"
+        ],
+        "answer": "20",
+        "difficulty": "easy",
+        "topic": "ratio"
+    },
+    {
+        "id": 7,
+        "question": "The ratio of two numbers is 3:5. If the smaller is 15, the larger is?",
+        "options": [
+            "20",
+            "25",
+            "30",
+            "35"
+        ],
+        "answer": "25",
+        "difficulty": "easy",
+        "topic": "ratio"
+    },
+    {
+        "id": 8,
+        "question": "The ratio of red to blue balls is 4:1. If total balls are 25, how many are red?",
+        "options": [
+            "20",
+            "18",
+            "15",
+            "10"
+        ],
+        "answer": "20",
+        "difficulty": "medium",
+        "topic": "ratio"
+    },
+    {
+        "id": 9,
+        "question": "The ratio of boys to girls in a class is 3:2. If boys are 18, total students are?",
+        "options": [
+            "24",
+            "26",
+            "28",
+            "30"
+        ],
+        "answer": "30",
+        "difficulty": "medium",
+        "topic": "ratio"
+    },
+    {
+        "id": 10,
+        "question": "If A can complete a work in 10 days, how much work does he do in 1 day?",
+        "options": [
+            "1/5",
+            "1/10",
+            "1/20",
+            "1/15"
+        ],
+        "answer": "1/10",
+        "difficulty": "easy",
+        "topic": "work"
+    },
+    {
+        "id": 11,
+        "question": "If a work takes 8 days to complete, what fraction is done in one day?",
+        "options": [
+            "1/6",
+            "1/8",
+            "1/10",
+            "1/12"
+        ],
+        "answer": "1/8",
+        "difficulty": "easy",
+        "topic": "work"
+    },
+    {
+        "id": 12,
+        "question": "If A can finish a work in 5 days, how many days for half the work?",
+        "options": [
+            "2",
+            "2.5",
+            "3",
+            "4"
+        ],
+        "answer": "2.5",
+        "difficulty": "medium",
+        "topic": "work"
+    },
+    {
+        "id": 13,
+        "question": "If A completes work in 10 days and B in 5 days, who is faster?",
+        "options": [
+            "A",
+            "B",
+            "Both same",
+            "Cannot say"
+        ],
+        "answer": "B",
+        "difficulty": "easy",
+        "topic": "work"
+    },
+    {
+        "id": 14,
+        "question": "If A can do work in 6 days, how much work per day?",
+        "options": [
+            "1/6",
+            "1/3",
+            "1/5",
+            "1/4"
+        ],
+        "answer": "1/6",
+        "difficulty": "easy",
+        "topic": "work"
+    },
+    {
+        "id": 15,
+        "question": "A pen costs ₹10 and a pencil ₹5. What is the cost of 2 pens and 3 pencils?",
+        "options": [
+            "₹30",
+            "₹35",
+            "₹40",
+            "₹45"
+        ],
+        "answer": "₹35",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 16,
+        "question": "A book costs ₹50. What will 4 books cost?",
+        "options": [
+            "₹150",
+            "₹180",
+            "₹200",
+            "₹250"
+        ],
+        "answer": "₹200",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 17,
+        "question": "A chocolate costs ₹20. What will 5 chocolates cost?",
+        "options": [
+            "₹80",
+            "₹90",
+            "₹100",
+            "₹110"
+        ],
+        "answer": "₹100",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 18,
+        "question": "A shirt costs ₹500 and trousers ₹800. Total cost?",
+        "options": [
+            "₹1200",
+            "₹1300",
+            "₹1400",
+            "₹1500"
+        ],
+        "answer": "₹1300",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 19,
+        "question": "A pen costs ₹12. What will 6 pens cost?",
+        "options": [
+            "₹60",
+            "₹72",
+            "₹84",
+            "₹96"
+        ],
+        "answer": "₹72",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 20,
+        "question": "The ratio of boys to girls is 4:5. If boys are 20, girls are?",
+        "options": [
+            "20",
+            "22",
+            "25",
+            "30"
+        ],
+        "answer": "25",
+        "difficulty": "easy",
+        "topic": "ratio"
+    },
+    {
+        "id": 21,
+        "question": "If 1 worker earns ₹300 per day, what will he earn in 7 days?",
+        "options": [
+            "₹1800",
+            "₹2000",
+            "₹2100",
+            "₹2400"
+        ],
+        "answer": "₹2100",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 22,
+        "question": "If a job takes 12 days, how much work is done per day?",
+        "options": [
+            "1/10",
+            "1/12",
+            "1/14",
+            "1/16"
+        ],
+        "answer": "1/12",
+        "difficulty": "easy",
+        "topic": "work"
+    },
+    {
+        "id": 23,
+        "question": "If a bag costs ₹400, what will 3 bags cost?",
+        "options": [
+            "₹1000",
+            "₹1100",
+            "₹1200",
+            "₹1400"
+        ],
+        "answer": "₹1200",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 24,
+        "question": "Ratio of two numbers is 2:3 and their sum is 25. Smaller number?",
+        "options": [
+            "10",
+            "12",
+            "14",
+            "15"
+        ],
+        "answer": "10",
+        "difficulty": "medium",
+        "topic": "ratio"
+    },
+    {
+        "id": 25,
+        "question": "If 5 workers earn ₹1000 together per day, each earns?",
+        "options": [
+            "₹150",
+            "₹180",
+            "₹200",
+            "₹250"
+        ],
+        "answer": "₹200",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 26,
+        "question": "If A finishes work in 20 days, what fraction per day?",
+        "options": [
+            "1/20",
+            "1/15",
+            "1/10",
+            "1/25"
+        ],
+        "answer": "1/20",
+        "difficulty": "easy",
+        "topic": "work"
+    },
+    {
+        "id": 27,
+        "question": "A toy costs ₹30. What will 10 toys cost?",
+        "options": [
+            "₹200",
+            "₹250",
+            "₹300",
+            "₹350"
+        ],
+        "answer": "₹300",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 28,
+        "question": "Ratio of two numbers is 3:7 and sum is 50. Smaller number?",
+        "options": [
+            "10",
+            "12",
+            "15",
+            "18"
+        ],
+        "answer": "15",
+        "difficulty": "medium",
+        "topic": "ratio"
+    },
+    {
+        "id": 29,
+        "question": "If a worker earns ₹400 daily, earning in 4 days?",
+        "options": [
+            "₹1200",
+            "₹1400",
+            "₹1600",
+            "₹1800"
+        ],
+        "answer": "₹1600",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 30,
+        "question": "If 2 pens cost ₹20, what is cost of 1 pen?",
+        "options": [
+            "₹5",
+            "₹10",
+            "₹15",
+            "₹20"
+        ],
+        "answer": "₹10",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 31,
+        "question": "If A can finish work in 4 days, fraction per day?",
+        "options": [
+            "1/2",
+            "1/3",
+            "1/4",
+            "1/5"
+        ],
+        "answer": "1/4",
+        "difficulty": "easy",
+        "topic": "work"
+    },
+    {
+        "id": 32,
+        "question": "Ratio of boys to girls 1:2, total 30 students. Boys?",
+        "options": [
+            "10",
+            "12",
+            "15",
+            "18"
+        ],
+        "answer": "10",
+        "difficulty": "medium",
+        "topic": "ratio"
+    },
+    {
+        "id": 33,
+        "question": "A worker earns ₹350 daily. Earnings in 3 days?",
+        "options": [
+            "₹950",
+            "₹1000",
+            "₹1050",
+            "₹1100"
+        ],
+        "answer": "₹1050",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 34,
+        "question": "A pen ₹8 and pencil ₹4. Cost of 3 pens and 2 pencils?",
+        "options": [
+            "₹28",
+            "₹32",
+            "₹36",
+            "₹40"
+        ],
+        "answer": "₹32",
+        "difficulty": "medium",
+        "topic": "cost"
+    },
+    {
+        "id": 35,
+        "question": "Ratio of two numbers is 4:5 and sum 45. Smaller number?",
+        "options": [
+            "16",
+            "18",
+            "20",
+            "22"
+        ],
+        "answer": "20",
+        "difficulty": "medium",
+        "topic": "ratio"
+    },
+    {
+        "id": 36,
+        "question": "If work takes 9 days, work per day?",
+        "options": [
+            "1/7",
+            "1/8",
+            "1/9",
+            "1/10"
+        ],
+        "answer": "1/9",
+        "difficulty": "easy",
+        "topic": "work"
+    },
+    {
+        "id": 37,
+        "question": "A worker earns ₹150 daily. Earnings in 10 days?",
+        "options": [
+            "₹1000",
+            "₹1200",
+            "₹1500",
+            "₹1700"
+        ],
+        "answer": "₹1500",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 38,
+        "question": "A bag ₹250. Cost of 4 bags?",
+        "options": [
+            "₹900",
+            "₹950",
+            "₹1000",
+            "₹1100"
+        ],
+        "answer": "₹1000",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 39,
+        "question": "Ratio of boys to girls 5:3. Boys=25. Girls?",
+        "options": [
+            "10",
+            "12",
+            "15",
+            "18"
+        ],
+        "answer": "15",
+        "difficulty": "medium",
+        "topic": "ratio"
+    },
+    {
+        "id": 40,
+        "question": "If A finishes work in 8 days, half work takes?",
+        "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+        ],
+        "answer": "4",
+        "difficulty": "medium",
+        "topic": "work"
+    },
+    {
+        "id": 41,
+        "question": "Worker earns ₹500 daily. Earnings in 2 days?",
+        "options": [
+            "₹800",
+            "₹900",
+            "₹1000",
+            "₹1200"
+        ],
+        "answer": "₹1000",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 42,
+        "question": "Pen ₹20, notebook ₹30. Cost of both?",
+        "options": [
+            "₹40",
+            "₹45",
+            "₹50",
+            "₹55"
+        ],
+        "answer": "₹50",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 43,
+        "question": "Ratio 2:5 and sum 28. Smaller number?",
+        "options": [
+            "8",
+            "10",
+            "12",
+            "14"
+        ],
+        "answer": "8",
+        "difficulty": "medium",
+        "topic": "ratio"
+    },
+    {
+        "id": 44,
+        "question": "Work takes 5 days. Work per day?",
+        "options": [
+            "1/5",
+            "1/6",
+            "1/7",
+            "1/8"
+        ],
+        "answer": "1/5",
+        "difficulty": "easy",
+        "topic": "work"
+    },
+    {
+        "id": 45,
+        "question": "Worker earns ₹600 daily. Earnings in 3 days?",
+        "options": [
+            "₹1600",
+            "₹1700",
+            "₹1800",
+            "₹2000"
+        ],
+        "answer": "₹1800",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 46,
+        "question": "A pen costs ₹15. Cost of 4 pens?",
+        "options": [
+            "₹50",
+            "₹55",
+            "₹60",
+            "₹65"
+        ],
+        "answer": "₹60",
+        "difficulty": "easy",
+        "topic": "cost"
+    },
+    {
+        "id": 47,
+        "question": "Ratio 3:4 and total 28. Smaller number?",
+        "options": [
+            "10",
+            "12",
+            "14",
+            "16"
+        ],
+        "answer": "12",
+        "difficulty": "medium",
+        "topic": "ratio"
+    },
+    {
+        "id": 48,
+        "question": "If A completes work in 12 days, half work takes?",
+        "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+        ],
+        "answer": "6",
+        "difficulty": "medium",
+        "topic": "work"
+    },
+    {
+        "id": 49,
+        "question": "Worker earns ₹700 daily. Earnings in 5 days?",
+        "options": [
+            "₹3000",
+            "₹3200",
+            "₹3500",
+            "₹3700"
+        ],
+        "answer": "₹3500",
+        "difficulty": "easy",
+        "topic": "wages"
+    },
+    {
+        "id": 50,
+        "question": "A book ₹120. Cost of 2 books?",
+        "options": [
+            "₹200",
+            "₹220",
+            "₹240",
+            "₹260"
+        ],
+        "answer": "₹240",
+        "difficulty": "easy",
+        "topic": "cost"
+    }
+]

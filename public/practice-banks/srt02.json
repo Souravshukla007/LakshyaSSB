@@ -1,0 +1,362 @@
+[
+    {
+        "id": 1,
+        "question": "While travelling by train he goes to the toilet and on return finds his briefcase missing. He..",
+        "difficulty": "medium",
+        "theme": "Alertness"
+    },
+    {
+        "id": 2,
+        "question": "He receives conflicting orders from his two superior officers. He..",
+        "difficulty": "hard",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 3,
+        "question": "He was appointed team captain of basketball but other players revolted against his appointment. He..",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 4,
+        "question": "An epidemic has spread in the village due to poor hygienic conditions. He..",
+        "difficulty": "medium",
+        "theme": "Social_Responsibility"
+    },
+    {
+        "id": 5,
+        "question": "Once he discusses his viewpoints but others do not listen to him carefully. He..",
+        "difficulty": "easy",
+        "theme": "Communication"
+    },
+    {
+        "id": 6,
+        "question": "He notices a car running at high speed that runs over a child on the road. He..",
+        "difficulty": "hard",
+        "theme": "Crisis_Management"
+    },
+    {
+        "id": 7,
+        "question": "A fellow passenger has fallen from a running train. He..",
+        "difficulty": "hard",
+        "theme": "Helping_Nature"
+    },
+    {
+        "id": 8,
+        "question": "His parents want him to marry a wealthy and less educated girl, but he has already chosen a suitable educated girl for himself. He..",
+        "difficulty": "medium",
+        "theme": "Conviction"
+    },
+    {
+        "id": 9,
+        "question": "He makes a silly mistake and his friend points it out. He..",
+        "difficulty": "easy",
+        "theme": "Self_Improvement"
+    },
+    {
+        "id": 10,
+        "question": "He hears the neighbour shouting 'thief-thief' at midnight. He..",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 11,
+        "question": "A fellow passenger points out that smoking is an offence in the train. He..",
+        "difficulty": "easy",
+        "theme": "Discipline"
+    },
+    {
+        "id": 12,
+        "question": "He reaches home from office and sees his house on fire. He..",
+        "difficulty": "hard",
+        "theme": "Crisis_Management"
+    },
+    {
+        "id": 13,
+        "question": "He was to go to Delhi for an interview but realized after one hour that he had boarded the wrong train. He..",
+        "difficulty": "medium",
+        "theme": "Problem_Solving"
+    },
+    {
+        "id": 14,
+        "question": "He was travelling in a lift and suddenly the lights went off. He..",
+        "difficulty": "easy",
+        "theme": "Composure"
+    },
+    {
+        "id": 15,
+        "question": "He took his friends for dinner at a hotel but forgot his wallet at home. He..",
+        "difficulty": "easy",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 16,
+        "question": "His friend came to borrow a book from which he was preparing for his next morning's exam. He..",
+        "difficulty": "medium",
+        "theme": "Time_Management"
+    },
+    {
+        "id": 17,
+        "question": "He was appointed to supervise evening games in the college but was staying far away. He..",
+        "difficulty": "medium",
+        "theme": "Commitment"
+    },
+    {
+        "id": 18,
+        "question": "He proposed inviting a political leader to preside over the annual day celebration but others were against it. He..",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 19,
+        "question": "His wife blames him for all the failures at home. He..",
+        "difficulty": "medium",
+        "theme": "Emotional_Maturity"
+    },
+    {
+        "id": 20,
+        "question": "While negotiating a thick jungle he was surrounded by six tribals carrying lathis. He..",
+        "difficulty": "hard",
+        "theme": "Courage"
+    },
+    {
+        "id": 21,
+        "question": "He tries to make a point to his friends but they ridicule his arguments. He..",
+        "difficulty": "easy",
+        "theme": "Confidence"
+    },
+    {
+        "id": 22,
+        "question": "Friends frequently come to him and demand money on some pretext. He..",
+        "difficulty": "medium",
+        "theme": "Judgement"
+    },
+    {
+        "id": 23,
+        "question": "He opened his packet of food and a female beggar with a small baby asked for a share. He..",
+        "difficulty": "easy",
+        "theme": "Empathy"
+    },
+    {
+        "id": 24,
+        "question": "He hears shouts for help and finds a small boy being carried away by water current. He..",
+        "difficulty": "hard",
+        "theme": "Initiative"
+    },
+    {
+        "id": 25,
+        "question": "He and his friends need to cross a bridge but find it damaged. He..",
+        "difficulty": "medium",
+        "theme": "Teamwork"
+    },
+    {
+        "id": 26,
+        "question": "He had to undergo an urgent surgical operation but there was no one to look after him. He..",
+        "difficulty": "medium",
+        "theme": "Resilience"
+    },
+    {
+        "id": 27,
+        "question": "His father insists on his marriage but he wants to take up a job first. He..",
+        "difficulty": "medium",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 28,
+        "question": "He feels he is being given stepmotherly treatment by his seniors. He..",
+        "difficulty": "medium",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 29,
+        "question": "Hearing an unusual sound at night he wakes up and finds a thief jumping out of his window. He..",
+        "difficulty": "medium",
+        "theme": "Alertness"
+    },
+    {
+        "id": 30,
+        "question": "He was going to attend SSB interview and noticed his suitcase containing original certificates was stolen. He..",
+        "difficulty": "hard",
+        "theme": "Composure"
+    },
+    {
+        "id": 31,
+        "question": "While travelling on his scooter someone at gunpoint demanded his purse. He..",
+        "difficulty": "hard",
+        "theme": "Courage"
+    },
+    {
+        "id": 32,
+        "question": "Some rowdy students told him to boycott college classes. He..",
+        "difficulty": "medium",
+        "theme": "Integrity"
+    },
+    {
+        "id": 33,
+        "question": "His father has a dispute with his uncle over landed property. He..",
+        "difficulty": "medium",
+        "theme": "Judgement"
+    },
+    {
+        "id": 34,
+        "question": "He wanted to borrow money for his sister's marriage but the relative declined at the last moment. He..",
+        "difficulty": "medium",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 35,
+        "question": "While cycling through a jungle at night his cycle got punctured and destination was far away. He..",
+        "difficulty": "medium",
+        "theme": "Problem_Solving"
+    },
+    {
+        "id": 36,
+        "question": "After buying a train ticket he discovered his purse was missing. He..",
+        "difficulty": "medium",
+        "theme": "Alertness"
+    },
+    {
+        "id": 37,
+        "question": "In jungle he saw six tribals with lathis rushing towards him. He..",
+        "difficulty": "hard",
+        "theme": "Courage"
+    },
+    {
+        "id": 38,
+        "question": "He wanted to carry extra rum bottles while going on leave but the canteen officer refused. He..",
+        "difficulty": "easy",
+        "theme": "Discipline"
+    },
+    {
+        "id": 39,
+        "question": "His commanding officer asked him to give four blankets for his residence. He..",
+        "difficulty": "medium",
+        "theme": "Integrity"
+    },
+    {
+        "id": 40,
+        "question": "As officer mess Havaldar there are complaints about bad quality of food. He..",
+        "difficulty": "medium",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 41,
+        "question": "While on night duty his colleague fainted. He..",
+        "difficulty": "medium",
+        "theme": "Helping_Nature"
+    },
+    {
+        "id": 42,
+        "question": "His father wanted him to quit military service but he wished to continue. He..",
+        "difficulty": "medium",
+        "theme": "Conviction"
+    },
+    {
+        "id": 43,
+        "question": "He was ordered to move to war front and send his family away from peace station. He..",
+        "difficulty": "hard",
+        "theme": "Duty_vs_Family"
+    },
+    {
+        "id": 44,
+        "question": "After reaching exam centre he realized he forgot writing material. He..",
+        "difficulty": "easy",
+        "theme": "Composure"
+    },
+    {
+        "id": 45,
+        "question": "After marriage his in-laws forced him to leave the service. He..",
+        "difficulty": "medium",
+        "theme": "Conviction"
+    },
+    {
+        "id": 46,
+        "question": "His wife wrote about ill-treatment from family members. He..",
+        "difficulty": "medium",
+        "theme": "Emotional_Maturity"
+    },
+    {
+        "id": 47,
+        "question": "While going on duty a child met with accident by his scooter. He..",
+        "difficulty": "hard",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 48,
+        "question": "While travelling he noticed civilians abusing military personnel. He..",
+        "difficulty": "medium",
+        "theme": "Self_Control"
+    },
+    {
+        "id": 49,
+        "question": "Village patwari demanded bribe for land work. He..",
+        "difficulty": "medium",
+        "theme": "Integrity"
+    },
+    {
+        "id": 50,
+        "question": "His colleagues wanted to go to cinema but he did not like it. He..",
+        "difficulty": "easy",
+        "theme": "Individual_Choice"
+    },
+    {
+        "id": 51,
+        "question": "On the way to examination curfew was declared and no vehicular movement permitted. He..",
+        "difficulty": "medium",
+        "theme": "Problem_Solving"
+    },
+    {
+        "id": 52,
+        "question": "While travelling his suitcase and identity card were stolen. He..",
+        "difficulty": "medium",
+        "theme": "Composure"
+    },
+    {
+        "id": 53,
+        "question": "At cinema he saw students chasing a young girl. He..",
+        "difficulty": "medium",
+        "theme": "Social_Responsibility"
+    },
+    {
+        "id": 54,
+        "question": "He entered bathroom and noticed a cobra hanging from ceiling. He..",
+        "difficulty": "hard",
+        "theme": "Crisis_Management"
+    },
+    {
+        "id": 55,
+        "question": "At railway platform he found an unclaimed suitcase. He..",
+        "difficulty": "medium",
+        "theme": "Alertness"
+    },
+    {
+        "id": 56,
+        "question": "During discussion his colleagues did not pay attention. He..",
+        "difficulty": "easy",
+        "theme": "Communication"
+    },
+    {
+        "id": 57,
+        "question": "He is asked to write an article about his unit. He..",
+        "difficulty": "easy",
+        "theme": "Initiative"
+    },
+    {
+        "id": 58,
+        "question": "At restaurant he saw two persons fighting with each other. He..",
+        "difficulty": "medium",
+        "theme": "Conflict_Management"
+    },
+    {
+        "id": 59,
+        "question": "A young college student who quarreled with his father came to stay with him. He..",
+        "difficulty": "medium",
+        "theme": "Empathy"
+    },
+    {
+        "id": 60,
+        "question": "His younger brother is alcoholic and consumes illicit liquor. He..",
+        "difficulty": "medium",
+        "theme": "Responsibility"
+    }
+]

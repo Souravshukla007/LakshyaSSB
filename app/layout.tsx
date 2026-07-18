@@ -3,6 +3,7 @@ import "./globals.css";
 import Script from "next/script";
 import CapacitorBackButtonHandler from "@/components/CapacitorBackButtonHandler";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import ServiceWorkerRegister from "@/components/offline/ServiceWorkerRegister";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -19,6 +20,9 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
+                {/* Web App Manifest — enables installability and offline support */}
+                <link rel="manifest" href="/manifest.webmanifest" />
+
                 {/* DNS Preconnects — let browser open connections early */}
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -46,6 +50,7 @@ export default function RootLayout({
                 />
             </head>
             <body className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg" suppressHydrationWarning>
+                <ServiceWorkerRegister />
                 <CapacitorBackButtonHandler />
                 <LayoutWrapper>
                     {children}

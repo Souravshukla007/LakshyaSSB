@@ -9,8 +9,11 @@ import { Search } from 'lucide-react';
 import useScrollReveal from '@/hooks/useScrollReveal';
 import seedNews from '@/data/currentAffairs.json'; // Static fallback
 import AdBanner, { AD_SLOTS } from '@/components/AdBanner';
+import { useOnlineStatus } from '@/hooks/useOnlineStatus';
+import OfflineFallback from '@/components/offline/OfflineFallback';
 
 export default function CurrentAffairsPage() {
+    const connectivity = useOnlineStatus();
     const [news, setNews] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -50,6 +53,20 @@ export default function CurrentAffairsPage() {
         
         return matchesCategory && matchesSearch;
     });
+
+    // Online-only capability: current affairs/news are fetched live (and quizzes are AI-generated).
+    // While offline, show the friendly fallback instead of a stale/broken feed. Re-enables
+    // automatically when connectivity returns (Req 7.1, 7.5, 7.6).
+    if (connectivity === 'offline') {
+        return (
+            <main className="antialiased font-sans bg-brand-bg relative min-h-screen pt-32 pb-20 px-6 flex items-start justify-center">
+                <OfflineFallback
+                    title="Current affairs need internet"
+                    message="This feature needs an internet connection."
+                />
+            </main>
+        );
+    }
 
     return (
         <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg relative min-h-screen pt-32 pb-20 px-6">

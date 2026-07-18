@@ -1,0 +1,1302 @@
+[
+    {
+        "id": 1,
+        "question": "If opposite faces of a dice sum to 7, which number is opposite 1?",
+        "options": [
+            "6",
+            "5",
+            "4",
+            "3"
+        ],
+        "answer": "6",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 2,
+        "question": "Two views of a dice show (1,2,3) and (1,3,4). Which number is opposite 2?",
+        "options": [
+            "4",
+            "5",
+            "6",
+            "3"
+        ],
+        "answer": "4",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 3,
+        "question": "A cube painted on all faces is cut into 27 cubes. How many cubes have exactly 3 painted faces?",
+        "options": [
+            "8",
+            "6",
+            "4",
+            "12"
+        ],
+        "answer": "8",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 4,
+        "question": "If 2 is opposite 5 and 3 is opposite 6, which number is opposite 1?",
+        "options": [
+            "4",
+            "2",
+            "3",
+            "5"
+        ],
+        "answer": "4",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 5,
+        "question": "Two views of a dice show (2,3,4) and (2,4,5). Which number is opposite 3?",
+        "options": [
+            "5",
+            "6",
+            "1",
+            "4"
+        ],
+        "answer": "5",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 6,
+        "question": "A cube painted on all faces is cut into 64 cubes. How many cubes have exactly 3 painted faces?",
+        "options": [
+            "8",
+            "6",
+            "12",
+            "4"
+        ],
+        "answer": "8",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 7,
+        "question": "If 1 is adjacent to 2,3,4,5 then which number is opposite 1?",
+        "options": [
+            "6",
+            "3",
+            "4",
+            "2"
+        ],
+        "answer": "6",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 8,
+        "question": "Two views show (3,4,5) and (3,5,6). What is opposite 4?",
+        "options": [
+            "6",
+            "2",
+            "1",
+            "5"
+        ],
+        "answer": "6",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 9,
+        "question": "A cube painted on all faces is cut into 125 cubes. How many cubes have exactly 3 painted faces?",
+        "options": [
+            "8",
+            "6",
+            "12",
+            "4"
+        ],
+        "answer": "8",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 10,
+        "question": "A cube painted on all sides is cut into 27 cubes. How many cubes have exactly 2 painted faces?",
+        "options": [
+            "12",
+            "6",
+            "8",
+            "4"
+        ],
+        "answer": "12",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 11,
+        "question": "If faces 1,2,3 meet at a corner of a dice, which number cannot be opposite 1?",
+        "options": [
+            "2",
+            "4",
+            "5",
+            "6"
+        ],
+        "answer": "2",
+        "difficulty": "easy",
+        "topic": "adjacent_faces"
+    },
+    {
+        "id": 12,
+        "question": "Two views show (1,4,6) and (1,6,2). What is opposite 4?",
+        "options": [
+            "2",
+            "3",
+            "5",
+            "6"
+        ],
+        "answer": "2",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 13,
+        "question": "A cube painted on all faces is cut into 64 cubes. How many cubes have exactly one painted face?",
+        "options": [
+            "24",
+            "16",
+            "12",
+            "8"
+        ],
+        "answer": "24",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 14,
+        "question": "If opposite faces sum to 7, which number is opposite 2?",
+        "options": [
+            "5",
+            "6",
+            "4",
+            "3"
+        ],
+        "answer": "5",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 15,
+        "question": "Two views show (1,3,5) and (1,5,4). What is opposite 3?",
+        "options": [
+            "4",
+            "2",
+            "6",
+            "5"
+        ],
+        "answer": "4",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 16,
+        "question": "A cube painted on all faces is cut into 216 cubes. How many cubes have exactly 3 painted faces?",
+        "options": [
+            "8",
+            "6",
+            "12",
+            "4"
+        ],
+        "answer": "8",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 17,
+        "question": "Which faces cannot be opposite if they appear together in one view?",
+        "options": [
+            "Adjacent faces",
+            "Opposite faces",
+            "Top faces",
+            "None"
+        ],
+        "answer": "Opposite faces",
+        "difficulty": "easy",
+        "topic": "logic"
+    },
+    {
+        "id": 18,
+        "question": "Two views show (2,4,6) and (2,6,3). What is opposite 4?",
+        "options": [
+            "3",
+            "5",
+            "1",
+            "6"
+        ],
+        "answer": "3",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 19,
+        "question": "A cube painted on all faces is cut into 125 cubes. How many cubes have exactly 2 painted faces?",
+        "options": [
+            "36",
+            "24",
+            "48",
+            "54"
+        ],
+        "answer": "36",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 20,
+        "question": "A cube painted on all faces is cut into 27 cubes. How many cubes have no paint?",
+        "options": [
+            "1",
+            "8",
+            "6",
+            "12"
+        ],
+        "answer": "1",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 21,
+        "question": "Two views show (1,5,6) and (1,6,3). What is opposite 5?",
+        "options": [
+            "3",
+            "4",
+            "2",
+            "6"
+        ],
+        "answer": "3",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 22,
+        "question": "If opposite faces sum to 7, which number is opposite 4?",
+        "options": [
+            "3",
+            "2",
+            "1",
+            "6"
+        ],
+        "answer": "3",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 23,
+        "question": "A cube painted on all faces is cut into 343 cubes. How many cubes have exactly 3 painted faces?",
+        "options": [
+            "8",
+            "12",
+            "6",
+            "4"
+        ],
+        "answer": "8",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 24,
+        "question": "Two views show (4,6,2) and (4,2,5). What is opposite 6?",
+        "options": [
+            "5",
+            "3",
+            "1",
+            "2"
+        ],
+        "answer": "5",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 25,
+        "question": "A cube painted on all faces is cut into 64 cubes. How many cubes have exactly 2 painted faces?",
+        "options": [
+            "24",
+            "12",
+            "16",
+            "18"
+        ],
+        "answer": "24",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 26,
+        "question": "If faces 2,3,4 meet at a corner, which face cannot be opposite 2?",
+        "options": [
+            "3",
+            "5",
+            "6",
+            "1"
+        ],
+        "answer": "3",
+        "difficulty": "easy",
+        "topic": "adjacent_faces"
+    },
+    {
+        "id": 27,
+        "question": "Two views show (2,3,6) and (2,6,5). What is opposite 3?",
+        "options": [
+            "5",
+            "4",
+            "1",
+            "6"
+        ],
+        "answer": "5",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 28,
+        "question": "A cube painted on all faces is cut into 125 cubes. How many cubes have no paint?",
+        "options": [
+            "27",
+            "16",
+            "64",
+            "36"
+        ],
+        "answer": "27",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 29,
+        "question": "If opposite faces sum to 7, which number is opposite 3?",
+        "options": [
+            "4",
+            "5",
+            "6",
+            "2"
+        ],
+        "answer": "4",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 30,
+        "question": "Two views show (3,4,1) and (3,1,6). What is opposite 4?",
+        "options": [
+            "6",
+            "5",
+            "2",
+            "1"
+        ],
+        "answer": "6",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 31,
+        "question": "A cube painted on all faces is cut into 216 cubes. How many cubes have exactly 2 painted faces?",
+        "options": [
+            "48",
+            "72",
+            "96",
+            "120"
+        ],
+        "answer": "48",
+        "difficulty": "hard",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 32,
+        "question": "If 2 opposite 5 and 1 opposite 6 which number opposite 3?",
+        "options": [
+            "4",
+            "2",
+            "5",
+            "1"
+        ],
+        "answer": "4",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 33,
+        "question": "Two views show (5,2,4) and (5,4,1). What is opposite 2?",
+        "options": [
+            "1",
+            "3",
+            "6",
+            "4"
+        ],
+        "answer": "1",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 34,
+        "question": "A cube painted on all faces is cut into 64 cubes. How many cubes have no painted faces?",
+        "options": [
+            "8",
+            "12",
+            "16",
+            "24"
+        ],
+        "answer": "8",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 35,
+        "question": "Which faces share an edge on a dice?",
+        "options": [
+            "Adjacent faces",
+            "Opposite faces",
+            "Bottom faces",
+            "None"
+        ],
+        "answer": "Adjacent faces",
+        "difficulty": "easy",
+        "topic": "logic"
+    },
+    {
+        "id": 36,
+        "question": "Two views show (4,5,6) and (4,6,2). What is opposite 5?",
+        "options": [
+            "2",
+            "3",
+            "1",
+            "6"
+        ],
+        "answer": "2",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 37,
+        "question": "A cube painted on all faces is cut into 27 cubes. How many cubes have exactly one painted face?",
+        "options": [
+            "6",
+            "12",
+            "8",
+            "4"
+        ],
+        "answer": "6",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 38,
+        "question": "If opposite faces sum to 7, which number is opposite 6?",
+        "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "answer": "1",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 39,
+        "question": "Two views show (3,5,6) and (3,6,1). What is opposite 5?",
+        "options": [
+            "1",
+            "2",
+            "4",
+            "6"
+        ],
+        "answer": "1",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 40,
+        "question": "A cube painted on all faces is cut into 343 cubes. How many cubes have no paint?",
+        "options": [
+            "125",
+            "216",
+            "150",
+            "96"
+        ],
+        "answer": "125",
+        "difficulty": "hard",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 41,
+        "question": "If a dice has numbers 1–6 and opposite faces sum to 7, what is opposite 5?",
+        "options": [
+            "2",
+            "3",
+            "4",
+            "1"
+        ],
+        "answer": "2",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 42,
+        "question": "Two views show (1,2,5) and (1,5,3). What is opposite 2?",
+        "options": [
+            "3",
+            "4",
+            "6",
+            "5"
+        ],
+        "answer": "3",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 43,
+        "question": "A cube painted on all faces is cut into 64 cubes. How many cubes have exactly one painted face?",
+        "options": [
+            "24",
+            "16",
+            "12",
+            "8"
+        ],
+        "answer": "24",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 44,
+        "question": "Which faces cannot meet at a corner of a cube?",
+        "options": [
+            "Opposite faces",
+            "Adjacent faces",
+            "Side faces",
+            "All"
+        ],
+        "answer": "Opposite faces",
+        "difficulty": "easy",
+        "topic": "logic"
+    },
+    {
+        "id": 45,
+        "question": "Two views show (2,4,5) and (2,5,6). What is opposite 4?",
+        "options": [
+            "6",
+            "3",
+            "1",
+            "5"
+        ],
+        "answer": "6",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 46,
+        "question": "A cube painted on all faces is cut into 125 cubes. How many cubes have exactly one painted face?",
+        "options": [
+            "54",
+            "64",
+            "36",
+            "48"
+        ],
+        "answer": "54",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 47,
+        "question": "If 1 opposite 6 and 2 opposite 5, what is opposite 3?",
+        "options": [
+            "4",
+            "2",
+            "6",
+            "5"
+        ],
+        "answer": "4",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 48,
+        "question": "Two views show (4,6,3) and (4,3,1). What is opposite 6?",
+        "options": [
+            "1",
+            "2",
+            "5",
+            "3"
+        ],
+        "answer": "1",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 49,
+        "question": "A cube painted on all faces is cut into 216 cubes. How many cubes have no paint?",
+        "options": [
+            "64",
+            "125",
+            "96",
+            "100"
+        ],
+        "answer": "64",
+        "difficulty": "hard",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 50,
+        "question": "Which faces remain opposite after rolling a dice?",
+        "options": [
+            "Original opposite faces",
+            "Adjacent faces",
+            "Top faces",
+            "None"
+        ],
+        "answer": "Original opposite faces",
+        "difficulty": "easy",
+        "topic": "logic"
+    },
+    {
+        "id": 51,
+        "question": "Two views of a dice are shown. In the first view 2 is on top and 4 is in front. In the second view 2 is on top and 5 is in front. Which number is opposite 4?",
+        "options": [
+            "1",
+            "3",
+            "5",
+            "6"
+        ],
+        "answer": "5",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 52,
+        "question": "A cube painted on all faces is cut into 27 smaller cubes. How many cubes have exactly 2 painted faces?",
+        "options": [
+            "8",
+            "12",
+            "6",
+            "4"
+        ],
+        "answer": "12",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 53,
+        "question": "If 1 is opposite 6 and 2 is opposite 5 in a dice, which number is opposite 3?",
+        "options": [
+            "4",
+            "5",
+            "6",
+            "2"
+        ],
+        "answer": "4",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 54,
+        "question": "A cube painted on all faces is cut into 64 cubes. How many cubes have exactly 3 painted faces?",
+        "options": [
+            "8",
+            "6",
+            "4",
+            "12"
+        ],
+        "answer": "8",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 55,
+        "question": "Two views of a dice show (1,2,3) and (1,3,4) on adjacent faces. Which number is opposite 2?",
+        "options": [
+            "4",
+            "5",
+            "6",
+            "3"
+        ],
+        "answer": "4",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 56,
+        "question": "A cube painted on all sides is cut into 125 cubes. How many cubes have exactly one painted face?",
+        "options": [
+            "54",
+            "64",
+            "36",
+            "48"
+        ],
+        "answer": "54",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 57,
+        "question": "If a dice has numbers 1–6 and opposite faces sum to 7, which number is opposite 5?",
+        "options": [
+            "2",
+            "3",
+            "4",
+            "1"
+        ],
+        "answer": "2",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 58,
+        "question": "Two views of a dice show (2,3,5) and (2,5,4). Which number is opposite 3?",
+        "options": [
+            "1",
+            "4",
+            "6",
+            "5"
+        ],
+        "answer": "4",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 59,
+        "question": "A cube painted on all faces is cut into 216 cubes. How many cubes have no paint?",
+        "options": [
+            "64",
+            "125",
+            "96",
+            "100"
+        ],
+        "answer": "64",
+        "difficulty": "hard",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 60,
+        "question": "A cube is rolled to the north. The top becomes front. If the top was 3 initially, which number cannot be bottom?",
+        "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "answer": "3",
+        "difficulty": "medium",
+        "topic": "rotation"
+    },
+    {
+        "id": 61,
+        "question": "If faces 1,2,3 meet at a corner of a dice, which face is opposite 1?",
+        "options": [
+            "4",
+            "5",
+            "6",
+            "Cannot be determined"
+        ],
+        "answer": "Cannot be determined",
+        "difficulty": "easy",
+        "topic": "adjacent_faces"
+    },
+    {
+        "id": 62,
+        "question": "A cube painted on all sides is cut into 27 cubes. How many cubes have exactly one painted face?",
+        "options": [
+            "6",
+            "12",
+            "8",
+            "4"
+        ],
+        "answer": "6",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 63,
+        "question": "Two views show (3,4,5) and (3,5,6). What is opposite 4?",
+        "options": [
+            "1",
+            "2",
+            "6",
+            "5"
+        ],
+        "answer": "6",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 64,
+        "question": "A cube painted on all sides is cut into 125 cubes. How many cubes have exactly 3 painted faces?",
+        "options": [
+            "8",
+            "12",
+            "6",
+            "4"
+        ],
+        "answer": "8",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 65,
+        "question": "If a cube is rolled east and then north, which face becomes bottom?",
+        "options": [
+            "Depends on initial orientation",
+            "Always opposite of top",
+            "Always same",
+            "None"
+        ],
+        "answer": "Depends on initial orientation",
+        "difficulty": "medium",
+        "topic": "rotation"
+    },
+    {
+        "id": 66,
+        "question": "If 2 is opposite 5 and 3 is opposite 6, which number is opposite 1?",
+        "options": [
+            "4",
+            "2",
+            "3",
+            "6"
+        ],
+        "answer": "4",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 67,
+        "question": "A cube painted on all faces is cut into 64 cubes. How many cubes have exactly 2 painted faces?",
+        "options": [
+            "24",
+            "12",
+            "16",
+            "18"
+        ],
+        "answer": "24",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 68,
+        "question": "Two views of dice show (1,4,6) and (1,6,2). What is opposite 4?",
+        "options": [
+            "2",
+            "3",
+            "5",
+            "6"
+        ],
+        "answer": "2",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 69,
+        "question": "A cube painted on all faces is cut into 343 cubes. How many cubes have exactly one painted face?",
+        "options": [
+            "150",
+            "96",
+            "216",
+            "120"
+        ],
+        "answer": "150",
+        "difficulty": "hard",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 70,
+        "question": "Which faces of a dice cannot be opposite if they appear together in a view?",
+        "options": [
+            "Adjacent faces",
+            "Opposite faces",
+            "Top faces",
+            "None"
+        ],
+        "answer": "Opposite faces",
+        "difficulty": "easy",
+        "topic": "logic"
+    },
+    {
+        "id": 71,
+        "question": "Two views show (2,4,6) and (2,6,3). What is opposite 4?",
+        "options": [
+            "3",
+            "5",
+            "1",
+            "6"
+        ],
+        "answer": "3",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 72,
+        "question": "A cube painted on all faces is cut into 8 cubes. How many cubes have 3 painted faces?",
+        "options": [
+            "8",
+            "4",
+            "6",
+            "2"
+        ],
+        "answer": "8",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 73,
+        "question": "If top=1, front=2, right=3 in a dice, what is opposite 2?",
+        "options": [
+            "4",
+            "5",
+            "6",
+            "Cannot determine"
+        ],
+        "answer": "Cannot determine",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 74,
+        "question": "A cube painted on all faces is cut into 125 cubes. How many cubes have exactly 2 painted faces?",
+        "options": [
+            "48",
+            "36",
+            "24",
+            "54"
+        ],
+        "answer": "36",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 75,
+        "question": "If a cube rolls west twice, which face becomes top?",
+        "options": [
+            "Depends on start",
+            "Same as start",
+            "Opposite of start",
+            "None"
+        ],
+        "answer": "Depends on start",
+        "difficulty": "medium",
+        "topic": "rotation"
+    },
+    {
+        "id": 76,
+        "question": "Two views show (1,3,5) and (1,5,4). What is opposite 3?",
+        "options": [
+            "4",
+            "2",
+            "6",
+            "5"
+        ],
+        "answer": "4",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 77,
+        "question": "Cube painted on all faces cut into 216 cubes. How many cubes have exactly 3 painted faces?",
+        "options": [
+            "8",
+            "6",
+            "12",
+            "4"
+        ],
+        "answer": "8",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 78,
+        "question": "Which face cannot be adjacent to itself when rolling a dice?",
+        "options": [
+            "Opposite face",
+            "Same face",
+            "Adjacent face",
+            "None"
+        ],
+        "answer": "Same face",
+        "difficulty": "easy",
+        "topic": "logic"
+    },
+    {
+        "id": 79,
+        "question": "Two views show (3,5,6) and (3,6,1). Opposite of 5?",
+        "options": [
+            "1",
+            "2",
+            "4",
+            "6"
+        ],
+        "answer": "1",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 80,
+        "question": "A cube painted on all faces is cut into 512 cubes. How many cubes have no paint?",
+        "options": [
+            "216",
+            "256",
+            "125",
+            "343"
+        ],
+        "answer": "216",
+        "difficulty": "hard",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 81,
+        "question": "If 4 appears with 1 and 3 in one view and with 1 and 2 in another view, which number is opposite 4?",
+        "options": [
+            "5",
+            "6",
+            "2",
+            "3"
+        ],
+        "answer": "6",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 82,
+        "question": "A cube painted on all faces is cut into 27 cubes. How many cubes have exactly 3 painted faces?",
+        "options": [
+            "8",
+            "6",
+            "12",
+            "4"
+        ],
+        "answer": "8",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 83,
+        "question": "If opposite faces sum to 7, which face is opposite 2?",
+        "options": [
+            "3",
+            "4",
+            "5",
+            "6"
+        ],
+        "answer": "5",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 84,
+        "question": "A cube painted on all faces is cut into 64 cubes. How many cubes have exactly one painted face?",
+        "options": [
+            "24",
+            "16",
+            "12",
+            "8"
+        ],
+        "answer": "24",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 85,
+        "question": "Two views show (2,3,6) and (2,6,5). Opposite of 3?",
+        "options": [
+            "5",
+            "4",
+            "1",
+            "6"
+        ],
+        "answer": "5",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 86,
+        "question": "A cube painted on all sides is cut into 343 cubes. How many cubes have exactly 2 painted faces?",
+        "options": [
+            "120",
+            "150",
+            "96",
+            "180"
+        ],
+        "answer": "120",
+        "difficulty": "hard",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 87,
+        "question": "Which faces cannot meet at a corner of a cube?",
+        "options": [
+            "Opposite faces",
+            "Adjacent faces",
+            "Side faces",
+            "All"
+        ],
+        "answer": "Opposite faces",
+        "difficulty": "easy",
+        "topic": "logic"
+    },
+    {
+        "id": 88,
+        "question": "Two views show (4,6,2) and (4,2,5). Opposite of 6?",
+        "options": [
+            "5",
+            "3",
+            "1",
+            "2"
+        ],
+        "answer": "5",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 89,
+        "question": "A cube painted on all faces cut into 216 cubes. How many cubes have exactly 1 painted face?",
+        "options": [
+            "96",
+            "100",
+            "150",
+            "120"
+        ],
+        "answer": "96",
+        "difficulty": "hard",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 90,
+        "question": "Which faces remain opposite after rolling a dice?",
+        "options": [
+            "Original opposite faces",
+            "Adjacent faces",
+            "Top faces",
+            "None"
+        ],
+        "answer": "Original opposite faces",
+        "difficulty": "easy",
+        "topic": "logic"
+    },
+    {
+        "id": 91,
+        "question": "Two views show (1,5,6) and (1,6,3). Opposite of 5?",
+        "options": [
+            "3",
+            "4",
+            "2",
+            "6"
+        ],
+        "answer": "3",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 92,
+        "question": "A cube painted on all faces is cut into 27 cubes. How many cubes have exactly 2 painted faces?",
+        "options": [
+            "12",
+            "8",
+            "6",
+            "4"
+        ],
+        "answer": "12",
+        "difficulty": "easy",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 93,
+        "question": "Which face cannot be opposite if seen together in two views?",
+        "options": [
+            "Adjacent faces",
+            "Same face",
+            "Opposite face",
+            "None"
+        ],
+        "answer": "Opposite face",
+        "difficulty": "easy",
+        "topic": "logic"
+    },
+    {
+        "id": 94,
+        "question": "A cube painted on all faces cut into 125 cubes. How many cubes have no painted faces?",
+        "options": [
+            "27",
+            "64",
+            "36",
+            "16"
+        ],
+        "answer": "27",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 95,
+        "question": "Two views show (3,4,1) and (3,1,6). Opposite of 4?",
+        "options": [
+            "6",
+            "5",
+            "2",
+            "1"
+        ],
+        "answer": "6",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 96,
+        "question": "A cube painted on all sides cut into 64 cubes. How many cubes have no painted faces?",
+        "options": [
+            "8",
+            "12",
+            "16",
+            "24"
+        ],
+        "answer": "8",
+        "difficulty": "medium",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 97,
+        "question": "If 2 opposite 5 and 1 opposite 6 which opposite 3?",
+        "options": [
+            "4",
+            "2",
+            "5",
+            "1"
+        ],
+        "answer": "4",
+        "difficulty": "easy",
+        "topic": "opposite_faces"
+    },
+    {
+        "id": 98,
+        "question": "Cube painted on all faces cut into 343 cubes. How many cubes have no paint?",
+        "options": [
+            "125",
+            "216",
+            "150",
+            "96"
+        ],
+        "answer": "125",
+        "difficulty": "hard",
+        "topic": "painted_cube"
+    },
+    {
+        "id": 99,
+        "question": "Which faces share an edge on a dice?",
+        "options": [
+            "Adjacent faces",
+            "Opposite faces",
+            "Bottom faces",
+            "None"
+        ],
+        "answer": "Adjacent faces",
+        "difficulty": "easy",
+        "topic": "logic"
+    },
+    {
+        "id": 100,
+        "question": "Two views show (5,2,4) and (5,4,1). Opposite of 2?",
+        "options": [
+            "1",
+            "3",
+            "6",
+            "4"
+        ],
+        "answer": "1",
+        "difficulty": "medium",
+        "topic": "opposite_faces"
+    }
+]

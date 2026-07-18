@@ -1,0 +1,602 @@
+[
+    {
+        "id": 1,
+        "word": "Easy",
+        "difficulty": "easy",
+        "theme": "Optimism"
+    },
+    {
+        "id": 2,
+        "word": "Ahead",
+        "difficulty": "easy",
+        "theme": "Progress"
+    },
+    {
+        "id": 3,
+        "word": "Sacrifice",
+        "difficulty": "hard",
+        "theme": "Patriotism"
+    },
+    {
+        "id": 4,
+        "word": "Happy",
+        "difficulty": "easy",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 5,
+        "word": "Discussion",
+        "difficulty": "medium",
+        "theme": "Communication"
+    },
+    {
+        "id": 6,
+        "word": "Satisfaction",
+        "difficulty": "medium",
+        "theme": "Work_Ethics"
+    },
+    {
+        "id": 7,
+        "word": "Encourage",
+        "difficulty": "easy",
+        "theme": "Leadership"
+    },
+    {
+        "id": 8,
+        "word": "System",
+        "difficulty": "medium",
+        "theme": "Discipline"
+    },
+    {
+        "id": 9,
+        "word": "Quick",
+        "difficulty": "medium",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 10,
+        "word": "Comfort",
+        "difficulty": "easy",
+        "theme": "Empathy"
+    },
+    {
+        "id": 11,
+        "word": "Judge",
+        "difficulty": "medium",
+        "theme": "Integrity"
+    },
+    {
+        "id": 12,
+        "word": "Women",
+        "difficulty": "medium",
+        "theme": "Respect"
+    },
+    {
+        "id": 13,
+        "word": "Desire",
+        "difficulty": "medium",
+        "theme": "Ambition"
+    },
+    {
+        "id": 14,
+        "word": "Bold",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 15,
+        "word": "Brave",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 16,
+        "word": "Defeat",
+        "difficulty": "hard",
+        "theme": "Resilience"
+    },
+    {
+        "id": 17,
+        "word": "Danger",
+        "difficulty": "medium",
+        "theme": "Crisis_Management"
+    },
+    {
+        "id": 18,
+        "word": "Craze",
+        "difficulty": "medium",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 19,
+        "word": "Risk",
+        "difficulty": "medium",
+        "theme": "Initiative"
+    },
+    {
+        "id": 20,
+        "word": "Peace",
+        "difficulty": "medium",
+        "theme": "Social_Responsibility"
+    },
+    {
+        "id": 21,
+        "word": "Character",
+        "difficulty": "hard",
+        "theme": "Integrity"
+    },
+    {
+        "id": 22,
+        "word": "Unity",
+        "difficulty": "medium",
+        "theme": "Teamwork"
+    },
+    {
+        "id": 23,
+        "word": "Cooperation",
+        "difficulty": "medium",
+        "theme": "Teamwork"
+    },
+    {
+        "id": 24,
+        "word": "Worry",
+        "difficulty": "medium",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 25,
+        "word": "Pursue",
+        "difficulty": "medium",
+        "theme": "Determination"
+    },
+    {
+        "id": 26,
+        "word": "War",
+        "difficulty": "hard",
+        "theme": "Patriotism"
+    },
+    {
+        "id": 27,
+        "word": "Plan",
+        "difficulty": "medium",
+        "theme": "Organizing_Ability"
+    },
+    {
+        "id": 28,
+        "word": "Organisation",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 29,
+        "word": "Government",
+        "difficulty": "medium",
+        "theme": "Nationalism"
+    },
+    {
+        "id": 30,
+        "word": "Foreign",
+        "difficulty": "medium",
+        "theme": "Nationalism"
+    },
+    {
+        "id": 31,
+        "word": "Specific",
+        "difficulty": "easy",
+        "theme": "Clarity"
+    },
+    {
+        "id": 32,
+        "word": "Law",
+        "difficulty": "medium",
+        "theme": "Integrity"
+    },
+    {
+        "id": 33,
+        "word": "Leader",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 34,
+        "word": "Friends",
+        "difficulty": "easy",
+        "theme": "Teamwork"
+    },
+    {
+        "id": 35,
+        "word": "Time",
+        "difficulty": "medium",
+        "theme": "Time_Management"
+    },
+    {
+        "id": 36,
+        "word": "Understanding",
+        "difficulty": "medium",
+        "theme": "Empathy"
+    },
+    {
+        "id": 37,
+        "word": "Utilize",
+        "difficulty": "medium",
+        "theme": "Resourcefulness"
+    },
+    {
+        "id": 38,
+        "word": "Honour",
+        "difficulty": "hard",
+        "theme": "Moral_Values"
+    },
+    {
+        "id": 39,
+        "word": "Method",
+        "difficulty": "medium",
+        "theme": "Organizing_Ability"
+    },
+    {
+        "id": 40,
+        "word": "Systematic",
+        "difficulty": "medium",
+        "theme": "Discipline"
+    },
+    {
+        "id": 41,
+        "word": "Carefully",
+        "difficulty": "easy",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 42,
+        "word": "Easy",
+        "difficulty": "easy",
+        "theme": "Optimism"
+    },
+    {
+        "id": 43,
+        "word": "System",
+        "difficulty": "medium",
+        "theme": "Discipline"
+    },
+    {
+        "id": 44,
+        "word": "Clear",
+        "difficulty": "easy",
+        "theme": "Clarity"
+    },
+    {
+        "id": 45,
+        "word": "Rest",
+        "difficulty": "easy",
+        "theme": "Balance"
+    },
+    {
+        "id": 46,
+        "word": "Problem",
+        "difficulty": "medium",
+        "theme": "Problem_Solving"
+    },
+    {
+        "id": 47,
+        "word": "Differ",
+        "difficulty": "medium",
+        "theme": "Tolerance"
+    },
+    {
+        "id": 48,
+        "word": "Failure",
+        "difficulty": "hard",
+        "theme": "Resilience"
+    },
+    {
+        "id": 49,
+        "word": "Atom",
+        "difficulty": "medium",
+        "theme": "Knowledge"
+    },
+    {
+        "id": 50,
+        "word": "Time",
+        "difficulty": "medium",
+        "theme": "Time_Management"
+    },
+    {
+        "id": 51,
+        "word": "Habit",
+        "difficulty": "medium",
+        "theme": "Discipline"
+    },
+    {
+        "id": 52,
+        "word": "Junior",
+        "difficulty": "easy",
+        "theme": "Leadership"
+    },
+    {
+        "id": 53,
+        "word": "Beauty",
+        "difficulty": "easy",
+        "theme": "Optimism"
+    },
+    {
+        "id": 54,
+        "word": "Proof",
+        "difficulty": "medium",
+        "theme": "Integrity"
+    },
+    {
+        "id": 55,
+        "word": "Discipline",
+        "difficulty": "medium",
+        "theme": "Discipline"
+    },
+    {
+        "id": 56,
+        "word": "Challenge",
+        "difficulty": "medium",
+        "theme": "Resilience"
+    },
+    {
+        "id": 57,
+        "word": "Love",
+        "difficulty": "easy",
+        "theme": "Empathy"
+    },
+    {
+        "id": 58,
+        "word": "Step",
+        "difficulty": "easy",
+        "theme": "Initiative"
+    },
+    {
+        "id": 59,
+        "word": "Difficult",
+        "difficulty": "medium",
+        "theme": "Resilience"
+    },
+    {
+        "id": 60,
+        "word": "Duty",
+        "difficulty": "hard",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 61,
+        "word": "Idea",
+        "difficulty": "easy",
+        "theme": "Creativity"
+    },
+    {
+        "id": 62,
+        "word": "Books",
+        "difficulty": "easy",
+        "theme": "Knowledge"
+    },
+    {
+        "id": 63,
+        "word": "Future",
+        "difficulty": "medium",
+        "theme": "Vision"
+    },
+    {
+        "id": 64,
+        "word": "Music",
+        "difficulty": "easy",
+        "theme": "Balance"
+    },
+    {
+        "id": 65,
+        "word": "Property",
+        "difficulty": "medium",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 66,
+        "word": "Error",
+        "difficulty": "medium",
+        "theme": "Self_Improvement"
+    },
+    {
+        "id": 67,
+        "word": "Work",
+        "difficulty": "medium",
+        "theme": "Work_Ethics"
+    },
+    {
+        "id": 68,
+        "word": "Justice",
+        "difficulty": "hard",
+        "theme": "Integrity"
+    },
+    {
+        "id": 69,
+        "word": "Charity",
+        "difficulty": "medium",
+        "theme": "Empathy"
+    },
+    {
+        "id": 70,
+        "word": "History",
+        "difficulty": "medium",
+        "theme": "Nationalism"
+    },
+    {
+        "id": 71,
+        "word": "Kindness",
+        "difficulty": "easy",
+        "theme": "Empathy"
+    },
+    {
+        "id": 72,
+        "word": "SelfControl",
+        "difficulty": "hard",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 73,
+        "word": "Faith",
+        "difficulty": "medium",
+        "theme": "Optimism"
+    },
+    {
+        "id": 74,
+        "word": "Life",
+        "difficulty": "medium",
+        "theme": "Optimism"
+    },
+    {
+        "id": 75,
+        "word": "Word",
+        "difficulty": "easy",
+        "theme": "Communication"
+    },
+    {
+        "id": 76,
+        "word": "Happiness",
+        "difficulty": "easy",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 77,
+        "word": "Educate",
+        "difficulty": "medium",
+        "theme": "Knowledge"
+    },
+    {
+        "id": 78,
+        "word": "Soul",
+        "difficulty": "hard",
+        "theme": "Moral_Values"
+    },
+    {
+        "id": 79,
+        "word": "Business",
+        "difficulty": "medium",
+        "theme": "Organizing_Ability"
+    },
+    {
+        "id": 80,
+        "word": "Medicine",
+        "difficulty": "medium",
+        "theme": "Helping_Nature"
+    },
+    {
+        "id": 81,
+        "word": "Exercise",
+        "difficulty": "easy",
+        "theme": "Self_Discipline"
+    },
+    {
+        "id": 82,
+        "word": "Poetry",
+        "difficulty": "medium",
+        "theme": "Creativity"
+    },
+    {
+        "id": 83,
+        "word": "Intelligence",
+        "difficulty": "medium",
+        "theme": "Intellectual_Ability"
+    },
+    {
+        "id": 84,
+        "word": "Old",
+        "difficulty": "easy",
+        "theme": "Respect"
+    },
+    {
+        "id": 85,
+        "word": "Patriotism",
+        "difficulty": "hard",
+        "theme": "Patriotism"
+    },
+    {
+        "id": 86,
+        "word": "Criticism",
+        "difficulty": "medium",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 87,
+        "word": "Fear",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 88,
+        "word": "Past",
+        "difficulty": "easy",
+        "theme": "Reflection"
+    },
+    {
+        "id": 89,
+        "word": "Tear",
+        "difficulty": "easy",
+        "theme": "Emotional_Control"
+    },
+    {
+        "id": 90,
+        "word": "Friendship",
+        "difficulty": "easy",
+        "theme": "Teamwork"
+    },
+    {
+        "id": 91,
+        "word": "World",
+        "difficulty": "medium",
+        "theme": "Global_Awareness"
+    },
+    {
+        "id": 92,
+        "word": "Chance",
+        "difficulty": "medium",
+        "theme": "Initiative"
+    },
+    {
+        "id": 93,
+        "word": "Mother",
+        "difficulty": "easy",
+        "theme": "Respect"
+    },
+    {
+        "id": 94,
+        "word": "Heart",
+        "difficulty": "medium",
+        "theme": "Empathy"
+    },
+    {
+        "id": 95,
+        "word": "Power",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 96,
+        "word": "Family",
+        "difficulty": "easy",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 97,
+        "word": "Wealth",
+        "difficulty": "medium",
+        "theme": "Values"
+    },
+    {
+        "id": 98,
+        "word": "Philosophy",
+        "difficulty": "hard",
+        "theme": "Moral_Values"
+    },
+    {
+        "id": 99,
+        "word": "Greatness",
+        "difficulty": "medium",
+        "theme": "Ambition"
+    },
+    {
+        "id": 100,
+        "word": "Honour",
+        "difficulty": "hard",
+        "theme": "Integrity"
+    }
+]

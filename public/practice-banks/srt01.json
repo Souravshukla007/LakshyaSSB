@@ -1,0 +1,362 @@
+[
+    {
+        "id": 1,
+        "question": "His sister’s marriage is fixed and his relative refuses to give loan or money. He..",
+        "difficulty": "medium",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 2,
+        "question": "His sister’s marriage is fixed but he is not granted leave due to administrative inspection. He..",
+        "difficulty": "medium",
+        "theme": "Duty_vs_Family"
+    },
+    {
+        "id": 3,
+        "question": "Bharat Bandh is declared while he is on leave and his leave ends two days after commencement of the Bandh. He..",
+        "difficulty": "medium",
+        "theme": "Sense_of_Duty"
+    },
+    {
+        "id": 4,
+        "question": "During a train journey at midnight he wakes up and finds someone trying to steal through the window. He..",
+        "difficulty": "medium",
+        "theme": "Courage"
+    },
+    {
+        "id": 5,
+        "question": "He is already late for an important meeting and the road is blocked due to traffic jam. He..",
+        "difficulty": "medium",
+        "theme": "Initiative"
+    },
+    {
+        "id": 6,
+        "question": "He has to go for patrolling duty but his driver has high fever. He..",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 7,
+        "question": "On the day of football match he has high fever but the team captain does not allow him to leave the game. He..",
+        "difficulty": "medium",
+        "theme": "Commitment"
+    },
+    {
+        "id": 8,
+        "question": "He is required to go for patrolling at high altitude but does not have a coat parka. He..",
+        "difficulty": "medium",
+        "theme": "Resourcefulness"
+    },
+    {
+        "id": 9,
+        "question": "Returning home at midnight he finds two persons quarreling on the way. He..",
+        "difficulty": "medium",
+        "theme": "Social_Responsibility"
+    },
+    {
+        "id": 10,
+        "question": "He is required to dig trenches but his colleagues are not cooperating. He..",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 11,
+        "question": "While working in the kitchen garden it starts raining. He..",
+        "difficulty": "easy",
+        "theme": "Perseverance"
+    },
+    {
+        "id": 12,
+        "question": "He is assigned a difficult task which he has not done earlier. He..",
+        "difficulty": "medium",
+        "theme": "Learning_Ability"
+    },
+    {
+        "id": 13,
+        "question": "As secretary of student union he is required to perform his responsibilities. He..",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 14,
+        "question": "Returning from market three persons with knives stop him and ask for his valuables. He..",
+        "difficulty": "hard",
+        "theme": "Courage"
+    },
+    {
+        "id": 15,
+        "question": "While on sentry duty a terrorist fires at his leg and tries to snatch his rifle. He..",
+        "difficulty": "hard",
+        "theme": "Bravery"
+    },
+    {
+        "id": 16,
+        "question": "While on leave he hears announcement about outbreak of war. He..",
+        "difficulty": "medium",
+        "theme": "Patriotism"
+    },
+    {
+        "id": 17,
+        "question": "A jawan asks for leave on a false excuse during manpower shortage. He..",
+        "difficulty": "medium",
+        "theme": "Integrity"
+    },
+    {
+        "id": 18,
+        "question": "He is already late to complete his task and colleagues refuse to cooperate. He..",
+        "difficulty": "medium",
+        "theme": "Perseverance"
+    },
+    {
+        "id": 19,
+        "question": "While returning from picnic he loses his way in darkness. He..",
+        "difficulty": "medium",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 20,
+        "question": "His boss does not agree with his views. He..",
+        "difficulty": "easy",
+        "theme": "Communication"
+    },
+    {
+        "id": 21,
+        "question": "He works hard because..",
+        "difficulty": "easy",
+        "theme": "Work_Ethics"
+    },
+    {
+        "id": 22,
+        "question": "He considers the most important thing in the world is..",
+        "difficulty": "easy",
+        "theme": "Values"
+    },
+    {
+        "id": 23,
+        "question": "He receives an order from his CO but feels the approach is wrong. He..",
+        "difficulty": "medium",
+        "theme": "Discipline"
+    },
+    {
+        "id": 24,
+        "question": "While travelling in a train he discovers his pocket has been picked. He..",
+        "difficulty": "medium",
+        "theme": "Alertness"
+    },
+    {
+        "id": 25,
+        "question": "Due to financial difficulties his parents cannot support further education. He..",
+        "difficulty": "medium",
+        "theme": "Responsibility"
+    },
+    {
+        "id": 26,
+        "question": "While waiting for a bus he witnesses an accident. He..",
+        "difficulty": "medium",
+        "theme": "Social_Responsibility"
+    },
+    {
+        "id": 27,
+        "question": "A mountain expedition failed and one of his friends died. He..",
+        "difficulty": "hard",
+        "theme": "Resilience"
+    },
+    {
+        "id": 28,
+        "question": "He feels the work he is presently engaged in is useless. He..",
+        "difficulty": "medium",
+        "theme": "Positive_Attitude"
+    },
+    {
+        "id": 29,
+        "question": "His friend lost his job and is in financial difficulty. He..",
+        "difficulty": "medium",
+        "theme": "Empathy"
+    },
+    {
+        "id": 30,
+        "question": "He feels he is losing ground in a discussion. He..",
+        "difficulty": "easy",
+        "theme": "Confidence"
+    },
+    {
+        "id": 31,
+        "question": "In his office staff is not working efficiently. He..",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 32,
+        "question": "He finds a task difficult. He..",
+        "difficulty": "easy",
+        "theme": "Learning_Ability"
+    },
+    {
+        "id": 33,
+        "question": "His plan failed in the beginning. He..",
+        "difficulty": "medium",
+        "theme": "Resilience"
+    },
+    {
+        "id": 34,
+        "question": "Dacoits enter his apartment and start looting. He..",
+        "difficulty": "hard",
+        "theme": "Courage"
+    },
+    {
+        "id": 35,
+        "question": "He is asked to organize a variety show for jawan welfare. He..",
+        "difficulty": "medium",
+        "theme": "Organizing_Ability"
+    },
+    {
+        "id": 36,
+        "question": "While camping in jungle a leopard is seen near camp where shooting is prohibited. He..",
+        "difficulty": "hard",
+        "theme": "Crisis_Management"
+    },
+    {
+        "id": 37,
+        "question": "Emergency is declared in the city and he is CO of the unit. He..",
+        "difficulty": "hard",
+        "theme": "Leadership"
+    },
+    {
+        "id": 38,
+        "question": "Whenever he is required to take a new step. He..",
+        "difficulty": "easy",
+        "theme": "Initiative"
+    },
+    {
+        "id": 39,
+        "question": "He sees a man climbing a house with rope while going to office. He..",
+        "difficulty": "medium",
+        "theme": "Alertness"
+    },
+    {
+        "id": 40,
+        "question": "He has to take a group on an All India tour. He..",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 41,
+        "question": "He hears cry of fire from neighboring house. He..",
+        "difficulty": "medium",
+        "theme": "Social_Responsibility"
+    },
+    {
+        "id": 42,
+        "question": "He has a minor scooter accident on way to office. He..",
+        "difficulty": "easy",
+        "theme": "Self_Control"
+    },
+    {
+        "id": 43,
+        "question": "He lost his way in jungle. He..",
+        "difficulty": "medium",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 44,
+        "question": "While travelling in train he lost his ticket. He..",
+        "difficulty": "easy",
+        "theme": "Honesty"
+    },
+    {
+        "id": 45,
+        "question": "To check population growth what will he suggest?",
+        "difficulty": "medium",
+        "theme": "Social_Awareness"
+    },
+    {
+        "id": 46,
+        "question": "Electric light of neighbor has gone off. He..",
+        "difficulty": "easy",
+        "theme": "Helping_Nature"
+    },
+    {
+        "id": 47,
+        "question": "Bus he is travelling in suddenly catches fire. He..",
+        "difficulty": "hard",
+        "theme": "Crisis_Management"
+    },
+    {
+        "id": 48,
+        "question": "He is attacked by miscreants with lathis. He..",
+        "difficulty": "hard",
+        "theme": "Courage"
+    },
+    {
+        "id": 49,
+        "question": "He sees a boy drowning in lake but does not know swimming. He..",
+        "difficulty": "hard",
+        "theme": "Initiative"
+    },
+    {
+        "id": 50,
+        "question": "He sees railway fish plates removed and train due in 15 minutes. He..",
+        "difficulty": "hard",
+        "theme": "Sense_of_Duty"
+    },
+    {
+        "id": 51,
+        "question": "Going for SSB he sees a lady fall from moving train. He..",
+        "difficulty": "medium",
+        "theme": "Helping_Nature"
+    },
+    {
+        "id": 52,
+        "question": "On annual leave dacoits attack his village. He..",
+        "difficulty": "hard",
+        "theme": "Leadership"
+    },
+    {
+        "id": 53,
+        "question": "He sees a heart patient collapse on road. He..",
+        "difficulty": "medium",
+        "theme": "Empathy"
+    },
+    {
+        "id": 54,
+        "question": "He gets down to buy fruits and train leaves. He..",
+        "difficulty": "easy",
+        "theme": "Composure"
+    },
+    {
+        "id": 55,
+        "question": "He has to organize a debate competition. He..",
+        "difficulty": "medium",
+        "theme": "Organizing_Ability"
+    },
+    {
+        "id": 56,
+        "question": "As football captain team performance is poor. He..",
+        "difficulty": "medium",
+        "theme": "Leadership"
+    },
+    {
+        "id": 57,
+        "question": "He loses way in desert away from team. He..",
+        "difficulty": "medium",
+        "theme": "Decision_Making"
+    },
+    {
+        "id": 58,
+        "question": "He wants to join Indian Army but father wants him to become software professional. He..",
+        "difficulty": "medium",
+        "theme": "Conviction"
+    },
+    {
+        "id": 59,
+        "question": "His sister is unhappy about arranged marriage. He..",
+        "difficulty": "medium",
+        "theme": "Empathy"
+    },
+    {
+        "id": 60,
+        "question": "As house captain he has to arrange entertainment programme in school. He..",
+        "difficulty": "medium",
+        "theme": "Organizing_Ability"
+    }
+]

@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import AdBanner, { AD_SLOTS } from '@/components/AdBanner';
+import { useOnlineStatus } from '@/hooks/useOnlineStatus';
+import OfflineFallback from '@/components/offline/OfflineFallback';
 
 
 
@@ -77,6 +79,7 @@ function RankPill({ rank }: { rank: number }) {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function LeaderboardPage() {
+    const connectivity = useOnlineStatus();
     const [tab, setTab] = useState<Tab>('overall');
     const [activeData, setActiveData] = useState<LeaderboardEntry[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -119,6 +122,20 @@ export default function LeaderboardPage() {
 
     const visibleRows = isPro ? activeData : activeData.slice(0, 10);
     const hiddenCount = activeData.length - 10;
+
+    // Online-only capability: the leaderboard requires live network data. While offline,
+    // render the friendly fallback instead of a broken/empty board. Re-enables automatically
+    // when connectivity returns (Req 7.1, 7.5, 7.6).
+    if (connectivity === 'offline') {
+        return (
+            <main className="min-h-screen pt-24 pb-20 px-4 md:px-8 bg-brand-bg flex items-start justify-center">
+                <OfflineFallback
+                    title="Leaderboard needs internet"
+                    message="This feature needs an internet connection."
+                />
+            </main>
+        );
+    }
 
     return (
         <>

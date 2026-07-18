@@ -6,9 +6,13 @@ import { useState, useEffect } from "react";
 import useScrollReveal from "@/hooks/useScrollReveal";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
+import { useOnlineStatus } from '@/hooks/useOnlineStatus';
+import OfflineFallback from '@/components/offline/OfflineFallback';
+import { requireOnline } from '@/lib/offline/online-guard';
 
 export default function Checkout() {
     useScrollReveal();
+    const connectivity = useOnlineStatus();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [userEmail, setUserEmail] = useState<string>('');
@@ -22,6 +26,9 @@ export default function Checkout() {
     }, []);
 
     const handlePayment = async () => {
+        // Belt-and-suspenders: the Razorpay script/order is online-only. The page already
+        // full-guards offline, but this surfaces the popup if state ever races.
+        if (!requireOnline()) return;
         setIsLoading(true);
         setError(null);
 
@@ -90,6 +97,20 @@ export default function Checkout() {
             setIsLoading(false);
         }
     };
+
+    // Online-only capability: checkout depends on the payment gateway (Razorpay) and live order
+    // creation/verification. While offline, render the friendly fallback instead of a payment flow
+    // that cannot complete. Re-enables automatically when connectivity returns (Req 7.1, 7.5, 7.6).
+    if (connectivity === 'offline') {
+        return (
+            <main className="antialiased font-sans bg-brand-bg min-h-screen pt-32 sm:pt-40 pb-16 px-4 sm:px-6 flex items-start justify-center">
+                <OfflineFallback
+                    title="Checkout needs internet"
+                    message="This feature needs an internet connection."
+                />
+            </main>
+        );
+    }
 
     return (
         <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
