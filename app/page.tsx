@@ -113,14 +113,14 @@ export default function Home() {
                                     </a>
                                 </div>
 
-                                <div className="mt-12 flex items-center gap-6 pt-12 border-t border-gray-100 reveal delay-300 active">
-                                    <div className="flex -space-x-3">
+                                <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4 pt-12 border-t border-gray-100 reveal delay-300 active">
+                                    <div className="flex -space-x-3 shrink-0">
                                         <img className="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1556978254-407bc35f8e66?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBhcm15JTIwb2ZmaWNlciUyMHBvcnRyYWl0JTIwc3F1YXJlfGVufDB8Mnx8fDE3NzEwNTE1MzZ8MA&ixlib=rb-4.1.0&w=100&h=100&fit=crop&fm=jpg&q=80" alt="Officer" />
                                         <img className="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://images.pexels.com/photos/8199174/pexels-photo-8199174.jpeg?w=100&h=100&fit=crop" alt="Aspirant" />
                                         <img className="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1538651954807-323f3c1c1123?ixid=M3w4NjU0NDF8MHwxfHNlYXJjaHwxfHxuYXZ5JTIwb2ZmaWNlciUyMHdvbWFuJTIwcG9ydHJhaXQlMjBzcXVhcmV8ZW58MHwyfHx8MTc3MTA1MTUzNXww&ixlib=rb-4.1.0&w=100&h=100&fit=crop&fm=jpg&q=80" alt="Officer" />
                                         <div className="w-10 h-10 rounded-full border-2 border-white bg-brand-orange flex items-center justify-center text-[10px] text-white font-bold">+500</div>
                                     </div>
-                                    <p className="text-sm text-gray-500 font-noname"><strong>Recommended</strong> from NDA-152, CDS-OTA & AFCAT 02/25 batches.</p>
+                                    <p className="text-sm text-gray-500 font-noname min-w-0"><strong>Recommended</strong> from NDA-152, CDS-OTA & AFCAT 02/25 batches.</p>
                                 </div>
                             </div>
 

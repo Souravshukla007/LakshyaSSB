@@ -112,7 +112,7 @@ export default function Navbar() {
             ═══════════════════════════════════════════ */}
             <div
                 onClick={closeMobile}
-                className={`fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                className={`fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                     }`}
                 aria-hidden="true"
             />
@@ -132,7 +132,7 @@ export default function Navbar() {
                         </Link>
 
                         {/* Desktop nav — unchanged */}
-                        <div className="hidden md:flex gap-8 text-sm font-noname font-medium text-gray-800 tracking-wide">
+                        <div className="hidden lg:flex gap-8 text-sm font-noname font-medium text-gray-800 tracking-wide">
                             {navLinks.map(({ href, label }) => (
                                 <Link
                                     key={href}
@@ -149,7 +149,7 @@ export default function Navbar() {
                     <div className="flex items-center gap-4">
 
                         {/* Android App Download Trigger (Desktop) */}
-                        <div className="hidden md:flex items-center">
+                        <div className="hidden lg:flex items-center">
                             <button
                                 onClick={() => setIsApkModalOpen(true)}
                                 className="group relative bg-[#1c1c1c] hover:bg-brand-orange text-white p-[8px] rounded-full shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
@@ -221,7 +221,7 @@ export default function Navbar() {
                         )}
 
                         {/* Join Academy / Dashboard pill (desktop) */}
-                        <div className="hidden md:flex items-center">
+                        <div className="hidden lg:flex items-center">
                             {user ? (
                                 <Link href="/dashboard" className="group relative bg-brand-dark p-[2px] rounded-full shadow-lg transition-all duration-300 hover:shadow-xl">
                                     <div className="relative w-full h-full rounded-full overflow-hidden bg-transparent flex items-center gap-3 pl-6 pr-1.5 py-1.5">
@@ -248,7 +248,7 @@ export default function Navbar() {
                         {/* ── Hamburger button (mobile only) ── */}
                         <button
                             onClick={() => setMobileMenuOpen(prev => !prev)}
-                            className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/90 backdrop-blur-sm border border-gray-200 shadow-sm hover:shadow-md transition-all gap-[5px]"
+                            className="lg:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/90 backdrop-blur-sm border border-gray-200 shadow-sm hover:shadow-md transition-all gap-[5px]"
                             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                             aria-expanded={mobileMenuOpen}
                         >
@@ -268,7 +268,7 @@ export default function Navbar() {
                 {/* ═══════════════════════════════════════════
                     MOBILE DRAWER
                 ═══════════════════════════════════════════ */}
-                <div className={`md:hidden fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
+                <div className={`lg:hidden fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
                     }`}>
                     <div className="bg-white rounded-b-3xl shadow-2xl overflow-hidden">
 

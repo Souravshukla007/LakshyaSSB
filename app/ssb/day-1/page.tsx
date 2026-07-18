@@ -113,7 +113,21 @@ export default function Day1() {
                                     <div className="p-8 lg:p-12 bg-white rounded-[3rem] border border-gray-100 shadow-sm relative overflow-hidden">
                                         <h3 className="font-hero font-bold text-2xl text-brand-dark mb-12">Visual Mind Map</h3>
 
-                                        <div className="relative flex items-center justify-center py-20">
+                                        <div className="xl:hidden flex flex-col items-center gap-6 py-8">
+                                            <div className="w-28 h-28 rounded-full bg-brand-dark text-white flex flex-col items-center justify-center shadow-2xl border-4 border-brand-orange shrink-0">
+                                                <span className="text-[10px] uppercase font-bold tracking-tight">SSB Stage</span>
+                                                <span className="text-xl font-hero font-bold">Day 1</span>
+                                            </div>
+                                            <div className="flex flex-wrap justify-center gap-3">
+                                                <div className="px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2"><i className="fa-solid fa-brain text-brand-orange"></i><span className="text-xs font-bold text-brand-dark">OIR Test</span></div>
+                                                <div className="px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2"><i className="fa-solid fa-pen-clip text-brand-orange"></i><span className="text-xs font-bold text-brand-dark">Story Writing</span></div>
+                                                <div className="px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2"><i className="fa-solid fa-eye text-brand-orange"></i><span className="text-xs font-bold text-brand-dark">PPDT</span></div>
+                                                <div className="px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2"><i className="fa-solid fa-bullhorn text-brand-orange"></i><span className="text-xs font-bold text-brand-dark">Narration</span></div>
+                                                <div className="px-4 py-2 bg-white border border-gray-200 rounded-xl shadow-md flex items-center gap-2"><i className="fa-solid fa-users text-brand-orange"></i><span className="text-xs font-bold text-brand-dark">Group Discussion</span></div>
+                                                <div className="px-4 py-2 bg-brand-orange text-white border border-brand-orange rounded-xl shadow-md flex items-center gap-2"><i className="fa-solid fa-check-double"></i><span className="text-xs font-bold">Screening Result</span></div>
+                                            </div>
+                                        </div>
+                                        <div className="relative hidden xl:flex items-center justify-center py-20">
                                             {/* SVG Lines */}
                                             <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" overflow="visible">
                                                 <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="#FF5E3A" strokeWidth="1.5"></line>
