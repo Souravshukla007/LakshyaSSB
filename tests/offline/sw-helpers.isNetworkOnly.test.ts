@@ -90,3 +90,35 @@ describe('Property 5: dynamic and online-only requests are never served from cac
     );
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Task 4 gap-fill: PAYMENT HOST classification. The property suites above cover
+// non-GET, enumerated online-only paths, and cacheable classes, but the payment
+// GATEWAY HOSTS (Razorpay) — which are network-only for GET regardless of path —
+// were only exercised in the preservation suite. Pin them here as focused unit
+// examples so the dedicated isNetworkOnly unit file covers every branch.
+// ─────────────────────────────────────────────────────────────────────────────
+const PAYMENT_HOSTS: readonly string[] = ['checkout.razorpay.com', 'api.razorpay.com'];
+
+describe('isNetworkOnly — payment gateway hosts are network-only for GET', () => {
+  it('treats every Razorpay host path as network-only regardless of path', () => {
+    for (const host of PAYMENT_HOSTS) {
+      for (const path of ['/', '/checkout', '/v1/orders', '/anything?x=1']) {
+        expect(isNetworkOnly(`https://${host}${path}`, 'GET')).toBe(true);
+      }
+    }
+  });
+
+  it('does NOT flag look-alike / non-payment hosts as network-only for a cacheable GET', () => {
+    // A different host must not be captured by the payment-host rule.
+    expect(isNetworkOnly('https://razorpay.com.evil.example/checkout', 'GET')).toBe(false);
+    expect(isNetworkOnly('https://images.unsplash.com/photo-1', 'GET')).toBe(false);
+  });
+
+  it('the whitelisted read-only GET API stays cacheable while other auth GETs do not', () => {
+    // Boundary between the whitelist and the enumerated online-only auth group.
+    expect(isNetworkOnly('/api/auth/status', 'GET')).toBe(false);
+    expect(isNetworkOnly('/api/auth/login', 'GET')).toBe(true);
+    expect(isNetworkOnly('/api/auth', 'GET')).toBe(true);
+  });
+});

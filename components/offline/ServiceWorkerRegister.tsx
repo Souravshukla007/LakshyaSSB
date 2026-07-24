@@ -31,6 +31,14 @@ const SW_UNAVAILABLE_EVENT = 'lssb:sw-unavailable';
  * Standards-based only: no Capacitor imports, native plugins, or
  * platform-specific bridges are used (Requirement 11.1).
  *
+ * OPERATIONAL PRECONDITION (offline-page-support, Req 2.4 / 3.4):
+ * In the Capacitor Android WebView under `server.url` mode, offline rendering of
+ * the allowlisted pages requires at least one prior ONLINE launch during which
+ * this component registers `/sw.js` at scope `/` and the worker activates. Only
+ * after that online registration/activation can the Android System WebView serve
+ * navigations from the SW cache while offline. A device that has never launched
+ * the app online will have no controlling worker and cannot render pages offline.
+ *
  * Requirements: 1.1, 1.7
  */
 export default function ServiceWorkerRegister(): null {

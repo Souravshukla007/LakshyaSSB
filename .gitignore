@@ -55,3 +55,5 @@ scripts/upgrade-user.js
 # Firebase / Google secrets — NEVER commit these
 google-services.json
 GoogleService-Info.plist
+
+.kiro\specs

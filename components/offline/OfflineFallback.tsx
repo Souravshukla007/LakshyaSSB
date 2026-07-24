@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { WifiOff, RefreshCw } from 'lucide-react';
+import { WifiOff, RefreshCw, Home } from 'lucide-react';
 
 interface OfflineFallbackProps {
     /** Heading shown at the top of the panel. */
@@ -74,6 +74,18 @@ export default function OfflineFallback({
                             <span className="relative z-10 tracking-wide">Retry</span>
                         </button>
                     )}
+
+                    {/* Back to Home — the landing page works offline, so this always
+                        gives the user a working destination. Uses a plain anchor so
+                        it hard-navigates to '/', which the service worker serves from
+                        cache while offline. */}
+                    <a
+                        href="/"
+                        className={`w-full h-14 rounded-2xl font-bold flex items-center justify-center gap-3 border-2 border-gray-200 text-brand-dark hover:border-brand-dark hover:bg-brand-bg transition-all duration-300 ${onRetry ? 'mt-3' : ''}`}
+                    >
+                        <Home className="w-5 h-5" aria-hidden="true" />
+                        <span className="tracking-wide">Back to Home</span>
+                    </a>
                 </div>
             </div>
         </section>

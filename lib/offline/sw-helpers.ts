@@ -20,8 +20,12 @@
 /**
  * The current cache version. Bump this per release so a new Service Worker
  * activates fresh caches and cleans up prior versions (Req 9.1, 9.2).
+ *
+ * SINGLE SOURCE OF TRUTH: this value is kept IN SYNC with `CACHE_VERSION` in the
+ * served worker `public/sw.js` (the authoritative worker for the Capacitor
+ * Android WebView in `server.url` mode). If you bump one, bump the other.
  */
-export const CACHE_VERSION = 'v1';
+export const CACHE_VERSION = 'v4';
 
 /**
  * Fixed prefix that identifies caches owned by this application. Used both to
@@ -50,6 +54,8 @@ export const CACHE_BASES = {
   API_GET: 'api-get',
   /** practice bank JSON */
   BANKS: 'banks',
+  /** RSC / soft-navigation data payloads for allowlisted routes (text/x-component) */
+  DATA: 'data',
 } as const;
 
 /** Union of the owned base-name string literals. */

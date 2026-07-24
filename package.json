@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/generate-practice-banks.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/generate-practice-banks.mjs",
     "build": "next build",
+    "postbuild": "node scripts/gen-offline-manifest.mjs",
+    "build:offline-manifest": "node scripts/gen-offline-manifest.mjs",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "//sw": "public/sw.js is the SINGLE SOURCE OF TRUTH. In Capacitor server.url mode the SERVED /sw.js is the worker that runs; the bundled android/app/src/main/assets/public/sw.js is inert and only matters in bundled-asset (webDir) mode. Run sync:sw (or cap:copy) so the bundled copy stays byte-identical to public/sw.js and can never drift.",
+    "sync:sw": "node scripts/sync-sw.mjs",
+    "cap:copy": "npx cap copy android && node scripts/sync-sw.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^6.2.1",

@@ -1,468 +1,439 @@
-/*
- * LakshyaSSB Service Worker — scoped offline support.
- *
- * ┌─────────────────────────────────────────────────────────────────────────┐
- * │ MIRROR NOTICE                                                             │
- * │ This file is authored in plain browser ES (NO imports, NO TypeScript) so  │
- * │ it can be served verbatim from `public/sw.js` at the origin root without  │
- * │ passing through the Next.js / Turbopack build.                            │
- * │                                                                           │
- * │ The pure classifier + cache-naming logic below is MIRRORED VERBATIM from  │
- * │ `lib/offline/sw-helpers.ts`. If you change one, you MUST change the other │
- * │ to keep them in sync (cache names, OWNED set, isNetworkOnly allowlist,    │
- * │ read-only GET whitelist, network-only hosts, online-only path predicate). │
- * └─────────────────────────────────────────────────────────────────────────┘
- *
- * Standards-based and platform-neutral: contains NO Capacitor / native / plugin
- * references (Req 11.1, 11.3). Runs identically in a browser tab and in the
- * Android System WebView (Req 1.8, 11.2).
- *
- * Requirements: 1.3, 1.4, 1.5, 1.6, 1.8, 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3,
- * 3.4, 4.2, 4.3, 5.1, 7.6, 9.1, 9.2, 9.3, 9.4, 9.6, 10.3, 11.1.
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// LakshyaSSB — allowlist offline Service Worker.
+//
+// Only an explicit allowlist of routes works offline (see OFFLINE_ROUTES below,
+// MIRRORED from lib/offline/offline-routes.ts — keep in sync). Those pages are
+// cached (network-first + precached best-effort at install) and served from cache
+// while offline. Navigating to ANY other route while offline is served the cached
+// "/offline" page; soft in-app navigations to non-allowlisted routes are
+// intercepted by OfflineNavGuard which shows a popup instead. This worker does NOT
+// cache APIs or other pages. Plain browser ES only: no imports, no native refs.
+// ─────────────────────────────────────────────────────────────────────────────
 
-'use strict';
+// SINGLE SOURCE OF TRUTH: this SERVED worker is authoritative for the Capacitor
+// Android WebView in `server.url` mode. Its allowlist MIRRORS
+// lib/offline/offline-routes.ts and this CACHE_VERSION is kept IN SYNC with
+// lib/offline/sw-helpers.ts (the shared pure logic used by the tests). The
+// bundled copy at android/app/src/main/assets/public/sw.js is regenerated from
+// this file (see the cap copy / sync build step) and must never diverge again.
+// Bump per release so a fresh worker activates and old caches are cleaned up.
+const CACHE_VERSION = 'v4';
 
-/* ==========================================================================
- * Cache_Store naming + versioning  (mirror of sw-helpers.ts; Req 9.1)
- * ======================================================================== */
+const PRECACHE = `lssb-precache-${CACHE_VERSION}`; // shell: '/', '/offline', manifest, icons, placeholder
+const PAGES = `lssb-pages-${CACHE_VERSION}`;       // allowlisted pages (except '/')
+const STATIC = `lssb-static-${CACHE_VERSION}`;     // /_next/static, fonts, remote images
+const DATA = `lssb-data-${CACHE_VERSION}`;         // RSC / soft-navigation data payloads (allowlisted routes)
 
-// Bump per release so a new worker activates fresh caches and cleans up prior
-// versions (Req 9.1, 9.2).
-const CACHE_VERSION = 'v1';
+const OWNED = new Set([PRECACHE, PAGES, STATIC, DATA]);
 
-// Fixed prefix identifying caches owned by this application.
-const CACHE_PREFIX = 'lssb';
+// Routes that are allowed to work offline. MIRROR of lib/offline/offline-routes.ts.
+const OFFLINE_ROUTES = [
+  '/',
+  '/practice',
+  '/pricing',
+  '/privacy',
+  '/terms',
+  '/refund-policy',
+  '/about',
+  '/contact',
+  '/roadmap',
+  '/ssb/day-1',
+  '/ssb/day-2',
+  '/ssb/day-3',
+  '/ssb/day-4',
+  '/ssb/day-5',
+];
 
-// Derive a versioned cache name of the form `lssb-{base}-{version}`.
-function cacheName(base, version) {
-  return CACHE_PREFIX + '-' + base + '-' + (version || CACHE_VERSION);
+function isOfflineRoute(pathname) {
+  const normalized =
+    pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+  return OFFLINE_ROUTES.indexOf(normalized) !== -1;
 }
 
-// Owned versioned cache names (mirror of CACHE_BASES in sw-helpers.ts).
-const PRECACHE = cacheName('precache'); // offline page, manifest, icons, placeholder, LSSB_logo
-const PAGES = cacheName('pages'); // navigations (landing + static study pages)
-const NEXT_STATIC = cacheName('next-static'); // /_next/static/* (content-hashed, immutable)
-const FONTS = cacheName('fonts'); // Google Fonts + Font Awesome CDN
-const IMAGES = cacheName('images'); // external hero images
-const API_GET = cacheName('api-get'); // whitelisted read-only GET responses
-const BANKS = cacheName('banks'); // practice bank JSON
-
-// Anything NOT in this set is deleted on activation (Req 1.6, 9.2).
-const OWNED = new Set([PRECACHE, PAGES, NEXT_STATIC, FONTS, IMAGES, API_GET, BANKS]);
-
-// Given the caches currently present and the OWNED set, return names to delete
-// (those NOT owned). Survivors after deletion are exactly `existing ∩ OWNED`.
-// (mirror of cachesToDelete in sw-helpers.ts; Correctness Property 3)
-function cachesToDelete(existing, owned) {
-  return existing.filter(function (name) {
-    return !owned.has(name);
-  });
-}
-
-/* ==========================================================================
- * Precache manifest (App_Shell — Req 1.3, 1.4)
- * ======================================================================== */
-
+// Critical app shell — install is all-or-nothing over this list.
 const PRECACHE_URLS = [
-  '/offline', // offline fallback route
+  '/',
+  '/offline',
   '/manifest.webmanifest',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
-  '/LSSB_logo.png',
-  '/images/hero-placeholder.png', // shared placeholder for failed hero images (Req 2.3)
+  '/images/hero-placeholder.png',
 ];
 
-// Shared placeholder served when a hero image is missing while offline (Req 2.3).
-const HERO_PLACEHOLDER_URL = '/images/hero-placeholder.png';
+// Allowlisted pages other than '/' — best-effort precache at install (non-fatal).
+const EXTRA_PAGE_URLS = OFFLINE_ROUTES.filter((r) => r !== '/');
 
-/* ==========================================================================
- * Request classification  (mirror of sw-helpers.ts; Correctness Property 5)
- * ======================================================================== */
+const SWR_HOSTS = new Set(['fonts.googleapis.com', 'fonts.gstatic.com', 'cdnjs.cloudflare.com']);
+const IMAGE_HOSTS = new Set(['images.unsplash.com', 'images.pexels.com', 'www.ssbcrack.com']);
+const HERO_PLACEHOLDER = '/images/hero-placeholder.png';
 
-// Read-only GET API endpoints explicitly whitelisted for caching so previously
-// loaded data can be re-viewed offline. Must NOT be treated as network-only
-// even though they may share a prefix with an online-only group.
-const READ_ONLY_GET_WHITELIST = ['/api/auth/status'];
+// Build-time precache manifest (produced by scripts/gen-offline-manifest.mjs and
+// served at /offline-manifest.json). Shape:
+//   { cacheVersion, buildId, generatedAt,
+//     shared: [ '/_next/static/...' , ... ],
+//     routes: [ { route, document, rsc, css: [...], js: [...] }, ... ] }
+const OFFLINE_MANIFEST_URL = '/offline-manifest.json';
 
-// Hosts whose requests are always online-only (payment gateways).
-const NETWORK_ONLY_HOSTS = ['checkout.razorpay.com', 'api.razorpay.com'];
-
-// Fallback origin used to resolve relative URLs into a parseable absolute URL.
-const FALLBACK_ORIGIN = 'https://lakshyassb.online';
-
-// Font CDN hosts — stale-while-revalidate (Req 2.4).
-const FONT_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdnjs.cloudflare.com'];
-
-// External hero image hosts — cache-first + placeholder fallback (Req 2.3).
-const IMAGE_HOSTS = ['images.unsplash.com', 'images.pexels.com', 'www.ssbcrack.com'];
-
-// Robustly parse an absolute or relative URL into { pathname, host }.
-// Never throws: on failure treats the raw string as a pathname.
-function parseUrl(url) {
-  try {
-    const u = new URL(url, FALLBACK_ORIGIN);
-    return { pathname: u.pathname, host: u.host.toLowerCase() };
-  } catch (e) {
-    const raw = typeof url === 'string' ? url : '';
-    const pathname = raw.split('?')[0].split('#')[0];
-    return { pathname: pathname.charAt(0) === '/' ? pathname : '/' + pathname, host: '' };
-  }
-}
-
-// Path predicate for the enumerated online-only API endpoints.
-// (mirror of isOnlineOnlyPath in sw-helpers.ts)
-function isOnlineOnlyPath(pathname) {
-  // Authentication: login/signup/Google auth (read-only status handled above).
-  if (pathname === '/api/auth' || pathname.indexOf('/api/auth/') === 0) return true;
-
-  // Payments (path-based; hosts handled separately).
-  if (pathname.indexOf('/api/payment') === 0) return true;
-
-  // AI evaluation.
-  if (pathname === '/api/srt/submit') return true;
-  if (pathname === '/api/wat/submit') return true;
-  if (pathname.indexOf('/api/tat/') === 0) return true;
-  if (pathname.indexOf('/api/piq/') === 0) return true;
-  if (pathname.indexOf('/api/gpe/') === 0) return true;
-  if (pathname === '/api/practice/lecturette/evaluate') return true;
-
-  // AI chat mentor (Gemini).
-  if (pathname.indexOf('/api/chat') === 0) return true;
-
-  // Current affairs / news.
-  if (pathname.indexOf('/api/current-affairs') === 0) return true;
-  if (pathname.indexOf('/api/quiz/current-affairs') === 0) return true;
-
-  // Leaderboards.
-  if (pathname.indexOf('/api/leaderboard') === 0) return true;
-
-  // Notifications.
-  if (pathname.indexOf('/api/notifications') === 0) return true;
-  if (pathname === '/api/account/notifications') return true;
-
-  // Practice access gate.
-  if (pathname === '/api/practice/check-access') return true;
-
-  // Streak.
-  if (pathname === '/api/streak' || pathname.indexOf('/api/streak/') === 0) return true;
-
-  // OIR generation (server + DB backed).
-  if (pathname === '/api/oir/generate') return true;
-
-  return false;
-}
-
-// Decide whether a request must go straight to the network and never be served
-// from cache. Returns true for every non-GET method and for every enumerated
-// online-only endpoint; false for cacheable classes.
-// (mirror of isNetworkOnly in sw-helpers.ts; Req 7.4, 10.1, 10.2, 10.3)
-function isNetworkOnly(url, method) {
-  // 1) Every non-GET method is a mutation -> always network-only (Req 10.3).
-  const verb = (method || 'GET').toUpperCase();
-  if (verb !== 'GET') {
-    return true;
-  }
-
-  const parsed = parseUrl(url);
-  const pathname = parsed.pathname;
-  const host = parsed.host;
-
-  // 2) Explicitly whitelisted read-only GET APIs are cacheable.
-  if (READ_ONLY_GET_WHITELIST.indexOf(pathname) !== -1) {
-    return false;
-  }
-
-  // 3) Payment gateway hosts are always online-only regardless of path.
-  if (NETWORK_ONLY_HOSTS.indexOf(host) !== -1) {
-    return true;
-  }
-
-  // 4) Enumerated online-only API paths.
-  if (isOnlineOnlyPath(pathname)) {
-    return true;
-  }
-
-  // 5) Everything else is a cacheable class.
-  return false;
-}
-
-/* ==========================================================================
- * install — all-or-nothing precache of the App_Shell (Req 1.3, 1.4)
- * ======================================================================== */
-
-self.addEventListener('install', function (event) {
+// ── install ─────────────────────────────────────────────────────────────────
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(PRECACHE).then(function (cache) {
-      // cache.addAll is atomic: if ANY request fails, the returned promise
-      // rejects, so the install fails, this worker does NOT activate, and the
-      // previously cached shell is retained (Req 1.4). No partial shell served.
-      return cache.addAll(PRECACHE_URLS);
-    })
+    (async () => {
+      // 1) Critical app shell — all-or-nothing. Install REJECTS (and the new
+      //    worker never activates) if any of these fail. This behavior is
+      //    unchanged: '/' and '/offline' remain in this shell list.
+      const precache = await caches.open(PRECACHE);
+      await precache.addAll(PRECACHE_URLS);
+
+      // 2) Best-effort precache of the other allowlisted page DOCUMENTS
+      //    (never fails install).
+      try {
+        const pages = await caches.open(PAGES);
+        await pages.addAll(EXTRA_PAGE_URLS);
+      } catch (err) {
+        // Non-fatal: any missing page will simply be cached on first online visit.
+        console.warn('[sw] extra page precache failed (non-fatal)', err);
+      }
+
+      // 3) Best-effort precache of every allowlisted route's FULL
+      //    render-dependency set from the build-time manifest: document +
+      //    /_next/static/ JS chunks + CSS (into STATIC) + the route's RSC
+      //    payload (into DATA). A single page/chunk/RSC failure must NOT abort
+      //    install, so the whole step is wrapped and each unit is independent.
+      try {
+        await precacheFromManifest();
+      } catch (err) {
+        // Non-fatal: pages fall back to on-demand caching on first online visit.
+        console.warn('[sw] offline manifest precache failed (non-fatal)', err);
+      }
+    })()
   );
-  // Become the active worker as soon as install succeeds (Req 1.5, 9.4).
   self.skipWaiting();
 });
 
-/* ==========================================================================
- * activate — delete caches not in OWNED, keep serving on failure (Req 1.6, 9.2, 9.3)
- * ======================================================================== */
+// Load the build-time offline manifest and precache each allowlisted route's
+// render-dependency set. Entirely best-effort: any failure (missing manifest,
+// unreachable asset, RSC fetch error) is swallowed so install still succeeds.
+async function precacheFromManifest() {
+  let manifest;
+  try {
+    const res = await fetch(OFFLINE_MANIFEST_URL, { cache: 'no-cache' });
+    if (!res || !res.ok) return;
+    manifest = await res.json();
+  } catch (err) {
+    // No manifest available (e.g. dev / not yet generated) — nothing to do.
+    return;
+  }
+  if (!manifest || typeof manifest !== 'object') return;
 
-self.addEventListener('activate', function (event) {
-  event.waitUntil(
-    (async function () {
-      try {
-        const existing = await caches.keys();
-        const toDelete = cachesToDelete(existing, OWNED);
-        await Promise.all(
-          toDelete.map(function (name) {
-            return caches.delete(name);
-          })
-        );
-      } catch (err) {
-        // If deletion fails, retain the current caches and keep serving; the
-        // stale entries are harmless and cleanup retries on the next activate
-        // (Req 9.3). Never let cleanup failure break activation.
-        // eslint-disable-next-line no-console
-        console.warn('[sw] cache cleanup failed; retrying next activate', err);
+  const pages = await caches.open(PAGES);
+  const staticCache = await caches.open(STATIC);
+  const dataCache = await caches.open(DATA);
+  const precache = await caches.open(PRECACHE);
+
+  // Shared runtime/layout chunks used across routes → STATIC (each independent).
+  const shared = Array.isArray(manifest.shared) ? manifest.shared : [];
+  await cacheAllBestEffort(staticCache, shared);
+
+  const routes = Array.isArray(manifest.routes) ? manifest.routes : [];
+  for (const entry of routes) {
+    // Per-route try/catch: one bad route never aborts the rest (or install).
+    try {
+      await precacheRoute(entry, { pages, staticCache, dataCache, precache });
+    } catch (err) {
+      console.warn('[sw] per-route precache failed (non-fatal)', entry && entry.route, err);
+    }
+  }
+}
+
+// Precache a single manifest route entry: its document, its /_next/static/
+// JS + CSS, and its RSC payload. Every unit is best-effort.
+async function precacheRoute(entry, stores) {
+  if (!entry || typeof entry !== 'object') return;
+  const { pages, staticCache, dataCache, precache } = stores;
+
+  // Document: '/' goes into PRECACHE (shell convention, matching handleNavigate);
+  // every other allowlisted document goes into PAGES.
+  if (entry.document) {
+    const docCache = entry.route === '/' ? precache : pages;
+    await putBestEffort(docCache, entry.document);
+  }
+
+  // JS chunks + CSS → STATIC (served cache-first by the fetch handler).
+  const assets = []
+    .concat(Array.isArray(entry.js) ? entry.js : [])
+    .concat(Array.isArray(entry.css) ? entry.css : []);
+  await cacheAllBestEffort(staticCache, assets);
+
+  // RSC payload → DATA cache. Fetch the route with an `RSC: 1` header so the
+  // server returns the text/x-component payload, and cache it keyed by a request
+  // that mirrors a soft navigation (RSC header set). The fetch handler's
+  // networkFirstData lookup uses ignoreSearch:true, so the changing `?_rsc=`
+  // token between visits does not prevent a match.
+  if (entry.rsc) {
+    try {
+      const rscRequest = new Request(entry.rsc, { headers: { RSC: '1' } });
+      const rscResponse = await fetch(rscRequest);
+      if (rscResponse && rscResponse.ok) {
+        await dataCache.put(rscRequest, rscResponse.clone());
       }
-      // Take control of open clients immediately (Req 9.4, 9.6).
-      await self.clients.claim();
+    } catch (err) {
+      /* best-effort — a failed RSC precache must not abort install */
+    }
+  }
+}
+
+// Fetch and cache every URL independently; a single failure is swallowed so it
+// cannot abort the surrounding precache (or install).
+async function cacheAllBestEffort(cache, urls) {
+  await Promise.all((urls || []).map((url) => putBestEffort(cache, url)));
+}
+
+async function putBestEffort(cache, url) {
+  try {
+    const response = await fetch(url, { cache: 'no-cache' });
+    if (response && (response.ok || response.type === 'opaque')) {
+      await cache.put(url, response.clone());
+    }
+  } catch (err) {
+    /* best-effort — a single asset failure must not abort install */
+  }
+}
+
+// ── activate ────────────────────────────────────────────────────────────────
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    (async () => {
+      try {
+        const keys = await caches.keys();
+        await Promise.all(keys.map((key) => (OWNED.has(key) ? undefined : caches.delete(key))));
+      } catch (err) {
+        console.warn('[sw] cache cleanup failed', err);
+      }
+      try {
+        await self.clients.claim();
+      } catch (err) {
+        console.warn('[sw] clients.claim failed', err);
+      }
     })()
   );
 });
 
-/* ==========================================================================
- * fetch — first-match-wins request routing (per design flowchart)
- * ======================================================================== */
+// ── fetch ─────────────────────────────────────────────────────────────────────
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
 
-self.addEventListener('fetch', function (event) {
-  const request = event.request;
-  const url = request.url;
+  if (request.method !== 'GET') return; // passthrough for non-GET
 
-  // 1) Non-GET OR network-only URL: do NOT call respondWith. The browser/WebView
-  //    performs its normal network fetch so the server response (or the server/
-  //    network error) reaches the app unchanged, preserving online behavior
-  //    (Req 10.1, 10.2, 10.3).
-  if (request.method !== 'GET' || isNetworkOnly(url, request.method)) {
+  let url;
+  try {
+    url = new URL(request.url);
+  } catch (err) {
     return;
   }
+  const pathname = url.pathname;
+  const host = url.hostname;
 
-  const parsed = parseUrl(url);
-  const pathname = parsed.pathname;
-  const host = parsed.host;
-
-  // 2) Navigations: network-first, cache fallback, then precached /offline
-  //    (Req 2.1, 2.6, 3.1-3.5, 7.6).
   if (request.mode === 'navigate') {
-    event.respondWith(handleNavigation(request));
+    event.respondWith(handleNavigate(request, pathname));
     return;
   }
-
-  // 3) /_next/static/** : content-hashed immutable assets -> cache-first.
-  if (pathname.indexOf('/_next/static/') === 0) {
-    event.respondWith(cacheFirst(request, NEXT_STATIC));
+  if (pathname.startsWith('/_next/static/')) {
+    event.respondWith(cacheFirst(request, STATIC));
     return;
   }
-
-  // 4) /practice-banks/** : Practice_Bank assets -> cache-first (Req 4.2, 4.3).
-  if (pathname.indexOf('/practice-banks/') === 0) {
-    event.respondWith(cacheFirst(request, BANKS));
+  if (SWR_HOSTS.has(host)) {
+    event.respondWith(staleWhileRevalidate(request, STATIC));
     return;
   }
-
-  // 5) Font CDNs -> stale-while-revalidate (Req 2.4).
-  if (FONT_HOSTS.indexOf(host) !== -1) {
-    event.respondWith(staleWhileRevalidate(request, FONTS));
+  if (IMAGE_HOSTS.has(host)) {
+    event.respondWith(imageCacheFirst(request, STATIC));
     return;
   }
-
-  // 6) Hero image hosts -> cache-first; on miss+offline serve cached placeholder
-  //    (Req 2.3).
-  if (IMAGE_HOSTS.indexOf(host) !== -1) {
-    event.respondWith(imageWithPlaceholder(request));
+  // RSC / soft-navigation data requests for ALLOWLISTED routes only: serve
+  // network-first with cache fallback into the dedicated DATA cache so offline
+  // in-app (soft) navigations render. Non-allowlisted RSC requests are NOT
+  // intercepted here and keep today's passthrough behavior (preservation).
+  if (isRscRequest(request, url) && isOfflineRoute(pathname)) {
+    event.respondWith(networkFirstData(request, DATA));
     return;
   }
-
-  // 7) Whitelisted read-only GET APIs -> network-first, cache fallback offline
-  //    (Req 5.1).
-  if (READ_ONLY_GET_WHITELIST.indexOf(pathname) !== -1) {
-    event.respondWith(networkFirst(request, API_GET));
-    return;
-  }
-
-  // Anything else: leave to the browser default (no respondWith).
+  // Everything else → passthrough (no caching of other pages/APIs).
 });
 
-/* ==========================================================================
- * Strategy helpers — all defensively wrapped so a cache failure never yields
- * an uncaught rejection that breaks navigation.
- * ======================================================================== */
+// Detect an App Router RSC / soft-navigation data request. Signals (any one):
+//   - the request carries an `RSC` header (App Router sets it on soft navs), or
+//   - the URL has an `?_rsc=` query token.
+// The response content-type (`text/x-component`) is the third signal; it is only
+// observable after fetching, so it is used in networkFirstData to gate caching.
+function isRscRequest(request, url) {
+  try {
+    if (request && request.headers && typeof request.headers.get === 'function') {
+      if (request.headers.get('RSC')) return true;
+    }
+  } catch (err) {
+    /* header access can throw in some engines — fall through to URL check */
+  }
+  try {
+    if (url && url.searchParams && url.searchParams.has('_rsc')) return true;
+  } catch (err) {
+    /* ignore */
+  }
+  return false;
+}
 
-// Network-first for navigations: try the network, cache a copy of successful
-// responses into PAGES, and on failure serve the cached page or the precached
-// /offline fallback so the WebView never shows a native error (Req 7.6).
-async function handleNavigation(request) {
+// True when a fetched response looks like an RSC/data payload.
+function isRscResponse(response) {
+  try {
+    const type = response && response.headers && response.headers.get('Content-Type');
+    return typeof type === 'string' && type.indexOf('text/x-component') !== -1;
+  } catch (err) {
+    return false;
+  }
+}
+
+// ── navigation: network-first for allowlisted routes; offline → cache or /offline ──
+async function handleNavigate(request, pathname) {
+  const allowed = isOfflineRoute(pathname);
   try {
     const response = await fetch(request);
-    if (response && response.ok) {
-      // Cache a copy for offline re-view (Req 2.1, 3.1-3.4). Best-effort.
+    if (allowed && response && response.ok) {
       try {
-        const copy = response.clone();
-        const cache = await caches.open(PAGES);
-        await cache.put(request, copy);
-      } catch (e) {
-        /* ignore cache write failures */
+        const cacheName = pathname === '/' ? PRECACHE : PAGES;
+        const cache = await caches.open(cacheName);
+        await cache.put(request, response.clone());
+      } catch (err) {
+        /* best-effort */
       }
     }
     return response;
   } catch (err) {
-    // Offline (or network error): serve cached page, else the offline fallback.
-    try {
-      const cached = await caches.match(request, { ignoreSearch: true });
+    // Offline.
+    if (allowed) {
+      const cached =
+        (await safeMatch(PAGES, request)) ||
+        (await safeMatch(PRECACHE, request)) ||
+        (pathname === '/' ? await safeMatchUrl(PRECACHE, '/') : undefined);
       if (cached) return cached;
-    } catch (e) {
-      /* fall through to offline page */
     }
-    const offline = await caches.match('/offline');
+    const offline = await safeMatchUrl(PRECACHE, '/offline');
     if (offline) return offline;
-    // Last-resort: a minimal offline response so we never surface a native error.
-    return new Response('<h1>Offline</h1>', {
-      status: 503,
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
-    });
+    return new Response(
+      '<!doctype html><meta charset="utf-8"><title>Offline</title>' +
+        '<body style="font-family:system-ui;background:#0b1220;color:#e2e8f0;' +
+        'display:flex;align-items:center;justify-content:center;height:100vh;margin:0">' +
+        "<p>You're offline — connect to the internet.</p></body>",
+      { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8' } }
+    );
   }
 }
 
-// Cache-first: serve the cached copy if present; otherwise fetch, cache a copy,
-// and return it. Content-hashed static assets are inherently safe to cache-first
-// because a new release changes the URL, so no stale-content risk (Req 9 update
-// strategy for immutable assets).
-async function cacheFirst(request, cacheKey) {
-  try {
-    const cached = await caches.match(request);
-    if (cached) return cached;
-  } catch (e) {
-    /* fall through to network */
-  }
+// ── strategy helpers ──────────────────────────────────────────────────────────
+
+// Network-first with cache fallback for RSC / soft-navigation data payloads of
+// allowlisted routes. Online, the live network response is returned unchanged
+// (preserving online rendering) and cached for later offline use; offline, the
+// cached payload for the route is served so the soft navigation renders. If
+// nothing is cached, the failed fetch is surfaced to the client exactly as
+// today's passthrough would (no fabricated response).
+async function networkFirstData(request, cacheName) {
   try {
     const response = await fetch(request);
-    if (response && (response.ok || response.type === 'opaque')) {
+    // Cache successful RSC/data responses (best-effort). Accept the response
+    // when it is ok — for an allowlisted-route RSC request this is the payload
+    // we need offline; prefer the text/x-component signal but do not require it,
+    // since some engines omit/normalize the header.
+    if (response && response.ok && (isRscResponse(response) || request.mode !== 'navigate')) {
       try {
-        const copy = response.clone();
-        const cache = await caches.open(cacheKey);
-        await cache.put(request, copy);
-      } catch (e) {
-        /* ignore cache write failures */
+        const cache = await caches.open(cacheName);
+        await cache.put(request, response.clone());
+      } catch (err) {
+        /* best-effort */
       }
     }
     return response;
   } catch (err) {
-    // Offline miss: return a cached match one more time if any, else 503.
-    const cached = await safeMatch(request);
+    // Offline — serve the cached RSC payload for this route. ignoreSearch:true
+    // (via safeMatch) tolerates a changed `?_rsc=` token between visits.
+    const cached = await safeMatch(cacheName, request);
     if (cached) return cached;
-    return new Response('', { status: 503, statusText: 'Offline' });
+    // Nothing cached: surface the network failure, matching prior passthrough.
+    return Response.error();
   }
 }
 
-// Network-first: try the network and cache a copy; on failure serve the cached
-// response (Req 5.1). Keeps online responses always live.
-async function networkFirst(request, cacheKey) {
+async function cacheFirst(request, cacheName) {
   try {
+    const cache = await caches.open(cacheName);
+    const cached = await cache.match(request);
+    if (cached) return cached;
     const response = await fetch(request);
-    if (response && response.ok) {
-      try {
-        const copy = response.clone();
-        const cache = await caches.open(cacheKey);
-        await cache.put(request, copy);
-      } catch (e) {
-        /* ignore cache write failures */
-      }
+    try {
+      await cache.put(request, response.clone());
+    } catch (err) {
+      /* best-effort */
     }
     return response;
   } catch (err) {
-    const cached = await safeMatch(request);
-    if (cached) return cached;
-    return new Response('', { status: 503, statusText: 'Offline' });
+    const fallback = await safeMatch(cacheName, request);
+    if (fallback) return fallback;
+    return Response.error();
   }
 }
 
-// Stale-while-revalidate: serve cached immediately if present while refreshing
-// in the background; otherwise wait for the network. On total failure fall back
-// to whatever is cached (Req 2.4 — cached/system font fallback keeps text visible).
-async function staleWhileRevalidate(request, cacheKey) {
-  const cached = await safeMatch(request);
-  const network = fetch(request)
-    .then(async function (response) {
-      if (response && (response.ok || response.type === 'opaque')) {
-        try {
-          const copy = response.clone();
-          const cache = await caches.open(cacheKey);
-          await cache.put(request, copy);
-        } catch (e) {
-          /* ignore cache write failures */
-        }
-      }
-      return response;
-    })
-    .catch(function () {
-      return null;
-    });
-
-  if (cached) {
-    // Kick off the revalidation but do not block on it.
-    event_noop(network);
-    return cached;
+async function staleWhileRevalidate(request, cacheName) {
+  try {
+    const cache = await caches.open(cacheName);
+    const cached = await cache.match(request);
+    const networkPromise = fetch(request)
+      .then((response) => {
+        cache.put(request, response.clone()).catch(() => {});
+        return response;
+      })
+      .catch(() => undefined);
+    return cached || (await networkPromise) || Response.error();
+  } catch (err) {
+    return Response.error();
   }
-  const response = await network;
-  if (response) return response;
-  return new Response('', { status: 503, statusText: 'Offline' });
 }
 
-// Hero images: cache-first; on a miss while offline return the cached shared
-// placeholder occupying the same layout box (Req 2.3).
-async function imageWithPlaceholder(request) {
+async function imageCacheFirst(request, cacheName) {
   try {
-    const cached = await caches.match(request);
+    const cache = await caches.open(cacheName);
+    const cached = await cache.match(request);
     if (cached) return cached;
-  } catch (e) {
-    /* fall through to network */
-  }
-  try {
     const response = await fetch(request);
-    if (response && (response.ok || response.type === 'opaque')) {
-      try {
-        const copy = response.clone();
-        const cache = await caches.open(IMAGES);
-        await cache.put(request, copy);
-      } catch (e) {
-        /* ignore cache write failures */
-      }
+    try {
+      await cache.put(request, response.clone());
+    } catch (err) {
+      /* best-effort */
     }
     return response;
   } catch (err) {
-    // Offline + not cached: serve the precached placeholder (Req 2.3).
-    const placeholder = await caches.match(HERO_PLACEHOLDER_URL);
-    if (placeholder) return placeholder;
-    return new Response('', { status: 503, statusText: 'Offline' });
+    try {
+      const precache = await caches.open(PRECACHE);
+      const placeholder = await precache.match(HERO_PLACEHOLDER);
+      if (placeholder) return placeholder;
+    } catch (cacheErr) {
+      /* fall through */
+    }
+    return Response.error();
   }
 }
 
-// Best-effort caches.match that never throws.
-async function safeMatch(request) {
+async function safeMatch(cacheName, request) {
   try {
-    return await caches.match(request);
-  } catch (e) {
+    const cache = await caches.open(cacheName);
+    return await cache.match(request, { ignoreSearch: true });
+  } catch (err) {
     return undefined;
   }
 }
 
-// Swallow a background promise without an unhandled rejection.
-function event_noop(promise) {
-  if (promise && typeof promise.then === 'function') {
-    promise.then(
-      function () {},
-      function () {}
-    );
+async function safeMatchUrl(cacheName, urlPath) {
+  try {
+    const cache = await caches.open(cacheName);
+    return await cache.match(urlPath);
+  } catch (err) {
+    return undefined;
   }
 }

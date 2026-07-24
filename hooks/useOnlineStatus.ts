@@ -27,11 +27,17 @@ function getCurrentState(): ConnectivityState {
 }
 
 export function useOnlineStatus(): ConnectivityState {
-    // Initialize synchronously so the first render reflects launch-time state (Req 8.5).
-    const [state, setState] = useState<ConnectivityState>(getCurrentState);
+    // IMPORTANT (hydration safety): the first client render MUST match the server
+    // render, which has no `navigator` and therefore resolves to 'online'. If we
+    // initialized from `navigator.onLine` here, an offline device would render
+    // 'offline' on the client while the server rendered 'online', causing a React
+    // hydration mismatch. So we start from a stable 'online' and correct to the
+    // real connectivity in the effect below (runs immediately after mount, well
+    // within the Req 8.5 launch-time budget).
+    const [state, setState] = useState<ConnectivityState>('online');
 
     useEffect(() => {
-        // Re-sync on mount in case connectivity changed between initial render and effect.
+        // Reflect the real connectivity as soon as we're on the client.
         setState(getCurrentState());
 
         const handleOnline = () => setState('online');
