@@ -4,9 +4,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import watData from '@/data/practice/wat01.json';
-import { useOnlineStatus } from '@/hooks/useOnlineStatus';
-import OfflineFallback from '@/components/offline/OfflineFallback';
-import { saveDraft, type Draft } from '@/lib/offline/draftStore';
 
 type GameState = 'start' | 'test' | 'result';
 
@@ -22,7 +19,6 @@ function playShutter() {
 
 export default function WATModule() {
     const router = useRouter();
-    const connectivity = useOnlineStatus();
     const [gameState, setGameState] = useState<GameState>('start');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [timeLeft, setTimeLeft] = useState(15);
@@ -32,11 +28,6 @@ export default function WATModule() {
     // Evaluation state
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [evaluationResult, setEvaluationResult] = useState<any>(null);
-    // Set when a submission was attempted while offline: AI evaluation is
-    // online-only, so we surface a message and retain the user's entered words.
-    const [offlineNotice, setOfflineNotice] = useState(false);
-    // Set when the offline draft could not be persisted locally (quota exceeded).
-    const [draftSaveFailed, setDraftSaveFailed] = useState(false);
 
     const totalWords = 60; // Usually 60 words in WAT
     const wordsList = watData.slice(0, totalWords); // taking first 60 just in case
@@ -64,33 +55,25 @@ export default function WATModule() {
     }, [currentIndex, gameState]);
 
     const handleStart = async () => {
-        // When offline, skip the online-only access gate and proceed against the
-        // already-bundled WAT questions (Req 4.5, 7.1). The ONLINE path below is
-        // unchanged.
-        if (connectivity === 'online') {
-            // Verify Access
-            const accessRes = await fetch('/api/practice/check-access?module=WAT');
-            if (accessRes.status === 401) {
-                router.push('/auth');
-                return;
-            }
-            const accessData = await accessRes.json();
-            if (!accessData.allowed) {
-                router.push('/pricing');
-                return;
-            }
-
-            // Consume Attempt (POST)
-            await fetch('/api/practice/check-access', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ module: 'WAT' })
-            });
+        // Verify Access
+        const accessRes = await fetch('/api/practice/check-access?module=WAT');
+        if (accessRes.status === 401) {
+            router.push('/auth');
+            return;
+        }
+        const accessData = await accessRes.json();
+        if (!accessData.allowed) {
+            router.push('/pricing');
+            return;
         }
 
-        setOfflineNotice(false);
-        setDraftSaveFailed(false);
-        setEvaluationResult(null);
+        // Consume Attempt (POST)
+        await fetch('/api/practice/check-access', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ module: 'WAT' })
+        });
+
         setGameState('test');
         setCurrentIndex(0);
         setTimeLeft(15);
@@ -121,34 +104,6 @@ export default function WATModule() {
     };
 
     const submitTest = async (finalAnswers: typeof answers) => {
-        // WAT scoring is an online-only AI evaluation (`/api/wat/submit`). When
-        // offline (Req 6.1, 6.2, 6.7, 7.2), save the submission payload as a pending
-        // Draft in the Local_Draft_Store so the existing syncManager/useDraftSync
-        // auto-submits it on reconnect, and surface a message while retaining the
-        // entered words in `answers`/`finalAnswers` so nothing is lost. Guard all
-        // IndexedDB access so a storage failure never breaks the UI.
-        if (connectivity === 'offline') {
-            setOfflineNotice(true);
-            setIsSubmitting(false);
-            try {
-                const draft: Draft = {
-                    id: 'wat:' + Date.now(),
-                    flow: 'wat',
-                    payload: { responses: finalAnswers },
-                    endpoint: '/api/wat/submit',
-                    updatedAt: Date.now(),
-                    status: 'pending',
-                    attempts: 0,
-                };
-                const result = await saveDraft(draft);
-                setDraftSaveFailed(result === 'quota-exceeded');
-            } catch (err) {
-                console.error('Failed to save WAT draft locally:', err);
-                setDraftSaveFailed(true);
-            }
-            return;
-        }
-
         setIsSubmitting(true);
         try {
             // Auth is resolved server-side from the session cookie.
@@ -327,28 +282,7 @@ export default function WATModule() {
                     {gameState === 'result' && (
                         <div className="bg-white/95 backdrop-blur-md p-8 sm:p-16 rounded-[3rem] border border-white shadow-2xl">
 
-                            {offlineNotice ? (
-                                <div className="py-4">
-                                    <OfflineFallback
-                                        title="Saved — will submit when you're back online"
-                                        message="Your responses have been saved on this device. AI scoring for the WAT is done online, so we'll automatically submit them and fetch your analysis as soon as you reconnect."
-                                        onRetry={() => submitTest(answers)}
-                                    />
-                                    {draftSaveFailed && (
-                                        <p className="mt-4 text-center text-sm font-noname text-red-600">
-                                            Heads up: your latest changes couldn&apos;t be saved locally (device storage is full). Free up space, or stay on this screen and retry once you&apos;re back online.
-                                        </p>
-                                    )}
-                                    <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-                                        <Link
-                                            href="/practice"
-                                            className="px-10 py-4 rounded-full bg-brand-bg border-2 border-gray-200 text-brand-dark font-bold text-lg hover:border-brand-dark transition-all hover:-translate-y-0.5 text-center"
-                                        >
-                                            <i className="fa-solid fa-dumbbell mr-2"></i> Go to Practice
-                                        </Link>
-                                    </div>
-                                </div>
-                            ) : isSubmitting || !evaluationResult ? (
+                            {isSubmitting || !evaluationResult ? (
                                 <div className="py-20 flex flex-col items-center justify-center text-center">
                                     <div className="w-16 h-16 border-4 border-gray-200 border-t-brand-orange rounded-full animate-spin mb-6"></div>
                                     <h2 className="text-2xl font-hero font-bold text-brand-dark mb-2">Analyzing Responses...</h2>

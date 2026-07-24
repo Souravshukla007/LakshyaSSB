@@ -4,11 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 import QuizInterface from '@/components/current-affairs/QuizInterface';
 import QuizResult from '@/components/current-affairs/QuizResult';
-import { useOnlineStatus } from '@/hooks/useOnlineStatus';
-import OfflineFallback from '@/components/offline/OfflineFallback';
 
 export default function CurrentAffairsQuizPage() {
-    const connectivity = useOnlineStatus();
     const [status, setStatus] = useState<'intro' | 'playing' | 'result'>('intro');
     const [quizData, setQuizData] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -42,20 +39,6 @@ export default function CurrentAffairsQuizPage() {
         setTimeTaken(600 - timeLeft); // 10 mins (600s) default
         setStatus('result');
     };
-
-    // Online-only capability: the quiz is generated/scored server-side via AI. While offline,
-    // render the friendly fallback instead of a failing loader. Re-enables automatically when
-    // connectivity returns (Req 7.1, 7.5, 7.6).
-    if (connectivity === 'offline') {
-        return (
-            <main className="antialiased font-sans bg-brand-bg relative min-h-screen pt-32 pb-20 px-6 flex items-start justify-center">
-                <OfflineFallback
-                    title="Quiz needs internet"
-                    message="This feature needs an internet connection."
-                />
-            </main>
-        );
-    }
 
     return (
         <main className="antialiased font-sans bg-brand-bg relative min-h-screen pt-32 pb-20 px-6">

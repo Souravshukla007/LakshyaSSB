@@ -6,8 +6,6 @@ import { useState, useEffect } from 'react';
 import useScrollReveal from "@/hooks/useScrollReveal";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useOnlineStatus } from '@/hooks/useOnlineStatus';
-import OfflineFallback from '@/components/offline/OfflineFallback';
 
 const FREE_FEATURES = [
     { text: "1 OIR test (limited)", included: true },
@@ -46,7 +44,6 @@ const COMPARISON_ROWS = [
 export default function Pricing() {
     useScrollReveal();
     const router = useRouter();
-    const connectivity = useOnlineStatus();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -57,20 +54,6 @@ export default function Pricing() {
             .catch(() => null);
         return () => { isMounted = false; };
     }, []);
-
-    // Online-only capability: upgrading routes into the payment gateway (Razorpay). While offline,
-    // render the friendly fallback instead of pricing CTAs that cannot proceed to payment.
-    // Re-enables automatically when connectivity returns (Req 7.1, 7.5, 7.6).
-    if (connectivity === 'offline') {
-        return (
-            <main className="antialiased font-sans bg-brand-bg min-h-screen pt-32 pb-20 px-6 flex items-start justify-center">
-                <OfflineFallback
-                    title="Pricing needs internet"
-                    message="This feature needs an internet connection."
-                />
-            </main>
-        );
-    }
 
     return (
         <main className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg">
