@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-    title: "Contact Us | LakshyaSSB",
+    // Bare page name: the root layout's title template appends "| LakshyaSSB".
+    title: "Contact Us",
     description:
         "Get in touch with the LakshyaSSB support team for billing, subscription, or platform queries. We typically respond within 24 business hours.",
 };

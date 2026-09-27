@@ -1,4 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+// Model name lives in lib/ai-eval.ts so a retirement is a one-line fix, not four.
+import { GEMINI_MODEL } from '@/lib/ai-eval';
 
 // Initialize Gemini
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
@@ -43,7 +45,7 @@ function getRetryDelayMs(error: any): number {
 
 export async function processNewsWithAI(title: string, content: string, retries = 3): Promise<SSBParsedNews | null> {
     const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash",
+        model: GEMINI_MODEL,
         generationConfig: { responseMimeType: "application/json" }
     });
     const prompt = PROMPT_TEMPLATE.replace("{TITLE}", title).replace("{CONTENT}", content);

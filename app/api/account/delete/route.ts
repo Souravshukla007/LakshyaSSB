@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { cookies } from 'next/headers';
-import { getSession } from '@/lib/auth';
+import { getSession, clearSessionCookie } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 /**
@@ -43,8 +42,11 @@ export async function DELETE(request: NextRequest) {
     // Cascade delete payments via schema onDelete: Cascade
     await prisma.user.delete({ where: { id: session.userId } });
 
-    // Clear session cookie
-    (await cookies()).set('session', '', { expires: new Date(0), path: '/' });
+    // Clear the cookie with attributes mirroring how it was set. Tokens still held
+    // by other devices now fail `getSession()` because the user row is gone, so
+    // they are rejected cleanly instead of reaching handlers that assume the user
+    // exists and hitting foreign-key errors.
+    await clearSessionCookie();
 
     return NextResponse.json({ success: true });
 }

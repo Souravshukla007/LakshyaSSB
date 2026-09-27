@@ -43,6 +43,11 @@ const config: CapacitorConfig = {
   plugins: {
     GoogleAuth: {
       scopes: ["profile", "email"],
+      // Android's native initialize() reads `androidClientId` → `clientId` →
+      // R.string.server_client_id, and NEVER `serverClientId`. Keep `clientId`
+      // set so the config fallback works even if the JS call omits it.
+      clientId: "822781441102-hssrs7efk670i9o8m9nes0b3gp16b8br.apps.googleusercontent.com",
+      androidClientId: "822781441102-hssrs7efk670i9o8m9nes0b3gp16b8br.apps.googleusercontent.com",
       serverClientId: "822781441102-hssrs7efk670i9o8m9nes0b3gp16b8br.apps.googleusercontent.com",
       forceCodeForRefreshToken: true,
     },

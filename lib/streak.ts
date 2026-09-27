@@ -1,6 +1,14 @@
 import { prisma } from '@/lib/prisma';
 
-export type PracticeActivityType = 'WAT' | 'SRT' | 'OIR' | 'LECTURETTE' | 'NEWS' | 'FITNESS';
+export type PracticeActivityType =
+  | 'WAT'
+  | 'TAT'
+  | 'SRT'
+  | 'GPE'
+  | 'OIR'
+  | 'LECTURETTE'
+  | 'NEWS'
+  | 'FITNESS';
 
 const MILESTONE_BONUS: Record<number, number> = {
   7: 5,
@@ -9,9 +17,7 @@ const MILESTONE_BONUS: Record<number, number> = {
   60: 25,
 };
 
-function toISTDateString(d: Date = new Date()) {
-  return d.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
-}
+import { toISTDateString } from '@/lib/ist';
 
 function toDateParts(key: string) {
   const [y, m, d] = key.split('-').map(Number);
@@ -86,6 +92,9 @@ export async function completePracticeForUser(userId: string, activityType: Prac
     const logs = await tx.activityLog.findMany({
       where: { userId, action: { startsWith: 'PRACTICE_COMPLETE_' } },
       orderBy: { createdAt: 'desc' },
+      // A streak only ever depends on recent consecutive days, so there is no
+      // reason to load a user's entire practice history to compute it.
+      take: 400,
       select: { action: true },
     });
 

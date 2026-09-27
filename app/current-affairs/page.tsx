@@ -16,8 +16,16 @@ export default function CurrentAffairsPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
 
-    // Add news value as a dependency to scroll reveal
-    useScrollReveal([news.length]);
+    /**
+     * Re-scan for reveal targets whenever the rendered set changes, not just when
+     * the news array changes size.
+     *
+     * `[news.length]` alone was the bug: switching category remounts the card grid
+     * (which itself carries `.reveal`) without changing `news.length`, so the fresh
+     * node never got observed and stayed at `opacity: 0`. The hook is now robust to
+     * this on its own via a MutationObserver, but these deps state the intent.
+     */
+    useScrollReveal([news.length, selectedCategory, searchQuery]);
 
     useEffect(() => {
         fetch('/api/current-affairs')
@@ -34,7 +42,30 @@ export default function CurrentAffairsPage() {
             .finally(() => setIsLoading(false));
     }, []);
 
-    const categories = ['All', 'Defence', 'International', 'India', 'Economy', 'Science'];
+    /**
+     * Canonical display order. Only categories that actually appear in the loaded
+     * news are offered as filters.
+     *
+     * This list used to be hard-coded, which meant the bar always advertised
+     * Defence, International, India, Economy and Science. In practice
+     * `getCategory()` in lib/ssb-enhancer.ts checks its Defence rule first with a
+     * very broad keyword set, and the news feed is itself defence-focused — so
+     * every stored article came back "Defence" and four of the six buttons could
+     * never match anything. Clicking them looked like the page had broken.
+     */
+    const CATEGORY_ORDER = ['Defence', 'International', 'India', 'Economy', 'Science'];
+
+    const presentCategories = new Set(
+        news.map((item) => (item?.category || '').trim()).filter(Boolean),
+    );
+
+    const categories = [
+        'All',
+        ...CATEGORY_ORDER.filter((c) => presentCategories.has(c)),
+        // Surface anything the pipeline produced that is not in the canonical list,
+        // rather than silently hiding those articles behind "All" only.
+        ...[...presentCategories].filter((c) => !CATEGORY_ORDER.includes(c)).sort(),
+    ];
 
     const filteredNews = news.filter((item) => {
         if (!item) return false;
@@ -91,8 +122,15 @@ export default function CurrentAffairsPage() {
                         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <Search className="h-5 w-5 text-gray-400" />
                         </div>
+                        {/* id/name/aria-label added: the field had none, so it was
+                            unlabelled for screen readers and browsers logged
+                            "A form field element should have an id or name attribute".
+                            type="search" also gives mobile keyboards a search key. */}
                         <input
-                            type="text"
+                            id="current-affairs-search"
+                            name="current-affairs-search"
+                            type="search"
+                            aria-label="Search current affairs and GD topics"
                             className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl text-sm font-noname focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all shadow-sm"
                             placeholder="Search current affairs, GD topics..."
                             value={searchQuery}

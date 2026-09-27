@@ -3,6 +3,11 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import {
+    EvaluationError,
+    toEvaluationFailure,
+    type EvaluationFailure,
+} from '@/components/practice/EvaluationState';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 type ViewState = 'intro' | 'test' | 'result';
@@ -43,24 +48,29 @@ export default function GPEPracticePage() {
 
     const [isEvaluating, setIsEvaluating] = useState(false);
     const [evaluationResult, setEvaluationResult] = useState<any>(null);
+    const [failure, setFailure] = useState<EvaluationFailure | null>(null);
 
     const handleStart = async () => {
-        // ... access checks ...
+        // Advisory pre-flight only; /api/gpe/evaluate holds the authoritative gate.
         const accessRes = await fetch('/api/practice/check-access?module=GPE');
         if (accessRes.status === 401) { router.push('/auth'); return; }
         const accessData = await accessRes.json();
         if (!accessData.allowed) { router.push('/pricing'); return; }
 
-        await fetch('/api/practice/check-access', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ module: 'GPE' }),
-        });
-
         const res = await fetch('/api/gpe/scenario');
+        if (res.status === 401) { router.push('/auth'); return; }
+        if (!res.ok) {
+            setFailure({
+                reason: 'load_failed',
+                message: 'We could not load a GPE scenario. Please try again.',
+            });
+            setView('result');
+            return;
+        }
         const data: GPEScenario = await res.json();
         setScenario(data);
 
+        setFailure(null);
         setIdentifyProblems('');
         setActionPlan('');
         setTimeManagement('');
@@ -72,6 +82,7 @@ export default function GPEPracticePage() {
     const submitGPE = async () => {
         if (!scenario) return;
         setIsEvaluating(true);
+        setFailure(null);
         setView('result');
         try {
             const res = await fetch('/api/gpe/evaluate', {
@@ -88,9 +99,15 @@ export default function GPEPracticePage() {
             if (res.ok) {
                 const data = await res.json();
                 setEvaluationResult(data);
+            } else {
+                setFailure(await toEvaluationFailure(res));
             }
         } catch (error) {
             console.error('GPE Submission Error:', error);
+            setFailure({
+                reason: 'network',
+                message: 'We could not reach the server. Check your connection and retry.',
+            });
         } finally {
             setIsEvaluating(false);
         }
@@ -321,6 +338,8 @@ export default function GPEPracticePage() {
                                     <h3 className="text-lg font-bold text-gray-900">Officer is reviewing your plan...</h3>
                                     <p className="text-sm text-gray-500">Evaluating your reasoning ability and organizing skills.</p>
                                 </div>
+                            ) : failure ? (
+                                <EvaluationError failure={failure} onRetry={submitGPE} />
                             ) : evaluationResult ? (
                                 <div className="animate-fadeIn space-y-8">
                                     {/* Overall Score */}

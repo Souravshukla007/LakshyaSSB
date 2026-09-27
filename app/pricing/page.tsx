@@ -45,12 +45,19 @@ export default function Pricing() {
     useScrollReveal();
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isPro, setIsPro] = useState(false);
 
     useEffect(() => {
         let isMounted = true;
         fetch('/api/auth/status')
             .then(res => res.ok ? res.json() : null)
-            .then(data => { if (isMounted && data?.isLoggedIn) setIsLoggedIn(true); })
+            .then(data => {
+                if (!isMounted || !data?.isLoggedIn) return;
+                setIsLoggedIn(true);
+                // Pro is a one-time lifetime purchase. Showing "Upgrade to Pro" to
+                // someone who already owns it walked them into paying ₹9 twice.
+                if (data.plan === 'PRO') setIsPro(true);
+            })
             .catch(() => null);
         return () => { isMounted = false; };
     }, []);
@@ -134,18 +141,35 @@ export default function Pricing() {
                                 </ul>
                             </div>
                             <div>
-                                <button
-                                    onClick={() => router.push(isLoggedIn ? '/checkout' : '/auth')}
-                                    className="w-full py-4 bg-brand-dark text-white rounded-full font-bold text-center hover:bg-brand-orange transition-all shadow-xl shadow-brand-dark/20 block"
-                                >
-                                    Upgrade to Pro
-                                </button>
-                                <p className="text-center text-xs text-gray-400 mt-3">
-                                    One-time purchase · No auto-renewal ·{" "}
-                                    <Link href="/refund-policy" className="text-brand-orange hover:underline">
-                                        Refund Policy
-                                    </Link>
-                                </p>
+                                {isPro ? (
+                                    <>
+                                        <button
+                                            onClick={() => router.push('/practice')}
+                                            className="w-full py-4 bg-green-600 text-white rounded-full font-bold text-center hover:bg-green-500 transition-all shadow-xl shadow-green-900/20 block"
+                                        >
+                                            <i className="fa-solid fa-circle-check mr-2" />
+                                            You already have Pro
+                                        </button>
+                                        <p className="text-center text-xs text-gray-400 mt-3">
+                                            Lifetime access is already active on your account — nothing more to pay.
+                                        </p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={() => router.push(isLoggedIn ? '/checkout' : '/auth')}
+                                            className="w-full py-4 bg-brand-dark text-white rounded-full font-bold text-center hover:bg-brand-orange transition-all shadow-xl shadow-brand-dark/20 block"
+                                        >
+                                            Upgrade to Pro
+                                        </button>
+                                        <p className="text-center text-xs text-gray-400 mt-3">
+                                            One-time purchase · No auto-renewal ·{" "}
+                                            <Link href="/refund-policy" className="text-brand-orange hover:underline">
+                                                Refund Policy
+                                            </Link>
+                                        </p>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>

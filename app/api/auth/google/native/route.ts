@@ -63,10 +63,34 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        // The interface declared `iss` but nothing ever checked it. tokeninfo only
+        // accepts Google-issued tokens so this is belt-and-braces, but an explicit
+        // issuer check costs nothing and documents the trust boundary.
+        const validIssuers = ['accounts.google.com', 'https://accounts.google.com'];
+        if (payload.iss && !validIssuers.includes(payload.iss)) {
+            console.error('[google-native] Token issuer mismatch:', payload.iss);
+            return NextResponse.json(
+                { error: 'Token was not issued by Google.' },
+                { status: 401 }
+            );
+        }
+
         if (!payload.email) {
             return NextResponse.json(
                 { error: 'No email address found in Google account.' },
                 { status: 400 }
+            );
+        }
+
+        // tokeninfo returns email_verified as the string "true"/"false".
+        const emailVerified =
+            payload.email_verified === true || String(payload.email_verified) === 'true';
+        if (!emailVerified) {
+            return NextResponse.json(
+                {
+                    error: 'Your Google email is not verified. Verify it with Google and try again.',
+                },
+                { status: 403 }
             );
         }
 
@@ -86,11 +110,14 @@ export async function POST(request: NextRequest) {
                 fullName: true,
                 plan: true,
                 googleId: true,
+                tokenVersion: true,
             },
         });
 
         if (user) {
-            // Existing user — link Google account if not already linked
+            // Existing user — link Google account if not already linked.
+            // Only safe because email_verified was checked above; otherwise this
+            // is an account-takeover path via a pre-registered email.
             if (!user.googleId) {
                 await prisma.user.update({
                     where: { id: user.id },
@@ -117,6 +144,7 @@ export async function POST(request: NextRequest) {
                     fullName: true,
                     plan: true,
                     googleId: true,
+                    tokenVersion: true,
                 },
             });
         }
@@ -126,6 +154,7 @@ export async function POST(request: NextRequest) {
             userId: user.id,
             email: user.email,
             plan: user.plan as 'FREE' | 'PRO',
+            tokenVersion: user.tokenVersion,
         });
 
         // Log login activity

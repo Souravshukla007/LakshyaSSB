@@ -14,7 +14,8 @@ const config: Config = {
                 brand: {
                     bg: '#FFFBF6',
                     dark: '#0F0F12',
-                    orange: '#FF5E3A',
+                    orange: '#FA5C39',
+                    orangeInk: '#BD462B', // AA-safe orange for SMALL text on light bg (5.15:1 white, 5.00:1 cream, 4.61:1 on orange tints). Keep brand.orange for fills/borders/large display.
                     purple: '#7C3AED',
                     green: '#10B981',
                     yellow: '#FBBF24',

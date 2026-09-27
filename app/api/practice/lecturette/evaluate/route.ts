@@ -1,46 +1,71 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { getSession } from '@/lib/auth';
+import { requireUser } from '@/lib/entitlement';
 import { awardMedals } from '@/lib/medals';
-import { freeEvalLimitReached, recordEvalCompletion } from '@/lib/practice-limit';
+import { claimFreeEval, releaseFreeEval } from '@/lib/practice-limit';
+import { generateJson, aiErrorResponse, toScore, toStringArray } from '@/lib/ai-eval';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+/** Audio bodies are large; refuse anything implausible before buffering it. */
+const MAX_AUDIO_BYTES = 15 * 1024 * 1024; // 15 MB
+
+function toTenPoint(value: unknown): number {
+    const n = typeof value === 'string' ? Number(value) : value;
+    if (typeof n !== 'number' || !Number.isFinite(n)) return 0;
+    return Math.max(0, Math.min(10, Math.round(n)));
+}
+
+function toText(value: unknown): string {
+    return typeof value === 'string' ? value.trim() : '';
+}
 
 export async function POST(req: NextRequest) {
+    const gate = await requireUser();
+    if (gate.response) return gate.response;
+    const { userId, isPro } = gate.entitlement;
+
+    let formData: FormData;
     try {
-        const session = await getSession();
-        if (!session?.userId) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        formData = await req.formData();
+    } catch {
+        return NextResponse.json({ error: 'Invalid form submission' }, { status: 400 });
+    }
 
-        // Enforce FREE-tier single-attempt limit server-side
-        if (await freeEvalLimitReached(session.userId, session.plan, 'LECTURETTE')) {
-            return NextResponse.json(
-                { error: 'Free limit reached. Upgrade to Pro for unlimited attempts.', reason: 'free_limit_reached' },
-                { status: 403 },
-            );
-        }
+    const audioFile = formData.get('audio');
+    const topic = formData.get('topic');
 
-        const formData = await req.formData();
-        const audioFile = formData.get('audio') as File;
-        const topic = formData.get('topic') as string;
-        const durationSeconds = parseInt(formData.get('duration') as string || '180');
+    if (!(audioFile instanceof File) || typeof topic !== 'string' || !topic.trim()) {
+        return NextResponse.json({ error: 'Missing audio or topic' }, { status: 400 });
+    }
+    if (audioFile.size === 0) {
+        return NextResponse.json(
+            { error: 'The recording was empty, so there is nothing to evaluate.', reason: 'empty_submission' },
+            { status: 400 },
+        );
+    }
+    if (audioFile.size > MAX_AUDIO_BYTES) {
+        return NextResponse.json(
+            { error: 'That recording is too large. Keep it under 15 MB.', reason: 'payload_too_large' },
+            { status: 413 },
+        );
+    }
 
-        if (!audioFile || !topic) {
-            return NextResponse.json({ error: 'Missing audio or topic' }, { status: 400 });
-        }
+    const claimed = await claimFreeEval(userId, isPro, 'LECTURETTE');
+    if (!claimed) {
+        return NextResponse.json(
+            {
+                error: 'You have used your free Lecturette evaluation. Upgrade to Pro for unlimited attempts.',
+                reason: 'free_limit_reached',
+                upgradeUrl: '/pricing',
+            },
+            { status: 403 },
+        );
+    }
 
-        // Convert File to base64 for Gemini
+    try {
         const arrayBuffer = await audioFile.arrayBuffer();
         const base64Audio = Buffer.from(arrayBuffer).toString('base64');
 
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash",
-            generationConfig: { responseMimeType: "application/json" }
-        });
-
         const prompt = `Analyze this audio recording of a candidate delivering an SSB Lecturette speech on the topic: "${topic}".
-        
+
         Provide a detailed evaluation in JSON format with the following fields:
         - transcript: Full text transcript of the speech.
         - wpm: Approximate words per minute.
@@ -54,30 +79,46 @@ export async function POST(req: NextRequest) {
             - strengths: What they did well.
             - weaknesses: Areas of improvement.
             - tips: Concrete tips for better performance.
-        
+
         Important: Be critical but constructive as an SSB GTO (Group Testing Officer) would be.`;
 
-        const result = await model.generateContent([
-            {
-                inlineData: {
-                    mimeType: audioFile.type,
-                    data: base64Audio
-                }
+        const evaluation = await generateJson({
+            prompt,
+            inlineData: { mimeType: audioFile.type || 'audio/webm', data: base64Audio },
+            // Transcription plus scoring takes materially longer than a text-only call.
+            timeoutMs: 60_000,
+            validate: (parsed) => {
+                const p = (parsed ?? {}) as Record<string, unknown>;
+                const fb = (p.feedback ?? {}) as Record<string, unknown>;
+                const fillerWords = toStringArray(p.fillerWords, 30);
+                return {
+                    transcript: toText(p.transcript),
+                    wpm: Math.max(0, Math.round(Number(p.wpm) || 0)),
+                    confidence: toTenPoint(p.confidence),
+                    clarity: toTenPoint(p.clarity),
+                    tone: toText(p.tone),
+                    contentScore: toTenPoint(p.contentScore),
+                    fillerWords,
+                    fillerCount:
+                        Number.isFinite(Number(p.fillerCount)) && Number(p.fillerCount) >= 0
+                            ? Math.round(Number(p.fillerCount))
+                            : fillerWords.length,
+                    feedback: {
+                        strengths: toText(fb.strengths),
+                        weaknesses: toText(fb.weaknesses),
+                        tips: Array.isArray(fb.tips) ? toStringArray(fb.tips) : toText(fb.tips),
+                    },
+                };
             },
-            { text: prompt }
-        ]);
+        });
 
-        const responseText = result.response.text();
-        const evaluation = JSON.parse(responseText);
-
-        // Award Medals
-        const medalResult = await awardMedals(session.userId, 'practice');
-        await recordEvalCompletion(session.userId, session.plan, 'LECTURETTE');
+        const medalResult = await awardMedals(userId, 'practice');
 
         return NextResponse.json({ ...evaluation, medals: medalResult });
-
-    } catch (error: any) {
-        console.error('[lecturette/evaluate] Error:', error);
-        return NextResponse.json({ error: 'Failed to evaluate speech' }, { status: 500 });
+    } catch (error) {
+        await releaseFreeEval(userId, isPro, 'LECTURETTE');
+        console.error('[lecturette/evaluate]', error);
+        const { body: errBody, status } = aiErrorResponse(error);
+        return NextResponse.json(errBody, { status });
     }
 }

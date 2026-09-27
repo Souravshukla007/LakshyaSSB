@@ -20,6 +20,7 @@ export async function POST(request: Request) {
                 fullName: true,
                 passwordHash: true,
                 plan: true,
+                tokenVersion: true,
             },
         });
 
@@ -44,6 +45,7 @@ export async function POST(request: Request) {
             userId: user.id,
             email: user.email,
             plan: user.plan as 'FREE' | 'PRO',
+            tokenVersion: user.tokenVersion,
         });
 
         // Log login activity

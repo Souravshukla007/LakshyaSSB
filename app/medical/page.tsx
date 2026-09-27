@@ -4,6 +4,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { VisionType, MedicalScoreBreakdown, WeeklyPlan } from "@/lib/medical-score";
 
 
@@ -742,7 +743,14 @@ function Step4Report({
                 </div>
                 {status === 'guest' && (
                     <div className="flex-shrink-0 text-[10px] font-bold text-orange-500 bg-orange-50 border border-orange-100 px-3 py-1.5 rounded-xl">
-                        Guest Mode — <a href="/auth/login" className="underline">Log in to save</a>
+                        {/*
+                          * Was `<a href="/auth/login">`, which 404s — there is no
+                          * /auth/login route, only /auth. This is the guest's
+                          * save-your-results prompt, so the dead link was breaking
+                          * the page's only conversion point. `Link` also keeps it a
+                          * client navigation instead of a full reload.
+                          */}
+                        Guest Mode — <Link href="/auth" className="underline">Log in to save</Link>
                     </div>
                 )}
             </div>

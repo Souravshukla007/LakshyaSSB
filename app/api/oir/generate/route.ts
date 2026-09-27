@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
-import { getSession } from '@/lib/auth';
+import { randomInt } from 'crypto';
+import { requireUser } from '@/lib/entitlement';
+import { claimFreeEval } from '@/lib/practice-limit';
 import { prisma } from '@/lib/prisma';
 import analogy from '@/data/practice/oir_analogy.json';
 import codeDe from '@/data/practice/oir_CodeDe.json';
@@ -21,7 +23,7 @@ type OirQuestion = {
 
 function shuffleInPlace<T>(arr: T[]) {
   for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = randomInt(0, i + 1);
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
 }
@@ -35,9 +37,43 @@ function toQuestionKey(question: OirQuestion & { __source: string; __sourceIndex
   return `${source}::${originalId}::${topic}::${text}`;
 }
 
-export async function GET() {
+/**
+ * POST /api/oir/generate
+ *
+ * Three things were wrong here:
+ *
+ *  1. No authentication at all — a full OIR paper, *including the answer key*,
+ *     was served to anonymous callers via the guest branch.
+ *  2. No entitlement check. OIR is scored entirely client-side (there is no
+ *     /api/oir/submit), so this endpoint is the only place the one-free-test
+ *     limit can be enforced. Because the old quota write was a POST the browser
+ *     volunteered, OIR was effectively unlimited for free users.
+ *  3. It was a GET that mutates. Generating a paper consumes the user's free OIR
+ *     attempt and writes OirQuestionHistory, so a link prefetch, a crawler, a
+ *     double-click or a browser retry could silently spend a free attempt. Safe
+ *     methods must not have side effects — this is now POST.
+ *
+ * Generating the paper consumes the free OIR attempt atomically.
+ */
+export async function POST() {
   try {
-    const session = await getSession();
+    const gate = await requireUser();
+    if (gate.response) return gate.response;
+    const session = gate.entitlement;
+
+    // Claiming here is what makes "1 free OIR test" real.
+    const claimed = await claimFreeEval(session.userId, session.isPro, 'OIR');
+    if (!claimed) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'You have used your free OIR test. Upgrade to Pro for unlimited attempts.',
+          reason: 'free_limit_reached',
+          upgradeUrl: '/pricing',
+        },
+        { status: 403 },
+      );
+    }
 
     const allQuestions: (OirQuestion & { __source: string; __sourceIndex: number })[] = [
       ...(Array.isArray(analogy) ? analogy : []).map((q, idx) => ({ ...(q as OirQuestion), __source: 'analogy', __sourceIndex: idx })),
@@ -65,28 +101,17 @@ export async function GET() {
 
     let selectedBase: (OirQuestion & { __source: string; __sourceIndex: number })[] = [];
 
-    if (session?.userId) {
-      // Ensure tracking table exists (runtime-safe, no migration block)
-      await prisma.$executeRawUnsafe(`
-        CREATE TABLE IF NOT EXISTS "OirQuestionHistory" (
-          id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
-          "userId" TEXT NOT NULL,
-          "questionKey" TEXT NOT NULL,
-          "seenAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "OirQuestionHistory_user_question_unique" UNIQUE ("userId", "questionKey"),
-          CONSTRAINT "OirQuestionHistory_user_fk" FOREIGN KEY ("userId") REFERENCES "User"(id) ON DELETE CASCADE
-        )
-      `);
-      await prisma.$executeRawUnsafe(`
-        CREATE INDEX IF NOT EXISTS "OirQuestionHistory_user_seen_idx"
-        ON "OirQuestionHistory" ("userId", "seenAt")
-      `);
-
-      const seenRows = await prisma.$queryRaw<Array<{ questionKey: string }>>`
-        SELECT "questionKey"
-        FROM "OirQuestionHistory"
-        WHERE "userId" = ${session.userId}
-      `;
+    {
+      // The CREATE TABLE / CREATE INDEX that used to run here on every single
+      // request is gone. `OirQuestionHistory` is declared in schema.prisma, so the
+      // runtime DDL was a duplicate definition free to drift, cost two extra
+      // round-trips per test, and required the production app role to hold
+      // CREATE TABLE privileges. It existed only because the project had no
+      // migrations; it now does.
+      const seenRows = await prisma.oirQuestionHistory.findMany({
+        where: { userId: session.userId },
+        select: { questionKey: true },
+      });
 
       const seenSet = new Set((seenRows || []).map((r) => r.questionKey));
       const unseenPool = allQuestions.filter((q) => !seenSet.has(toQuestionKey(q)));
@@ -112,10 +137,6 @@ export async function GET() {
           skipDuplicates: true,
         });
       }
-    } else {
-      // Guest/unauthenticated fallback: regular random selection
-      shuffleInPlace(allQuestions);
-      selectedBase = allQuestions.slice(0, questionCount);
     }
 
     // Keep response format expected by frontend

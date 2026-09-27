@@ -16,12 +16,28 @@ export default function SrtResult({ result, onRetake, onDashboard }: SrtResultPr
         </div>
     );
 
-    const overallScore = result.totalScore;
+    const rawScore = Number(result.totalScore);
+    const overallScore = Number.isFinite(rawScore) ? Math.round(rawScore) : 0;
 
-    const themes = Object.entries(result.themeScores || {}).map(([name, data]: [string, any]) => ({
-        name: name.replace('_', ' '),
-        score: Math.round(data.percentage)
-    }));
+    // Tolerate a bare number / string / null per theme instead of rendering NaN%.
+    const themes = Object.entries(result.themeScores || {}).map(([name, data]: [string, any]) => {
+        const raw = data && typeof data === 'object' ? data.percentage : data;
+        const n = Number(raw);
+        return {
+            name: name.replace(/_/g, ' '),
+            score: Number.isFinite(n) ? Math.max(0, Math.min(100, Math.round(n))) : 0,
+        };
+    });
+
+    // The badge used to be hardcoded to green "Strong Officer Traits" while the
+    // indicator list below it branched on riskLevel — so a HIGH-risk candidate saw
+    // a green badge sitting next to "Low action orientation".
+    const riskBadge =
+        result.riskLevel === 'LOW'
+            ? { label: 'Strong Officer Traits', wrap: 'bg-green-50 text-green-700 border-green-200', ping: 'bg-green-400', dot: 'bg-green-500' }
+            : result.riskLevel === 'MODERATE'
+              ? { label: 'Developing Traits', wrap: 'bg-yellow-50 text-yellow-700 border-yellow-200', ping: 'bg-yellow-400', dot: 'bg-yellow-500' }
+              : { label: 'Needs Improvement', wrap: 'bg-red-50 text-red-700 border-red-200', ping: 'bg-red-400', dot: 'bg-red-500' };
 
     const indicators = result.riskLevel === 'LOW' ? [
         'High action orientation',
@@ -65,12 +81,12 @@ export default function SrtResult({ result, onRetake, onDashboard }: SrtResultPr
 
                     <div className="text-center md:text-left">
                         <p className="text-gray-500 mb-2 font-medium">Risk Badge</p>
-                        <div className="inline-flex items-center gap-3 bg-green-50 text-green-700 px-5 py-3 rounded-xl border border-green-200 font-semibold shadow-sm">
+                        <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-xl border font-semibold shadow-sm ${riskBadge.wrap}`}>
                             <span className="relative flex h-4 w-4">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500"></span>
+                                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${riskBadge.ping}`}></span>
+                                <span className={`relative inline-flex rounded-full h-4 w-4 ${riskBadge.dot}`}></span>
                             </span>
-                            Strong Officer Traits
+                            {riskBadge.label}
                         </div>
                     </div>
                 </div>

@@ -3,9 +3,19 @@
 import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { Capacitor } from '@capacitor/core';
 import { requireOnline } from '@/lib/offline/online-guard';
+
+/**
+ * Google **Web** OAuth client ID (client_type 3), NOT the Android client ID.
+ * The native plugin passes this to requestIdToken(), so the resulting idToken's
+ * `aud` claim is this value — which is what /api/auth/google/native validates
+ * against process.env.GOOGLE_CLIENT_ID. Must stay in sync with:
+ *   - capacitor.config.ts          → plugins.GoogleAuth.clientId
+ *   - android/.../res/values/strings.xml → server_client_id
+ */
+const GOOGLE_WEB_CLIENT_ID =
+    '822781441102-hssrs7efk670i9o8m9nes0b3gp16b8br.apps.googleusercontent.com';
 
 function AuthContent() {
     const searchParams = useSearchParams();
@@ -34,6 +44,18 @@ function AuthContent() {
             if (Capacitor.isNativePlatform()) {
                 // ✅ Native Android/iOS: bypasses WebView — uses official Google Sign-In sheet
                 const { GoogleAuth } = await import('@codetrix-studio/capacitor-google-auth');
+
+                // ⚠️ REQUIRED: initialize() builds the native GoogleSignInClient.
+                // Without it, GoogleSignInClient stays null and signIn() throws an
+                // NPE that Capacitor rethrows as an uncaught RuntimeException on its
+                // task Handler thread — which kills the whole app process instead of
+                // rejecting this promise. Never call signIn() before initialize().
+                await GoogleAuth.initialize({
+                    clientId: GOOGLE_WEB_CLIENT_ID,
+                    scopes: ['profile', 'email'],
+                    grantOfflineAccess: true,
+                });
+
                 const nativeUser = await GoogleAuth.signIn();
                 const idToken = nativeUser.authentication.idToken;
 
@@ -63,8 +85,29 @@ function AuthContent() {
                 window.location.href = '/api/auth/google';
             }
         } catch (error: unknown) {
-            const errorMessage = error instanceof Error ? error.message : 'Google login failed. Please try again.';
             console.error('Google Auth Error:', error);
+
+            // The native plugin rejects with a numeric Google Sign-In status code in
+            // `code`. Those messages ("Something went wrong") are useless on their own,
+            // so translate the ones that actually happen into something actionable.
+            const code = (error as { code?: string })?.code;
+            let errorMessage =
+                error instanceof Error ? error.message : 'Google login failed. Please try again.';
+
+            if (code === '12501') {
+                // User backed out of the Google account picker — not an error.
+                setLoading(false);
+                return;
+            }
+            if (code === '10') {
+                // DEVELOPER_ERROR: the app's package name + signing SHA-1 is not
+                // registered as an Android OAuth client in the Google Cloud project.
+                errorMessage =
+                    'Google sign-in is not configured for this build. Please use email login for now.';
+            } else if (code === '7') {
+                errorMessage = 'Network error reaching Google. Check your connection and try again.';
+            }
+
             setMessage({ type: 'error', text: errorMessage });
             setLoading(false);
         }
@@ -116,7 +159,9 @@ function AuthContent() {
             const response = await fetch('/api/auth/send-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
+                // Codes are purpose-scoped server-side: a PASSWORD_RESET code
+                // cannot be redeemed at /api/auth/verify-otp to log in.
+                body: JSON.stringify({ email, purpose: 'PASSWORD_RESET' }),
             });
 
             const data = await response.json();

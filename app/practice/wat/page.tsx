@@ -1,9 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import watData from '@/data/practice/wat01.json';
+import {
+    EvaluationLoading,
+    EvaluationError,
+    toEvaluationFailure,
+    type EvaluationFailure,
+} from '@/components/practice/EvaluationState';
 
 type GameState = 'start' | 'test' | 'result';
 
@@ -28,6 +34,12 @@ export default function WATModule() {
     // Evaluation state
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [evaluationResult, setEvaluationResult] = useState<any>(null);
+    const [failure, setFailure] = useState<EvaluationFailure | null>(null);
+
+    // Guards the timer-expiry branch. Without it React StrictMode runs the effect
+    // body twice at timeLeft === 0 and the functional setCurrentIndex(prev => prev + 1)
+    // fires twice, silently skipping a word.
+    const advanceGuard = useRef<number | null>(null);
 
     const totalWords = 60; // Usually 60 words in WAT
     const wordsList = watData.slice(0, totalWords); // taking first 60 just in case
@@ -37,7 +49,11 @@ export default function WATModule() {
         if (gameState !== 'test') return;
 
         if (timeLeft === 0) {
-            handleNextWord();
+            // Only advance once per word, even if this effect body runs twice.
+            if (advanceGuard.current !== currentIndex) {
+                advanceGuard.current = currentIndex;
+                handleNextWord();
+            }
             return;
         }
 
@@ -55,25 +71,27 @@ export default function WATModule() {
     }, [currentIndex, gameState]);
 
     const handleStart = async () => {
-        // Verify Access
-        const accessRes = await fetch('/api/practice/check-access?module=WAT');
-        if (accessRes.status === 401) {
-            router.push('/auth');
-            return;
-        }
-        const accessData = await accessRes.json();
-        if (!accessData.allowed) {
-            router.push('/pricing');
-            return;
+        // Advisory pre-flight only: it exists so we don't walk the user through a
+        // 15-minute test we already know we can't score. The real gate is the
+        // atomic claim inside /api/wat/submit, so there is nothing to bypass here.
+        try {
+            const accessRes = await fetch('/api/practice/check-access?module=WAT');
+            if (accessRes.status === 401) {
+                router.push('/auth');
+                return;
+            }
+            const accessData = await accessRes.json();
+            if (!accessData.allowed) {
+                router.push('/pricing');
+                return;
+            }
+        } catch {
+            // Network hiccup on a pre-flight shouldn't block the test; submit still gates.
         }
 
-        // Consume Attempt (POST)
-        await fetch('/api/practice/check-access', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ module: 'WAT' })
-        });
-
+        setFailure(null);
+        setEvaluationResult(null);
+        advanceGuard.current = null;
         setGameState('test');
         setCurrentIndex(0);
         setTimeLeft(15);
@@ -105,6 +123,7 @@ export default function WATModule() {
 
     const submitTest = async (finalAnswers: typeof answers) => {
         setIsSubmitting(true);
+        setFailure(null);
         try {
             // Auth is resolved server-side from the session cookie.
             const res = await fetch('/api/wat/submit', {
@@ -119,10 +138,15 @@ export default function WATModule() {
                 const data = await res.json();
                 setEvaluationResult(data.evaluation);
             } else {
-                console.error("Failed to submit test:", await res.text());
+                // Surface the reason instead of spinning forever.
+                setFailure(await toEvaluationFailure(res));
             }
         } catch (error) {
             console.error("Error submitting test:", error);
+            setFailure({
+                reason: 'network',
+                message: 'We could not reach the server. Check your connection and retry.',
+            });
         } finally {
             setIsSubmitting(false);
         }
@@ -131,10 +155,17 @@ export default function WATModule() {
     const RadarChart = ({ themeScores }: { themeScores?: Record<string, any> }) => {
         if (!themeScores) return null;
 
-        const themes = Object.entries(themeScores).map(([theme, data]) => ({
-            label: theme.replace('_', ' '),
-            score: data.percentage
-        }));
+        // Coerce defensively: the model can return a bare number, a string, or null
+        // for a theme, and `data.percentage` on any of those yields NaN (broken bar)
+        // or throws (white screen).
+        const themes = Object.entries(themeScores).map(([theme, data]) => {
+            const raw = data && typeof data === 'object' ? (data as any).percentage : data;
+            const n = Number(raw);
+            return {
+                label: theme.replace(/_/g, ' '),
+                score: Number.isFinite(n) ? Math.max(0, Math.min(100, Math.round(n))) : 0,
+            };
+        });
 
         return (
             <div className="w-full flex flex-col gap-5 mt-8">
@@ -282,12 +313,21 @@ export default function WATModule() {
                     {gameState === 'result' && (
                         <div className="bg-white/95 backdrop-blur-md p-8 sm:p-16 rounded-[3rem] border border-white shadow-2xl">
 
-                            {isSubmitting || !evaluationResult ? (
-                                <div className="py-20 flex flex-col items-center justify-center text-center">
-                                    <div className="w-16 h-16 border-4 border-gray-200 border-t-brand-orange rounded-full animate-spin mb-6"></div>
-                                    <h2 className="text-2xl font-hero font-bold text-brand-dark mb-2">Analyzing Responses...</h2>
-                                    <p className="text-gray-500 font-noname">Our AI engine is processing your word associations.</p>
-                                </div>
+                            {isSubmitting ? (
+                                <EvaluationLoading
+                                    title="Analyzing Responses..."
+                                    subtitle="Our AI engine is processing your word associations."
+                                />
+                            ) : failure ? (
+                                <EvaluationError
+                                    failure={failure}
+                                    onRetry={() => submitTest(answers)}
+                                />
+                            ) : !evaluationResult ? (
+                                <EvaluationLoading
+                                    title="Analyzing Responses..."
+                                    subtitle="Our AI engine is processing your word associations."
+                                />
                             ) : (
                                 <>
                                     <div className="text-center mb-12 border-b border-gray-100 pb-12">

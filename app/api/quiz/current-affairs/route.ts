@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getStoredNews } from '@/lib/storage';
 import { getSession } from '@/lib/auth';
+// Model name lives in lib/ai-eval.ts so a retirement is a one-line fix, not four.
+import { GEMINI_MODEL } from '@/lib/ai-eval';
 
 // Never statically pre-render this route — Gemini must only be called at request time
 export const dynamic = 'force-dynamic';
@@ -46,7 +48,7 @@ export async function GET() {
 
         // 2. Generate MCQs using Gemini with strict JSON enforcement and auto-retry
         const model = genAI.getGenerativeModel({ 
-            model: "gemini-2.0-flash",
+            model: GEMINI_MODEL,
             generationConfig: { responseMimeType: "application/json" }
         });
         const prompt = PROMPT_TEMPLATE.replace("{NEWS_DATA}", newsText);
@@ -79,7 +81,13 @@ export async function GET() {
             date: new Date().toISOString().split('T')[0],
             questions: quizData
         }, {
-            headers: { 'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=3600' }
+            // `public` was wrong on an authenticated route: it invites a shared CDN
+            // to store and replay a response that required a session to obtain.
+            // The quiz body is identical for every user, so there is nothing to
+            // leak today — but the header should not be the thing standing between
+            // this route and a cache-poisoning bug the day it becomes per-user.
+            // `private` keeps the day-long reuse in the caller's own browser.
+            headers: { 'Cache-Control': 'private, max-age=3600, stale-while-revalidate=3600' }
         });
 
     } catch (error) {

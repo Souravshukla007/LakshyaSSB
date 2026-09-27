@@ -101,6 +101,17 @@ export async function GET(request: NextRequest) {
             );
         }
 
+        // Google tells us whether it actually owns this address. Trusting an
+        // unverified one lets an attacker take over an account by asserting
+        // someone else's email.
+        if (googleUser.email_verified === false) {
+            return NextResponse.redirect(
+                `${baseUrl}/auth?error=${encodeURIComponent(
+                    'Your Google email is not verified. Verify it with Google and try again.',
+                )}`,
+            );
+        }
+
         // ── Find or create user ───────────────────────────────────────────────
         const email = googleUser.email.toLowerCase().trim();
 
@@ -118,11 +129,19 @@ export async function GET(request: NextRequest) {
                 fullName: true,
                 plan: true,
                 googleId: true,
+                passwordHash: true,
+                tokenVersion: true,
             },
         });
 
         if (user) {
-            // Existing user — link Google account if not already linked
+            // Existing user — link Google account if not already linked.
+            //
+            // Only safe because email_verified was checked above. Without that
+            // check this was an account-takeover path: an attacker signs up with
+            // victim@example.com and a password, the real owner later signs in
+            // with Google, and Google's identity gets grafted onto the
+            // attacker-controlled account.
             if (!user.googleId) {
                 await prisma.user.update({
                     where: { id: user.id },
@@ -149,6 +168,8 @@ export async function GET(request: NextRequest) {
                     fullName: true,
                     plan: true,
                     googleId: true,
+                    passwordHash: true,
+                    tokenVersion: true,
                 },
             });
         }
@@ -158,6 +179,7 @@ export async function GET(request: NextRequest) {
             userId: user.id,
             email: user.email,
             plan: user.plan as 'FREE' | 'PRO',
+            tokenVersion: user.tokenVersion,
         });
 
         // Clear the CSRF state cookie and redirect to home

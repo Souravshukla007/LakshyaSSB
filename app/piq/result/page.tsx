@@ -35,13 +35,45 @@ export default function PIQResult() {
         return () => observer.disconnect();
     }, []);
 
-    const olqBars = [
-        { label: 'Leadership', score: 7, pct: '70%' },
-        { label: 'Initiative', score: 6, pct: '60%' },
-        { label: 'Responsibility', score: 8, pct: '80%' },
-        { label: 'Social Adaptability', score: 6, pct: '60%' },
-        { label: 'Consistency', score: 7, pct: '70%' },
-    ];
+    // Live PIQ scores, replacing the hardcoded literals that used to sit here and
+    // render as if they were this user's assessment.
+    const [olqScores, setOlqScores] = useState<Record<string, number> | null>(null);
+    const [scoresState, setScoresState] = useState<'loading' | 'ready' | 'none'>('loading');
+
+    useEffect(() => {
+        let cancelled = false;
+
+        fetch('/api/piq/latest')
+            .then(async (res) => {
+                if (!res.ok) return null;
+                return res.json();
+            })
+            .then((data) => {
+                if (cancelled) return;
+                if (!data || data.status === 'NO_PIQ' || !data.leadership) {
+                    setScoresState('none');
+                    return;
+                }
+                setOlqScores({
+                    Leadership: Number(data.leadership) || 0,
+                    Initiative: Number(data.initiative) || 0,
+                    Responsibility: Number(data.responsibility) || 0,
+                    'Social Adaptability': Number(data.socialAdaptability) || 0,
+                    Consistency: Number(data.consistency) || 0,
+                });
+                setScoresState('ready');
+            })
+            .catch(() => {
+                if (!cancelled) setScoresState('none');
+            });
+
+        return () => { cancelled = true; };
+    }, []);
+
+    const olqBars = Object.entries(olqScores ?? {}).map(([label, score]) => {
+        const clamped = Math.max(0, Math.min(10, score));
+        return { label, score: clamped, pct: `${clamped * 10}%` };
+    });
 
     return (
         <>
@@ -87,19 +119,48 @@ export default function PIQResult() {
                                 {/* OLQ Breakdown */}
                                 <div className="bg-white p-8 lg:p-10 rounded-[3rem] border border-gray-100 shadow-sm">
                                     <h3 className="font-hero font-bold text-xl text-brand-dark mb-8">OLQ Breakdown</h3>
-                                    <div className="space-y-6">
-                                        {olqBars.map(({ label, score, pct }) => (
-                                            <div key={label}>
-                                                <div className="flex justify-between text-[10px] font-bold uppercase tracking-wider mb-2">
-                                                    <span className="text-gray-400">{label}</span>
-                                                    <span className="text-brand-dark">{score} / 10</span>
+
+                                    {scoresState === 'loading' && (
+                                        <div className="space-y-6" aria-hidden="true">
+                                            {[0, 1, 2, 3, 4].map((i) => (
+                                                <div key={i}>
+                                                    <div className="h-3 w-32 bg-gray-100 rounded mb-2 animate-pulse"></div>
+                                                    <div className="h-2 w-full bg-gray-100 rounded-full animate-pulse"></div>
                                                 </div>
-                                                <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                                                    <div className="h-full bg-brand-orange" style={{ width: pct }}></div>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {scoresState === 'none' && (
+                                        <div className="text-center py-8">
+                                            <p className="text-gray-500 font-noname mb-6">
+                                                You haven&apos;t completed your PIQ yet, so there are no OLQ
+                                                scores to show.
+                                            </p>
+                                            <Link
+                                                href="/piq/form"
+                                                className="inline-block px-8 py-3.5 rounded-full bg-brand-dark text-white font-bold hover:bg-brand-orange transition-all shadow-lg"
+                                            >
+                                                Fill your PIQ
+                                            </Link>
+                                        </div>
+                                    )}
+
+                                    {scoresState === 'ready' && (
+                                        <div className="space-y-6">
+                                            {olqBars.map(({ label, score, pct }) => (
+                                                <div key={label}>
+                                                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-wider mb-2">
+                                                        <span className="text-gray-400">{label}</span>
+                                                        <span className="text-brand-dark">{score} / 10</span>
+                                                    </div>
+                                                    <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                                        <div className="h-full bg-brand-orange" style={{ width: pct }}></div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
-                                    </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Red Flags */}

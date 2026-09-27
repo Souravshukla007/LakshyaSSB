@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import QuestionNavigator from '@/components/practice/QuestionNavigator';
 
@@ -36,48 +37,60 @@ export default function OIRTestEngine() {
     const [reviewStatus, setReviewStatus] = useState<Record<number, boolean>>({});
     const [timeLeft, setTimeLeft] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
+    const [loadError, setLoadError] = useState<string | null>(null);
+    // submitTest is reachable from the timer expiry, the last "Next" press and the
+    // explicit submit button. Without a guard, StrictMode's double effect run fired
+    // it twice — two sessionStorage writes and two router.push calls.
+    const hasSubmitted = useRef(false);
 
     useEffect(() => {
+        let cancelled = false;
+
         async function loadQuestions() {
             try {
-                // 1. Verify Access
-                const accessRes = await fetch('/api/practice/check-access?module=OIR');
-                if (accessRes.status === 401) {
+                // /api/oir/generate now requires auth AND consumes the free OIR
+                // attempt server-side, so there is no separate "consume" POST for
+                // the client to skip. Generating the paper IS the gate.
+                // POST, not GET: this call consumes the free OIR attempt and writes
+                // history, so it must not be a safe method a prefetch can trigger.
+                const res = await fetch('/api/oir/generate', { method: 'POST' });
+
+                if (res.status === 401) {
                     router.push('/auth');
                     return;
                 }
-                const accessData = await accessRes.json();
-                if (!accessData.allowed) {
+                if (res.status === 403) {
                     router.push('/pricing');
                     return;
                 }
 
-                // 2. Consume Attempt (POST)
-                await fetch('/api/practice/check-access', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ module: 'OIR' })
-                });
+                const data = await res.json().catch(() => null);
 
-                // 3. Load Questions
-                const res = await fetch('/api/oir/generate');
-                const data = await res.json();
+                if (cancelled) return;
 
-                if (data.success && data.data) {
+                if (res.ok && data?.success && Array.isArray(data.data) && data.data.length > 0) {
                     setQuestions(data.data);
                     // Timing rule: 3 questions per minute => (count / 3) * 60 seconds
-                    const count = data.data.length;
-                    setTimeLeft((count / 3) * 60);
+                    setTimeLeft((data.data.length / 3) * 60);
                 } else {
-                    console.error("Failed to load questions");
+                    // Used to fall through to `questions.length === 0` and render
+                    // `null` — a blank white page with no message and no retry.
+                    setLoadError(
+                        data?.error ?? 'We could not generate your OIR test. Please try again.',
+                    );
                 }
             } catch (err) {
-                console.error("Error fetching OIR questions", err);
+                console.error('Error fetching OIR questions', err);
+                if (!cancelled) {
+                    setLoadError('We could not reach the server. Check your connection and try again.');
+                }
             } finally {
-                setIsLoading(false);
+                if (!cancelled) setIsLoading(false);
             }
         }
+
         loadQuestions();
+        return () => { cancelled = true; };
     }, [router]);
 
     // Timer Effect
@@ -97,6 +110,9 @@ export default function OIRTestEngine() {
     }, [timeLeft, isLoading, questions]);
 
     const submitTest = async () => {
+        if (hasSubmitted.current) return;
+        hasSubmitted.current = true;
+
         // Generate evaluation payload
         const results = questions.map((q) => {
             const selectedOption = answers[q.id] || null;
@@ -122,12 +138,25 @@ export default function OIRTestEngine() {
         // Store in session storage to pass to Result Page
         sessionStorage.setItem('oir_test_result', JSON.stringify(payload));
 
-        // Mark daily practice completion for streak system (non-blocking UX-safe)
-        fetch('/api/streak/complete', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ activityType: 'OIR' }),
-        }).catch(() => null);
+        // Mark daily practice completion for the streak system.
+        //
+        // This used to be fire-and-forget immediately before `router.push`, so the
+        // request was routinely aborted mid-flight and OIR silently never counted
+        // toward the user's streak. `keepalive` lets it survive the navigation, and
+        // awaiting it (with a short cap) means we normally see the result.
+        try {
+            await Promise.race([
+                fetch('/api/streak/complete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ activityType: 'OIR' }),
+                    keepalive: true,
+                }),
+                new Promise((resolve) => setTimeout(resolve, 2000)),
+            ]);
+        } catch (err) {
+            console.error('[oir] streak completion failed', err);
+        }
 
         router.push('/practice/oir/result');
     };
@@ -172,7 +201,37 @@ export default function OIRTestEngine() {
         );
     }
 
-    if (questions.length === 0) return null;
+    if (loadError || questions.length === 0) {
+        return (
+            <main className="min-h-screen bg-brand-bg flex items-center justify-center px-6 py-20">
+                <div className="max-w-lg w-full bg-white rounded-[2rem] border border-gray-100 shadow-xl p-10 text-center">
+                    <div className="w-16 h-16 rounded-full bg-red-50 border border-red-100 flex items-center justify-center mx-auto mb-6">
+                        <i className="fa-solid fa-circle-exclamation text-2xl text-red-500" aria-hidden="true"></i>
+                    </div>
+                    <h1 className="font-hero font-bold text-2xl text-brand-dark mb-3">
+                        Could not start your OIR test
+                    </h1>
+                    <p className="text-gray-500 font-noname mb-8">
+                        {loadError ?? 'No questions were returned. Please try again.'}
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <button
+                            onClick={() => window.location.reload()}
+                            className="px-8 py-3.5 rounded-full bg-brand-dark text-white font-bold hover:bg-brand-orange transition-all shadow-lg"
+                        >
+                            Try again
+                        </button>
+                        <Link
+                            href="/practice"
+                            className="px-8 py-3.5 rounded-full bg-white border-2 border-gray-100 text-brand-dark font-bold hover:border-gray-200 hover:bg-gray-50 transition-all"
+                        >
+                            Back to practice
+                        </Link>
+                    </div>
+                </div>
+            </main>
+        );
+    }
 
     const currentQ = questions[currentIndex];
     const qId = currentQ.id;

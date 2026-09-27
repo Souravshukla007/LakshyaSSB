@@ -1,54 +1,70 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { getSession } from '@/lib/auth';
+import { requireUser } from '@/lib/entitlement';
 import { awardMedals } from '@/lib/medals';
-import { freeEvalLimitReached, recordEvalCompletion } from '@/lib/practice-limit';
+import { claimFreeEval, releaseFreeEval } from '@/lib/practice-limit';
+import { generateJson, aiErrorResponse, toScore } from '@/lib/ai-eval';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+/** Clamp a 1-10 sub-score. */
+function toTenPoint(value: unknown): number {
+    return Math.round(toScore(value, 0) / 10) || Math.max(0, Math.min(10, Number(value) || 0));
+}
+
+function toFeedbackText(value: unknown): string {
+    return typeof value === 'string' ? value.trim() : '';
+}
 
 export async function POST(req: NextRequest) {
+    const gate = await requireUser();
+    if (gate.response) return gate.response;
+    const { userId, isPro } = gate.entitlement;
+
+    let reqBody: Record<string, unknown>;
     try {
-        const session = await getSession();
-        if (!session?.userId) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        reqBody = await req.json();
+    } catch {
+        return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    }
 
-        // Enforce FREE-tier single-attempt limit server-side
-        if (await freeEvalLimitReached(session.userId, session.plan, 'GPE')) {
-            return NextResponse.json(
-                { error: 'Free limit reached. Upgrade to Pro for unlimited attempts.', reason: 'free_limit_reached' },
-                { status: 403 },
-            );
-        }
+    const situation = reqBody.situation;
+    const actionPlan = reqBody.actionPlan;
+    const timeManagement = reqBody.timeManagement ?? '';
+    // Client sends `identifyProblems`; accept both spellings for safety.
+    const identifiedProblems = reqBody.identifyProblems ?? reqBody.identifiedProblems ?? '';
 
-        // Client sends `identifyProblems`; accept both spellings for safety.
-        const reqBody = await req.json();
-        const { situation, actionPlan, timeManagement } = reqBody;
-        const identifiedProblems = reqBody.identifyProblems ?? reqBody.identifiedProblems ?? '';
+    if (typeof situation !== 'string' || !situation.trim()) {
+        return NextResponse.json({ error: 'Missing situation' }, { status: 400 });
+    }
+    if (typeof actionPlan !== 'string' || !actionPlan.trim()) {
+        return NextResponse.json({ error: 'Missing action plan' }, { status: 400 });
+    }
 
-        if (!situation || !actionPlan) {
-            return NextResponse.json({ error: 'Missing situation or action plan' }, { status: 400 });
-        }
+    const claimed = await claimFreeEval(userId, isPro, 'GPE');
+    if (!claimed) {
+        return NextResponse.json(
+            {
+                error: 'You have used your free GPE evaluation. Upgrade to Pro for unlimited attempts.',
+                reason: 'free_limit_reached',
+                upgradeUrl: '/pricing',
+            },
+            { status: 403 },
+        );
+    }
 
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash",
-            generationConfig: { responseMimeType: "application/json" }
-        });
-
+    try {
         const prompt = `Evaluate the following Group Planning Exercise (GPE) solution for an SSB candidate.
-        
+
         SITUATION:
         ${situation}
-        
+
         CANDIDATE'S IDENTIFIED PROBLEMS:
         ${identifiedProblems}
-        
+
         CANDIDATE'S ACTION PLAN:
         ${actionPlan}
-        
+
         CANDIDATE'S TIME/RESOURCE MANAGEMENT:
         ${timeManagement}
-        
+
         Provide a detailed evaluation in JSON format with the following fields:
         - score: Overall score from 1-100.
         - reasoningScore: Score from 1-10 for Reasoning Ability.
@@ -60,21 +76,39 @@ export async function POST(req: NextRequest) {
             - weaknesses: Areas of improvement.
             - missedProblems: List of any problems from the situation the candidate missed.
             - resourceUsage: Critique of how they used available resources.
-        
+
         Be critical and constructive as an SSB GTO. Focus on logical sequencing and urgency prioritization.`;
 
-        const result = await model.generateContent(prompt);
-        const responseText = result.response.text();
-        const evaluation = JSON.parse(responseText);
+        const evaluation = await generateJson({
+            prompt,
+            validate: (parsed) => {
+                const p = (parsed ?? {}) as Record<string, unknown>;
+                const fb = (p.feedback ?? {}) as Record<string, unknown>;
+                return {
+                    score: toScore(p.score),
+                    reasoningScore: toTenPoint(p.reasoningScore),
+                    organizingScore: toTenPoint(p.organizingScore),
+                    initiativeScore: toTenPoint(p.initiativeScore),
+                    socialScore: toTenPoint(p.socialScore),
+                    feedback: {
+                        strengths: toFeedbackText(fb.strengths),
+                        weaknesses: toFeedbackText(fb.weaknesses),
+                        missedProblems: Array.isArray(fb.missedProblems)
+                            ? fb.missedProblems.filter((x): x is string => typeof x === 'string')
+                            : toFeedbackText(fb.missedProblems),
+                        resourceUsage: toFeedbackText(fb.resourceUsage),
+                    },
+                };
+            },
+        });
 
-        // Award Medals
-        const medalResult = await awardMedals(session.userId, 'practice');
-        await recordEvalCompletion(session.userId, session.plan, 'GPE');
+        const medalResult = await awardMedals(userId, 'practice');
 
         return NextResponse.json({ ...evaluation, medals: medalResult });
-
-    } catch (error: any) {
-        console.error('[gpe/evaluate] Error:', error);
-        return NextResponse.json({ error: 'Failed to evaluate GPE solution' }, { status: 500 });
+    } catch (error) {
+        await releaseFreeEval(userId, isPro, 'GPE');
+        console.error('[gpe/evaluate]', error);
+        const { body: errBody, status } = aiErrorResponse(error);
+        return NextResponse.json(errBody, { status });
     }
 }

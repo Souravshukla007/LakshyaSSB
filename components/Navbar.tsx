@@ -83,25 +83,37 @@ export default function Navbar() {
     };
 
     // Links visible to everyone
-    const guestNavLinks = [
+    const isPro = user?.plan === 'PRO';
+
+    /**
+     * Navigation.
+     *
+     * Two things were wrong here and both cost money:
+     *
+     *  1. `authNavLinks` omitted /pricing while the only other entry points to it
+     *     were wrapped in `{false && …}` further down this file. A signed-in FREE
+     *     user therefore had no route to Pricing or Checkout from anywhere in the
+     *     UI — the upgrade funnel was closed.
+     *  2. Leftover `...([])` / `...([{…}])` spreads from a previous edit made the
+     *     two lists look like they differed more than they did.
+     *
+     * Pricing is shown to everyone except active PRO users, who have nothing left
+     * to buy. Current Affairs is included because it previously had no nav entry at
+     * all and was reachable only from a notification item.
+     */
+    const baseNavLinks = [
         { href: '/', label: 'Home', icon: 'fa-house' },
         { href: '/practice', label: 'Practice', icon: 'fa-dumbbell' },
         { href: '/medical', label: 'Medical', icon: 'fa-heart-pulse' },
-        { href: '/pricing', label: 'Pricing', icon: 'fa-credit-card' },
-        { href: '/ssb-entry-navigator', label: 'SSB Entry Navigator', icon: 'fa-compass' },
+        { href: '/current-affairs', label: 'Current Affairs', icon: 'fa-newspaper' },
     ];
 
-    // Extra link only for logged-in users
-    const authNavLinks = [
-        ...([{ href: '/', label: 'Home', icon: 'fa-house' }]),
-        { href: '/practice', label: 'Practice', icon: 'fa-dumbbell' },
-        { href: '/medical', label: 'Medical', icon: 'fa-heart-pulse' },
-        ...([]),
-        { href: '/leaderboard', label: 'Leaderboard', icon: 'fa-trophy' },
+    const navLinks = [
+        ...baseNavLinks,
+        ...(user ? [{ href: '/leaderboard', label: 'Leaderboard', icon: 'fa-trophy' }] : []),
+        ...(isPro ? [] : [{ href: '/pricing', label: 'Pricing', icon: 'fa-credit-card' }]),
         { href: '/ssb-entry-navigator', label: 'SSB Entry Navigator', icon: 'fa-compass' },
     ];
-
-    const navLinks = user ? authNavLinks : guestNavLinks;
 
     const closeMobile = () => setMobileMenuOpen(false);
 
@@ -137,7 +149,7 @@ export default function Navbar() {
                                 <Link
                                     key={href}
                                     href={href}
-                                    className={`hover:text-brand-orange transition ${isActive(href) ? 'text-brand-orange font-bold' : ''}`}
+                                    className={`hover:text-brand-orange transition ${isActive(href) ? 'text-brand-orangeInk font-bold' : ''}`}
                                 >
                                     {label}
                                 </Link>
@@ -191,7 +203,7 @@ export default function Navbar() {
                                             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Cadet Profile</p>
                                             <p className="text-sm font-bold text-brand-dark truncate">{user.fullName}</p>
                                             {user?.plan === 'PRO' && (
-                                                <span className="inline-block mt-1 px-2 py-0.5 bg-brand-orange/10 text-brand-orange text-[10px] font-bold rounded-full uppercase tracking-wider">
+                                                <span className="inline-block mt-1 px-2 py-0.5 bg-brand-orange/10 text-brand-orangeInk text-[10px] font-bold rounded-full uppercase tracking-wider">
                                                     PRO Active
                                                 </span>
                                             )}
@@ -204,10 +216,21 @@ export default function Navbar() {
                                             className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors">
                                             <i className="fa-solid fa-chart-pie w-4" /> OLQ Report
                                         </Link>
-                                        {false && (
+                                        {/*
+                                          * Daily Question is PRO-gated in proxy.ts but nothing in the app
+                                          * linked to it, so it was a paid feature with no way in. The
+                                          * dropdown is the right home for it: it keeps the top bar from
+                                          * overflowing while staying one click away for signed-in users.
+                                          */}
+                                        <Link href="/daily-question" onClick={() => setDropdownOpen(false)}
+                                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors">
+                                            <i className="fa-solid fa-circle-question w-4" /> Daily Question
+                                        </Link>
+                                        {/* Nothing left to sell to an active PRO user. */}
+                                        {!isPro && (
                                             <Link href="/pricing" onClick={() => setDropdownOpen(false)}
                                                 className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-brand-orange transition-colors">
-                                                <i className="fa-solid fa-credit-card w-4" /> Pricing
+                                                <i className="fa-solid fa-credit-card w-4" /> Upgrade to Pro
                                             </Link>
                                         )}
                                         <div className="h-[1px] bg-gray-50 my-1 mx-2" />
@@ -296,11 +319,11 @@ export default function Navbar() {
                                     href={href}
                                     onClick={closeMobile}
                                     className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition-all ${isActive(href)
-                                        ? 'bg-brand-orange/10 text-brand-orange font-semibold'
+                                        ? 'bg-brand-orange/10 text-brand-orangeInk font-semibold'
                                         : 'text-gray-700 hover:bg-gray-50 hover:text-brand-orange'
                                         }`}
                                 >
-                                    <i className={`fa-solid ${icon} w-4 text-center ${isActive(href) ? 'text-brand-orange' : 'text-gray-400'}`} />
+                                    <i className={`fa-solid ${icon} w-4 text-center ${isActive(href) ? 'text-brand-orangeInk' : 'text-gray-400'}`} />
                                     {label}
                                     {isActive(href) && (
                                         <span className="ml-auto w-2 h-2 rounded-full bg-brand-orange" />
@@ -336,7 +359,7 @@ export default function Navbar() {
                                         <p className="text-sm font-bold text-brand-dark truncate">{user.fullName}</p>
                                         <p className="text-xs text-gray-400 truncate">{user.email}</p>
                                         {user?.plan === 'PRO' && (
-                                            <span className="inline-block mt-0.5 px-2 py-0.5 bg-brand-orange/10 text-brand-orange text-[9px] font-bold rounded-full uppercase tracking-wider">
+                                            <span className="inline-block mt-0.5 px-2 py-0.5 bg-brand-orange/10 text-brand-orangeInk text-[10px] font-bold rounded-full uppercase tracking-wider">
                                                 PRO Active
                                             </span>
                                         )}
@@ -344,7 +367,7 @@ export default function Navbar() {
                                     <Link
                                         href="/account"
                                         onClick={closeMobile}
-                                        className="text-xs font-semibold text-brand-orange hover:underline shrink-0"
+                                        className="text-xs font-semibold text-brand-orangeInk hover:underline shrink-0"
                                     >
                                         Edit
                                     </Link>
@@ -352,22 +375,36 @@ export default function Navbar() {
 
                                 {/* ── 2-column Quick Links ── */}
                                 <div className="grid grid-cols-2 gap-3 px-4 pb-2">
+                                    {/*
+                                      * `${true ? 'col-span-2' : ''}` was a hard-coded leftover: it forced
+                                      * OLQ Report full-width because the Pricing tile beside it had been
+                                      * disabled with `{false && …}`. With the grid populated again the
+                                      * span is driven by whether there is a second tile to sit next to.
+                                      */}
                                     <Link
                                         href="/olq-report"
                                         onClick={closeMobile}
-                                        className={`flex items-center gap-2 p-3 bg-gray-50 rounded-2xl text-sm text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange transition ${true ? 'col-span-2 justify-center' : ''}`}
+                                        className="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl text-sm text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange transition"
                                     >
                                         <i className="fa-solid fa-chart-pie text-gray-400 text-sm" />
                                         OLQ Report
                                     </Link>
-                                    {false && (
+                                    <Link
+                                        href="/daily-question"
+                                        onClick={closeMobile}
+                                        className="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl text-sm text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange transition"
+                                    >
+                                        <i className="fa-solid fa-circle-question text-gray-400 text-sm" />
+                                        Daily Question
+                                    </Link>
+                                    {!isPro && (
                                         <Link
                                             href="/pricing"
                                             onClick={closeMobile}
-                                            className="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl text-sm text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange transition"
+                                            className="col-span-2 flex items-center justify-center gap-2 p-3 bg-brand-orange/10 rounded-2xl text-sm font-semibold text-brand-orange hover:bg-brand-orange/20 transition"
                                         >
-                                            <i className="fa-solid fa-credit-card text-gray-400 text-sm" />
-                                            Pricing
+                                            <i className="fa-solid fa-credit-card text-sm" />
+                                            Upgrade to Pro
                                         </Link>
                                     )}
                                 </div>

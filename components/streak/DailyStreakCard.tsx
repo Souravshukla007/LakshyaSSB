@@ -115,17 +115,17 @@ export default function DailyStreakCard() {
     <div id="daily-practice" className={`bg-white rounded-3xl p-6 text-brand-dark shadow-2xl border border-gray-100 transition-all duration-500 ${animateGlow ? 'ring-2 ring-brand-orange/40 shadow-[0_0_30px_rgba(255,106,61,0.25)]' : ''}`}>
       <div className="flex items-start justify-between gap-4 mb-5 relative z-10">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Daily Streak</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1">Daily Streak</p>
           <h3 className="text-3xl font-hero font-bold flex items-center gap-2">
             <span className="inline-block flame-pulse">🔥</span> {displayStatus.streakCount} Day Streak
           </h3>
           <p className="text-sm text-gray-500 mt-1">Consistency builds Officer Like Qualities.</p>
-          <p className="text-xs text-brand-orange font-bold mt-2">
+          <p className="text-xs text-brand-orangeInk font-bold mt-2">
             Next reward in {displayStatus.nextRewardInDays} day{displayStatus.nextRewardInDays === 1 ? '' : 's'}.
           </p>
         </div>
         <div className="text-right">
-          <p className="text-[10px] uppercase font-bold tracking-widest text-gray-400">Best</p>
+          <p className="text-[10px] uppercase font-bold tracking-widest text-gray-500">Best</p>
           <p className="text-xl font-bold text-brand-orange">{displayStatus.longestStreak}d</p>
         </div>
       </div>
@@ -140,7 +140,7 @@ export default function DailyStreakCard() {
         </div>
         <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2">
           {displayStatus.milestones.map((m) => (
-            <div key={m} className={`text-[10px] font-bold px-2 py-1.5 rounded-lg border flex items-center justify-center text-center ${displayStatus.streakCount >= m ? 'bg-brand-orange/10 text-brand-orange border-brand-orange/30' : 'bg-gray-50 text-gray-400 border-gray-200'}`}>
+            <div key={m} className={`text-[10px] font-bold px-2 py-1.5 rounded-lg border flex items-center justify-center text-center ${displayStatus.streakCount >= m ? 'bg-brand-orange/10 text-brand-orangeInk border-brand-orange/30' : 'bg-gray-50 text-gray-500 border-gray-200'}`}>
               {m}d • {MILESTONE_LABELS[m]}
             </div>
           ))}
@@ -148,12 +148,12 @@ export default function DailyStreakCard() {
       </div>
 
       <div className="mb-5 relative z-10">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Weekly Checkpoint</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Weekly Checkpoint</p>
         <div className="grid grid-cols-7 gap-2">
           {displayStatus.weekly.map((d) => (
             <div key={d.key} className="bg-brand-bg rounded-xl p-2 text-center border border-gray-100 shadow-sm">
               <p className="text-[10px] font-bold text-gray-500">{d.day}</p>
-              <p className={`mt-1 text-sm font-bold ${d.completed ? 'text-brand-orange' : 'text-gray-300'}`}>
+              <p className={`mt-1 text-sm font-bold ${d.completed ? 'text-brand-orangeInk' : 'text-gray-500'}`}>
                 {d.completed ? '✔' : '○'}
               </p>
             </div>
@@ -162,7 +162,7 @@ export default function DailyStreakCard() {
       </div>
 
       <div className="rounded-2xl border border-brand-orange/20 bg-brand-orange/5 p-4 mb-4 relative z-10">
-        <p className="text-xs font-bold text-brand-orange mb-1">{todayMissionText}</p>
+        <p className="text-xs font-bold text-brand-orangeInk mb-1">{todayMissionText}</p>
         <p className="text-xs text-gray-600">{displayStatus.motivationMessage}</p>
       </div>
 

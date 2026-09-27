@@ -79,25 +79,40 @@ function RankPill({ rank }: { rank: number }) {
 export default function LeaderboardPage() {
     const [tab, setTab] = useState<Tab>('overall');
     const [activeData, setActiveData] = useState<LeaderboardEntry[]>([]);
+    const [currentUserRow, setCurrentUserRow] = useState<LeaderboardEntry | null>(null);
+    const [totalRanked, setTotalRanked] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [isPro, setIsPro] = useState(false);
+    const [needsAuth, setNeedsAuth] = useState(false);
 
     useEffect(() => {
         let isMounted = true;
-
-        // Fetch User status
-        fetch('/api/auth/status')
-            .then(res => res.ok ? res.json() : null)
-            .then(data => { if (isMounted && data?.plan === 'PRO') setIsPro(true); })
-            .catch(() => null);
 
         const fetchLeaderboard = async () => {
             setIsLoading(true);
             try {
                 const res = await fetch(`/api/leaderboard?tab=${tab}`);
+
+                if (res.status === 401) {
+                    // The board is no longer public, so say so instead of
+                    // rendering an empty table.
+                    if (isMounted) {
+                        setNeedsAuth(true);
+                        setActiveData([]);
+                    }
+                    return;
+                }
+
                 if (res.ok) {
                     const data = await res.json();
-                    if (isMounted) setActiveData(data);
+                    if (!isMounted) return;
+                    setNeedsAuth(false);
+                    // The response is now an envelope: the server truncates for free
+                    // users rather than shipping the full board and hiding it in CSS.
+                    setActiveData(Array.isArray(data.rows) ? data.rows : []);
+                    setCurrentUserRow(data.currentUserRow ?? null);
+                    setTotalRanked(Number(data.totalRanked) || 0);
+                    setIsPro(!data.restricted);
                 }
             } catch (error) {
                 console.error('Failed to fetch leaderboard:', error);
@@ -117,8 +132,9 @@ export default function LeaderboardPage() {
         { key: 'streak', label: 'Streak', icon: 'fa-fire' },
     ];
 
-    const visibleRows = isPro ? activeData : activeData.slice(0, 10);
-    const hiddenCount = activeData.length - 10;
+    // The server already truncated for free users, so render exactly what arrived.
+    const visibleRows = activeData;
+    const hiddenCount = Math.max(0, totalRanked - activeData.length);
 
     return (
         <>

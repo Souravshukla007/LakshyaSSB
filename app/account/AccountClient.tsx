@@ -96,6 +96,68 @@ function actionIcon(action: string): { icon: string; color: string } {
     }
 }
 
+/**
+ * Centre-crop an image file to a square and downscale it, returning a compressed
+ * Blob ready to upload.
+ *
+ * Avatars are always rendered as circles at 24–96px, so uploading the original
+ * camera file was pure waste — production ended up holding avatars as large as
+ * 1.98 MB each, which is what forced `/api/leaderboard` to stop selecting the
+ * column and left every user but the caller with no picture.
+ *
+ * WebP is preferred and JPEG is the fallback: `canvas.toBlob` hands back a
+ * `image/png` Blob when it does not recognise the requested type, and PNG of a
+ * photo is far larger than the JPEG equivalent, so the requested type is verified
+ * rather than assumed.
+ */
+async function downscaleToSquare(file: File, size: number): Promise<Blob> {
+    const objectUrl = URL.createObjectURL(file);
+    try {
+        const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+            const el = new Image();
+            el.onload = () => resolve(el);
+            el.onerror = () => reject(new Error('Could not decode image'));
+            el.src = objectUrl;
+        });
+
+        // Never upscale a small source; just square it off.
+        const side = Math.min(size, img.naturalWidth, img.naturalHeight);
+        const canvas = document.createElement('canvas');
+        canvas.width = side;
+        canvas.height = side;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) throw new Error('Canvas unavailable');
+
+        // Centre crop: take the largest square from the middle of the source.
+        const crop = Math.min(img.naturalWidth, img.naturalHeight);
+        ctx.drawImage(
+            img,
+            (img.naturalWidth - crop) / 2,
+            (img.naturalHeight - crop) / 2,
+            crop,
+            crop,
+            0,
+            0,
+            side,
+            side,
+        );
+
+        const encode = (type: string, quality: number) =>
+            new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, type, quality));
+
+        const webp = await encode('image/webp', 0.85);
+        if (webp && webp.type === 'image/webp') return webp;
+
+        const jpeg = await encode('image/jpeg', 0.85);
+        if (jpeg && jpeg.type === 'image/jpeg') return jpeg;
+
+        throw new Error('Could not encode image');
+    } finally {
+        URL.revokeObjectURL(objectUrl);
+    }
+}
+
 // ─── Section: Profile Header (Avatar) ─────────────────────────────────────────
 
 function ProfileHeader({ user, onAvatarChange }: { user: User; onAvatarChange: (url: string | null) => void }) {
@@ -109,50 +171,56 @@ function ProfileHeader({ user, onAvatarChange }: { user: User; onAvatarChange: (
         setTimeout(() => setToast(null), 3000);
     }
 
-    function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    async function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0];
+        // Reset immediately so picking the same file twice still fires a change event.
+        e.target.value = '';
         if (!file) return;
 
-        // Validate image type
         if (!file.type.startsWith('image/')) {
             showToast('Please select an image file', 'error');
             return;
         }
 
-        // Validate size (2MB)
-        if (file.size > 2 * 1024 * 1024) {
-            showToast('Image must be under 2MB', 'error');
+        // Generous limit on the *source* file — it gets downscaled below, so a big
+        // phone photo is fine as input even though we refuse to store one.
+        if (file.size > 12 * 1024 * 1024) {
+            showToast('Image must be under 12MB', 'error');
             return;
         }
 
-        const reader = new FileReader();
-        reader.onload = async () => {
-            const base64 = reader.result as string;
-            setUploading(true);
-            try {
-                const res = await fetch('/api/account/upload-avatar', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ image: base64 }),
-                });
-                const data = await res.json();
-                if (res.ok) {
-                    setAvatarUrl(base64);
-                    onAvatarChange(base64);
-                    showToast('Avatar updated!', 'success');
-                } else {
-                    showToast(data.error || 'Upload failed', 'error');
-                }
-            } catch {
-                showToast('Network error', 'error');
-            } finally {
-                setUploading(false);
-            }
-        };
-        reader.readAsDataURL(file);
+        setUploading(true);
+        try {
+            // Downscale before upload. An avatar renders at 24–96px, so sending the
+            // original was the root of the whole problem: production held avatars up
+            // to 1.98 MB, which is what forced the leaderboard to drop the column and
+            // made /api/account/me slow on every page load. 512px WebP is typically
+            // 20–60 KB.
+            const resized = await downscaleToSquare(file, 512);
 
-        // Reset input
-        e.target.value = '';
+            const form = new FormData();
+            form.append('file', resized, `avatar.${resized.type === 'image/webp' ? 'webp' : 'jpg'}`);
+
+            const res = await fetch('/api/account/upload-avatar', {
+                method: 'POST',
+                body: form, // no explicit Content-Type: the browser sets the boundary
+            });
+            const data = await res.json().catch(() => ({}));
+
+            if (res.ok && data.url) {
+                // Render the stored URL, not a local data URL, so what is shown is
+                // exactly what other surfaces will load.
+                setAvatarUrl(data.url);
+                onAvatarChange(data.url);
+                showToast('Avatar updated!', 'success');
+            } else {
+                showToast(data.error || 'Upload failed', 'error');
+            }
+        } catch {
+            showToast('Could not process that image', 'error');
+        } finally {
+            setUploading(false);
+        }
     }
 
     async function handleRemove() {

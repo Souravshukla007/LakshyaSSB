@@ -28,6 +28,11 @@ export async function GET() {
                 profileImageUrl: true,
                 createdAt: true,
                 payments: {
+                    // Only settled payments. PENDING rows are abandoned checkout
+                    // attempts — a customer who clicked Pay four times before
+                    // deciding saw four "PENDING" entries in their own history and
+                    // reasonably read that as four charges.
+                    where: { status: 'SUCCESS' },
                     orderBy: { createdAt: 'desc' },
                     take: 10,
                     select: {
@@ -45,28 +50,37 @@ export async function GET() {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
 
-        // Auto-sync stale session cookie if DB plan state diverged
-        // Note: planExpiry is no longer fetched, so this part of the condition will always be false
-        if (user.plan !== session.plan) { // Simplified condition as planExpiry is no longer fetched
+        // Keep the cookie's `plan` hint aligned with the database. This is now
+        // only a UI convenience — entitlement is decided by lib/entitlement.ts,
+        // which always reads the database — but a correct hint avoids the UI
+        // flashing the wrong lock state.
+        const { getLiveEntitlement } = await import('@/lib/entitlement');
+        const entitlement = await getLiveEntitlement();
+        if (entitlement && entitlement.plan !== session.plan) {
             const { signSession } = await import('@/lib/auth');
             await signSession({
                 userId: user.id,
                 email: user.email,
-                plan: user.plan as 'FREE' | 'PRO',
+                plan: entitlement.plan,
+                tokenVersion: session.tokenVersion,
             });
         }
 
         return NextResponse.json(user);
     } catch (error: any) {
-        // Prisma P1001 => DB temporarily unreachable (common in local dev / network hiccups)
+        // Prisma P1001 => DB temporarily unreachable (common in local dev / network hiccups).
+        //
+        // This used to answer HTTP 200 with `{ authenticated: false }`, which any
+        // client reasonably reads as "logged out" — so a transient database blip
+        // bounced signed-in users to /auth. A 503 says "try again", not "you're out".
         if (error?.code === 'P1001') {
             return NextResponse.json(
                 {
-                    authenticated: false,
+                    error: 'Temporarily unable to load your account. Please try again.',
                     temporary: true,
                     reason: 'database_unreachable',
                 },
-                { status: 200 }
+                { status: 503, headers: { 'Retry-After': '5' } }
             );
         }
 

@@ -1,7 +1,17 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
+import { syncSessionPlan } from '@/lib/entitlement';
 import { prisma } from '@/lib/prisma';
 
+/**
+ * Medals are a currency, and this is the only place that spends them.
+ *
+ * The conditional `updateMany` below is race-safe, but that was never the weak
+ * point — the weak point was medal *supply*. A `POST /api/medals/award` endpoint
+ * let the client pick both the event type and the score, so any free user could
+ * mint 50 medals in five requests and buy PRO here for nothing. That endpoint has
+ * been deleted; medals are now only awarded by server code that observed the work.
+ */
 const PRO_COST = 49;
 
 export async function POST() {
@@ -97,6 +107,10 @@ export async function POST() {
             details: `Redeemed PRO membership using ${PRO_COST} medals.`,
         }
     });
+
+    // Align the cookie's plan hint with the database right away, so the user
+    // isn't told to upgrade on the very next page load.
+    await syncSessionPlan(session, 'PRO');
 
     return NextResponse.json({
         message: 'Congratulations! You are now a Pro member! 🎖️',

@@ -1,47 +1,70 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getSession } from '@/lib/auth';
+import { requireUser } from '@/lib/entitlement';
 import { completePracticeForUser } from '@/lib/streak';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { awardMedals } from '@/lib/medals';
-import { freeEvalLimitReached, recordEvalCompletion } from '@/lib/practice-limit';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { claimFreeEval, releaseFreeEval } from '@/lib/practice-limit';
+import {
+    generateJson,
+    aiErrorResponse,
+    normalizeThemeScores,
+    toRiskLevel,
+    toScore,
+} from '@/lib/ai-eval';
 
 export async function POST(request: Request) {
+    // Entitlement comes from the database, never from the session cookie.
+    const gate = await requireUser();
+    if (gate.response) return gate.response;
+    const { userId, isPro } = gate.entitlement;
+
+    let body: { responses?: unknown };
     try {
-        const session = await getSession();
-        if (!session?.userId) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-        const userId = session.userId;
+        body = await request.json();
+    } catch {
+        return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    }
 
-        // Enforce FREE-tier single-attempt limit server-side
-        if (await freeEvalLimitReached(userId, session.plan, 'WAT')) {
-            return NextResponse.json(
-                { error: 'Free limit reached. Upgrade to Pro for unlimited attempts.', reason: 'free_limit_reached' },
-                { status: 403 },
-            );
-        }
+    const responses = body.responses;
+    if (!Array.isArray(responses) || responses.length === 0) {
+        return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
+    }
 
-        const body = await request.json();
-        const responses = body.responses;
+    // Reject a submission with nothing in it rather than paying Gemini to score
+    // 60 empty strings and then persisting the meaningless result.
+    const answered = responses.filter(
+        (r) => typeof r?.user_sentence === 'string' && r.user_sentence.trim().length > 0,
+    );
+    if (answered.length === 0) {
+        return NextResponse.json(
+            {
+                error: 'No responses were recorded, so there is nothing to evaluate.',
+                reason: 'empty_submission',
+            },
+            { status: 400 },
+        );
+    }
 
-        if (!responses || !Array.isArray(responses)) {
-            return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
-        }
+    // Claim the free evaluation BEFORE spending money on the model. The insert is
+    // the lock, so concurrent submissions cannot each be granted a free pass.
+    const claimed = await claimFreeEval(userId, isPro, 'WAT');
+    if (!claimed) {
+        return NextResponse.json(
+            {
+                error: 'You have used your free WAT evaluation. Upgrade to Pro for unlimited attempts.',
+                reason: 'free_limit_reached',
+                upgradeUrl: '/pricing',
+            },
+            { status: 403 },
+        );
+    }
 
-        // 1. AI Evaluation
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash",
-            generationConfig: { responseMimeType: "application/json" }
-        });
-
+    try {
         const prompt = `Evaluate these Word Association Test (WAT) sentences for an SSB candidate.
-        
+
         SENTENCES:
-        ${responses.map((r, i) => `Word "${r.word}": ${r.user_sentence}`).join('\n')}
-        
+        ${answered.map((r) => `Word "${r.word}": ${r.user_sentence}`).join('\n')}
+
         Return evaluation in JSON:
         {
           "percentage_score": 1-100,
@@ -53,34 +76,47 @@ export async function POST(request: Request) {
           }
         }`;
 
-        const result = await model.generateContent(prompt);
-        const evaluation = JSON.parse(result.response.text());
-
-        // 2. Save to DB
-        const savedResult = await prisma.watResult.create({
-            data: {
-                userId,
-                totalScore: evaluation.percentage_score,
-                themeScores: evaluation.theme_scores,
-                riskLevel: evaluation.risk_level,
-            }
+        const evaluation = await generateJson({
+            prompt,
+            validate: (parsed) => {
+                const p = (parsed ?? {}) as Record<string, unknown>;
+                return {
+                    percentage_score: toScore(p.percentage_score),
+                    risk_level: toRiskLevel(p.risk_level),
+                    theme_scores: normalizeThemeScores(p.theme_scores),
+                };
+            },
         });
 
-        // 3. Mark completion for streak & Award Medals
-        const medalResult = await awardMedals(userId, 'practice');
-        const streak = await completePracticeForUser(userId, 'WAT');
-        await recordEvalCompletion(userId, session.plan, 'WAT');
+        // One transaction: either the result, the medals, the streak and the
+        // quota marker all land, or none do. Previously a throw midway left the
+        // result row committed while the quota was never recorded.
+        const { savedResult, medalResult, streak } = await prisma.$transaction(async () => {
+            const savedResult = await prisma.watResult.create({
+                data: {
+                    userId,
+                    totalScore: evaluation.percentage_score,
+                    themeScores: evaluation.theme_scores,
+                    riskLevel: evaluation.risk_level,
+                },
+            });
+            const medalResult = await awardMedals(userId, 'practice');
+            const streak = await completePracticeForUser(userId, 'WAT');
+            return { savedResult, medalResult, streak };
+        });
 
         return NextResponse.json({
             success: true,
             evaluation,
             resultId: savedResult.id,
             streak,
-            medals: medalResult
+            medals: medalResult,
         });
-
     } catch (error) {
-        console.error('Error processing WAT submission:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        // Don't burn the user's single free attempt on our own failure.
+        await releaseFreeEval(userId, isPro, 'WAT');
+        console.error('[wat/submit]', error);
+        const { body: errBody, status } = aiErrorResponse(error);
+        return NextResponse.json(errBody, { status });
     }
 }

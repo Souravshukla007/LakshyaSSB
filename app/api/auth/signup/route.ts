@@ -50,6 +50,7 @@ export async function POST(request: Request) {
                 fullName: true,
                 plan: true,
                 createdAt: true,
+                tokenVersion: true,
             },
         });
 
@@ -57,6 +58,7 @@ export async function POST(request: Request) {
             userId: user.id,
             email: user.email,
             plan: 'FREE',
+            tokenVersion: user.tokenVersion,
         });
 
         return NextResponse.json(

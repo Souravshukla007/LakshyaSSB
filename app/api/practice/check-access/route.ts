@@ -1,70 +1,55 @@
 import { NextResponse } from 'next/server';
-import { getSession } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+import { requireUser } from '@/lib/entitlement';
+import { freeEvalLimitReached, isGatedModule } from '@/lib/practice-limit';
 
+/**
+ * GET /api/practice/check-access?module=WAT
+ *
+ * Advisory pre-flight so the UI can route a user to /pricing before they sit
+ * through a 15-minute test they cannot have scored. Never the actual gate — that
+ * is `claimFreeEval()` in the submit/evaluate routes.
+ *
+ * The `POST` half of this route has been REMOVED. It was the quota *writer*:
+ * the browser was trusted to call it to "consume" an attempt, so a free user
+ * skipping that one request got unlimited attempts, and it accepted any
+ * `module` string, letting the table be polluted with junk. Quota is now
+ * recorded server-side at evaluation time only.
+ */
 export async function GET(request: Request) {
     try {
-        const session = await getSession();
-        if (!session) {
+        const gate = await requireUser();
+        if (gate.response) {
             return NextResponse.json({ error: 'Unauthorized', allowed: false }, { status: 401 });
         }
+        const { userId, isPro } = gate.entitlement;
 
         const { searchParams } = new URL(request.url);
         const moduleName = searchParams.get('module')?.toUpperCase();
 
         if (!moduleName) {
-            return NextResponse.json({ error: 'Module parameter is required', allowed: false }, { status: 400 });
+            return NextResponse.json(
+                { error: 'Module parameter is required', allowed: false },
+                { status: 400 },
+            );
+        }
+        if (!isGatedModule(moduleName)) {
+            return NextResponse.json({ error: 'Unknown module', allowed: false }, { status: 400 });
         }
 
-        // PRO users have unlimited access
-        if (session?.plan === 'PRO') {
-            return NextResponse.json({ allowed: true, attempts: 0 });
+        if (isPro) {
+            return NextResponse.json({ allowed: true, isPro: true, used: false });
         }
 
-        // FREE users check
-        const attemptCount = await prisma.practiceAttempt.count({
-            where: {
-                userId: session!.userId,
-                module: moduleName
-            }
+        const used = await freeEvalLimitReached(userId, isPro, moduleName);
+
+        return NextResponse.json({
+            allowed: !used,
+            isPro: false,
+            used,
+            ...(used ? { reason: 'free_limit_reached', upgradeUrl: '/pricing' } : {}),
         });
-
-        if (attemptCount === 0) {
-            return NextResponse.json({ allowed: true, attempts: attemptCount });
-        } else {
-            return NextResponse.json({ allowed: false, attempts: attemptCount, reason: 'limit_reached' });
-        }
     } catch (error) {
         console.error('[CHECK_ACCESS_ERROR]', error);
         return NextResponse.json({ error: 'Internal server error', allowed: false }, { status: 500 });
-    }
-}
-
-export async function POST(request: Request) {
-    try {
-        const session = await getSession();
-        if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
-        const body = await request.json();
-        const moduleName = body.module?.toUpperCase();
-
-        if (!moduleName) {
-            return NextResponse.json({ error: 'Module required' }, { status: 400 });
-        }
-
-        // Log the attempt
-        await prisma.practiceAttempt.create({
-            data: {
-                userId: session!.userId,
-                module: moduleName,
-            }
-        });
-
-        return NextResponse.json({ success: true });
-    } catch (error) {
-        console.error('[RECORD_ATTEMPT_ERROR]', error);
-        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

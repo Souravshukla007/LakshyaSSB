@@ -5,7 +5,7 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
 [![Capacitor JS](https://img.shields.io/badge/Capacitor-6.1.2-119EFF?style=flat-square&logo=capacitor)](https://capacitorjs.com/)
 [![Razorpay](https://img.shields.io/badge/Razorpay-Integrated-blue?style=flat-square)](https://razorpay.com/)
-[![Google Gemini API](https://img.shields.io/badge/Google_Gemini-1.5_Flash-orange?style=flat-square&logo=google)](https://ai.google.dev/)
+[![Google Gemini API](https://img.shields.io/badge/Google_Gemini-2.5_Flash-orange?style=flat-square&logo=google)](https://ai.google.dev/)
 
 A production-grade, isomorphic EdTech ecosystem designed to help Indian Armed Forces aspirants ace the highly rigorous **Services Selection Board (SSB)** interview process. Built with a unified full-stack architecture, LakshyaSSB simulates psychometric, physical, and cognitive evaluations, scoring candidates using advanced NLP models and providing detailed feedback on Officer Like Qualities (OLQs).
 
@@ -224,7 +224,7 @@ User Story Input  ──► Local Keyword Filter (Regex) ──► Prompt Constr
                                                            │
 ┌──────────────────────────────────────────────────────────┘
 ▼
-Google Gemini (gemini-1.5-flash) ──► JSON Mode Enforcement ──► DB Schema Insert
+Google Gemini (gemini-2.5-flash) ──► JSON Mode Enforcement ──► DB Schema Insert
 ```
 
 ### Processing Steps:
@@ -419,9 +419,12 @@ JWT_SECRET="generate-a-long-random-base64-string"
 CRON_SECRET="generate-a-secure-cron-reset-string"
 
 # Payment Services
+# RAZORPAY_WEBHOOK_SECRET is required: it is what lets a captured payment still
+# upgrade the user when the browser callback never fires. Register the webhook at
+# {APP_URL}/api/payment/webhook for `payment.captured` and `payment.failed`.
 RAZORPAY_KEY_ID="rzp_test_xxxxxxxxxx"
 RAZORPAY_KEY_SECRET="xxxxxxxxxxxxxxxx"
-NEXT_PUBLIC_RAZORPAY_KEY_ID="rzp_test_xxxxxxxxxx"
+RAZORPAY_WEBHOOK_SECRET="xxxxxxxxxxxxxxxx"
 
 # Third-Party Integrations
 RESEND_API_KEY="re_xxxxxxxxxxxxxxxx"

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getSession } from '@/lib/auth';
+import { requirePro } from '@/lib/entitlement';
 import { prisma } from '@/lib/prisma';
 import { generateIOQuestions, scoreOLQs, type PiqInput } from '@/lib/piq-score';
 
@@ -33,10 +33,9 @@ interface ScoreRow {
  */
 export async function GET() {
     try {
-        const session = await getSession();
-        if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        const gate = await requirePro();
+        if (gate.response) return gate.response;
+        const session = gate.entitlement;
 
         // Fetch latest submission
         const submissions = await prisma.$queryRaw<SubmissionRow[]>`

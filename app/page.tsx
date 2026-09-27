@@ -25,47 +25,48 @@ export default function Home() {
                 .forEach(el => revealObserver.observe(el));
         };
 
-        // --- Auth cache: skip DB roundtrip if we have a fresh result (5 min TTL) ---
+        // --- Auth cache ------------------------------------------------------
+        // Mirrors the lifetime of the 7-day session cookie so a signed-in user is
+        // never shown guest UI while the background check is in flight (and stays
+        // correct while offline in the mobile app).
         const AUTH_CACHE_KEY = 'lssb_auth_cache';
-        const AUTH_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+        const AUTH_CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days — matches the session cookie
 
-        try {
-            const raw = localStorage.getItem(AUTH_CACHE_KEY);
-            if (raw) {
+        const readAuthCache = (): boolean | null => {
+            try {
+                const raw = localStorage.getItem(AUTH_CACHE_KEY);
+                if (!raw) return null;
                 const { isLoggedIn: cachedLogin, ts } = JSON.parse(raw);
-                if (Date.now() - ts < AUTH_CACHE_TTL) {
-                    // Use cached value immediately — no DB roundtrip
-                    if (isMounted) setIsLoggedIn(cachedLogin);
-                    setupReveal();
-                    // Background refresh so cache stays accurate
-                    fetch('/api/auth/status')
-                        .then(res => res.ok ? res.json() : null)
-                        .then(data => {
-                            const val = data?.isLoggedIn ?? false;
-                            try {
-                                localStorage.setItem(AUTH_CACHE_KEY, JSON.stringify({ isLoggedIn: val, ts: Date.now() }));
-                            } catch { /* ignore */ }
-                            if (isMounted) setIsLoggedIn(val);
-                        })
-                        .catch(() => null);
-                    return () => { isMounted = false; revealObserver.disconnect(); };
-                }
+                if (typeof ts !== 'number' || Date.now() - ts >= AUTH_CACHE_TTL) return null;
+                return Boolean(cachedLogin);
+            } catch {
+                // localStorage unavailable (private / incognito) or corrupt entry
+                return null;
             }
-        } catch {
-            // localStorage unavailable (private / incognito) — fall through to normal fetch
-        }
+        };
 
-        // Normal path: fetch auth status, then cache it
-        fetch('/api/auth/status')
-            .then(res => res.ok ? res.json() : null)
-            .then(data => {
-                const val = data?.isLoggedIn ?? false;
-                if (isMounted) setIsLoggedIn(val);
-                try {
-                    localStorage.setItem(AUTH_CACHE_KEY, JSON.stringify({ isLoggedIn: val, ts: Date.now() }));
-                } catch { /* ignore */ }
-            })
-            .catch(() => null);
+        const writeAuthCache = (value: boolean) => {
+            try {
+                localStorage.setItem(AUTH_CACHE_KEY, JSON.stringify({ isLoggedIn: value, ts: Date.now() }));
+            } catch { /* ignore */ }
+        };
+
+        // /api/auth/status answers with { isLoggedIn } on both 200 and 401, so the
+        // body is the authoritative signal — not res.ok. A rejected fetch means the
+        // network failed, which is not a logout, so the cached state is kept.
+        const refreshAuthStatus = () =>
+            fetch('/api/auth/status')
+                .then(res => res.json().catch(() => null))
+                .then(data => {
+                    if (typeof data?.isLoggedIn !== 'boolean') return;
+                    if (isMounted) setIsLoggedIn(data.isLoggedIn);
+                    writeAuthCache(data.isLoggedIn);
+                })
+                .catch(() => { /* offline — keep the cached session state */ });
+
+        const cached = readAuthCache();
+        if (cached !== null && isMounted) setIsLoggedIn(cached);
+        refreshAuthStatus();
 
         setupReveal();
 
@@ -148,7 +149,7 @@ export default function Home() {
                                 </div>
 
                                 {/* Floating Badges */}
-                                <div className="absolute -top-12 -left-12 bg-white p-4 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4 z-20 animate-float">
+                                <div className="absolute -top-12 left-2 lg:-left-12 bg-white p-4 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4 z-20 animate-float">
                                     <div className="w-12 h-12 rounded-xl bg-green-50 text-brand-green flex items-center justify-center text-xl">
                                         <i className="fa-solid fa-person-military-pointing"></i>
                                     </div>
@@ -481,7 +482,7 @@ export default function Home() {
                                     <img src="https://images.pexels.com/photos/2450438/pexels-photo-2450438.jpeg?w=800&h=1000&fit=crop" alt="GTO Training" className="rounded-[1.8rem] w-full object-cover" />
                                 </div>
                                 {/* Floating Info */}
-                                <div className="absolute -bottom-8 -left-8 bg-white shadow-2xl p-6 rounded-2xl border border-gray-100 max-w-[240px]">
+                                <div className="absolute -bottom-8 left-2 lg:-left-8 bg-white shadow-2xl p-6 rounded-2xl border border-gray-100 max-w-[240px]">
                                     <div className="flex items-center gap-2 mb-2 text-brand-orange">
                                         <i className="fa-solid fa-medal"></i>
                                         <span className="text-[10px] font-bold uppercase tracking-widest">Success Rate</span>

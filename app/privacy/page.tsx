@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-    title: "Privacy Policy | LakshyaSSB",
+    // Bare page name: the root layout's title template appends "| LakshyaSSB".
+    title: "Privacy Policy",
     description:
         "Learn how LakshyaSSB collects, uses, and protects your personal data. We are committed to your privacy under the Indian Information Technology Act, 2000.",
 };

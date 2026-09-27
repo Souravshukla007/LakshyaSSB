@@ -12,8 +12,11 @@ export async function GET(request: NextRequest) {
     const clientId = process.env.GOOGLE_CLIENT_ID;
     const redirectUri = getGoogleRedirectUri(request);
 
-    // 🔍 Debug: visible in Vercel logs — verify this matches your Google Cloud Console URI exactly
-    console.log('[google-oauth] redirectUri sent to Google:', redirectUri);
+    // Logged only in development. This fired on every production sign-in attempt,
+    // which is noise rather than a leak, but there is no reason to keep it.
+    if (process.env.NODE_ENV !== 'production') {
+        console.log('[google-oauth] redirectUri sent to Google:', redirectUri);
+    }
 
     if (!clientId || !redirectUri) {
         return NextResponse.json(

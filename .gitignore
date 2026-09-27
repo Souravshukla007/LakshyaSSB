@@ -35,6 +35,10 @@ yarn-error.log*
 .env*.local
 .env
 
+# Backups written by scripts/migrate-avatars-to-blob.mjs. These contain the users'
+# original base64 avatar images, so they must never be committed.
+avatar-backup-*.json
+
 # vercel
 .vercel
 
@@ -43,14 +47,41 @@ yarn-error.log*
 next-env.d.ts
 
 # prisma
-/prisma/migrations
+# NOTE: prisma/migrations is deliberately COMMITTED. It used to be ignored, which
+# is why the project had no schema history and resorted to CREATE TABLE IF NOT
+# EXISTS at runtime inside app/api/oir/generate. Migrations must be version
+# controlled or `prisma migrate deploy` cannot reproduce production.
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+# Playwright MCP scratch output (page snapshots + console logs from agent runs).
+# Can contain authenticated page content, so keep it out of version control.
+/.playwright-mcp/
+
+# audit / review write-ups
+# Local-only. AUDIT_REPORT.md names internal file paths and records observations
+# made directly against the PRODUCTION database (row counts, account states,
+# stored avatar sizes). Useful to keep on disk, not something to publish.
+/AUDIT_REPORT.md
+
+# scratch command output
+# Dumps left behind by local and agent runs: `git status` captures, tsc and
+# ESLint logs, findstr probes, empty placeholder files. All disposable.
+#
+# Root-anchored on purpose. A bare `*.txt` would also swallow public/ads.txt,
+# which AdSense requires and which must stay tracked. The leading slash limits
+# this to the repository root, so nested .txt files are unaffected.
+/*.txt
 
 # custom admin scripts
 scripts/upgrade-user.js
 /Upgrade-to-Pro.md
 /LakshyaSSB_TechStack_Interview_Guide.md
 /Razorpay_Integration_Guide.md
-/Saarathi_finance_AppDev_Interview_Guide.md
+/Saarathi_Finance_AppDev_Interview_Guide.md
 
 # Firebase / Google secrets — NEVER commit these
 google-services.json

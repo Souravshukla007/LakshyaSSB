@@ -1,45 +1,66 @@
 import { NextResponse } from 'next/server';
-import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { requireUser } from '@/lib/entitlement';
+import { completePracticeForUser } from '@/lib/streak';
 import { awardMedals } from '@/lib/medals';
-import { freeEvalLimitReached, recordEvalCompletion } from '@/lib/practice-limit';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { claimFreeEval, releaseFreeEval } from '@/lib/practice-limit';
+import {
+    generateJson,
+    aiErrorResponse,
+    normalizeThemeScores,
+    toRiskLevel,
+    toScore,
+    toStringArray,
+} from '@/lib/ai-eval';
 
 export async function POST(req: Request) {
+    const gate = await requireUser();
+    if (gate.response) return gate.response;
+    const { userId, isPro } = gate.entitlement;
+
+    let body: { stories?: unknown };
     try {
-        const session = await getSession();
-        if (!session?.userId) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        body = await req.json();
+    } catch {
+        return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    }
 
-        // Enforce FREE-tier single-attempt limit server-side
-        if (await freeEvalLimitReached(session.userId, session.plan, 'TAT')) {
-            return NextResponse.json(
-                { error: 'Free limit reached. Upgrade to Pro for unlimited attempts.', reason: 'free_limit_reached' },
-                { status: 403 },
-            );
-        }
+    const stories = body.stories;
+    if (!Array.isArray(stories) || stories.length === 0) {
+        return NextResponse.json({ error: 'Invalid input format' }, { status: 400 });
+    }
 
-        const body = await req.json();
-        const stories = body.stories;
+    const written = stories.filter(
+        (s) => typeof s?.story_text === 'string' && s.story_text.trim().length > 0,
+    );
+    if (written.length === 0) {
+        return NextResponse.json(
+            {
+                error: 'No stories were recorded, so there is nothing to evaluate.',
+                reason: 'empty_submission',
+            },
+            { status: 400 },
+        );
+    }
 
-        if (!Array.isArray(stories) || stories.length === 0) {
-            return NextResponse.json({ error: 'Invalid input format' }, { status: 400 });
-        }
+    const claimed = await claimFreeEval(userId, isPro, 'TAT');
+    if (!claimed) {
+        return NextResponse.json(
+            {
+                error: 'You have used your free TAT evaluation. Upgrade to Pro for unlimited attempts.',
+                reason: 'free_limit_reached',
+                upgradeUrl: '/pricing',
+            },
+            { status: 403 },
+        );
+    }
 
-        // 1. Prepare Prompt for Gemini
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash",
-            generationConfig: { responseMimeType: "application/json" }
-        });
+    try {
+        const prompt = `Analyze these ${written.length} TAT (Thematic Apperception Test) stories for an SSB candidate.
 
-        const prompt = `Analyze these ${stories.length} TAT (Thematic Apperception Test) stories for an SSB candidate.
-        
         STORIES:
-        ${stories.map((s, i) => `Image ${i+1}: ${s.story_text}`).join('\n\n')}
-        
+        ${written.map((s, i) => `Image ${i + 1}: ${s.story_text}`).join('\n\n')}
+
         Evaluate the candidate's psychological profile and return JSON:
         {
           "percentage": 1-100,
@@ -53,36 +74,48 @@ export async function POST(req: Request) {
           },
           "insights": ["insight 1", "insight 2"]
         }
-        
+
         Focus on Officer Like Qualities (OLQs), positivity, realism, and proactive problem-solving.`;
 
-        const result = await model.generateContent(prompt);
-        const evaluation = JSON.parse(result.response.text());
-
-        // 2. Save to DB
-        const savedResult = await prisma.tatResult.create({
-            data: {
-                userId: session.userId,
-                totalScore: evaluation.percentage,
-                themeScores: evaluation.themeScores,
-                riskLevel: evaluation.riskLevel,
+        const evaluation = await generateJson({
+            prompt,
+            validate: (parsed) => {
+                const p = (parsed ?? {}) as Record<string, unknown>;
+                return {
+                    percentage: toScore(p.percentage),
+                    riskLevel: toRiskLevel(p.riskLevel),
+                    themeScores: normalizeThemeScores(p.themeScores),
+                    insights: toStringArray(p.insights),
+                };
             },
         });
 
-        // 3. Award Medals
-        const medalResult = await awardMedals(session.userId, 'practice');
-        await recordEvalCompletion(session.userId, session.plan, 'TAT');
+        const { savedResult, medalResult, streak } = await prisma.$transaction(async () => {
+            const savedResult = await prisma.tatResult.create({
+                data: {
+                    userId,
+                    totalScore: evaluation.percentage,
+                    themeScores: evaluation.themeScores,
+                    riskLevel: evaluation.riskLevel,
+                },
+            });
+            const medalResult = await awardMedals(userId, 'practice');
+            const streak = await completePracticeForUser(userId, 'TAT');
+            return { savedResult, medalResult, streak };
+        });
 
-        // 4. Respond
         return NextResponse.json({
+            success: true,
             message: 'TAT Evaluated by AI and saved.',
             resultId: savedResult.id,
             evaluation,
-            medals: medalResult
+            streak,
+            medals: medalResult,
         });
-
-    } catch (error: any) {
+    } catch (error) {
+        await releaseFreeEval(userId, isPro, 'TAT');
         console.error('[tat/submit]', error);
-        return NextResponse.json({ error: 'Failed to evaluate TAT' }, { status: 500 });
+        const { body: errBody, status } = aiErrorResponse(error);
+        return NextResponse.json(errBody, { status });
     }
 }

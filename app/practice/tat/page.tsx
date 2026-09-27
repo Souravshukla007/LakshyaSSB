@@ -1,8 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import {
+    EvaluationError,
+    toEvaluationFailure,
+    type EvaluationFailure,
+} from '@/components/practice/EvaluationState';
 
 // ─── Types and Constants ──────────────────────────────────────────────────────
 type ViewState = 'intro' | 'test' | 'result';
@@ -23,10 +28,18 @@ function playShutter() {
 function DynamicRadarChart({ scores }: { scores: any }) {
     const cx = 160, cy = 160, maxR = 100;
     
-    const stats = Object.entries(scores || {}).map(([label, data]: [string, any]) => ({
-        label: label.replace('_', ' '),
-        value: data.percentage / 10
-    })).slice(0, 5);
+    // `scores` was guarded but each *value* was not: the model may return a bare
+    // number or null per theme, and `data.percentage / 10` then yields NaN (which
+    // renders an invalid SVG path) or throws (which white-screened the page).
+    const stats = Object.entries(scores || {}).map(([label, data]: [string, any]) => {
+        const raw = data && typeof data === 'object' ? data.percentage : data;
+        const n = Number(raw);
+        const pct = Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : 0;
+        return {
+            label: label.replace(/_/g, ' '),
+            value: pct / 10,
+        };
+    }).slice(0, 5);
 
     if (stats.length === 0) return <div className="text-gray-400 text-xs text-center py-20 font-bold uppercase tracking-widest">No evaluation data</div>;
 
@@ -97,12 +110,19 @@ export default function TATPracticePage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [evaluationResult, setEvaluationResult] = useState<any>(null);
     const [medalsEarned, setMedalsEarned] = useState<number | null>(null);
+    const [failure, setFailure] = useState<EvaluationFailure | null>(null);
+
+    // Prevents the StrictMode double-run of the timer effect from advancing twice.
+    const advanceGuard = useRef<number | null>(null);
 
     // Timer logic
     useEffect(() => {
         if (view !== 'test') return;
         if (timeLeft <= 0) {
-            handleNext();
+            if (advanceGuard.current !== currentIndex) {
+                advanceGuard.current = currentIndex;
+                handleNext();
+            }
             return;
         }
         const timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
@@ -114,21 +134,27 @@ export default function TATPracticePage() {
     }, [currentIndex, view]);
 
     const handleStart = async () => {
+        // Advisory pre-flight. The real gate is the atomic claim in /api/tat/submit;
+        // the client no longer writes its own quota row.
         const accessRes = await fetch('/api/practice/check-access?module=TAT');
         if (accessRes.status === 401) return router.push('/auth');
         const accessData = await accessRes.json();
         if (!accessData.allowed) return router.push('/pricing');
 
-        await fetch('/api/practice/check-access', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ module: 'TAT' })
-        });
-
         const imgRes = await fetch('/api/tat/images');
+        if (imgRes.status === 401) return router.push('/auth');
+        if (!imgRes.ok) {
+            setFailure({
+                reason: 'load_failed',
+                message: 'We could not load the TAT images. Please try again.',
+            });
+            setView('result');
+            return;
+        }
         const imgData = await imgRes.json();
         const sessionImages: string[] = imgData.images ?? [];
 
+        setFailure(null);
         setTatImages(sessionImages);
         setCurrentIndex(0);
         setTimeLeft(TIME_PER_IMAGE);
@@ -141,6 +167,7 @@ export default function TATPracticePage() {
 
     const submitTAT = async (finalStories: string[]) => {
         setIsSubmitting(true);
+        setFailure(null);
         try {
             const storiesToSubmit = tatImages.map((img, idx) => ({
                 image_id: img,
@@ -159,12 +186,26 @@ export default function TATPracticePage() {
                 const data = await res.json();
                 setEvaluationResult(data.evaluation);
                 if (data.medals?.awarded) setMedalsEarned(data.medals.awarded);
+            } else {
+                // Previously this branch didn't even log, so a free-limit 403 left
+                // the user on a spinner that never resolved.
+                setFailure(await toEvaluationFailure(res));
             }
         } catch (error) {
             console.error('Failed to submit TAT:', error);
+            setFailure({
+                reason: 'network',
+                message: 'We could not reach the server. Check your connection and retry.',
+            });
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const lastStories = () => {
+        const merged = [...stories];
+        merged[currentIndex] = story;
+        return merged;
     };
 
     const handleNext = () => {
@@ -296,7 +337,14 @@ export default function TATPracticePage() {
 
                 {view === 'result' && (
                     <div className="w-full max-w-4xl mx-auto animate-fadeIn">
-                        {isSubmitting || !evaluationResult ? (
+                        {failure && !isSubmitting ? (
+                            <div className="bg-white/90 backdrop-blur-md rounded-[2.5rem] border border-gray-100 shadow-xl">
+                                <EvaluationError
+                                    failure={failure}
+                                    onRetry={() => submitTAT(lastStories())}
+                                />
+                            </div>
+                        ) : isSubmitting || !evaluationResult ? (
                             <div className="bg-white/90 backdrop-blur-md rounded-[2.5rem] p-12 md:p-20 border border-gray-100 shadow-xl text-center">
                                 <div className="w-16 h-16 border-4 border-gray-200 border-t-orange-500 rounded-full animate-spin mx-auto mb-8"></div>
                                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Analyzing Your Stories</h2>

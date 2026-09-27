@@ -13,18 +13,54 @@ export default function OlqReport() {
 
             <section className="min-h-screen bg-brand-bg pt-32 pb-20 px-6">
                 <div className="max-w-7xl mx-auto">
-                    <div className="flex justify-between items-end mb-12 reveal">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-8 reveal">
                         <div>
                             <h1 className="font-hero font-bold text-4xl text-brand-dark mb-2">
                                 Detailed <span className="text-brand-orange">OLQ Report</span>
                             </h1>
                             <p className="text-gray-500 font-noname">
-                                Psychologist's view of your projected officer-like qualities.
+                                Psychologist&apos;s view of your projected officer-like qualities.
                             </p>
                         </div>
-                        <button className="px-6 py-3 bg-brand-dark text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-brand-orange transition-all">
-                            Download PDF
+                        {/*
+                          The "Download PDF" button had no onClick — it was focusable and
+                          announced as actionable but did nothing. Disabled and labelled
+                          until the export exists, rather than silently dead.
+                        */}
+                        <button
+                            type="button"
+                            disabled
+                            title="PDF export is coming soon"
+                            className="px-6 py-3 bg-gray-100 text-gray-400 rounded-xl text-xs font-bold uppercase tracking-widest cursor-not-allowed"
+                        >
+                            Download PDF — coming soon
                         </button>
+                    </div>
+
+                    {/*
+                      This page renders an illustrative layout, not the signed-in user's
+                      data: the radar polygon, the weekly bars and the insight text below
+                      are all hardcoded, and the page performs no data fetching. Saying so
+                      is the honest option until it is wired to /api/dashboard/psych-summary;
+                      presenting fixed numbers as a personal assessment is worse than
+                      showing nothing.
+                    */}
+                    <div
+                        role="note"
+                        className="mb-12 flex items-start gap-4 bg-amber-50 border border-amber-200 rounded-2xl p-5 reveal"
+                    >
+                        <i className="fa-solid fa-circle-info text-amber-500 mt-0.5" aria-hidden="true"></i>
+                        <div>
+                            <p className="font-bold text-amber-900 text-sm mb-1">Sample report</p>
+                            <p className="text-amber-800 text-sm font-noname">
+                                This is an example of the report format. Your own OLQ assessment is
+                                generated from your completed psychology tests — see{' '}
+                                <a href="/dashboard" className="underline font-semibold">
+                                    your dashboard
+                                </a>{' '}
+                                for live scores.
+                            </p>
+                        </div>
                     </div>
 
                     <div className="grid lg:grid-cols-12 gap-12">

@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-    title: "Terms & Conditions | LakshyaSSB",
+    // Bare page name: the root layout's title template appends "| LakshyaSSB".
+    title: "Terms & Conditions",
     description:
         "Read the Terms and Conditions governing your use of LakshyaSSB's digital SSB preparation platform, including subscription terms, payment conditions, and disclaimers.",
 };

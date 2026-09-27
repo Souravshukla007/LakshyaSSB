@@ -9,9 +9,11 @@ export async function GET() {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
+        // Bounded: was unpaginated, so the payload grew without limit.
         const history = await prisma.srtResult.findMany({
             where: { userId: session.userId },
             orderBy: { createdAt: 'desc' },
+            take: 50,
         });
 
         return NextResponse.json({ history });

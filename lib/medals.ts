@@ -6,24 +6,33 @@
  *  - "login"          → +1 medal (once per calendar day, IST)
  *  - "piq"            → floor(score / 10) medals
  *  - "daily_question" → +1 medal
+ *  - "practice"       → +2 medals
  *
  * Also handles streak bookkeeping.
+ *
+ * ────────────────────────────────────────────────────────────────────────────
+ * SECURITY CONTRACT — read before adding a caller.
+ *
+ * Medals are a CURRENCY: 49 of them buy a permanent PRO plan via
+ * /api/redeem-pro. `awardMedals` must therefore only ever be invoked from server
+ * code that has just *observed* the qualifying work — e.g. inside a submit route
+ * after the evaluation was persisted.
+ *
+ * It must NEVER be reachable from a request whose body chooses `type` or `score`.
+ * A `POST /api/medals/award` endpoint used to do exactly that, which let any
+ * logged-in free user mint 50 medals in five requests
+ * (`{"type":"piq","score":100}` ×5 → floor(100/10) each) and redeem them for
+ * PRO. That route has been deleted. Do not reintroduce it; derive the score from
+ * a stored row instead.
+ * ────────────────────────────────────────────────────────────────────────────
  */
 
 import { prisma } from '@/lib/prisma';
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 
-/** Returns the IST date string "YYYY-MM-DD" for a given Date (or now). */
-function toISTDateString(d: Date = new Date()): string {
-    return d.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }); // "YYYY-MM-DD"
-}
-
-function startOfISTDay(d: Date = new Date()): Date {
-    const [y, m, day] = toISTDateString(d).split('-').map(Number);
-    // midnight IST = UTC-5:30 → subtract 5h30m
-    return new Date(Date.UTC(y, m - 1, day, 0, 0, 0, 0) - (5 * 60 + 30) * 60 * 1000);
-}
+// Day boundaries live in lib/ist.ts so every feature agrees on when "today" ends.
+import { toISTDateString, startOfISTDay } from '@/lib/ist';
 
 // ─── types ───────────────────────────────────────────────────────────────────
 

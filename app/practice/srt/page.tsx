@@ -7,6 +7,11 @@ import SrtTestInterface from '@/components/srt/SrtTestInterface';
 import SrtResult from '@/components/srt/SrtResult';
 import srt01 from '@/data/practice/srt01.json';
 import srt02 from '@/data/practice/srt02.json';
+import {
+    EvaluationError,
+    toEvaluationFailure,
+    type EvaluationFailure,
+} from '@/components/practice/EvaluationState';
 
 const allQuestionsRaw = [...srt01, ...srt02];
 const allQuestions = allQuestionsRaw.map((q, idx) => ({ ...q, id: idx + 1 })).slice(0, 60);
@@ -19,9 +24,10 @@ export default function SrtTestPage() {
     const [answers, setAnswers] = useState<Record<number, string>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [evaluationResult, setEvaluationResult] = useState<any>(null);
+    const [failure, setFailure] = useState<EvaluationFailure | null>(null);
 
     const handleStart = async () => {
-        // ... same access check logic ...
+        // Advisory pre-flight only — /api/srt/submit holds the authoritative gate.
         const accessRes = await fetch('/api/practice/check-access?module=SRT');
         if (accessRes.status === 401) {
             router.push('/auth');
@@ -33,24 +39,15 @@ export default function SrtTestPage() {
             return;
         }
 
-        // Consume Attempt (POST)
-        await fetch('/api/practice/check-access', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ module: 'SRT' })
-        });
-
         setEvaluationResult(null);
+        setFailure(null);
         setState('test');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const handleSubmit = async (submittedAnswers: Record<number, string>) => {
-        setAnswers(submittedAnswers);
-        setState('result');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
+    const runSubmit = async (submittedAnswers: Record<number, string>) => {
         setIsSubmitting(true);
+        setFailure(null);
         try {
             const inputs = allQuestions.map(q => ({
                 question_id: q.id,
@@ -68,17 +65,31 @@ export default function SrtTestPage() {
             if (res.ok) {
                 const data = await res.json();
                 setEvaluationResult(data.evaluation);
+            } else {
+                setFailure(await toEvaluationFailure(res));
             }
         } catch (error) {
             console.error('Failed to submit SRT:', error);
+            setFailure({
+                reason: 'network',
+                message: 'We could not reach the server. Check your connection and retry.',
+            });
         } finally {
             setIsSubmitting(false);
         }
     };
 
+    const handleSubmit = async (submittedAnswers: Record<number, string>) => {
+        setAnswers(submittedAnswers);
+        setState('result');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        await runSubmit(submittedAnswers);
+    };
+
     const handleRetake = () => {
         setAnswers({});
         setEvaluationResult(null);
+        setFailure(null);
         setState('intro');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -102,11 +113,17 @@ export default function SrtTestPage() {
                         />
                     )}
                     {state === 'result' && (
-                        <SrtResult 
-                            result={evaluationResult} 
-                            onRetake={handleRetake} 
-                            onDashboard={handleDashboard} 
-                        />
+                        failure && !isSubmitting ? (
+                            <div className="bg-white/90 backdrop-blur-md rounded-3xl border border-gray-100 shadow-xl">
+                                <EvaluationError failure={failure} onRetry={() => runSubmit(answers)} />
+                            </div>
+                        ) : (
+                            <SrtResult
+                                result={evaluationResult}
+                                onRetake={handleRetake}
+                                onDashboard={handleDashboard}
+                            />
+                        )
                     )}
                 </div>
             </div>

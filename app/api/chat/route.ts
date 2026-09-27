@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { startOfISTDay } from '@/lib/ist';
+// Model name lives in lib/ai-eval.ts so a retirement is a one-line fix, not four.
+import { GEMINI_MODEL } from '@/lib/ai-eval';
 
 type IncomingMessage = {
   role: 'user' | 'assistant';
@@ -111,8 +114,10 @@ export async function POST(request: Request) {
     }
 
     if (user.plan !== 'PRO') {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      // IST midnight, matching medals and streaks. This used to be
+      // `setHours(0,0,0,0)` = server-local midnight (UTC in production), so the
+      // chat allowance reset at 05:30 IST while everything else reset at 00:00.
+      const today = startOfISTDay();
 
       const todaysMessageCount = await prisma.chatMessage.count({
         where: {
@@ -146,14 +151,17 @@ export async function POST(request: Request) {
 
     const featureHint = buildFeatureHint(message);
 
+    // Five of the six names previously listed here (gemini-2.0-flash,
+    // gemini-2.0-flash-lite, gemini-1.5-flash-latest, gemini-1.5-flash,
+    // gemini-1.5-flash-8b) had been retired by Google and returned 404, so every
+    // attempt after the first was guaranteed-wasted latency on the user's request.
+    // Keep this list short and made of live models only; the primary comes from
+    // the single shared constant.
     const modelsToTry = [
+      GEMINI_MODEL,
       'gemini-2.5-flash',
-      'gemini-2.0-flash',
-      'gemini-2.0-flash-lite',
-      'gemini-1.5-flash-latest',
-      'gemini-1.5-flash',
-      'gemini-1.5-flash-8b',
-    ];
+      'gemini-flash-lite-latest',
+    ].filter((m, i, all) => all.indexOf(m) === i);
 
     const payload = {
       systemInstruction: {

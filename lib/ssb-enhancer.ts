@@ -34,17 +34,45 @@ const CATEGORY_RULES: { category: string; keywords: RegExp }[] = [
 ];
 
 /**
- * Detect category from title text using keyword matching.
- * Defaults to 'India' if no specific category matches.
+ * Detect category from title text, picking the category with the most keyword
+ * hits. Defaults to 'India' when nothing matches.
+ *
+ * This used to be first-match-wins over CATEGORY_RULES in array order. Defence is
+ * first and its keyword set is the broadest in the file (`military`, `defence`,
+ * `nuclear`, `army`, `armed forces`, `ceasefire`, …), while the ingestion feed in
+ * lib/gnews-fetcher.ts is itself defence-focused. The result was that essentially
+ * every article matched Defence on the first test and returned immediately: the
+ * function behaved like a constant, every stored row came back "Defence", and the
+ * International / India / Economy / Science filters on /current-affairs could never
+ * populate.
+ *
+ * Counting hits instead means a story like "India and Japan sign defence pact at
+ * bilateral summit" is weighed across categories rather than being claimed by
+ * whichever rule happens to sit at index 0. Ties keep CATEGORY_RULES order, so
+ * behaviour stays deterministic.
+ *
+ * NOTE: category is persisted per article by lib/storage.ts, so this only affects
+ * newly ingested news. Existing rows keep whatever they were classified as until
+ * the pipeline reprocesses them.
  */
 export function getCategory(title: string): string {
     const text = title.toLowerCase();
+
+    let best: { category: string; score: number } | null = null;
+
     for (const rule of CATEGORY_RULES) {
-        if (rule.keywords.test(text)) {
-            return rule.category;
+        // Count distinct keyword hits, not just "does anything match".
+        const globalPattern = new RegExp(rule.keywords.source, 'gi');
+        const score = (text.match(globalPattern) || []).length;
+
+        // Strictly greater keeps the first rule on a tie, preserving the old
+        // precedence order as the documented tie-break.
+        if (score > 0 && (best === null || score > best.score)) {
+            best = { category: rule.category, score };
         }
     }
-    return 'India'; // Default
+
+    return best ? best.category : 'India'; // Default
 }
 
 // ── Summary Extraction ─────────────────────────────────────────────────────────

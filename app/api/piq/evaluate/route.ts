@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getSession } from '@/lib/auth';
+import { requirePro } from '@/lib/entitlement';
 import { prisma } from '@/lib/prisma';
 import { computePIQScore, type PiqInput } from '@/lib/piq-score';
 
@@ -16,10 +16,12 @@ import { computePIQScore, type PiqInput } from '@/lib/piq-score';
  */
 export async function POST(request: Request) {
     try {
-        const session = await getSession();
-        if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        // PIQ is a Pro feature — /piq is already behind the PRO page guard, but the
+        // API was only auth-gated, so the whole OLQ engine was reachable by any
+        // free account with a fetch call.
+        const gate = await requirePro();
+        if (gate.response) return gate.response;
+        const session = gate.entitlement;
 
         const body = await request.json();
 

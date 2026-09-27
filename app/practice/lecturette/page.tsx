@@ -4,6 +4,11 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import topicsData from '@/data/lecturette/topics.json';
+import {
+    EvaluationError,
+    toEvaluationFailure,
+    type EvaluationFailure,
+} from '@/components/practice/EvaluationState';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type View = 'intro' | 'prep' | 'speech' | 'eval' | 'result';
@@ -93,6 +98,8 @@ export default function LecturettePage() {
     const [recording, setRecording] = useState(false);
     const [canRecord, setCanRecord] = useState(false);
     const [isEvaluating, setIsEvaluating] = useState(false);
+    const [failure, setFailure] = useState<EvaluationFailure | null>(null);
+    const lastBlobRef = useRef<Blob | null>(null);
     const [aiEvaluation, setAiEvaluation] = useState<any>(null);
 
     // Evaluation
@@ -130,15 +137,13 @@ export default function LecturettePage() {
         if (res.status === 401) { router.push('/auth'); return; }
         const data = await res.json();
         if (!data.allowed) { router.push('/pricing'); return; }
-        await fetch('/api/practice/check-access', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ module: 'LECTURETTE' }),
-        });
+        // The client no longer writes its own quota row — the server records the
+        // attempt when the evaluation is claimed.
         setSelectedTopic(topic);
         setPrepLeft(PREP_TIME);
         setPrepUsed(0);
         setAiEvaluation(null);
+        setFailure(null);
         playShutter();
         setView('prep');
     };
@@ -160,7 +165,11 @@ export default function LecturettePage() {
 
     const submitSpeech = async (blob: Blob) => {
         if (!selectedTopic) return;
+        // Keep the recording so a failed evaluation can be retried without
+        // making the candidate deliver the whole speech again.
+        lastBlobRef.current = blob;
         setIsEvaluating(true);
+        setFailure(null);
         try {
             const formData = new FormData();
             formData.append('audio', blob);
@@ -183,9 +192,15 @@ export default function LecturettePage() {
                     knowledge: data.contentScore,
                     timeManagement: Math.round(((SPEECH_TIME - speechLeft) / SPEECH_TIME) * 10)
                 });
+            } else {
+                setFailure(await toEvaluationFailure(res));
             }
         } catch (error) {
             console.error('Failed to evaluate speech:', error);
+            setFailure({
+                reason: 'network',
+                message: 'We could not reach the server. Check your connection and retry.',
+            });
         } finally {
             setIsEvaluating(false);
         }
@@ -555,6 +570,17 @@ export default function LecturettePage() {
                                 <div className="w-16 h-16 border-4 border-gray-200 border-t-orange-500 rounded-full animate-spin mx-auto mb-8" />
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">AI Assessing Your Speech...</h3>
                                 <p className="text-gray-500">Analyzing your tone, speed, and content relevancy.</p>
+                            </div>
+                        ) : failure ? (
+                            <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-xl">
+                                <EvaluationError
+                                    failure={failure}
+                                    onRetry={
+                                        lastBlobRef.current
+                                            ? () => submitSpeech(lastBlobRef.current as Blob)
+                                            : undefined
+                                    }
+                                />
                             </div>
                         ) : (
                             <>

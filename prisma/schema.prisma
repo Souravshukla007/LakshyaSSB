@@ -31,6 +31,11 @@ enum RiskLevel {
   HIGH
 }
 
+enum OtpPurpose {
+  LOGIN
+  PASSWORD_RESET
+}
+
 // ---------------------------------------------------------------------------
 // Models
 // ---------------------------------------------------------------------------
@@ -49,6 +54,15 @@ model User {
 
   // Subscription (Razorpay)
   plan       Plan      @default(FREE)
+  /// When the paid plan lapses. NULL = lifetime grant (e.g. medal redemption).
+  /// Checked by lib/entitlement.ts, which is the only place allowed to decide
+  /// whether a user is PRO.
+  planExpiry DateTime?
+
+  /// Bumped to invalidate every outstanding session JWT for this user
+  /// (logout-all, password change, password reset, account delete).
+  /// Compared against the token's claim in lib/auth.ts#getSession.
+  tokenVersion Int @default(0)
 
   // Leaderboard & Medal System
   medals_total   Int       @default(0)
@@ -67,6 +81,7 @@ model User {
   watResults       WatResult[]
   tatResults       TatResult[]
   practiceAttempts    PracticeAttempt[]
+  freeEvalClaims      FreeEvalClaim[]
   oirQuestionHistory  OirQuestionHistory[]
   chatMessages       ChatMessage[]
   activityLogs       ActivityLog[]
@@ -219,11 +234,20 @@ model PiqScore {
 model Otp {
   id        String   @id @default(uuid())
   email     String
+  /// SHA-256 of the code, not the code itself. A leaked database snapshot must
+  /// not hand out working login/reset codes.
   otp       String
+  /// What the code may be used for. Previously absent, which meant a code mailed
+  /// for LOGIN was equally valid to RESET the password.
+  purpose   OtpPurpose @default(LOGIN)
+  /// Failed verification attempts. Enforces a cap instead of allowing an
+  /// unlimited brute force of a 6-digit space.
+  attempts  Int      @default(0)
   expiresAt DateTime
   createdAt DateTime @default(now())
 
-  @@index([email])
+  @@index([email, purpose])
+  @@index([expiresAt])
 }
 
 // ---------------------------------------------------------------------------
@@ -293,13 +317,42 @@ model TatResult {
 model PracticeAttempt {
   id        String   @id @default(uuid())
   userId    String
-  module    String   // e.g., "OIR", "WAT", "TAT", "SRT", "LECTURETTE"
+  /// Either a module name ("OIR", "WAT", …) or a server-written completion
+  /// marker ("WAT_EVAL"). Only the markers are authoritative — see
+  /// lib/practice-limit.ts.
+  module    String
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  /// The actual query shape is `where: { userId, module }`; two single-column
+  /// indexes forced Postgres to pick one and filter. Purely additive.
+  @@index([userId, module])
+}
+
+/// The FREE-tier "one evaluation per module" ledger.
+///
+/// Deliberately a separate table from PracticeAttempt rather than a unique
+/// constraint on it. PracticeAttempt already holds 320 legacy rows written by the
+/// old client-driven quota POST — including 86 duplicate OIR rows for one user —
+/// so adding `@@unique([userId, module])` there would have required deleting real
+/// historical data to apply. This table starts empty, so the constraint is free.
+///
+/// The unique constraint IS the lock: lib/practice-limit.ts inserts first and
+/// treats a P2002 violation as "already claimed", which closes the read-then-write
+/// race where concurrent submissions each saw "no marker yet" and every one of
+/// them was granted a free AI evaluation.
+model FreeEvalClaim {
+  id        String   @id @default(uuid())
+  userId    String
+  /// One of lib/practice-limit.ts GATED_MODULES: WAT, TAT, SRT, GPE, LECTURETTE, OIR.
+  module    String
+  claimedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, module])
   @@index([userId])
-  @@index([module])
 }
 
 // ---------------------------------------------------------------------------

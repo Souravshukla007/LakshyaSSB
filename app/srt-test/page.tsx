@@ -7,6 +7,11 @@ import SrtTestInterface from '@/components/srt/SrtTestInterface';
 import SrtResult from '@/components/srt/SrtResult';
 import srt01 from '@/data/practice/srt01.json';
 import srt02 from '@/data/practice/srt02.json';
+import {
+    EvaluationError,
+    toEvaluationFailure,
+    type EvaluationFailure,
+} from '@/components/practice/EvaluationState';
 
 const allQuestionsRaw = [...srt01, ...srt02];
 const allQuestions = allQuestionsRaw.map((q, idx) => ({ ...q, id: idx + 1 })).slice(0, 60);
@@ -18,37 +23,56 @@ export default function SrtTestPage() {
     const [state, setState] = useState<AppState>('intro');
     const [answers, setAnswers] = useState<Record<number, string>>({});
     const [result, setResult] = useState<any>(null);
+    const [failure, setFailure] = useState<EvaluationFailure | null>(null);
 
     const handleStart = () => {
         setState('test');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const handleSubmit = async (submittedAnswers: Record<number, string>) => {
-        setAnswers(submittedAnswers);
-        setState('result');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        
-        // Submit to API for evaluation
+    const submitToApi = async (submittedAnswers: Record<number, string>) => {
+        setFailure(null);
         try {
             const res = await fetch('/api/srt/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ inputs: Object.values(submittedAnswers) })
+                // The route scores `user_response` per item. This used to send
+                // `Object.values(...)` — bare strings — so every prompt line read
+                // "Srt N: undefined" and the model scored nothing at all.
+                body: JSON.stringify({
+                    inputs: Object.values(submittedAnswers).map((text) => ({ user_response: text })),
+                }),
             });
-            
+
             if (res.ok) {
                 const data = await res.json();
-                setResult(data);
+                // SrtResult reads `totalScore`/`themeScores` off this object, so it
+                // needs the evaluation itself — not the whole response envelope,
+                // which rendered "undefined/100" for every user.
+                setResult(data.evaluation ?? null);
+            } else {
+                setFailure(await toEvaluationFailure(res));
             }
         } catch (error) {
             console.error('Error submitting SRT:', error);
+            setFailure({
+                reason: 'network',
+                message: 'We could not reach the server. Check your connection and retry.',
+            });
         }
+    };
+
+    const handleSubmit = async (submittedAnswers: Record<number, string>) => {
+        setAnswers(submittedAnswers);
+        setState('result');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        await submitToApi(submittedAnswers);
     };
 
     const handleRetake = () => {
         setAnswers({});
         setResult(null);
+        setFailure(null);
         setState('intro');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -77,7 +101,15 @@ export default function SrtTestPage() {
                 <div className="w-full">
                     {state === 'intro' && <SrtIntro onStart={handleStart} />}
                     {state === 'test' && <SrtTestInterface questions={allQuestions} onSubmit={handleSubmit} />}
-                    {state === 'result' && <SrtResult result={result} onRetake={handleRetake} onDashboard={handleDashboard} />}
+                    {state === 'result' && (
+                        failure ? (
+                            <div className="bg-white/90 backdrop-blur-md rounded-3xl border border-gray-100 shadow-xl">
+                                <EvaluationError failure={failure} onRetry={() => submitToApi(answers)} />
+                            </div>
+                        ) : (
+                            <SrtResult result={result} onRetake={handleRetake} onDashboard={handleDashboard} />
+                        )
+                    )}
                 </div>
             </div>
         </div>

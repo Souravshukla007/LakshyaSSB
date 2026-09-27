@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-    title: "Refund Policy | LakshyaSSB",
+    // Bare page name: the root layout's title template appends "| LakshyaSSB".
+    title: "Refund Policy",
     description:
         "Read LakshyaSSB's refund policy for our digital SSB preparation subscription. Understand conditions, timelines, and the dispute resolution process.",
 };

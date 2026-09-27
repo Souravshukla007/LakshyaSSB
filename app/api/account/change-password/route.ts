@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { getSession } from '@/lib/auth';
+import { getSession, bumpTokenVersion, signSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 /**
  * POST /api/account/change-password
- * Verifies current password before updating to new one.
+ * Verifies the current password, updates it, then revokes every other session.
  */
 export async function POST(request: NextRequest) {
     const session = await getSession();
@@ -42,10 +42,31 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Current password is incorrect' }, { status: 400 });
     }
 
+    if (currentPassword === newPassword) {
+        return NextResponse.json(
+            { error: 'The new password must be different from the current one' },
+            { status: 400 },
+        );
+    }
+
     const passwordHash = await bcrypt.hash(newPassword, 12);
     await prisma.user.update({
         where: { id: session.userId },
         data: { passwordHash },
+    });
+
+    // A password change is the standard response to a suspected compromise, so it
+    // has to revoke sessions. Previously an attacker holding a stolen token kept
+    // full access afterwards, which defeated the point of changing it.
+    const newVersion = await bumpTokenVersion(session.userId);
+
+    // Re-issue for *this* device so the user who just changed their password
+    // isn't the one who gets signed out.
+    await signSession({
+        userId: session.userId,
+        email: session.email,
+        plan: session.plan,
+        tokenVersion: newVersion,
     });
 
     // Log password change activity
@@ -53,9 +74,12 @@ export async function POST(request: NextRequest) {
         data: {
             userId: session.userId,
             action: 'PASSWORD_CHANGE',
-            details: 'Password changed successfully',
+            details: 'Password changed; other devices signed out',
         },
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({
+        success: true,
+        message: 'Password updated. Other devices have been signed out.',
+    });
 }

@@ -4,9 +4,7 @@ import { prisma } from '@/lib/prisma';
 
 const MILESTONES = [7, 14, 30, 60];
 
-function toISTDateString(d: Date = new Date()) {
-  return d.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
-}
+import { toISTDateString } from '@/lib/ist';
 
 function toDateParts(key: string) {
   const [y, m, d] = key.split('-').map(Number);
@@ -80,6 +78,10 @@ export async function GET() {
           action: { startsWith: 'PRACTICE_COMPLETE_' },
         },
         orderBy: { createdAt: 'desc' },
+        // Streak maths only needs recent history; this was unbounded and grew
+        // with every practice session the user ever completed.
+        take: 400,
+        select: { action: true, createdAt: true },
       }),
       prisma.activityLog.count({
         where: {

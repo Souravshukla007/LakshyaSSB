@@ -371,8 +371,14 @@ export default function DashboardClient({ user }: DashboardClientProps) {
                                         <div className="hidden md:block w-32 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                                             <div className="w-4/5 h-full bg-brand-orange"></div>
                                         </div>
-                                        <button className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:text-white transition-colors">
-                                            <i className="fa-solid fa-play text-xs"></i>
+                                        <button
+                                            type="button"
+                                            aria-label="Start Psychological Test Series"
+                                            className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:text-white transition-colors"
+                                        >
+                                            {/* Font Awesome renders a CSS pseudo-element, so an icon-only
+                                                button has no accessible name without the aria-label above. */}
+                                            <i className="fa-solid fa-play text-xs" aria-hidden="true"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -391,8 +397,12 @@ export default function DashboardClient({ user }: DashboardClientProps) {
                                         <div className="hidden md:block w-32 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                                             <div className="w-1/5 h-full bg-brand-purple"></div>
                                         </div>
-                                        <button className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:text-white transition-colors">
-                                            <i className="fa-solid fa-lock text-xs"></i>
+                                        <button
+                                            type="button"
+                                            aria-label="Personal Interview Drill — locked, upgrade to unlock"
+                                            className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:text-white transition-colors"
+                                        >
+                                            <i className="fa-solid fa-lock text-xs" aria-hidden="true"></i>
                                         </button>
                                     </div>
                                 </div>

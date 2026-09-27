@@ -76,9 +76,11 @@ export async function GET(request: Request) {
         });
 
     } catch (error) {
+        // `details: String(error)` used to be returned to the caller, which leaked
+        // Prisma/Postgres internals (table names, connection targets).
         console.error('[refresh] Failed:', error);
         return NextResponse.json(
-            { success: false, error: 'Refresh failed. Check server logs.', details: String(error) },
+            { success: false, error: 'Refresh failed. Check server logs.' },
             { status: 500 }
         );
     }

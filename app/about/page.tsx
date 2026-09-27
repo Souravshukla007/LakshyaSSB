@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-    title: "About Us | LakshyaSSB",
+    // Bare page name: the root layout's title template appends "| LakshyaSSB".
+    title: "About Us",
     description:
         "Learn about LakshyaSSB — India's digital SSB preparation platform offering psychology tests, mock interviews, and OLQ development tools for aspiring defence officers.",
 };

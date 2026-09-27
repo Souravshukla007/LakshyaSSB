@@ -17,14 +17,14 @@ export default function Footer() {
                             Lakshya<span className="text-brand-orange">SSB</span>
                         </span>
                     </div>
-                    <p className="text-gray-500 leading-relaxed">
+                    <p className="text-gray-400 leading-relaxed">
                         Crafting future leaders for the Indian Armed Forces. Specialized SSB training for NDA, CDS, and AFCAT.
                     </p>
                 </div>
 
                 {/* Resources Column */}
                 <div>
-                    <h4 className="text-white font-bold mb-6">Resources</h4>
+                    <h3 className="text-white font-bold mb-6">Resources</h3>
                     <ul className="space-y-3">
                         <li>
                             <button onClick={() => setIsApkModalOpen(true)} className="hover:text-white transition flex items-center gap-2">
@@ -39,7 +39,7 @@ export default function Footer() {
 
                 {/* Academy Column */}
                 <div>
-                    <h4 className="text-white font-bold mb-6">Academy</h4>
+                    <h3 className="text-white font-bold mb-6">Academy</h3>
                     <ul className="space-y-3">
                         <li><Link href="/about" className="hover:text-white transition">About Us</Link></li>
                         <li><Link href="/contact" className="hover:text-white transition">Contact Us</Link></li>
@@ -50,7 +50,7 @@ export default function Footer() {
 
                 {/* Legal Column */}
                 <div>
-                    <h4 className="text-white font-bold mb-6">Legal</h4>
+                    <h3 className="text-white font-bold mb-6">Legal</h3>
                     <ul className="space-y-3">
                         <li><Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link></li>
                         <li><Link href="/terms" className="hover:text-white transition">Terms &amp; Conditions</Link></li>

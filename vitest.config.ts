@@ -30,6 +30,9 @@ export default defineConfig({
     // Only pick up dedicated test files; never traverse build output or native
     // project folders.
     include: ['**/*.{test,spec}.{ts,tsx,js,mjs}'],
-    exclude: ['node_modules', '.next', 'android', 'dist', 'out'],
+    // `tests/e2e` holds Playwright browser specs. They use @playwright/test's own
+    // runner and would fail under Vitest, so keep the two suites disjoint:
+    // `npm test` = unit/property, `npm run test:e2e` = browser.
+    exclude: ['node_modules', '.next', 'android', 'dist', 'out', 'tests/e2e/**'],
   },
 });
