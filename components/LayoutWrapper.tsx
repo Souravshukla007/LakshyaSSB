@@ -16,7 +16,9 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     const hideNavFooter = pathname ? noNavRoutes.some(route => pathname.startsWith(route)) : false;
 
     return (
-        <div className="flex flex-col min-h-screen">
+        // The top padding moves every page below the Android status bar in the app
+        // (--app-safe-top is 0 on the web). Navbar is absolute, so it is offset on its own.
+        <div className="flex flex-col min-h-screen pt-[var(--app-safe-top)]">
             {!hideNavFooter && <Navbar />}
             <main className="flex-grow">
                 {children}

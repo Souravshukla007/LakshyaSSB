@@ -26,7 +26,8 @@ export default function Footer() {
                 <div>
                     <h3 className="text-white font-bold mb-6">Resources</h3>
                     <ul className="space-y-3">
-                        <li>
+                        {/* Hidden inside the Android app — the user already has it. */}
+                        <li className="native:hidden">
                             <button onClick={() => setIsApkModalOpen(true)} className="hover:text-white transition flex items-center gap-2">
                                 <i className="fa-brands fa-android text-brand-orange" /> Download Android App
                             </button>

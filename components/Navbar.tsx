@@ -132,7 +132,8 @@ export default function Navbar() {
             {/* ═══════════════════════════════════════════
                 NAV  (desktop bar + hamburger trigger)
             ═══════════════════════════════════════════ */}
-            <nav className="absolute w-full z-50 top-0 left-0 transition-all duration-300">
+            {/* top = status-bar height inside the Android app, 0 on the web (app/globals.css). */}
+            <nav className="absolute w-full z-50 top-[var(--app-safe-top)] left-0 transition-all duration-300">
                 <div className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
 
                     {/* ── Left: Logo + Desktop links ── */}
@@ -160,8 +161,8 @@ export default function Navbar() {
                     {/* ── Right: Avatar + CTA + Hamburger ── */}
                     <div className="flex items-center gap-4">
 
-                        {/* Android App Download Trigger (Desktop) */}
-                        <div className="hidden lg:flex items-center">
+                        {/* Android App Download Trigger (Desktop) — pointless inside the app itself */}
+                        <div className="hidden lg:flex items-center native:hidden">
                             <button
                                 onClick={() => setIsApkModalOpen(true)}
                                 className="group relative bg-[#1c1c1c] hover:bg-brand-orange text-white p-[8px] rounded-full shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
@@ -182,9 +183,14 @@ export default function Navbar() {
                             </>
                         )}
 
-                        {/* Avatar Dropdown (desktop) — unchanged */}
+                        {/*
+                          * Avatar Dropdown. Hidden in the app wherever the hamburger shows
+                          * (below lg): the drawer's profile card already covers Profile, OLQ
+                          * Report, Daily Question, Upgrade and Logout, and the extra icon was
+                          * crowding the bar. At lg+ there is no drawer, so it stays.
+                          */}
                         {user && (
-                            <div className="relative" ref={dropdownRef}>
+                            <div className="relative native:max-lg:hidden" ref={dropdownRef}>
                                 <button
                                     onClick={() => setDropdownOpen(prev => !prev)}
                                     className="w-10 h-10 rounded-full bg-gray-200 border border-gray-100 flex items-center justify-center text-brand-dark font-bold text-sm shadow-sm hover:shadow-md transition-all overflow-hidden"
@@ -293,7 +299,8 @@ export default function Navbar() {
                 ═══════════════════════════════════════════ */}
                 <div className={`lg:hidden fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
                     }`}>
-                    <div className="bg-white rounded-b-3xl shadow-2xl overflow-hidden">
+                    {/* Top padding keeps the drawer header below the status bar in the app. */}
+                    <div className="bg-white rounded-b-3xl shadow-2xl overflow-hidden pt-[var(--app-safe-top)]">
 
                         {/* ── Drawer Header: Logo + Close ── */}
                         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
@@ -331,13 +338,13 @@ export default function Navbar() {
                                 </Link>
                             ))}
 
-                            {/* Mobile Download App Link */}
+                            {/* Mobile Download App Link — hidden inside the app itself */}
                             <button
                                 onClick={() => {
                                     closeMobile();
                                     setIsApkModalOpen(true);
                                 }}
-                                className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition-all text-left"
+                                className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition-all text-left native:hidden"
                             >
                                 <i className="fa-brands fa-android w-4 text-center text-green-500" />
                                 Download Android App

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
     content: [
@@ -62,6 +63,15 @@ const config: Config = {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        /**
+         * `native:` applies only inside the Capacitor app, e.g. `native:hidden`.
+         * app/layout.tsx sets `data-native-app` on <html> before first paint, so
+         * these styles never flash on the web and never jump in the app.
+         */
+        plugin(({ addVariant }) => {
+            addVariant("native", "html[data-native-app] &");
+        }),
+    ],
 };
 export default config;

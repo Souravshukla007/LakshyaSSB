@@ -7,6 +7,22 @@
 :root {
   --background: #fafaf9;
   --foreground: #1a1a1a;
+  /* Space reserved for the phone's status bar. 0 on the web; see below. */
+  --app-safe-top: 0px;
+}
+
+/*
+ * Inside the Capacitor Android app (data-native-app is set on <html> by the
+ * inline script in app/layout.tsx).
+ *
+ * targetSdkVersion 36 makes Android 15+ draw the WebView edge-to-edge, so the
+ * status bar is painted on top of the page and the header ended up under the
+ * clock and battery icons. env(safe-area-inset-top) is the real status-bar
+ * height on current WebViews; older WebViews (Chromium < 140) report 0 there,
+ * so 28px keeps the header clear on those too.
+ */
+html[data-native-app] {
+  --app-safe-top: max(env(safe-area-inset-top, 0px), 28px);
 }
 
 body {

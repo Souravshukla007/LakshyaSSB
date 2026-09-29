@@ -40,7 +40,8 @@ export default function SearchOverlay({
                 aria-label="Close search"
             />
 
-            <div className="absolute left-1/2 top-[86px] md:top-[98px] -translate-x-1/2 w-full px-3 md:px-0 md:w-[650px]">
+            {/* Sits just under the header; --app-safe-top follows the header down in the Android app. */}
+            <div className="absolute left-1/2 top-[calc(86px+var(--app-safe-top))] md:top-[calc(98px+var(--app-safe-top))] -translate-x-1/2 w-full px-3 md:px-0 md:w-[650px]">
                 <div
                     className={`bg-brand-bg/95 rounded-3xl border border-gray-200/70 shadow-soft p-3 md:p-4 transition-all duration-150 ${isOpen ? 'scale-100 translate-y-0' : 'scale-95 -translate-y-1'}`}
                 >

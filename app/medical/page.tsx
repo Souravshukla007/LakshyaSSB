@@ -731,7 +731,8 @@ function Step4Report({
         <div className="space-y-8">
             {/* Toast */}
             {toast && (
-                <div className="fixed top-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-gray-900 text-white text-sm font-semibold shadow-xl animate-fadeIn">
+                // --app-safe-top keeps the toast below the status bar in the Android app (0 on the web).
+                <div className="fixed top-[calc(1.5rem+var(--app-safe-top))] right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-gray-900 text-white text-sm font-semibold shadow-xl animate-fadeIn">
                     <span className="text-green-400">✓</span> {toast}
                 </div>
             )}

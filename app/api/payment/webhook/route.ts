@@ -24,8 +24,18 @@ import {
  * HMAC over the raw body is the authentication.
  */
 
-/** Razorpay retries on any non-2xx, so only signal failure when a retry can help. */
-const ACK = NextResponse.json({ received: true });
+/**
+ * Razorpay retries on any non-2xx, so only signal failure when a retry can help.
+ *
+ * Deliberately a function, not a shared constant. A Response body is a one-shot
+ * stream: a module-level `NextResponse.json(...)` was consumed by the first
+ * request each server instance handled, and every later delivery on that warm
+ * instance got a 200 with an EMPTY body (observed in production, 29 Sep 2026).
+ * Razorpay only reads the status, so deliveries still counted — but any path
+ * that re-wraps the body (Next.js does, when a handler sets cookies) throws on a
+ * consumed stream, which would turn every warm delivery into a 500.
+ */
+const ack = () => NextResponse.json({ received: true });
 
 export async function POST(request: NextRequest) {
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
@@ -70,7 +80,7 @@ export async function POST(request: NextRequest) {
             case 'payment.captured': {
                 if (!paymentId || !orderId || typeof amount !== 'number') {
                     console.error('[webhook] payment.captured missing fields', event.event);
-                    return ACK;
+                    return ack();
                 }
 
                 const outcome = await settleCapturedPayment({ orderId, paymentId, amountPaid: amount });
@@ -80,7 +90,7 @@ export async function POST(request: NextRequest) {
                     // it, because it means either a stray webhook from another app
                     // sharing the key, or create-order lost its database write.
                     console.error('[webhook] captured payment for unknown order', orderId, paymentId);
-                    return ACK;
+                    return ack();
                 }
                 if (outcome.status === 'amount_mismatch') {
                     console.error(
@@ -89,25 +99,25 @@ export async function POST(request: NextRequest) {
                         outcome.expected,
                         outcome.received,
                     );
-                    return ACK;
+                    return ack();
                 }
 
                 console.log(
                     `[webhook] payment.captured settled order=${orderId} payment=${paymentId} ` +
                     `user=${outcome.userId} alreadySettled=${outcome.alreadySettled}`,
                 );
-                return ACK;
+                return ack();
             }
 
             case 'payment.failed': {
                 if (orderId) await markPaymentFailed(orderId, paymentId);
-                return ACK;
+                return ack();
             }
 
             default:
                 // Unsubscribed or future event types: acknowledge so Razorpay stops
                 // retrying. Retrying an event we will never handle is pure noise.
-                return ACK;
+                return ack();
         }
     } catch (error) {
         // A 500 makes Razorpay retry with backoff, which is what we want for a

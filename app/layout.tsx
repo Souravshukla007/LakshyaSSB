@@ -3,6 +3,7 @@ import "./globals.css";
 import Script from "next/script";
 import CapacitorBackButtonHandler from "@/components/CapacitorBackButtonHandler";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import NativeAppFlag from "@/components/NativeAppFlag";
 import ServiceWorkerRegister from "@/components/offline/ServiceWorkerRegister";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -64,6 +65,27 @@ export default function RootLayout({
                 />
             </head>
             <body className="antialiased overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans bg-brand-bg" suppressHydrationWarning>
+                {/*
+                  * Flags the Capacitor Android app before first paint. This drives the
+                  * `native:` Tailwind variant and --app-safe-top in app/globals.css.
+                  *
+                  * Capacitor injects window.Capacitor at document start, so it already
+                  * exists when this runs inside the app. On the web it is still
+                  * undefined at this point, so the attribute is never set there.
+                  *
+                  * - A plain inline <script> on purpose: next/script runs it after
+                  *   first paint, so the web header would show for a frame and then jump.
+                  * - First in <body>, not in <head>: the AdSense loader inserts its own
+                  *   <script> just before the first script it finds, and in <head> that
+                  *   was this one, so React hydrated the wrong element.
+                  */}
+                <script
+                    suppressHydrationWarning
+                    dangerouslySetInnerHTML={{
+                        __html: "try{var c=window.Capacitor;if(c&&c.isNativePlatform&&c.isNativePlatform())document.documentElement.setAttribute('data-native-app','')}catch(e){}",
+                    }}
+                />
+                <NativeAppFlag />
                 <ServiceWorkerRegister />
                 <CapacitorBackButtonHandler />
                 <LayoutWrapper>
