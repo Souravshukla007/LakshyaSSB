@@ -66,6 +66,8 @@ next-env.d.ts
 # made directly against the PRODUCTION database (row counts, account states,
 # stored avatar sizes). Useful to keep on disk, not something to publish.
 /AUDIT_REPORT.md
+/FEATURE_ROADMAP.md
+/SETUP_GUIDE.md
 
 # scratch command output
 # Dumps left behind by local and agent runs: `git status` captures, tsc and
